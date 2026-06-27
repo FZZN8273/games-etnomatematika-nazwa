@@ -36,7 +36,7 @@
             width: 900px;
             height: 600px;
             position: relative;
-            background-color: #fcf9ee;
+            background-color: #1a3a5c;
             border: 10px solid #4a2e1b;
             border-radius: 20px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
@@ -66,6 +66,18 @@
             top: 0;
             left: 0;
             z-index: 1;
+        }
+
+        /* ===== OVERLAY ===== */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background: rgba(0, 20, 50, 0.25);
+            pointer-events: none;
         }
 
         /* ===== KONTEN ===== */
@@ -119,8 +131,8 @@
             cursor: pointer;
             transition: 0.2s;
             box-shadow: 0 6px 0 rgba(0, 0, 0, 0.3);
-            background: linear-gradient(135deg, #dca658, #b87c32);
-            color: #fff;
+            background: linear-gradient(135deg, #f5c842, #dca658);
+            color: #1a1a2e;
             letter-spacing: 1px;
         }
 
@@ -219,7 +231,7 @@
     <div id="game-wrapper">
         <div id="game-container">
 
-            <!-- ===== LOADING SCREEN ===== -->
+            <!-- ===== LOADING ===== -->
             <div id="loading-screen">
                 <div class="spinner"></div>
                 <h2>Nenek Moyang Lagi Natah...</h2>
@@ -230,10 +242,11 @@
             <audio id="a-click" src="click.mp3" preload="auto"></audio>
 
             <!-- =========================================================
-            SLIDE 1: wel1.jpg
+            SLIDE 1: wel1.jpg (Background Biru)
             ========================================================= -->
             <div id="slide1" class="slide active">
-                <img src="wel1.jpg" class="bg-img" alt="Selamat Datang di Etnomatematika">
+                <img src="wel1.jpg" class="bg-img" alt="Etnomatematika Nusantara">
+                <div class="overlay"></div>
                 <div class="slide-content">
                     <div class="slide-title">
                         SELAMAT DATANG DI<br>
@@ -248,7 +261,8 @@
             SLIDE 2: wel2.jpg
             ========================================================= -->
             <div id="slide2" class="slide">
-                <img src="wel2.jpg" class="bg-img" alt="Selamat Datang di Pelabuhan Etnomatematika">
+                <img src="wel2.jpg" class="bg-img" alt="Pelabuhan Etnomatematika">
+                <div class="overlay"></div>
                 <div class="slide-content">
                     <div class="slide-title" style="font-size: clamp(28px, 5vw, 48px);">
                         SELAMAT DATANG DI<br>
@@ -263,7 +277,7 @@
     </div>
 
     <script>
-        // ===== RESIZE GAME =====
+        // ===== RESIZE =====
         function resizeGame() {
             const game = document.getElementById('game-container');
             const container = document.getElementById('game-wrapper');
@@ -279,11 +293,10 @@
         window.addEventListener('resize', resizeGame);
         window.addEventListener('load', function() {
             resizeGame();
-            // sembunyikan loading
             document.getElementById('loading-screen').style.display = 'none';
         });
 
-        // ===== FUNGSI SUARA =====
+        // ===== SUARA =====
         function playClick() {
             try {
                 const audio = document.getElementById('a-click');
@@ -295,32 +308,24 @@
         // ===== PINDAH SLIDE =====
         function goToSlide(slideNum) {
             playClick();
-
-            // Tampilkan loading
             const loader = document.getElementById('loading-screen');
             loader.style.display = 'flex';
 
             setTimeout(function() {
-                // Sembunyikan semua slide
                 document.querySelectorAll('.slide').forEach(function(s) {
                     s.classList.remove('active');
                 });
-
-                // Tampilkan slide target
                 const target = document.getElementById('slide' + slideNum);
                 if (target) target.classList.add('active');
-
                 loader.style.display = 'none';
             }, 500);
         }
 
-        // ===== LANJUT KE GAME UTAMA =====
+        // ===== LANJUT KE GAME =====
         function lanjutKeGame() {
             playClick();
-            // Redirect ke halaman utama game (index.html)
-            // atau ganti dengan file game utama-mu
+            // Ganti 'index.html' dengan file game utama-mu
             window.location.href = 'index.html';
-            // Alternatif: window.location.href = 'game-full.html';
         }
 
         // ===== KEYBOARD =====
@@ -336,7 +341,6 @@
             }
         });
 
-        // ===== TOMBOL NAVIGASI DI LUAR =====
         console.log('✅ Etnomatematika Nusantara — wel1.jpg & wel2.jpg siap!');
         console.log('📸 Pastikan file wel1.jpg dan wel2.jpg ada di folder yang sama.');
     </script>
