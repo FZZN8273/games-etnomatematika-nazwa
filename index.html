@@ -1,582 +1,570 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>Game Petualangan · Etnomatematika Nusantara</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Game Etnomatematika Nusantara</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Sen:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
         body {
-            font-family: 'Inter', sans-serif;
-            background: #1a1a2e;
-            color: #fff;
-            min-height: 100vh;
-            overflow: hidden;
-            user-select: none;
+            background-color: #1a0f08; display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; font-family: 'Sen', sans-serif; overflow: hidden; margin: 0;
         }
 
-        /* ============================================================
-           SLIDE WRAPPER
-           ============================================================ */
-        .slide-container {
-            position: fixed;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
+        #desktop-lock {
+            display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #2c1e12; color: #fff; z-index: 10000;
+            flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px;
+        }
+        #desktop-lock h1 { font-family: 'Poppins', sans-serif; color: #dca658; font-size: 30px; margin-bottom: 15px; }
+        #desktop-lock p { font-size: 18px; max-width: 600px; margin-bottom: 20px; line-height: 1.5; }
+        .hint-box { border: 2px dashed #ffeb3b; color: #ffeb3b; padding: 15px; border-radius: 10px; font-weight: bold; font-size: 16px; margin-bottom: 20px; }
+        .btn-confirm {
+            padding: 15px 30px; border-radius: 50px; border: 4px solid #fff; cursor: pointer; 
+            font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 18px; 
+            background: #4CAF50; color: #fff; box-shadow: 0 6px 0 #1b5e20; text-transform: uppercase;
         }
 
-        .slide {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-            padding: 30px 20px;
+        #game-wrapper { display: none; width: 100vw; height: 100vh; justify-content: center; align-items: center; }
+        #game-container {
+            width: 900px; height: 600px; position: relative;
+            background-color: #fcf9ee; border: 10px solid #4a2e1b; border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8); overflow: hidden;
+            transform-origin: center center;
         }
 
-        .slide.active {
-            opacity: 1;
-            visibility: visible;
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; z-index: 1; }
+        .bg-img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; }
+        .bg-dim { filter: brightness(0.4) contrast(1.1); }
+
+        /* --- UI GLOBAL --- */
+        .bottom-panel {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 110px; 
+            background: linear-gradient(to top, #4a2e1b, #6b442a); border-top: 5px solid #dca658; 
+            display: flex; justify-content: center; align-items: center; z-index: 50;
+        }
+        .btn-start {
+            width: 750px; height: 75px; background: linear-gradient(135deg, #dca658, #b87c32); 
+            color: #fff; border: 4px solid #fff; font-size: 28px; font-family: 'Poppins', sans-serif; 
+            font-weight: 900; letter-spacing: 3px; border-radius: 15px; cursor: pointer; box-shadow: 0 6px 0 #7c5333;
         }
 
-        /* ===== OVERLAY GELAP ===== */
-        .slide .overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.20);
-            z-index: 1;
+        /* --- TOMBOL MUSIK ON/OFF --- */
+        .btn-music-toggle {
+            position: absolute; top: 15px; left: 15px; z-index: 9998;
+            padding: 8px 15px; border-radius: 20px; border: 3px solid #dca658;
+            background: #4a2e1b; color: #fff; cursor: pointer; box-shadow: 0 4px 0 #2c1e12;
+            font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 16px;
+            transition: 0.2s; line-height: 1; pointer-events: auto;
+        }
+        .btn-music-toggle:active { transform: translateY(4px); box-shadow: none; }
+        .btn-music-toggle.muted { background: #7f5d46; border-color: #7f5d46; opacity: 0.8; }
+        .btn-music-toggle.hidden { display: none !important; }
+
+        /* ==========================================================
+           KONTEN SLIDE
+           ========================================================== */
+        .slide-content {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 40px 60px;
         }
 
-        /* ===== KONTEN SLIDE ===== */
-        .slide .content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 800px;
-            width: 100%;
-            padding: 20px;
-        }
-
-        .slide .title {
-            font-size: clamp(1.8rem, 10vw, 5rem);
-            font-weight: 800;
-            color: #fff;
-            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), 0 2px 10px rgba(0, 0, 0, 0.3);
-            line-height: 1.15;
-            letter-spacing: 1px;
+        .slide-title {
+            font-family: 'Poppins', sans-serif; font-weight: 900;
+            color: #fff; text-shadow: 0 4px 30px rgba(0,0,0,0.8);
+            font-size: clamp(28px, 5vw, 48px);
+            text-align: center; line-height: 1.2;
             margin-bottom: 10px;
         }
+        .slide-title .highlight { color: #f5c842; }
 
-        .slide .title .highlight {
-            color: #f5c842;
+        .slide-sub {
+            font-family: 'Sen', sans-serif; font-weight: 700;
+            color: rgba(255,255,255,0.9); text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+            font-size: clamp(16px, 2.5vw, 24px);
+            text-align: center; margin-bottom: 16px;
         }
 
-        .slide .subtitle {
-            font-size: clamp(1rem, 4vw, 2rem);
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.85);
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+        .slide-desc {
+            font-family: 'Sen', sans-serif; font-weight: 400;
+            color: rgba(255,255,255,0.85); text-shadow: 0 2px 16px rgba(0,0,0,0.6);
+            font-size: clamp(14px, 1.8vw, 20px);
+            text-align: center; max-width: 600px; line-height: 1.6;
             margin-bottom: 20px;
-            letter-spacing: 1px;
         }
 
-        .slide .desc {
-            font-size: clamp(0.85rem, 2vw, 1.2rem);
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.80);
-            text-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
-            max-width: 600px;
-            margin: 0 auto 24px;
-            line-height: 1.6;
+        .choice-group {
+            display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;
+            margin-top: 8px;
         }
 
-        /* ===== TOMBOL ===== */
-        .btn-slide {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 40px;
-            background: linear-gradient(135deg, #f5c842, #e6a817);
-            color: #1a1a2e;
-            font-weight: 800;
-            font-size: clamp(1rem, 2.5vw, 1.4rem);
-            border: none;
-            border-radius: 60px;
-            cursor: pointer;
-            transition: 0.3s ease;
-            box-shadow: 0 8px 32px rgba(245, 200, 66, 0.30);
-            letter-spacing: 1px;
+        .btn-choice {
+            padding: 12px 32px; border-radius: 50px; border: 4px solid #fff;
+            font-family: 'Poppins', sans-serif; font-weight: 900;
+            font-size: clamp(14px, 1.5vw, 18px);
+            cursor: pointer; transition: 0.2s;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.3);
+            color: #fff;
+        }
+        .btn-choice:active { transform: translateY(4px); box-shadow: none; }
+        .btn-choice.good { background: linear-gradient(135deg, #3d8b40, #2a5c2d); }
+        .btn-choice.bad { background: linear-gradient(135deg, #d48c8c, #a14242); }
+
+        .btn-nav {
+            padding: 12px 32px; border-radius: 50px; border: 4px solid #fff;
+            font-family: 'Poppins', sans-serif; font-weight: 900;
+            font-size: clamp(14px, 1.5vw, 18px);
+            cursor: pointer; transition: 0.2s;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #dca658, #b87c32);
+            color: #fff;
+        }
+        .btn-nav:active { transform: translateY(4px); box-shadow: none; }
+
+        .result-badge {
+            font-size: clamp(40px, 6vw, 64px);
+            margin-bottom: 6px;
+        }
+        .result-stars {
+            font-size: clamp(30px, 4vw, 48px);
+            color: #f5c842;
+            margin: 6px 0;
         }
 
-        .btn-slide:hover {
-            transform: scale(1.05);
-            box-shadow: 0 12px 48px rgba(245, 200, 66, 0.45);
-        }
-
-        .btn-slide:active {
-            transform: scale(0.95);
-        }
-
-        .btn-slide i {
-            font-size: 1.1rem;
-        }
-
-        /* ===== INDIKATOR SLIDE ===== */
+        /* ==========================================================
+           INDIKATOR SLIDE
+           ========================================================== */
         .slide-indicators {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            display: flex;
-            gap: 10px;
-            background: rgba(0, 0, 0, 0.30);
-            backdrop-filter: blur(8px);
-            padding: 8px 16px;
-            border-radius: 40px;
+            position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%);
+            z-index: 60; display: flex; gap: 10px;
+            background: rgba(0,0,0,0.3); backdrop-filter: blur(4px);
+            padding: 6px 14px; border-radius: 40px;
         }
-
         .slide-indicators .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.25);
-            transition: 0.3s ease;
-            cursor: pointer;
+            width: 10px; height: 10px; border-radius: 50%;
+            background: rgba(255,255,255,0.2); transition: 0.3s;
+            cursor: pointer; border: none;
         }
-
         .slide-indicators .dot.active {
-            background: #f5c842;
-            width: 24px;
-            border-radius: 10px;
+            background: #f5c842; width: 24px; border-radius: 10px;
         }
 
-        .slide-indicators .dot:hover {
-            background: rgba(255, 255, 255, 0.5);
+        /* ==========================================================
+           LOADING SCREEN
+           ========================================================== */
+        #loading-screen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(244, 230, 208, 0.95); 
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9999; font-family: 'Poppins', sans-serif; border: 6px solid #dca658;
         }
-
-        /* ===== CREDIT ===== */
-        .credit {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            z-index: 10;
-            font-size: 0.6rem;
-            color: rgba(255, 255, 255, 0.20);
-            letter-spacing: 1px;
-            pointer-events: none;
+        #loading-screen .spinner {
+            width: 80px; height: 80px; border: 10px solid #dca658; border-top: 10px solid #6b442a;
+            border-radius: 50%; animation: spin 1s linear infinite; box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            margin-bottom: 20px; position: relative;
         }
-
-        @media (max-width: 480px) {
-            .btn-slide {
-                padding: 12px 28px;
-                font-size: 0.9rem;
-            }
-            .slide-indicators {
-                bottom: 20px;
-                padding: 6px 12px;
-                gap: 6px;
-            }
-            .slide-indicators .dot {
-                width: 8px;
-                height: 8px;
-            }
-            .slide-indicators .dot.active {
-                width: 18px;
-            }
-            .credit {
-                bottom: 70px;
-                right: 12px;
-                font-size: 0.5rem;
-            }
+        #loading-screen .spinner::after {
+            content: "✦"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 24px; color: #6b442a;
         }
+        #loading-screen h2 { font-size: 28px; font-weight: 900; color: #4a2e1b; margin-bottom: 5px; }
+        #loading-screen p { font-size: 16px; color: #6b442a; font-weight: 700; font-style: italic; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes popUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <!-- ============================================================
-    SLIDE CONTAINER
-    ============================================================ -->
-    <div class="slide-container" id="slideContainer">
-
-        <!-- ===== SLIDE 1: wel1.jpg ===== -->
-        <div class="slide active" id="slide1" style="background-image: url('wel1.jpg');">
-            <div class="overlay"></div>
-            <div class="content">
-                <div class="title">
-                    SELAMAT DATANG DI<br />
-                    <span class="highlight">ETNOMATEMATIKA NUSANTARA</span>
-                </div>
-                <div class="subtitle">Warisan Budaya · Fondasi Teknologi</div>
-                <div class="desc">
-                    Jelajahi 3 skenario petualangan laut.<br />
-                    Temukan koneksi budaya Nusantara dengan teknologi modern.
-                </div>
-                <button class="btn-slide" onclick="goToSlide(2)">
-                    <i class="fas fa-rocket"></i> Mulai Petualangan
-                </button>
-            </div>
-        </div>
-
-        <!-- ===== SLIDE 2: wel2.jpg ===== -->
-        <div class="slide" id="slide2" style="background-image: url('wel2.jpg');">
-            <div class="overlay"></div>
-            <div class="content">
-                <div class="title" style="font-size:clamp(1.6rem, 8vw, 4rem);">
-                    <span class="highlight">🌊</span> Siap Berlayar?
-                </div>
-                <div class="subtitle">3 Skenario Petualangan Laut</div>
-                <div class="desc">
-                    <strong>1. Membaca Bintang, Menentukan Arah</strong> — Navigasi astronomi → GPS modern<br />
-                    <strong>2. Membaca Pasang, Menentukan Waktu</strong> — Kalender pasang surut → Prediksi cuaca<br />
-                    <strong>3. Membangun Perahu, Menaklukkan Laut</strong> — Geometri perahu → Rekayasa kapal
-                </div>
-                <button class="btn-slide" onclick="goToSlide(3)">
-                    <i class="fas fa-ship"></i> Lanjutkan
-                </button>
-            </div>
-        </div>
-
-        <!-- ===== SLIDE 3: wel3.jpg ===== -->
-        <div class="slide" id="slide3" style="background-image: url('wel3.jpg');">
-            <div class="overlay"></div>
-            <div class="content">
-                <div class="title" style="font-size:clamp(1.6rem, 8vw, 4rem);">
-                    <span class="highlight">🧭</span> Aturan Main
-                </div>
-                <div class="desc" style="max-width:500px;text-align:left;margin:0 auto 20px;line-height:2;">
-                    ✅ Baca cerita dengan saksama<br />
-                    ✅ Pilih jawaban terbaik<br />
-                    ✅ Benar = +1 Bintang<br />
-                    ❌ Salah = 0 Bintang (belajar dari konsekuensi)<br />
-                    ⭐ Kumpulkan 3 bintang!
-                </div>
-                <button class="btn-slide" onclick="goToSlide(4)">
-                    <i class="fas fa-play"></i> Mulai Game
-                </button>
-            </div>
-        </div>
-
-        <!-- ===== SLIDE 4: game mulai (wel4.jpg) ===== -->
-        <div class="slide" id="slide4" style="background-image: url('wel4.jpg');">
-            <div class="overlay"></div>
-            <div class="content">
-                <div class="title" style="font-size:clamp(1.8rem, 9vw, 4.5rem);">
-                    SKENARIO 1<br />
-                    <span class="highlight">Membaca Bintang</span>
-                </div>
-                <div class="subtitle">Menentukan Arah</div>
-                <div class="desc">
-                    Kamu adalah navigator kapal di masa lalu.<br />
-                    Bintang utara tertutup awan. Bagaimana caramu menentukan arah?
-                </div>
-                <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px;">
-                    <button class="btn-slide" style="background:linear-gradient(135deg,#3d8b40,#2a5c2d);box-shadow:0 8px 32px rgba(61,139,64,0.25);" onclick="pilih('good',1)">
-                        ✅ Gunakan rasi bintang lain
-                    </button>
-                    <button class="btn-slide" style="background:linear-gradient(135deg,#d48c8c,#a14242);box-shadow:0 8px 32px rgba(212,140,140,0.25);" onclick="pilih('bad',1)">
-                        ❌ Ikuti arus laut
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== SLIDE 5: hasil skenario 1 ===== -->
-        <div class="slide" id="slide5" style="background-image: url('wel5.jpg');">
-            <div class="overlay"></div>
-            <div class="content">
-                <div class="title" style="font-size:clamp(1.6rem, 8vw, 4rem);">
-                    <span class="highlight" id="hasilIcon1">✅</span>
-                    <span id="hasilStatus1">BERHASIL!</span>
-                </div>
-                <div class="desc" id="hasilText1">
-                    Kamu berhasil membaca langit dan menentukan arah dengan tepat.
-                </div>
-                <div style="font-size:2rem;color:#f5c842;margin:8px 0;" id="bintang1">⭐ +1</div>
-                <button class="btn-slide" onclick="goToSlide(6)">
-                    <i class="fas fa-arrow-right"></i> Skenario 2
-                </button>
-            </div>
-        </div>
-
-        <!-- ===== SLIDE 6: skenario 2 ===== -->
-        <div class="slide" id="slide6" style="background-image: url('wel6.jpg');">
-            <div class="overlay"></div>
-            <div class="content">
-                <div class="title" style="font-size:clamp(1.8rem, 9vw, 4.5rem);">
-                    SKENARIO 2<br />
-                    <span class="highlight">Membaca Pasang</span>
-                </div>
-                <div class="subtitle">Menentukan Waktu</div>
-                <div class="desc">
-                    Kamu adalah nelayan. Cuaca mendadak berubah, ombak tinggi.<br />
-                    Apa yang akan kamu lakukan?
-                </div>
-                <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px;">
-                    <button class="btn-slide" style="background:linear-gradient(135deg,#3d8b40,#2a5c2d);box-shadow:0 8px 32px rgba(61,139,64,0.25);" onclick="pilih('good',2)">
-                        ✅ Baca pola pasang surut
-                    </button>
-                    <button class="btn-slide" style="background:linear-gradient(135deg,#d48c8c,#a14242);box-shadow:0 8px 32px rgba(212,140,140,0.25);" onclick="pilih('bad',2)">
-                        ❌ Nekat melaut
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== SLIDE 7: hasil skenario 2 ===== -->
-        <div class="slide" id="slide7" style="background-image: url('wel7.jpg');">
-            <div class="overlay"></div>
-            <div class="content">
-                <div class="title" style="font-size:clamp(1.6rem, 8vw, 4rem);">
-                    <span class="highlight" id="hasilIcon2">✅</span>
-                    <span id="hasilStatus2">BERHASIL!</span>
-                </div>
-                <div class="desc" id="hasilText2">
-                    Kamu membaca pola pasang surut dan memilih waktu terbaik.
-                </div>
-                <div style="font-size:2rem;color:#f5c842;margin:8px 0;" id="bintang2">⭐ +1</div>
-                <button class="btn-slide" onclick="goToSlide(8)">
-                    <i class="fas fa-arrow-right"></i> Skenario 3
-                </button>
-            </div>
-        </div>
-
-        <!-- ===== SLIDE 8: skenario 3 ===== -->
-        <div class="slide" id="slide8" style="background-image: url('wel8.jpg');">
-            <div class="overlay"></div>
-            <div class="content">
-                <div class="title" style="font-size:clamp(1.8rem, 9vw, 4.5rem);">
-                    SKENARIO 3<br />
-                    <span class="highlight">Membangun Perahu</span>
-                </div>
-                <div class="subtitle">Menaklukkan Laut</div>
-                <div class="desc">
-                    Kamu perajin perahu. Kayu terbatas. Perahu lebar (stabil) atau kecil (cepat)?<br />
-                    Nelayan minta perahu yang stabil di ombak besar.
-                </div>
-                <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px;">
-                    <button class="btn-slide" style="background:linear-gradient(135deg,#3d8b40,#2a5c2d);box-shadow:0 8px 32px rgba(61,139,64,0.25);" onclick="pilih('good',3)">
-                        ✅ Perahu lebar = stabil
-                    </button>
-                    <button class="btn-slide" style="background:linear-gradient(135deg,#d48c8c,#a14242);box-shadow:0 8px 32px rgba(212,140,140,0.25);" onclick="pilih('bad',3)">
-                        ❌ Perahu kecil = cepat
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== SLIDE 9: hasil skenario 3 ===== -->
-        <div class="slide" id="slide9" style="background-image: url('wel9.jpg');">
-            <div class="overlay"></div>
-            <div class="content">
-                <div class="title" style="font-size:clamp(1.6rem, 8vw, 4rem);">
-                    <span class="highlight" id="hasilIcon3">✅</span>
-                    <span id="hasilStatus3">BERHASIL!</span>
-                </div>
-                <div class="desc" id="hasilText3">
-                    Perahu dengan geometri tepat memberikan stabilitas.
-                </div>
-                <div style="font-size:2rem;color:#f5c842;margin:8px 0;" id="bintang3">⭐ +1</div>
-                <button class="btn-slide" onclick="goToSlide(10)">
-                    <i class="fas fa-trophy"></i> Lihat Hasil Akhir
-                </button>
-            </div>
-        </div>
-
-        <!-- ===== SLIDE 10: FINISH ===== -->
-        <div class="slide" id="slide10" style="background-image: url('wel10.jpg');">
-            <div class="overlay"></div>
-            <div class="content">
-                <div class="title" style="font-size:clamp(2rem, 10vw, 5rem);">
-                    🏆 <span class="highlight">SELESAI!</span>
-                </div>
-                <div class="subtitle">Total Bintang Kamu</div>
-                <div style="font-size:4rem;color:#f5c842;margin:12px 0;" id="totalBintangAkhir">⭐ 0</div>
-                <div class="desc" id="pesanAkhir">
-                    "Teknologi modern berakar dari budaya Nusantara."
-                </div>
-                <button class="btn-slide" onclick="resetGame()">
-                    <i class="fas fa-redo"></i> Main Lagi
-                </button>
-            </div>
-        </div>
-
+    <div id="desktop-lock">
+        <h1>⚠️ MODE DESKTOP DIWAJIBKAN ⚠️</h1>
+        <p>Agar teks dan gambar pas pada tempatnya, aktifkan Mode Situs Desktop di browsermu.</p>
+        <div class="hint-box">CARA: Klik ( ⋮ ) di pojok browser -> Centang "Situs Desktop"</div>
+        <button class="btn-confirm" onclick="cekDesktopManual()">✅ SAYA SUDAH CENTANG SITUS DESKTOP</button>
     </div>
 
-    <!-- ===== INDIKATOR SLIDE ===== -->
-    <div class="slide-indicators" id="indicators">
-        <!-- di-generate oleh JS -->
+    <div id="game-wrapper">
+        <div id="game-container">
+
+            <!-- ===== AUDIO ===== -->
+            <audio id="a-click" src="click.mp3" preload="auto"></audio>
+            <audio id="a-correct" src="correct.mp3" preload="auto"></audio>
+            <audio id="a-wrong" src="wrong.mp3" preload="auto"></audio>
+            <audio id="a-gamelan" src="gamelan.mp3" preload="auto" loop></audio>
+
+            <button class="btn-music-toggle" id="btnMusic" onclick="toggleMusic()">🎵 ON</button>
+
+            <!-- ===== LOADING ===== -->
+            <div id="loading-screen">
+                <div class="spinner"></div>
+                <h2>Nenek Moyang Lagi Natah...</h2>
+                <p>Jangan kemana-mana, bentar lagi wayangnya main!</p>
+            </div>
+
+            <!-- ===== SLIDE 1: WEL1 ===== -->
+            <div id="slide1" class="slide" style="display: block;">
+                <img src="wel1.jpg" class="bg-img">
+                <div class="slide-content">
+                    <div class="slide-title">
+                        SELAMAT DATANG DI<br>
+                        <span class="highlight">ETNOMATEMATIKA NUSANTARA</span>
+                    </div>
+                    <div class="slide-sub">Warisan Budaya · Fondasi Teknologi</div>
+                    <div class="slide-desc">
+                        Jelajahi 3 skenario petualangan laut.<br>
+                        Temukan koneksi budaya Nusantara dengan teknologi modern.
+                    </div>
+                    <button class="btn-nav" onclick="changeSlide('slide2')">🚀 Mulai Petualangan</button>
+                </div>
+            </div>
+
+            <!-- ===== SLIDE 2: WEL2 (3 skenario) ===== -->
+            <div id="slide2" class="slide">
+                <img src="wel2.jpg" class="bg-img">
+                <div class="slide-content">
+                    <div class="slide-title" style="font-size:clamp(24px,4vw,38px);">
+                        <span class="highlight">🌊</span> Siap Berlayar?
+                    </div>
+                    <div class="slide-sub">3 Skenario Petualangan Laut</div>
+                    <div class="slide-desc" style="line-height:2.2;">
+                        <strong>1.</strong> Membaca Bintang → GPS<br>
+                        <strong>2.</strong> Membaca Pasang → Prediksi Cuaca<br>
+                        <strong>3.</strong> Membangun Perahu → Rekayasa Kapal
+                    </div>
+                    <button class="btn-nav" onclick="changeSlide('slide3')">⏩ Lanjut</button>
+                </div>
+            </div>
+
+            <!-- ===== SLIDE 3: WEL3 (aturan) ===== -->
+            <div id="slide3" class="slide">
+                <img src="wel3.jpg" class="bg-img">
+                <div class="slide-content">
+                    <div class="slide-title" style="font-size:clamp(24px,4vw,38px);">
+                        <span class="highlight">🧭</span> Aturan Main
+                    </div>
+                    <div class="slide-desc" style="text-align:left;max-width:480px;line-height:2.4;">
+                        ✅ Baca cerita dengan saksama<br>
+                        ✅ Pilih jawaban terbaik<br>
+                        ✅ Benar = +1 Bintang<br>
+                        ❌ Salah = belajar dari konsekuensi<br>
+                        ⭐ Kumpulkan 3 bintang!
+                    </div>
+                    <button class="btn-nav" onclick="changeSlide('slide4')">🎮 Mulai Game</button>
+                </div>
+            </div>
+
+            <!-- ===== SLIDE 4: SKENARIO 1 ===== -->
+            <div id="slide4" class="slide">
+                <img src="wel4.jpg" class="bg-img">
+                <div class="slide-content">
+                    <div class="slide-title" style="font-size:clamp(22px,3.5vw,34px);">
+                        SKENARIO 1<br>
+                        <span class="highlight">Membaca Bintang</span>
+                    </div>
+                    <div class="slide-sub">Menentukan Arah</div>
+                    <div class="slide-desc">
+                        Kamu navigator kapal. Bintang utara tertutup awan.<br>
+                        Bagaimana caramu menentukan arah?
+                    </div>
+                    <div class="choice-group">
+                        <button class="btn-choice good" onclick="pilih('good',1)">✅ Gunakan rasi bintang lain</button>
+                        <button class="btn-choice bad" onclick="pilih('bad',1)">❌ Ikuti arus laut</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== SLIDE 5: HASIL 1 ===== -->
+            <div id="slide5" class="slide">
+                <img src="wel5.jpg" class="bg-img">
+                <div class="slide-content">
+                    <div class="result-badge" id="hasilIcon1">✅</div>
+                    <div class="slide-title" style="font-size:clamp(28px,4vw,42px);" id="hasilStatus1">BERHASIL!</div>
+                    <div class="slide-desc" id="hasilText1">Kamu berhasil membaca langit dan menentukan arah dengan tepat.</div>
+                    <div class="result-stars" id="bintang1">⭐ +1</div>
+                    <button class="btn-nav" onclick="changeSlide('slide6')">⏩ Skenario 2</button>
+                </div>
+            </div>
+
+            <!-- ===== SLIDE 6: SKENARIO 2 ===== -->
+            <div id="slide6" class="slide">
+                <img src="wel6.jpg" class="bg-img">
+                <div class="slide-content">
+                    <div class="slide-title" style="font-size:clamp(22px,3.5vw,34px);">
+                        SKENARIO 2<br>
+                        <span class="highlight">Membaca Pasang</span>
+                    </div>
+                    <div class="slide-sub">Menentukan Waktu</div>
+                    <div class="slide-desc">
+                        Kamu nelayan. Cuaca berubah, ombak tinggi.<br>
+                        Apa yang akan kamu lakukan?
+                    </div>
+                    <div class="choice-group">
+                        <button class="btn-choice good" onclick="pilih('good',2)">✅ Baca pola pasang surut</button>
+                        <button class="btn-choice bad" onclick="pilih('bad',2)">❌ Nekat melaut</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== SLIDE 7: HASIL 2 ===== -->
+            <div id="slide7" class="slide">
+                <img src="wel7.jpg" class="bg-img">
+                <div class="slide-content">
+                    <div class="result-badge" id="hasilIcon2">✅</div>
+                    <div class="slide-title" style="font-size:clamp(28px,4vw,42px);" id="hasilStatus2">BERHASIL!</div>
+                    <div class="slide-desc" id="hasilText2">Kamu membaca pola pasang surut dan memilih waktu terbaik.</div>
+                    <div class="result-stars" id="bintang2">⭐ +1</div>
+                    <button class="btn-nav" onclick="changeSlide('slide8')">⏩ Skenario 3</button>
+                </div>
+            </div>
+
+            <!-- ===== SLIDE 8: SKENARIO 3 ===== -->
+            <div id="slide8" class="slide">
+                <img src="wel8.jpg" class="bg-img">
+                <div class="slide-content">
+                    <div class="slide-title" style="font-size:clamp(22px,3.5vw,34px);">
+                        SKENARIO 3<br>
+                        <span class="highlight">Membangun Perahu</span>
+                    </div>
+                    <div class="slide-sub">Menaklukkan Laut</div>
+                    <div class="slide-desc">
+                        Kamu perajin perahu. Kayu terbatas.<br>
+                        Perahu lebar (stabil) atau kecil (cepat)?
+                    </div>
+                    <div class="choice-group">
+                        <button class="btn-choice good" onclick="pilih('good',3)">✅ Perahu lebar = stabil</button>
+                        <button class="btn-choice bad" onclick="pilih('bad',3)">❌ Perahu kecil = cepat</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== SLIDE 9: HASIL 3 ===== -->
+            <div id="slide9" class="slide">
+                <img src="wel9.jpg" class="bg-img">
+                <div class="slide-content">
+                    <div class="result-badge" id="hasilIcon3">✅</div>
+                    <div class="slide-title" style="font-size:clamp(28px,4vw,42px);" id="hasilStatus3">BERHASIL!</div>
+                    <div class="slide-desc" id="hasilText3">Perahu dengan geometri tepat memberikan stabilitas.</div>
+                    <div class="result-stars" id="bintang3">⭐ +1</div>
+                    <button class="btn-nav" onclick="changeSlide('slide10')">🏆 Lihat Hasil</button>
+                </div>
+            </div>
+
+            <!-- ===== SLIDE 10: FINISH ===== -->
+            <div id="slide10" class="slide">
+                <img src="wel10.jpg" class="bg-img">
+                <div class="slide-content">
+                    <div class="slide-title" style="font-size:clamp(32px,5vw,56px);">
+                        🏆 <span class="highlight">SELESAI!</span>
+                    </div>
+                    <div class="slide-sub">Total Bintang Kamu</div>
+                    <div class="result-stars" id="totalBintangAkhir" style="font-size:clamp(40px,6vw,64px);">⭐ 0</div>
+                    <div class="slide-desc" id="pesanAkhir">"Teknologi modern berakar dari budaya Nusantara."</div>
+                    <button class="btn-nav" onclick="resetGame()">🔄 Main Lagi</button>
+                </div>
+            </div>
+
+            <!-- ===== INDIKATOR ===== -->
+            <div class="slide-indicators" id="indicators"></div>
+
+        </div>
     </div>
 
-    <!-- ===== CREDIT ===== -->
-    <div class="credit">LKIP 2026 · Nazwa Ananda Devina</div>
-
-    <!-- ============================================================
-    JAVASCRIPT
-    ============================================================ -->
     <script>
-        (function() {
-            'use strict';
+        // ===== RESIZE =====
+        function resizeGame() {
+            const game = document.getElementById('game-container');
+            const scaleX = window.innerWidth / 920;
+            const scaleY = window.innerHeight / 620;
+            let scale = Math.min(scaleX, scaleY);
+            if(scale > 1) scale = 1;
+            game.style.transform = `scale(${scale})`;
+        }
 
-            const totalSlides = 10;
-            let currentSlide = 1;
-            let bintang = { 1: 0, 2: 0, 3: 0 };
-            let sudahPilih = { 1: false, 2: false, 3: false };
-
-            const slideElements = {};
-            for (let i = 1; i <= totalSlides; i++) {
-                slideElements[i] = document.getElementById('slide' + i);
+        function cekLayar() {
+            if (window.innerWidth < 800) {
+                document.getElementById('desktop-lock').style.display = 'flex';
+                document.getElementById('game-wrapper').style.display = 'none';
+            } else {
+                document.getElementById('desktop-lock').style.display = 'none';
+                document.getElementById('game-wrapper').style.display = 'flex';
+                resizeGame();
             }
+        }
 
-            // ===== GENERATE INDICATOR =====
-            const indicators = document.getElementById('indicators');
-            for (let i = 1; i <= totalSlides; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'dot' + (i === 1 ? ' active' : '');
-                dot.dataset.slide = i;
-                dot.addEventListener('click', function() {
-                    goToSlide(parseInt(this.dataset.slide));
-                });
-                indicators.appendChild(dot);
+        window.onload = cekLayar;
+        window.onresize = cekLayar;
+        function cekDesktopManual() { document.getElementById('desktop-lock').style.display = 'none'; document.getElementById('game-wrapper').style.display = 'flex'; resizeGame(); }
+
+        // ===== AUDIO =====
+        const sfx = {
+            click: document.getElementById('a-click'),
+            correct: document.getElementById('a-correct'),
+            wrong: document.getElementById('a-wrong'),
+            gamelan: document.getElementById('a-gamelan')
+        };
+
+        let isMusicOn = true;
+        let isLoading = false;
+
+        function playSfx(type) {
+            if(sfx[type]) {
+                sfx[type].currentTime = 0;
+                sfx[type].play().catch(e=>e);
             }
+        }
 
-            function updateIndicators() {
-                const dots = indicators.querySelectorAll('.dot');
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', (index + 1) === currentSlide);
-                });
+        function toggleMusic() {
+            const btn = document.getElementById('btnMusic');
+            isMusicOn = !isMusicOn;
+            if(isMusicOn) {
+                btn.innerText = "🎵 ON";
+                btn.classList.remove('muted');
+                sfx.gamelan.play().catch(e=>e);
+            } else {
+                btn.innerText = "🔇 OFF";
+                btn.classList.add('muted');
+                sfx.gamelan.pause();
             }
+        }
 
-            // ===== GO TO SLIDE =====
-            window.goToSlide = function(slideNum) {
-                if (slideNum < 1 || slideNum > totalSlides) return;
+        // ===== LOADING =====
+        function showLoading(callback, duration = 600) {
+            if(isLoading) return;
+            isLoading = true;
+            const loader = document.getElementById('loading-screen');
+            loader.style.display = 'flex';
+            setTimeout(() => {
+                loader.style.display = 'none';
+                isLoading = false;
+                if (typeof callback === 'function') callback();
+            }, duration);
+        }
 
-                // Sembunyikan semua
-                for (let i = 1; i <= totalSlides; i++) {
-                    slideElements[i].classList.remove('active');
-                }
+        // ===== SLIDE NAVIGASI =====
+        let currentSlide = 1;
+        const totalSlides = 10;
 
-                // Tampilkan target
-                slideElements[slideNum].classList.add('active');
-                currentSlide = slideNum;
+        function changeSlide(id) {
+            const slideNum = parseInt(id.replace('slide',''));
+            if(slideNum >= 1 && slideNum <= totalSlides) currentSlide = slideNum;
+
+            playSfx('click');
+            showLoading(() => {
+                document.querySelectorAll('.slide').forEach(s => s.style.display = 'none');
+                document.getElementById(id).style.display = 'block';
                 updateIndicators();
+            }, 400);
+        }
 
-                // Scroll ke atas
-                window.scrollTo(0, 0);
-            };
+        // ===== INDIKATOR =====
+        const indicators = document.getElementById('indicators');
+        for (let i = 1; i <= totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'dot' + (i === 1 ? ' active' : '');
+            dot.dataset.slide = i;
+            dot.addEventListener('click', () => changeSlide('slide' + i));
+            indicators.appendChild(dot);
+        }
 
-            // ===== PILIH JAWABAN =====
-            window.pilih = function(choice, scenario) {
-                if (sudahPilih[scenario]) return;
+        function updateIndicators() {
+            const dots = indicators.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', (index + 1) === currentSlide);
+            });
+        }
 
-                const isGood = (choice === 'good');
-                const starEarned = isGood ? 1 : 0;
-                bintang[scenario] = starEarned;
-                sudahPilih[scenario] = true;
+        // ===== GAME STATE =====
+        let bintang = { 1: 0, 2: 0, 3: 0 };
+        let sudahPilih = { 1: false, 2: false, 3: false };
 
-                // Update hasil di slide hasil (5,7,9)
-                const resultSlide = scenario === 1 ? 5 : scenario === 2 ? 7 : 9;
-                const iconEl = document.getElementById('hasilIcon' + scenario);
-                const statusEl = document.getElementById('hasilStatus' + scenario);
-                const textEl = document.getElementById('hasilText' + scenario);
-                const bintangEl = document.getElementById('bintang' + scenario);
+        function pilih(choice, scenario) {
+            if (sudahPilih[scenario]) return;
 
-                if (isGood) {
-                    iconEl.textContent = '✅';
-                    statusEl.textContent = 'BERHASIL!';
-                    statusEl.style.color = '#3d8b40';
-                    const msgs = {
-                        1: 'Kamu berhasil membaca langit dan menentukan arah dengan tepat. Seperti GPS modern, nenek moyang sudah menguasai navigasi.',
-                        2: 'Kamu membaca pola pasang surut dan memilih waktu terbaik. Ini sama dengan teknologi prediksi cuaca modern.',
-                        3: 'Perahu dengan geometri tepat memberikan stabilitas. Prinsip ini masih digunakan dalam rekayasa kapal modern.'
-                    };
-                    textEl.textContent = msgs[scenario] || 'Berhasil!';
-                    bintangEl.textContent = '⭐ +1';
-                    bintangEl.style.color = '#f5c842';
-                } else {
-                    iconEl.textContent = '❌';
-                    statusEl.textContent = 'BELAJAR LAGI';
-                    statusEl.style.color = '#d48c8c';
-                    const msgs = {
-                        1: 'Mengandalkan arus tanpa petunjuk langit membawa kapal tersesat. Navigasi membutuhkan pengetahuan, bukan keberuntungan.',
-                        2: 'Nekat melaut tanpa membaca alam berbahaya. Nenek moyang mengajarkan bahwa menghormati alam adalah kunci keselamatan.',
-                        3: 'Perahu kecil memang cepat tapi mudah terbalik. Stabilitas lebih penting untuk keselamatan di laut lepas.'
-                    };
-                    textEl.textContent = msgs[scenario] || 'Coba lagi!';
-                    bintangEl.textContent = '⭐ 0';
-                    bintangEl.style.color = '#888';
-                }
+            const isGood = (choice === 'good');
+            const star = isGood ? 1 : 0;
+            bintang[scenario] = star;
+            sudahPilih[scenario] = true;
 
-                // Update total di slide akhir
-                updateFinalResult();
+            const resultSlide = scenario === 1 ? 5 : scenario === 2 ? 7 : 9;
+            const iconEl = document.getElementById('hasilIcon' + scenario);
+            const statusEl = document.getElementById('hasilStatus' + scenario);
+            const textEl = document.getElementById('hasilText' + scenario);
+            const bintangEl = document.getElementById('bintang' + scenario);
 
-                // Pindah ke slide hasil
-                goToSlide(resultSlide);
-            };
-
-            // ===== UPDATE FINAL =====
-            function updateFinalResult() {
-                const total = bintang[1] + bintang[2] + bintang[3];
-                const el = document.getElementById('totalBintangAkhir');
-                const pesan = document.getElementById('pesanAkhir');
-                if (el) {
-                    el.textContent = '⭐ ' + total;
-                    if (total === 3) {
-                        el.style.color = '#f5c842';
-                        pesan.textContent = '🏆 Luar biasa! Kamu mengumpulkan 3 bintang! "Teknologi modern berakar dari budaya Nusantara."';
-                    } else if (total >= 1) {
-                        el.style.color = '#f5c842';
-                        pesan.textContent = 'Bagus! Teruslah belajar. "Setiap langkah adalah pelajaran berharga."';
-                    } else {
-                        el.style.color = '#888';
-                        pesan.textContent = 'Jangan menyerah! Coba lagi dan kumpulkan bintang. "Kesalahan adalah guru terbaik."';
-                    }
-                }
+            if (isGood) {
+                playSfx('correct');
+                iconEl.textContent = '✅';
+                statusEl.textContent = 'BERHASIL!';
+                statusEl.style.color = '#f5c842';
+                const msgs = {
+                    1: 'Kamu berhasil membaca langit dan menentukan arah dengan tepat. Seperti GPS modern, nenek moyang sudah menguasai navigasi.',
+                    2: 'Kamu membaca pola pasang surut dan memilih waktu terbaik. Ini sama dengan teknologi prediksi cuaca modern.',
+                    3: 'Perahu dengan geometri tepat memberikan stabilitas. Prinsip ini masih digunakan dalam rekayasa kapal modern.'
+                };
+                textEl.textContent = msgs[scenario] || 'Berhasil!';
+                bintangEl.textContent = '⭐ +1';
+                bintangEl.style.color = '#f5c842';
+            } else {
+                playSfx('wrong');
+                iconEl.textContent = '❌';
+                statusEl.textContent = 'BELAJAR LAGI';
+                statusEl.style.color = '#d48c8c';
+                const msgs = {
+                    1: 'Mengandalkan arus tanpa petunjuk langit membawa kapal tersesat. Navigasi membutuhkan pengetahuan, bukan keberuntungan.',
+                    2: 'Nekat melaut tanpa membaca alam berbahaya. Nenek moyang mengajarkan bahwa menghormati alam adalah kunci keselamatan.',
+                    3: 'Perahu kecil memang cepat tapi mudah terbalik. Stabilitas lebih penting untuk keselamatan di laut lepas.'
+                };
+                textEl.textContent = msgs[scenario] || 'Coba lagi!';
+                bintangEl.textContent = '⭐ 0';
+                bintangEl.style.color = '#888';
             }
 
-            // ===== RESET GAME =====
-            window.resetGame = function() {
-                bintang = { 1: 0, 2: 0, 3: 0 };
-                sudahPilih = { 1: false, 2: false, 3: false };
-                updateFinalResult();
-                goToSlide(1);
-            };
+            updateFinalResult();
+            changeSlide('slide' + resultSlide);
+        }
 
-            // ===== KEYBOARD =====
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'ArrowRight' || e.key === ' ') {
-                    e.preventDefault();
-                    if (currentSlide < totalSlides) goToSlide(currentSlide + 1);
-                } else if (e.key === 'ArrowLeft') {
-                    e.preventDefault();
-                    if (currentSlide > 1) goToSlide(currentSlide - 1);
+        function updateFinalResult() {
+            const total = bintang[1] + bintang[2] + bintang[3];
+            const el = document.getElementById('totalBintangAkhir');
+            const pesan = document.getElementById('pesanAkhir');
+            if (el) {
+                el.textContent = '⭐ ' + total;
+                if (total === 3) {
+                    el.style.color = '#f5c842';
+                    pesan.textContent = '🏆 Luar biasa! Kamu mengumpulkan 3 bintang! "Teknologi modern berakar dari budaya Nusantara."';
+                } else if (total >= 1) {
+                    el.style.color = '#f5c842';
+                    pesan.textContent = 'Bagus! Teruslah belajar. "Setiap langkah adalah pelajaran berharga."';
+                } else {
+                    el.style.color = '#888';
+                    pesan.textContent = 'Jangan menyerah! Coba lagi dan kumpulkan bintang. "Kesalahan adalah guru terbaik."';
                 }
-            });
+            }
+        }
 
-            // ===== INIT =====
-            goToSlide(1);
+        function resetGame() {
+            bintang = { 1: 0, 2: 0, 3: 0 };
+            sudahPilih = { 1: false, 2: false, 3: false };
+            updateFinalResult();
+            changeSlide('slide1');
+        }
 
-        })();
+        // ===== KEYBOARD =====
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                const next = Math.min(currentSlide + 1, totalSlides);
+                changeSlide('slide' + next);
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                const prev = Math.max(currentSlide - 1, 1);
+                changeSlide('slide' + prev);
+            }
+        });
+
+        // ===== INIT =====
+        changeSlide('slide1');
     </script>
-
 </body>
 </html>
