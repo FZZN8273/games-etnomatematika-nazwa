@@ -38,7 +38,7 @@
         .btn-oke:hover { transform: scale(1.1); background: #fdcb6e; }
 
         /* ============================
-           LOADING SCREEN AWAL
+           LOADING SCREEN AWAL (2.5 DETIK)
         ============================ */
         #loadingScreen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -54,11 +54,12 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* ============================
-           GAME CONTAINER & AUDIO BTN
+           GAME CONTAINER (FIXED 3:2 RATIO)
         ============================ */
         .game-container {
-            position: relative; width: 100%; max-width: 1000px;
-            aspect-ratio: 16/9; background-color: #000; overflow: hidden;
+            position: relative; width: 100%; max-width: 900px;
+            aspect-ratio: 3 / 2; /* Sesuai request: Rasio 3:2 murni agar aset PNG pas */
+            background-color: #000; overflow: hidden;
             box-shadow: 0 0 20px rgba(0,0,0,0.8); display: none;
         }
         
@@ -76,10 +77,10 @@
         .bg-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
         /* ============================
-           SLIDE 1 (START GAME)
+           SLIDE 1 (START GAME - PAS DI AREA BIRU BAWAH)
         ============================ */
         .bottom-bar {
-            position: absolute; bottom: 2%; left: 0; width: 100%; height: 14%;
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 15%;
             display: flex; justify-content: center; align-items: center;
             cursor: pointer;
         }
@@ -101,7 +102,7 @@
         .puzzle-btn { left: 25%; } .book-btn { left: 43%; } .ship-btn { left: 61%; }
 
         /* ============================
-           SLIDE PETUALANGAN 1 & 2
+           SLIDE PETUALANGAN 1 & 2 (AREA TAP)
         ============================ */
         .tap-zone {
             position: absolute; background: rgba(0, 168, 255, 0.05);
@@ -110,7 +111,7 @@
         }
         .tap-zone:hover { background: rgba(0, 168, 255, 0.25); }
         
-        /* Koordinat Gambar 1 (1002944239.png) */
+        /* Koordinat Gambar 1 (1.png) */
         .pulau-tap { width: 32%; height: 40%; top: 22%; right: 6%; border-radius: 40px; }
         .kapal-tap { width: 55%; height: 28%; bottom: 0; left: 25%; border-radius: 60px 60px 0 0; }
 
@@ -124,34 +125,29 @@
         }
 
         /* ============================
-           TRANSISI AWAN SINEMATIK (⛅-><-⛅)
+           TRANSISI AWAN SINEMATIK (⛅-><-⛅) - FIX BUG OVERFLOW
         ============================ */
         .cloud-transition-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 80; pointer-events: none; display: flex;
+            z-index: 80; pointer-events: none; 
+            display: none; /* Sembunyikan total di awal agar tidak numpang/bocor ke samping */
         }
         .cloud-half {
             width: 50%; height: 100%; background: #e3f2fd;
             transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
-            position: relative; display: flex; align-items: center; justify-content: center;
+            position: absolute; top: 0; display: flex; align-items: center; justify-content: center;
         }
-        /* Desain bentuk lekukan awan dekorasi interior */
-        .left-cloud { transform: translateX(-100%); border-radius: 0 100px 100px 0; box-shadow: inset -30px 0 40px #fff; }
-        .right-cloud { transform: translateX(100%); border-radius: 100px 0 0 100px; box-shadow: inset 30px 0 40px #fff; }
+        .left-cloud { left: 0; transform: translateX(-100%); border-radius: 0 100px 100px 0; box-shadow: inset -30px 0 40px #fff; }
+        .right-cloud { right: 0; transform: translateX(100%); border-radius: 100px 0 0 100px; box-shadow: inset 30px 0 40px #fff; }
         
-        /* Teks Indikator Loading Awan */
-        .cloud-half::before {
-            content: "⛅"; font-size: 80px; opacity: 0.7; position: absolute;
-        }
+        .cloud-half::before { content: "⛅"; font-size: 80px; opacity: 0.7; position: absolute; }
         
-        /* Gerakan Animasi Burung */
         .transition-bird {
             position: absolute; font-size: 50px; left: 45%; top: 110%;
             opacity: 0; z-index: 85; transition: none;
         }
 
-        /* Trigger Kelas Aktif via JS */
-        .transition-active { pointer-events: auto; }
+        /* Kelas Pengaktif Transisi via JavaScript */
         .transition-active .left-cloud { transform: translateX(0); }
         .transition-active .right-cloud { transform: translateX(0); }
         .transition-active .transition-bird { animation: birdFlight 2.4s ease-in-out forwards; }
@@ -159,9 +155,9 @@
         @keyframes birdFlight {
             0% { top: 110%; transform: scale(0.5) rotate(0deg); opacity: 0; }
             15% { opacity: 1; }
-            50% { top: 15%; transform: scale(1.4) rotate(360deg); } /* Berputar ke atas */
+            50% { top: 15%; transform: scale(1.4) rotate(360deg); }
             80% { opacity: 1; }
-            100% { top: 110%; transform: scale(0.5) rotate(720deg); opacity: 0; } /* Turun ke slide berikutnya */
+            100% { top: 110%; transform: scale(0.5) rotate(720deg); opacity: 0; }
         }
 
         /* ============================
@@ -222,8 +218,8 @@
         }
 
         @media (min-width: 1000px) {
-            .start-text { font-size: 38px; }
-            .star-container { font-size: 22px; }
+            .start-text { font-size: 36px; }
+            .star-container { font-size: 20px; }
             .speech-bubble { font-size: 14px; }
         }
     </style>
@@ -308,7 +304,7 @@
         </div>
 
         <div id="slidePetualangan1" class="slide">
-            <img src="1002944239.png" alt="Skenario 1 - Layar 1" class="bg-img">
+            <img src="1.png" alt="Skenario 1 - Layar 1" class="bg-img">
             
             <div class="tap-zone kapal-tap" onclick="interaksiLayar1('kapal')"></div>
             <div class="tap-zone pulau-tap" onclick="interaksiLayar1('pulau')"></div>
@@ -317,7 +313,7 @@
         </div>
 
         <div id="slidePetualangan2" class="slide">
-            <img src="2.png" alt="Skenario 1 - Layar 2" class="bg-img" onerror="this.src='1002944239.png'; this.style.filter='hue-rotate(90deg)';">
+            <img src="2.png" alt="Skenario 1 - Layar 2" class="bg-img">
             
             <div class="tap-zone batu-tap" onclick="interaksiLayar2('batu')"></div>
 
@@ -377,7 +373,7 @@
 
         function urutanAudioWelcome() {
             if(!audioMuted) {
-                soundWelcome.play().catch(e => console.log("Audio play di-block policy browser lokal"));
+                soundWelcome.play().catch(e => console.log("Audio play diblokir sistem"));
                 soundWelcome.onended = function() {
                     if(!audioMuted) {
                         soundBgm.play();
@@ -421,7 +417,7 @@
             } 
             else if (menuType === 'mulai') {
                 document.getElementById('slidePetualangan1').classList.add('active');
-                document.getElementById('starUI').style.display = 'block'; // BINTANG NYALA KONSISTEN DI SINI
+                document.getElementById('starUI').style.display = 'block'; 
                 document.getElementById('robotSpeech').innerText = "Kapten! Kita sudah sampai di Laut Nusantara. Coba tap Dek Kapal kita atau tap Pulau Adat di depan sana!";
             }
         }
@@ -430,13 +426,13 @@
             playClick();
             sembunyikanSemuaSlide();
             document.getElementById('slide2').classList.add('active');
-            document.getElementById('starUI').style.display = 'none'; // MATIKAN BINTANG PAS BALIK KE HOME HUB
+            document.getElementById('starUI').style.display = 'none'; 
             document.getElementById('robotSpeech').innerText = "Mau cek menu yang lain atau langsung lanjut berlayar?";
         }
 
-        // 4. INTERAKSI ACTION DI PETUALANGAN LAYAR 1
+        // 4. INTERAKSI ACTION DI PETUALANGAN LAYAR 1 (FIXED LOADING TRANSITION BUG)
         function interaksiLayar1(tipe) {
-            playClickShip(); // Memutar audio clickship.mp3 sesuai permintaan
+            playClickShip(); 
             
             if (tipe === 'kapal') {
                 document.getElementById('robotSpeech').innerText = "Dek Kapal kokoh aman terkendali, siap mengarungi samudra matematika!";
@@ -444,20 +440,28 @@
             else if (tipe === 'pulau') {
                 document.getElementById('robotSpeech').innerText = "Pulau terpilih! Bersiap melakukan pendaratan...";
                 
-                // EKSEKUSI TRANSISI AWAN SINEMATIK MENUJU SLIDE 2 (2.png)
                 const transisi = document.getElementById('cloudTransition');
+                
+                // 1. Munculkan container utama awannya dulu ke layar
+                transisi.style.display = 'flex'; 
+                
+                // 2. Beri sedikit jeda mikro (reflow) agar CSS menangkap display:flex sebelum kelas animasi ditempel
+                void transisi.offsetWidth; 
+                
+                // 3. Jalankan animasinya ⛅-><-⛅
                 transisi.classList.add('transition-active');
                 
-                // Ketika awan menutup rapat (detik 1.2), ganti slide dibelakangnya secara diam-diam
+                // Saat awan menutup layar di tengah (detik 1.2), pindah slide diam-diam
                 setTimeout(() => {
                     sembunyikanSemuaSlide();
                     document.getElementById('slidePetualangan2').classList.add('active');
                     document.getElementById('robotSpeech').innerText = "Pendaratan berhasil! Lihat batu misterius di tengah itu, coba kamu klik!";
                 }, 1200);
 
-                // Setelah animasi total selesai (detik 2.4), reset class transisi awannya
+                // Setelah total animasi selesai (detik 2.4), reset class dan matikan display-nya total biar gak bocor!
                 setTimeout(() => {
                     transisi.classList.remove('transition-active');
+                    transisi.style.display = 'none'; // Benar-benar lenyap, bebas bug!
                 }, 2400);
             }
         }
@@ -465,8 +469,8 @@
         // 5. INTERAKSI ACTION DI PETUALANGAN LAYAR 2
         function interaksiLayar2(tipe) {
             if (tipe === 'batu') {
-                playClick(); // Memutar audio lama/klasik click.mp3 sesuai permintaan
-                jumlahBintang += 1; // Mendapat poin bintang literasi
+                playClick(); 
+                jumlahBintang += 1; 
                 document.getElementById('starCount').innerText = jumlahBintang;
                 document.getElementById('robotSpeech').innerText = "Wah! Kamu menekan batu prasasti kuno! Rahasia angka Nol terungkap! (+1 Bintang didapat)";
             }
