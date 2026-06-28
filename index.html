@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Etnomatematika - Rasio 3:2</title>
+    <title>Game Etnomatematika - Skenario 1</title>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,7 +15,7 @@
             align-items: center;
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden; /* Mencegah scrollbar di level browser */
+            overflow: hidden;
         }
 
         /* ============================
@@ -63,15 +63,14 @@
         .game-container {
             position: relative; 
             width: 100%; 
-            max-width: 900px; /* Ukuran ideal canvas */
-            aspect-ratio: 3 / 2; /* Mengunci rasio 3:2 agar semua PNG pas bebas bug */
+            max-width: 900px; 
+            aspect-ratio: 3 / 2; 
             background-color: #000; 
-            overflow: hidden; /* Mengunci transisi awan agar tidak bocor ke samping kanan body */
+            overflow: hidden; 
             box-shadow: 0 0 30px rgba(0,0,0,0.8); 
             display: none;
         }
         
-        /* Tombol Audio Biru Cerah */
         .audio-toggle {
             position: absolute; top: 15px; right: 15px; z-index: 50;
             background: #00a8ff; color: white; font-weight: 900;
@@ -83,7 +82,16 @@
 
         .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
         .slide.active { display: block; }
-        .bg-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        
+        /* Efek Zoom untuk Latar Gambar 2.png */
+        .bg-img { 
+            width: 100%; height: 100%; object-fit: cover; display: block; 
+            transition: transform 1.2s ease-in-out;
+            transform-origin: 50% 50%;
+        }
+        .batu-zoomed .bg-img {
+            transform: scale(1.4) translateY(-5%); /* Efek zoom ke arah batu tengah */
+        }
 
         /* ============================
            SLIDE 1: WELCOME SCREEN (START GAME)
@@ -111,36 +119,25 @@
         .puzzle-btn { left: 24.5%; } .book-btn { left: 42.5%; } .ship-btn { left: 61%; }
 
         /* ============================
-           ZONA TAP BULAT INTERAKTIF (PAS DENGAN OBJEK)
+           ZONA TAP INTERAKTIF BULAT
         ============================ */
         .tap-zone {
             position: absolute; 
-            background: rgba(0, 168, 255, 0.03);
-            border: 3px dashed #00a8ff; /* Garis bulat pembantu interaksi */
+            background: rgba(0, 168, 255, 0.02);
+            border: 3px dashed #00a8ff; 
             cursor: pointer; 
             z-index: 30;
             animation: pulse-glow 2s infinite ease-in-out;
         }
+        .tap-zone.ready { border-color: #2ecc71; background: rgba(46, 204, 113, 0.05); } /* Hijau jika siap klik */
         .tap-zone:hover { background: rgba(0, 168, 255, 0.2); }
         
-        /* Kalibrasi Koordinat Layar 1 (1.png) */
-        .pulau-tap { 
-            width: 38%; height: 42%; 
-            top: 25%; right: 10%; 
-            border-radius: 30px; 
-        }
-        .kapal-tap { 
-            width: 60%; height: 26%; 
-            bottom: 0; left: 20%; 
-            border-radius: 100px 100px 0 0; 
-        }
+        /* Koordinat Layar 1 (1.png) */
+        .pulau-tap { width: 38%; height: 42%; top: 25%; right: 10%; border-radius: 30px; }
+        .kapal-tap { width: 60%; height: 26%; bottom: 0; left: 20%; border-radius: 100px 100px 0 0; }
 
-        /* Kalibrasi Koordinat Layar 2 (2.png) */
-        .batu-tap { 
-            width: 36%; height: 44%; 
-            top: 32%; left: 32%; 
-            border-radius: 50% 50% 35% 35%; /* Mengikuti lekukan kubah batu */
-        }
+        /* Koordinat Layar 2 (2.png) */
+        .batu-tap { width: 36%; height: 44%; top: 32%; left: 32%; border-radius: 50% 50% 35% 35%; }
 
         @keyframes pulse-glow {
             0% { transform: scale(1); box-shadow: 0 0 10px rgba(0, 168, 255, 0.4); }
@@ -149,12 +146,36 @@
         }
 
         /* ============================
-           TRANSISI LOADING AWAN SINEMATIK (KUNCI TOTAL DI DALAM CANVAS)
+           SOAL DILEMA PILIHAN (A / B) OVERLAY
+        ============================ */
+        #decisionOverlay {
+            position: absolute; top: 8%; left: 5%; width: 55%; height: 62%;
+            z-index: 45; display: none; flex-direction: column; gap: 10px;
+            background: rgba(26, 37, 47, 0.95); border: 3px solid #00a8ff;
+            border-radius: 15px; padding: 15px; color: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+        }
+        .decision-header { font-size: 14px; font-weight: bold; text-align: center; color: #ffeaa7; border-bottom: 1px solid #00a8ff; padding-bottom: 5px; }
+        
+        .opt-box {
+            background: #2c3e50; border: 2px solid #74b9ff; border-radius: 10px;
+            padding: 10px; cursor: pointer; transition: 0.2s;
+        }
+        /* Manipulasi Psikologi Warna Tombol */
+        .opt-box.btn-a:hover { background: #0984e3; transform: scale(1.02); }
+        .opt-box.btn-b:hover { background: #d63031; transform: scale(1.02); }
+        
+        .opt-title { font-size: 14px; font-weight: 900; margin-bottom: 4px; display: flex; justify-content: space-between; }
+        .opt-title span.badge-a { color: #00a8ff; }
+        .opt-title span.badge-b { color: #ff7675; }
+        .opt-detail { font-size: 11px; line-height: 1.4; color: #dfe6e9; }
+
+        /* ============================
+           TRANSISI LOADING AWAN (⛅-><-⛅)
         ============================ */
         .cloud-transition-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 80; pointer-events: none; 
-            display: none; /* Dikunci: hanya aktif saat dipicu fungsi JS */
+            z-index: 80; pointer-events: none; display: none;
         }
         .cloud-half {
             width: 50%; height: 100%; background: #e3f2fd;
@@ -163,15 +184,11 @@
         }
         .left-cloud { left: 0; transform: translateX(-100%); border-radius: 0 80px 80px 0; box-shadow: inset -20px 0 30px #fff; }
         .right-cloud { right: 0; transform: translateX(100%); border-radius: 80px 0 0 80px; box-shadow: inset 20px 0 30px #fff; }
-        
         .cloud-half::before { content: "⛅"; font-size: 70px; opacity: 0.7; position: absolute; }
         
-        .transition-bird {
-            position: absolute; font-size: 50px; left: 45%; top: 110%;
-            opacity: 0; z-index: 85; transition: none;
-        }
+        .transition-bird { position: absolute; font-size: 50px; left: 45%; top: 110%; opacity: 0; z-index: 85; }
 
-        /* State pemicu transisi awan */
+        .transition-active { pointer-events: auto; }
         .transition-active .left-cloud { transform: translateX(0); }
         .transition-active .right-cloud { transform: translateX(0); }
         .transition-active .transition-bird { animation: birdFlight 2.4s ease-in-out forwards; }
@@ -185,7 +202,7 @@
         }
 
         /* ============================
-           OVERLAY PAPAN INFORMASI 
+           OVERLAY PAPAN INFORMASI UTAMA
         ============================ */
         .content-overlay {
             position: absolute; top: 10%; left: 8%; width: 50%; height: 80%;
@@ -212,7 +229,7 @@
            HUD GLOBAL (ROBOT & BINTANG)
         ============================ */
         #globalUI { display: none; }
-        #starUI { display: none; } /* Terkunci: Hanya tampil saat petualangan dimulai */
+        #starUI { display: none; } 
 
         .star-container {
             position: absolute; bottom: 5%; left: 3%; background: #0984e3;
@@ -221,7 +238,6 @@
             border: 3px solid #ffeaa7; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
-        /* Karakter Robot Ukuran Mantap */
         .robot-wrapper {
             position: absolute; bottom: -2%; right: -2%; width: 34%;
             max-width: 310px; z-index: 40; display: flex; flex-direction: column; align-items: flex-end;
@@ -234,6 +250,7 @@
             color: #0984e3; font-weight: 900; text-align: center;
             box-shadow: 0px 5px 15px rgba(0,0,0,0.3); position: relative; z-index: 41;
             border: 3px solid #74b9ff;
+            width: 280px; max-height: 180px; overflow-y: auto;
         }
         .speech-bubble::after {
             content: ''; position: absolute; bottom: -15px; right: 40px;
@@ -330,8 +347,8 @@
         <div id="slidePetualangan1" class="slide">
             <img src="1.png" alt="Skenario 1 - Layar 1" class="bg-img">
             
-            <div class="tap-zone kapal-tap" onclick="interaksiLayar1('kapal')"></div>
-            <div class="tap-zone pulau-tap" onclick="interaksiLayar1('pulau')"></div>
+            <div id="zoneKapal" class="tap-zone kapal-tap" onclick="interaksiLayar1('kapal')"></div>
+            <div id="zonePulau" class="tap-zone pulau-tap" onclick="interaksiLayar1('pulau')"></div>
 
             <button class="btn-kembali" style="position: absolute; top: 15px; left: 15px; width: 120px; margin:0; font-size:14px; z-index:50;" onclick="kembaliKeMenu()">⚓ Beranda</button>
         </div>
@@ -339,13 +356,27 @@
         <div id="slidePetualangan2" class="slide">
             <img src="2.png" alt="Skenario 1 - Layar 2" class="bg-img">
             
-            <div class="tap-zone batu-tap" onclick="interaksiLayar2('batu')"></div>
+            <div id="zoneBatu" class="tap-zone batu-tap" onclick="interaksiLayar2('batu')"></div>
+
+            <div id="decisionOverlay">
+                <div class="decision-header">PILIH METODE PENERJEMAHAN ARTEFAK</div>
+                
+                <div class="opt-box btn-a" onclick="pilihDilema('A')">
+                    <div class="opt-title"><span class="badge-a">A. Pembagian Berulang (604 ÷ 2 = 302...)</span> <span>Aman 🛡️</span></div>
+                    <div class="opt-detail"><b>Untung:</b> Akurat, aman, metode standar sekolah.<br><b>Risiko:</b> Buang waktu 15 menit. Hanya cukup untuk 1 artefak hari ini.</div>
+                </div>
+
+                <div class="opt-box btn-b" onclick="pilihDilema('B')">
+                    <div class="opt-title"><span class="badge-b">B. Tabel Nilai Tempat (604 = 512 + 64...)</span> <span>Cepat ⚡</span></div>
+                    <div class="opt-detail"><b>Untung:</b> Cepat & efisien, hanya butuh waktu 5 menit.<br><b>Risiko:</b> Bahaya jika salah konsep. Data prasasti bisa korup total!</div>
+                </div>
+            </div>
 
             <button class="btn-kembali" style="position: absolute; top: 15px; left: 15px; width: 120px; margin:0; font-size:14px; z-index:50;" onclick="kembaliKeMenu()">⚓ Beranda</button>
         </div>
 
         <div id="globalUI">
-            <div id="starUI" class="star-container">⭐ Poin: <span id="starCount">0</span></div>
+            <div id="starUI" class="star-container">⭐ Bintang Literasi: <span id="starCount">0</span></div>
             
             <div class="robot-wrapper">
                 <div class="speech-bubble" id="robotSpeech">Halo! Pilih ikon untuk mulai!</div>
@@ -364,6 +395,9 @@
         let audioMuted = false;
         let isBgmPlaying = false; 
         let jumlahBintang = 0;
+        
+        // Flags Alur Mekanik Baru
+        let sinyalTerkirim = false;
 
         function tutupWarning() {
             document.getElementById('desktopWarning').style.display = 'none';
@@ -409,6 +443,9 @@
 
         function sembunyikanSemuaSlide() {
             document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active'));
+            // Reset efek zoom pada slide petualangan 2 jika kembali
+            document.getElementById('slidePetualangan2').classList.remove('batu-zoomed');
+            document.getElementById('decisionOverlay').style.display = 'none';
         }
 
         function startGame() {
@@ -437,9 +474,13 @@
                 document.getElementById('robotSpeech').innerText = "Ikuti 3 langkah mudah ini buat mainin gamenya!";
             } 
             else if (menuType === 'mulai') {
+                // Reset State Alur Sinyal Kapal
+                sinyalTerkirim = false;
+                document.getElementById('zonePulau').classList.remove('ready');
+                
                 document.getElementById('slidePetualangan1').classList.add('active');
-                document.getElementById('starUI').style.display = 'block'; /* Bintang menyala hanya saat berlayar */
-                document.getElementById('robotSpeech').innerText = "Kapten! Kita sudah sampai di Laut Nusantara. Coba tap Dek Kapal kita atau tap Pulau Adat di depan sana!";
+                document.getElementById('starUI').style.display = 'block'; 
+                document.getElementById('robotSpeech').innerText = "Kapten! Kita sudah sampai di Laut Nusantara. Tekan dek KAPAL kita terlebih dahulu untuk memberi SINYAL AMAN ke pulau!";
             }
         }
 
@@ -451,48 +492,83 @@
             document.getElementById('robotSpeech').innerText = "Mau cek menu yang lain atau langsung lanjut berlayar?";
         }
 
-        // TRANSISI LOADING AWAN BEBAS BUG VISUAL SAMPING
+        // ==========================================
+        // ALUR MEKANIK PETUALANGAN LAYAR 1 (1.png)
+        // ==========================================
         function interaksiLayar1(tipe) {
-            playClickShip(); 
-            
             if (tipe === 'kapal') {
-                document.getElementById('robotSpeech').innerText = "Dek Kapal kokoh aman terkendali, siap mengarungi samudra matematika!";
+                playClickShip(); 
+                sinyalTerkirim = true;
+                document.getElementById('zonePulau').classList.add('ready'); // Beri tanda visual pulau siap diklik
+                document.getElementById('robotSpeech').innerText = "🛰️ Sinyal terkirim aman! Pulau merespon dengan baik! Sekarang kapten bisa aman mendarat dengan cara ketuk PULAU!";
             } 
             else if (tipe === 'pulau') {
-                document.getElementById('robotSpeech').innerText = "Pulau terpilih! Bersiap melakukan pendaratan...";
+                if (!sinyalTerkirim) {
+                    playClick(); // Suara klik error biasa
+                    document.getElementById('robotSpeech').innerText = "❌ Jangan mendarat dulu, Kapten! Berbahaya! Berikan sinyal pengaman terlebih dahulu dengan mengetuk dek KAPAL!";
+                    return;
+                }
+                
+                // Jika sudah beri sinyal kapal, proses mendarat aktif
+                playClickShip();
+                document.getElementById('robotSpeech').innerText = "Sinyal terverifikasi aman! Kapal merapat, bersiap melakukan pendaratan...";
                 
                 const transisi = document.getElementById('cloudTransition');
-                
-                // 1. Munculkan container awan
                 transisi.style.display = 'flex'; 
-                
-                // 2. Jeda mikro agar transisi menangkap perubahannya
                 void transisi.offsetWidth; 
-                
-                // 3. Jalankan jalannya awan & terbang burung ⛅-><-⛅
                 transisi.classList.add('transition-active');
                 
-                // Ganti slide di balik layar tepat di tengah loading (detik 1.2)
+                // Transisi pindah slide di balik awan (detik 1.2)
                 setTimeout(() => {
                     sembunyikanSemuaSlide();
                     document.getElementById('slidePetualangan2').classList.add('active');
-                    document.getElementById('robotSpeech').innerText = "Pendaratan berhasil! Lihat batu prasasti di tengah hutan itu, coba kamu klik!";
+                    document.getElementById('robotSpeech').innerText = "Pendaratan sukses! Wah, lihat ada batu prasasti kuno raksasa di tengah sana! Coba kapten dekati dengan cara klik BATU tersebut!";
                 }, 1200);
 
-                // Setelah beres total (detik 2.4), bersihkan kelas dan sembunyikan kembali
                 setTimeout(() => {
                     transisi.classList.remove('transition-active');
-                    transisi.style.display = 'none'; /* Tersembunyi sempurna dari layout samping */
+                    transisi.style.display = 'none'; 
                 }, 2400);
             }
         }
 
+        // ==========================================
+        // ALUR MEKANIK PETUALANGAN LAYAR 2 (2.png)
+        // ==========================================
         function interaksiLayar2(tipe) {
             if (tipe === 'batu') {
                 playClick(); 
-                jumlahBintang += 1; 
-                document.getElementById('starCount').innerText = jumlahBintang;
-                document.getElementById('robotSpeech').innerText = "Wah! Kamu menemukan angka Nol kuno pada Prasasti! (+1 Bintang Literasi diperoleh!)";
+                
+                // Jalankan Efek Zoom Layar Sinematik ke Arah Batu Kuno
+                document.getElementById('slidePetualangan2').classList.add('batu-zoomed');
+                document.getElementById('zoneBatu').style.display = 'none'; // Sembunyikan zona klik batu agar tidak bisa di spam
+                
+                // Ubah Teks Soal di Gelembung Robot
+                document.getElementById('robotSpeech').innerText = "🔊 Prasasti Kedukan Bukit terdeteksi! Sistem biner kuno terkunci di dalamnya. Kamu harus mengubah angka desimal 604 menjadi kode biner komputer secara cepat dan tepat! Metode mana yang akan kamu pilih?";
+                
+                // Munculkan Kotak Overlay Opsi Keputusan Nasib Sebab Akibat (A / B)
+                setTimeout(() => {
+                    document.getElementById('decisionOverlay').style.display = 'flex';
+                }, 800);
+            }
+        }
+
+        // AKSI EVALUASI KEPUTUSAN DILEMA (A / B) -> BINTANG BARU BERTAMBAH DI SINI
+        function pilihDilema(pilihan) {
+            playClick();
+            
+            // Sembunyikan kotak pilihan setelah diklik
+            document.getElementById('decisionOverlay').style.display = 'none';
+            
+            // Berikan Hadiah Bintang Literasi Hanya Saat Mengambil Keputusan Penting Ini
+            jumlahBintang += 1;
+            document.getElementById('starCount').innerText = jumlahBintang;
+            
+            if (pilihan === 'A') {
+                document.getElementById('robotSpeech').innerText = "🛡️ Konsekuensi Pilihan A: Kamu memilih jalan aman! Penerjemahan sangat akurat (1001011100), namun menghabiskan waktu 15 menit. Energi habis, hari ini kita hanya bisa meneliti 1 artefak saja. (+1 ⭐ Diperoleh!)";
+            } 
+            else if (pilihan === 'B') {
+                document.getElementById('robotSpeech').innerText = "⚡ Konsekuensi Pilihan B: Efisiensi luar biasa! Kamu menggunakan metode tabel nilai tempat dan selesai dalam 5 menit! Untungnya penalaranmu kuat, enkripsi biner berhasil dipecahkan tanpa korup! (+1 ⭐ Diperoleh!)";
             }
         }
     </script>
