@@ -76,7 +76,7 @@
         .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
         .slide.active { display: block; }
         
-        /* TIMING ZOOM AKTOR TERINTEGRASI KILAT */
+        /* TIMING ZOOM GERAKAN KILAT INSTAN */
         .bg-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease-out; transform-origin: 50% 50%; display: block; }
         .batu-zoomed .bg-img { transform: scale(1.6) translateY(-5%); }
 
@@ -110,7 +110,7 @@
         @keyframes blackFlash020 { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
 
         /* ============================
-           KOREKSI PANEL LOG EXPEDITION (MENYATU PADA 'soalback.png')
+           RPG QUEST LOG (MENYATU PADA 'soalback.png' - TANPA BOX PUTIH)
         ============================ */
         .soal-panel-wrapper {
             position: absolute; 
@@ -118,7 +118,7 @@
             width: 62%; height: 90%; 
             z-index: 45; 
             display: flex; flex-direction: column; justify-content: center;
-            background: transparent; padding: 10px; /* Tanpa background putih pengganggu */
+            background: transparent; padding: 10px;
         }
         
         /* Bar transparan gelap pelindung teks agar kontras menyatu natural dengan alam */
@@ -126,7 +126,7 @@
             background: rgba(20, 30, 40, 0.75); 
             border-left: 4px solid #eccc68; padding: 14px 18px;
             font-size: 15px; font-weight: 700; color: #f5f6fa; line-height: 1.6;
-            border-radius: 6px; margin-bottom: 20px;
+            border-radius: 6px; margin-bottom: 18px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
@@ -139,17 +139,17 @@
         
         .opsi-container { display: flex; flex-direction: column; gap: 12px; }
         
-        /* KUNCI UTAMA: KEDUA TOMBOL PILIHAN KEMBAR IDENTIK TOTAL SECARA VISUAL */
+        /* KUNCI UTAMA: KEDUA TOMBOL PILIHAN KEMBAR IDENTIK TOTAL SECARA VISUAL (MURNI LOGIKA) */
         .opsi-button-card {
             background: rgba(20, 30, 40, 0.85); 
-            border: 2px solid #eccc68; /* Warna emas kuningan kuno seragam */
+            border: 2px solid #eccc68; /* Warna emas kuningan kuno seragam total */
             border-radius: 10px; padding: 14px 18px;
             cursor: pointer; transition: 0.12s ease-in-out; 
             display: flex; align-items: center; gap: 15px;
-            color: #f5f6fa; /* Teks putih kabut identik */
+            color: #f5f6fa; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
-        /* Efek hover sama persis untuk menjaga kerahasiaan rute komputasi */
+        /* Efek hover sama persis untuk menjaga kerahasiaan rute komputasi, otak bebas menebak */
         .opsi-button-card:hover { 
             background: rgba(236, 204, 104, 0.25); 
             border-color: #ffa502; 
@@ -164,7 +164,7 @@
         }
         .opsi-text-content { display: flex; flex-direction: column; gap: 4px; text-shadow: 1px 1px 3px rgba(0,0,0,0.9); }
         .opsi-judul { font-size: 15px; font-weight: 800; letter-spacing: 0.5px; }
-        .opsi-dampak { font-size: 13px; font-weight: 600; color: #f5f6fa; opacity: 0.95; } /* Tidak ada teks warna hijau/kuning yang mendikte */
+        .opsi-dampak { font-size: 13px; font-weight: 600; color: #f5f6fa; opacity: 0.95; line-height: 1.4; } /* Bebas dari warna hijau sukses/kuning warning */
 
         /* ============================
            TRANSISI LAYAR AWAN (⛅)
@@ -273,26 +273,26 @@
             
             <div class="soal-panel-wrapper">
                 <div class="soal-situasi-box">
-                    🧭 <b>LOG EKSPEDISI:</b><br>
-                    Kamu menemukan 1 Prasasti Kedukan Bukit (batu bertulis kuno dari Kerajaan Sriwijaya). Dokumentasikan temuan berharga ini ke dalam sistem kapal tanpa merusak fisik batu purbakala tersebut!
+                    🧭 <b>SITUASI:</b><br>
+                    Kamu nemuin Prasasti Kedukan Bukit di Palembang. Tugasmu: mendokumentasikan prasasti ini ke digital.
                 </div>
                 
-                <div class="choose-title">⚔️ PILIH RUTE PENJELAJAHAN KAPTEN:</div>
+                <div class="choose-title">⚔️ ADA DUA CARA:</div>
                 
                 <div class="opsi-container">
                     <div class="opsi-button-card" onclick="eksekusiPilihOpsi('A')">
                         <div class="opsi-badge">A</div>
                         <div class="opsi-text-content">
-                            <div class="opsi-judul">Rute Pemetaan Manual Fisik</div>
-                            <div class="opsi-dampak">Foto, ukur, dan catat manual satu per satu. (Selesai 1 hari, akurat namun lambat).</div>
+                            <div class="opsi-judul">Cara A: Dokumentasi Biasa</div>
+                            <div class="opsi-dampak">Kamu dokumentasikan dengan cara biasa. Foto dari berbagai sudut, ukur fisik batu, catat semua detail. Hasilnya akurat dan detail. Tapi butuh waktu lama, satu hari.</div>
                         </div>
                     </div>
 
                     <div class="opsi-button-card" onclick="eksekusiPilihOpsi('B')">
                         <div class="opsi-badge">B</div>
                         <div class="opsi-text-content">
-                            <div class="opsi-judul">Rute Dekripsi Struktur Komputasi</div>
-                            <div class="opsi-dampak">Cari pola matematika dan sistem inti penulisan prasasti. (Selesai instan & memahami sistemnya).</div>
+                            <div class="opsi-judul">Cara B: Dokumentasi Pola</div>
+                            <div class="opsi-dampak">Kamu dokumentasikan dengan mencari pola. Perhatikan aksara yang berulang, lihat sistem penulisan angkanya, cari tahu polanya. Hasilnya lebih cepat dan kamu jadi paham sistemnya. Dalam waktu yg sama, kamu bisa selesaikan.</div>
                         </div>
                     </div>
                 </div>
@@ -486,7 +486,7 @@
                         // AMAN: Bintang disembunyikan total agar tidak menumpuk visual log penjelajahan
                         document.getElementById('starUI').style.display = 'none'; 
                         
-                        document.getElementById('robotSpeech').innerText = "Teks kuno Sriwijaya terenkripsi. Tentukan rute strategimu, Kapten!";
+                        document.getElementById('robotSpeech').innerText = "Teks kuno terdeteksi. Tentukan rute strategimu, Kapten!";
                     }, 100);
 
                     setTimeout(() => {
@@ -513,11 +513,11 @@
             sembunyikanSemuaSlide();
             document.getElementById('slideSebabAkibat').classList.add('active');
             
-            // Respon Jurnal Petualangan Netral
+            // Respons Jurnal Petualangan Netral Tanpa Kesan Menilai Benar-Salah Khas Kuis
             if (opsi === 'B') {
-                document.getElementById('robotSpeech').innerText = "⚔️ Log Aktivitas: Pemetaan struktur komputasi berhasil mengurai kode etnomatematika Sriwijaya secara efisien! Pelajari analisismu pada layar! (+1 ⭐)";
+                document.getElementById('robotSpeech').innerText = "⚔️ Log Aktivitas: Eksplorasi dengan Cara B berhasil mendokumentasikan pola aksara secara cepat dan efisien! Pelajari analisismu pada layar! (+1 ⭐)";
             } else {
-                document.getElementById('robotSpeech').innerText = "🧭 Log Aktivitas: Rute manual memerlukan waktu ekstra bagi kru kapal, namun sejarah fisik tercatat utuh. Pelajari analisismu pada layar! (+1 ⭐)";
+                document.getElementById('robotSpeech').innerText = "🧭 Log Aktivitas: Eksplorasi dengan Cara A mencatat seluruh detail fisik prasasti secara manual meski memakan waktu lama. Pelajari analisismu pada layar! (+1 ⭐)";
             }
         }
     </script>
