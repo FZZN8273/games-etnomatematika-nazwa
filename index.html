@@ -7,7 +7,7 @@
     
     <style>
         /* ============================
-           RESET & FONT PSIKOLOGI (MUDAH DICERNA)
+           RESET & FONT PSIKOLOGI (ANTI-PUSING)
         ============================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -17,11 +17,11 @@
             min-height: 100vh; 
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             overflow: hidden;
-            color: #2d3436;
+            color: #ffffff;
         }
 
         /* ============================
-           WARNING DESKTOP (ANTI BUG LAYOUT)
+           WARNING DESKTOP 
         ============================ */
         #desktopWarning {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -56,14 +56,14 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* ============================
-           GAME CONTAINER (MURNI RASIO 3:2)
+           GAME CONTAINER (KUNCI RASIO MURNI 3:2)
         ============================ */
         .game-container {
             position: relative; width: 100%; max-width: 900px; aspect-ratio: 3 / 2; 
             background-color: #000; overflow: hidden; box-shadow: 0 0 30px rgba(0,0,0,0.8); display: none;
         }
         
-        /* PANEL AUDIO (ON/OFF & SLIDER ±) */
+        /* PANEL AUDIO PENGATUR ± VITAL */
         .audio-panel {
             position: absolute; top: 15px; right: 15px; z-index: 60;
             background: rgba(44, 62, 80, 0.9); border: 2px solid #74b9ff;
@@ -76,12 +76,12 @@
         .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
         .slide.active { display: block; }
         
-        /* EFEK ZOOM SINEMATIK BATU */
-        .bg-img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1); transform-origin: 50% 50%; display: block; }
+        /* LATAR BELAKANG */
+        .bg-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease-out; transform-origin: 50% 50%; display: block; }
         .batu-zoomed .bg-img { transform: scale(1.6) translateY(-5%); }
 
         /* ============================
-           UI BERANDA & HUB (1 & 2)
+           UI BERANDA & HUB INTERIOR
         ============================ */
         .bottom-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 12%; display: flex; justify-content: center; align-items: center; cursor: pointer; }
         .start-text { color: #ffffff; font-size: 3vw; font-weight: 900; letter-spacing: 2px; text-shadow: 0px 4px 10px #0984e3; animation: pulse-glow 1.5s infinite; }
@@ -90,7 +90,7 @@
         .puzzle-btn { left: 24.5%; } .book-btn { left: 42.5%; } .ship-btn { left: 61%; }
 
         /* ============================
-           ZONA TAP (KAPAL, PULAU, BATU)
+           ZONA TAP RESPONSIF
         ============================ */
         .tap-zone { position: absolute; background: rgba(0, 168, 255, 0.02); border: 2px dashed #00a8ff; cursor: pointer; z-index: 30; animation: pulse-glow 2s infinite ease-in-out; }
         .tap-zone.ready { border-color: #2ecc71; background: rgba(46, 204, 113, 0.05); }
@@ -103,64 +103,71 @@
         @keyframes pulse-glow { 0% { transform: scale(1); box-shadow: 0 0 5px rgba(0, 168, 255, 0.3); } 50% { transform: scale(1.02); box-shadow: 0 0 15px rgba(0, 168, 255, 0.6); } 100% { transform: scale(1); box-shadow: 0 0 5px rgba(0, 168, 255, 0.3); } }
 
         /* ============================
-           EFEK KEDIP HITAM (0.20s)
+           EFEK KEDIP HITAM INSTAN (0.20s)
         ============================ */
         #blackBlinkOverlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 95; display: none; pointer-events: none; }
-        .flash-animation { display: block !important; animation: blackFlash020 0.20s ease-in-out forwards; }
+        .flash-animation { display: block !important; animation: blackFlash020 0.20s linear forwards; }
         @keyframes blackFlash020 { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
 
         /* ============================
-           DESAIN SOAL & OPSI (PSIKOLOGI OTAK)
+           DESAIN STRUKTUR SOAL PADA 'soalback.png' (TANPA BOX PUTIH)
         ============================ */
         .soal-panel-wrapper {
-            position: absolute; top: 8%; left: 8%; width: 84%; height: 84%;
-            z-index: 45; display: flex; flex-direction: column; justify-content: center;
-            background: rgba(255, 255, 255, 0.95); border: 3px solid #0984e3;
-            border-radius: 16px; padding: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            position: absolute; 
+            top: 5%; left: 5%; 
+            width: 62%; height: 90%; /* Menyisakan area kanan 100% lega bebas tumpukan untuk robot */
+            z-index: 45; 
+            display: flex; flex-direction: column; justify-content: center;
+            background: transparent; /* Box putih dihapus total sesuai request! */
+            border: none; padding: 10px; box-shadow: none;
         }
         
+        /* Teks Situasi langsung menempel di gambar dengan high-contrast shadow */
         .soal-situasi-box {
-            background: #f1f2f6; border-left: 6px solid #2c3e50; padding: 15px 20px;
-            font-size: 16px; font-weight: 600; color: #2f3640; line-height: 1.6;
-            border-radius: 8px; margin-bottom: 25px;
+            background: rgba(0, 0, 0, 0.45); /* Perlindungan bar transparan tipis agar teks tetap terbaca */
+            border-left: 6px solid #00a8ff; padding: 12px 18px;
+            font-size: 15px; font-weight: 700; color: #ffffff; line-height: 1.5;
+            border-radius: 6px; margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
         }
 
         .choose-title {
-            text-align: center; font-size: 16px; font-weight: 800; color: #7f8fa6;
-            margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;
+            text-align: left; font-size: 15px; font-weight: 900; color: #ffffff;
+            margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
         }
         
         .opsi-container { display: flex; flex-direction: column; gap: 12px; }
         
         .opsi-button-card {
-            border: 2px solid; border-radius: 12px; padding: 15px 20px;
-            cursor: pointer; transition: 0.2s ease; display: flex; align-items: center; gap: 15px;
+            border: 2px solid; border-radius: 10px; padding: 12px 18px;
+            cursor: pointer; transition: 0.15s ease; display: flex; align-items: center; gap: 15px;
         }
         
-        /* MANIPULASI WARNA: Opsi A (Kesan Lambat, Netral, Biasa Saja) */
-        .card-a { background: #ffffff; border-color: #dcdde1; color: #7f8fa6; }
-        .card-a:hover { background: #f5f6fa; border-color: #a4b0be; transform: translateY(-2px); }
-        .badge-a { background: #dcdde1; color: #2f3640; }
+        /* PSIKOLOGI WARNA TOMBOL */
+        /* Opsi A: Sengaja dibuat Flat & Transparan agar dipandang otak sebagai opsi "lambat/kuno" */
+        .card-a { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.6); color: #ffffff; }
+        .card-a:hover { background: rgba(255, 255, 255, 0.25); border-color: #ffffff; transform: translateX(4px); }
+        .badge-a { background: rgba(255, 255, 255, 0.3); color: #ffffff; border: 1px solid #fff; }
 
-        /* MANIPULASI WARNA: Opsi B (Kesan Modern, Cepat, Pintar, Menarik Otak) */
-        .card-b { background: #f0f8ff; border-color: #00a8ff; color: #0984e3; box-shadow: 0 4px 10px rgba(0,168,255,0.1); }
-        .card-b:hover { background: #e1f0ff; border-color: #0984e3; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(9, 132, 227, 0.2); }
-        .badge-b { background: #00a8ff; color: #ffffff; box-shadow: 0 0 10px rgba(0,168,255,0.4); }
+        /* Opsi B (KUNCI): Diberi pancaran Tech Blue cerah yang memicu insting otak untuk memilihnya */
+        .card-b { background: rgba(0, 168, 255, 0.2); border-color: #00a8ff; color: #ffffff; box-shadow: 0 0 10px rgba(0,168,255,0.3); }
+        .card-b:hover { background: rgba(0, 168, 255, 0.4); border-color: #00a8ff; transform: translateX(4px); box-shadow: 0 0 15px rgba(0,168,255,0.7); }
+        .badge-b { background: #00a8ff; color: #ffffff; box-shadow: 0 0 10px rgba(0,168,255,0.6); }
 
         .opsi-badge {
-            width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; 
-            align-items: center; font-weight: 900; font-size: 18px; flex-shrink: 0;
+            width: 36px; height: 36px; border-radius: 50%; display: flex; justify-content: center; 
+            align-items: center; font-weight: 900; font-size: 16px; flex-shrink: 0;
         }
-        .opsi-text-content { display: flex; flex-direction: column; gap: 5px; }
-        .opsi-judul { font-size: 16px; font-weight: 800; }
-        .opsi-dampak { font-size: 14px; font-weight: 500; }
+        .opsi-text-content { display: flex; flex-direction: column; gap: 3px; text-shadow: 1px 1px 3px rgba(0,0,0,0.9); }
+        .opsi-judul { font-size: 15px; font-weight: 800; }
+        .opsi-dampak { font-size: 13px; font-weight: 600; }
         
-        /* Warna spesifik untuk dampak */
-        .card-a .opsi-dampak { color: #e1b12c; } /* Warna peringatan lambat */
-        .card-b .opsi-dampak { color: #44bd32; } /* Warna hijau sukses/cepat */
+        .card-a .opsi-dampak { color: #ffeaa7; } /* Kuning tanda lambat */
+        .card-b .opsi-dampak { color: #55efc4; } /* Hijau tanda sukses cerdas */
 
         /* ============================
-           TRANSISI AWAN (⛅)
+           TRANSISI AWAN ( Sherwood ⛅ )
         ============================ */
         .cloud-transition-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 80; pointer-events: none; display: none; }
         .cloud-half { width: 50%; height: 100%; background: #e3f2fd; transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1); position: absolute; top: 0; display: flex; align-items: center; justify-content: center; }
@@ -170,20 +177,30 @@
         .transition-active .left-cloud, .transition-active .right-cloud { transform: translateX(0); }
 
         /* ============================
-           HUD (ROBOT & BINTANG)
+           HUD (BINTANG & ROBOT) - ANTI TIMPA
         ============================ */
         #globalUI, #starUI { display: none; } 
-        .star-container { position: absolute; bottom: 5%; left: 3%; background: #0984e3; padding: 10px 20px; border-radius: 30px; color: #ffeaa7; font-size: 1.5vw; font-weight: 800; z-index: 40; border: 2px solid #ffeaa7; }
+        
+        /* Bintang dikunci di TENGAH ATAS secara aman & minimalis */
+        .star-container { 
+            position: absolute; top: 15px; left: 50%; transform: translateX(-50%); 
+            background: rgba(9, 132, 227, 0.95); padding: 6px 18px; border-radius: 30px; 
+            color: #ffeaa7; font-size: 16px; font-weight: 900; z-index: 60; 
+            border: 2px solid #ffeaa7; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: flex; align-items: center; gap: 5px;
+        }
+
         .robot-wrapper { position: absolute; bottom: -2%; right: -2%; width: 30%; max-width: 280px; z-index: 60; display: flex; flex-direction: column; align-items: flex-end; }
         .robot-img { width: 100%; height: auto; filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.5)); }
         
         .speech-bubble {
             background: #ffffff; border-radius: 12px; padding: 12px; margin-right: 25px; margin-bottom: -10px; font-size: 1.2vw;
             color: #2c3e50; font-weight: 700; text-align: center; box-shadow: 0px 4px 10px rgba(0,0,0,0.2); position: relative; z-index: 61; border: 2px solid #74b9ff;
+            width: 260px; max-height: 180px; overflow-y: auto;
         }
         .speech-bubble::after { content: ''; position: absolute; bottom: -10px; right: 30px; border-width: 10px 10px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; }
 
-        /* Tombol Darurat Kembali */
+        /* NAVIGASI HUD HUD */
         .btn-kembali-hud { position: absolute; top: 15px; left: 15px; width: 100px; padding: 8px; background: #0984e3; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; z-index: 50; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
         .btn-kembali-hud:hover { background: #00a8ff; }
         
@@ -193,10 +210,10 @@
 </head>
 <body>
 
-    <audio id="clickSound" src="click.mp3"></audio>
-    <audio id="clickShipSound" src="clickship.mp3"></audio>
-    <audio id="etnoWelcome" src="etnowelcome.mp3"></audio>
-    <audio id="backsound" src="backsound.mp3" loop></audio>
+    <audio id="clickSound" src="click.mp3" preload="auto"></audio>
+    <audio id="clickShipSound" src="clickship.mp3" preload="auto"></audio>
+    <audio id="etnoWelcome" src="etnowelcome.mp3" preload="auto"></audio>
+    <audio id="backsound" src="backsound.mp3" loop preload="auto"></audio>
 
     <div id="blackBlinkOverlay"></div>
 
@@ -257,6 +274,7 @@
             
             <div class="soal-panel-wrapper">
                 <div class="soal-situasi-box">
+                    📜 <b>SITUASI:</b><br>
                     Kamu menemukan 1 Prasasti Kedukan Bukit (batu bertulis kuno dari Kerajaan Sriwijaya). Tugasmu: dokumentasikan prasasti ini ke dalam sistem digital tanpa merusak batu kuno itu.
                 </div>
                 
@@ -289,7 +307,8 @@
         </div>
 
         <div id="globalUI">
-            <div id="starUI" class="star-container">⭐ Bintang: <span id="starCount">0</span></div>
+            <div id="starUI" class="star-container">🌟 <span id="starCount">0</span></div>
+            
             <div class="robot-wrapper">
                 <div class="speech-bubble" id="robotSpeech">Halo! Pilih ikon untuk mulai!</div>
                 <img src="robot.jpg" alt="Robot Nusantara" class="robot-img" onerror="this.src='https://via.placeholder.com/300x400.png?text=Robot'">
@@ -311,11 +330,11 @@
         let skenarioSekarang = 1; 
         let volumeSistem = 1;
 
-        // PENGUATAN LOOPING BACKSOUND (Berjaga-jaga jika atribut HTML 'loop' bermasalah di beberapa browser)
+        // KUNCI FAILSAFE RE-RUN BACKSOUND INSTAN (0,0001 DETIK)
         soundBgm.addEventListener('ended', function() {
             if (!audioMuted) {
                 this.currentTime = 0;
-                this.play();
+                this.play().catch(e=>{});
             }
         }, false);
 
@@ -328,7 +347,7 @@
             }, 2500);
         }
 
-        // FUNGSI VOLUME & MUTE ±
+        // FUNGSI PENGATUR AUDIO ± VOLUME
         function setSistemVolume(val) {
             volumeSistem = val;
             if(!audioMuted) {
@@ -349,7 +368,7 @@
             } else {
                 btn.innerText = "🔊";
                 setSistemVolume(document.getElementById('volSlider').value);
-                if(isBgmPlaying) soundBgm.play();
+                if(isBgmPlaying) soundBgm.play().catch(e=>{});
             }
         }
 
@@ -362,7 +381,7 @@
                 soundWelcome.play().catch(e => {});
                 soundWelcome.onended = function() {
                     if(!audioMuted) {
-                        soundBgm.play();
+                        soundBgm.play().catch(e=>{});
                         isBgmPlaying = true;
                     }
                 };
@@ -397,7 +416,7 @@
                 sinyalTerkirim = false;
                 document.getElementById('zonePulau').classList.remove('ready');
                 document.getElementById('slidePetualangan1').classList.add('active');
-                document.getElementById('starUI').style.display = 'block'; 
+                document.getElementById('starUI').style.display = 'flex'; 
                 document.getElementById('robotSpeech').innerText = "Skenario 1. Ketuk dek KAPAL kita terlebih dahulu untuk memberi sinyal aman ke pulau!";
             } else {
                 alert("Fitur Menu Rules/Cara Main sedang diminimalkan untuk fokus ke inti cerita Skenario 1. Kembali ke beranda otomatis.");
@@ -414,7 +433,7 @@
         }
 
         // ==========================================
-        // MEKANIK KAPAL & PULAU
+        // ALUR MEKANIK KETUK KAPAL BARU PULAU
         // ==========================================
         function interaksiLayar1(tipe) {
             if (tipe === 'kapal') {
@@ -448,59 +467,63 @@
         }
 
         // ==========================================
-        // EFEK ZOOM & KEDIP HITAM 0,20 DETIK -> SOAL
+        // KONTROL PENDEK DURASI TRANSISI (ANTI-LAG)
         // ==========================================
         function interaksiLayar2(tipe) {
             if (tipe === 'batu') {
                 playClick(); 
                 
-                // 1. Zoom Sinematik ke Batu (Transisi 1 Detik)
+                // 1. Zoom Sinematik Dipercepat Gerakannya
                 document.getElementById('slidePetualangan2').classList.add('batu-zoomed');
                 document.getElementById('zoneBatu').style.display = 'none'; 
                 document.getElementById('robotSpeech').innerText = "Menganalisis sistem...";
 
-                // 2. Eksekusi Kedip Hitam di akhir zoom
+                // 2. Jeda dipangkas ekstrim menjadi hanya 200 milidetik (0.2 detik) agar terasa instan!
                 setTimeout(() => {
                     const blinkOverlay = document.getElementById('blackBlinkOverlay');
-                    blinkOverlay.classList.add('flash-animation'); // Durasi css 0.20s
+                    blinkOverlay.classList.add('flash-animation'); // Menjalankan durasi kedip 0.20 detik
                     
-                    // 3. Tepat di detik 0.10 (tengah kedip), ganti layar Soal
+                    // 3. Tepat di detik ke-0.10, ganti background ke layar Soal
                     setTimeout(() => {
                         sembunyikanSemuaSlide();
                         document.getElementById('slideSoal').classList.add('active');
+                        
+                        // KUNCI UTAMA: Bintang literasi dihilangkan total saat menjawab soal!
+                        document.getElementById('starUI').style.display = 'none'; 
+                        
                         document.getElementById('robotSpeech').innerText = "Analisis selesai! Tentukan tindakan cerdasmu!";
                     }, 100);
 
-                    // Bersihkan class kedip
+                    // Bersihkan class kedip hitam
                     setTimeout(() => {
                         blinkOverlay.classList.remove('flash-animation');
                     }, 200);
 
-                }, 1000); 
+                }, 200); // Penundaan zoom diturunkan dari 1000ms menjadi 200ms agar instan!
             }
         }
 
         // ==========================================
-        // LOGIKA PENAMAAN FILE SEBAB AKIBAT
+        // EKSEKUSI PENAMAAN GAMBAR SEBAB AKIBAT
         // ==========================================
         function eksekusiPilihOpsi(opsi) {
             playClick();
             
-            // Tambah Poin Bintang
+            // Tambah Poin Bintang Literasi
             jumlahBintang += 1;
             document.getElementById('starCount').innerText = jumlahBintang;
             
-            // Format Nama File Dinamis (Contoh: SAA1.png atau SAB1.png)
+            // Perangkaian String Kode Dinamis Otomatis -> SAA1.png / SAB1.png
             let namaFileSebabAkibat = "SA" + opsi + skenarioSekarang + ".png";
             
             // Panggil file gambar ke elemen img
             document.getElementById('assetSebabAkibatImg').src = namaFileSebabAkibat;
             
-            // Tampilkan Slide Konsekuensi
+            // Tampilkan Slide Konsekuensi Akibat
             sembunyikanSemuaSlide();
             document.getElementById('slideSebabAkibat').classList.add('active');
             
-            // Respon Psikologi Robot
+            // Pengondisian Respons Psikologi Pesan Robot
             if (opsi === 'B') {
                 document.getElementById('robotSpeech').innerText = "🎉 Cerdas! Opsi B sangat efisien. Pelajari sebab akibatnya di layar! (+1 ⭐)";
             } else {
