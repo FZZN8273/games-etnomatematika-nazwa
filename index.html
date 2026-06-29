@@ -100,7 +100,7 @@
         .kapal-tap { width: 60%; height: 26%; bottom: 0; left: 20%; border-radius: 100px 100px 0 0; }
         .batu-tap { width: 36%; height: 44%; top: 32%; left: 32%; border-radius: 50% 50% 35% 35%; }
         
-        /* Zona Tap Kapal Khusus pada layar next1.png */
+        /* Zona Tap Kapal Khusus pada layar next1.jpg */
         .kapal-madura-tap { width: 35%; height: 25%; bottom: 10%; left: 32%; border-radius: 40px; }
 
         @keyframes pulse-glow { 0% { transform: scale(1); box-shadow: 0 0 5px rgba(0, 168, 255, 0.3); } 50% { transform: scale(1.02); box-shadow: 0 0 15px rgba(0, 168, 255, 0.6); } 100% { transform: scale(1); box-shadow: 0 0 5px rgba(0, 168, 255, 0.3); } }
@@ -161,6 +161,22 @@
         .opsi-dampak { font-size: 13px; font-weight: 600; color: #f5f6fa; opacity: 0.95; line-height: 1.4; }
 
         /* ============================
+           EFEK FEEDBACK BETUL/SALAH (BARU!)
+        ============================ */
+        #feedbackOverlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8); z-index: 100; display: none;
+            flex-direction: column; justify-content: center; align-items: center;
+        }
+        .feedback-box {
+            padding: 20px 40px; border-radius: 15px; font-size: 24px; font-weight: 900;
+            text-align: center; text-transform: uppercase; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        .feedback-correct { background: rgba(46, 204, 113, 0.2); border: 3px solid #2ecc71; color: #2ecc71; box-shadow: 0 0 30px rgba(46,204,113,0.5); }
+        .feedback-wrong { background: rgba(231, 76, 60, 0.2); border: 3px solid #e74c3c; color: #e74c3c; box-shadow: 0 0 30px rgba(231,76,60,0.5); }
+        @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+        /* ============================
            TRANSISI LAYAR AWAN (⛅)
         ============================ */
         .cloud-transition-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 80; pointer-events: none; display: none; }
@@ -187,9 +203,8 @@
             position: absolute; width: 30%; max-width: 280px; z-index: 60; 
             display: flex; flex-direction: column; transition: all 0.25s ease-in-out;
         }
-        /* State Posisi Robot */
         .robot-bawah { bottom: -2%; right: -2%; align-items: flex-end; }
-        .robot-atas { top: 12%; right: 2%; align-items: flex-end; } /* Pindah ke atas khusus saat infografis SA1.png aktif */
+        .robot-atas { top: 12%; right: 2%; align-items: flex-end; } 
 
         .robot-img { width: 100%; height: auto; filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.5)); }
         
@@ -217,6 +232,13 @@
     <audio id="clickShipSound" src="clickship.mp3" preload="auto"></audio>
     <audio id="etnoWelcome" src="etnowelcome.mp3" preload="auto"></audio>
     <audio id="backsound" src="backsound.mp3" loop preload="auto"></audio>
+    
+    <audio id="soundCorrect" src="correct.mp3" preload="auto"></audio>
+    <audio id="soundWrong" src="wrong.mp3" preload="auto"></audio>
+
+    <div id="feedbackOverlay">
+        <div id="feedbackMsg" class="feedback-box"></div>
+    </div>
 
     <div id="blackBlinkOverlay"></div>
 
@@ -336,12 +358,11 @@
 
         <div id="slideSebabAkibat" class="slide">
             <img id="assetSebabAkibatImg" src="" alt="Penjelasan Sebab Akibat" class="bg-img">
-            
             <button class="btn-kembali-hud" style="top: 15px; left: 15px; width: 140px; background: #e67e22;" onclick="lanjutKeLayarNextSatu()">Lanjutkan ➔</button>
         </div>
 
         <div id="slideNextSatu" class="slide">
-            <img src="next1.png" alt="Peta Jalur Laut Baru" class="bg-img">
+            <img src="next1.jpg" alt="Peta Jalur Laut Baru" class="bg-img">
             <div id="zoneKapalMadura" class="tap-zone kapal-madura-tap" onclick="berlayarKeMadura()"></div>
         </div>
 
@@ -366,6 +387,8 @@
         const soundClickShip = document.getElementById('clickShipSound');
         const soundWelcome = document.getElementById('etnoWelcome');
         const soundBgm = document.getElementById('backsound');
+        const soundCorrect = document.getElementById('soundCorrect');
+        const soundWrong = document.getElementById('soundWrong');
         
         let audioMuted = false;
         let isBgmPlaying = false; 
@@ -374,7 +397,6 @@
         let skenarioSekarang = 1; 
         let volumeSistem = 1;
 
-        // SECONDS-RESTART BACKSOUND LOOP SYSTEM FALLBACK
         soundBgm.addEventListener('ended', function() {
             if (!audioMuted) {
                 this.currentTime = 0;
@@ -391,7 +413,6 @@
             }, 2500);
         }
 
-        // REGULATOR AUDIO PANEL INTERFACE
         function setSistemVolume(val) {
             volumeSistem = val;
             if(!audioMuted) {
@@ -399,6 +420,8 @@
                 soundClickShip.volume = volumeSistem;
                 soundWelcome.volume = volumeSistem;
                 soundBgm.volume = volumeSistem;
+                soundCorrect.volume = volumeSistem;
+                soundWrong.volume = volumeSistem;
             }
         }
 
@@ -409,6 +432,7 @@
                 btn.innerText = "🔇";
                 soundWelcome.volume = 0; soundBgm.volume = 0;
                 soundClick.volume = 0; soundClickShip.volume = 0;
+                soundCorrect.volume = 0; soundWrong.volume = 0;
             } else {
                 btn.innerText = "🔊";
                 setSistemVolume(document.getElementById('volSlider').value);
@@ -439,7 +463,6 @@
             document.getElementById('slidePetualangan2').classList.remove('batu-zoomed');
             document.getElementById('zoneBatu').style.display = 'block'; 
             
-            // Atur robot kembali ke posisi bawah normal secara default
             const r = document.getElementById('robotAktor');
             r.classList.remove('robot-atas');
             r.classList.add('robot-bawah');
@@ -486,7 +509,6 @@
             document.getElementById('robotSpeech').innerText = "Kembali ke pusat komando. Siap berlayar lagi?";
         }
 
-        // CONTROL LAYAR 1 EKSPEDISI
         function interaksiLayar1(tipe) {
             if (tipe === 'kapal') {
                 playClickShip(); 
@@ -518,7 +540,6 @@
             }
         }
 
-        // ZOOM -> KEDIP HITAM INSTAN 0.20s -> SOAL (soalback.png)
         function interaksiLayar2(tipe) {
             if (tipe === 'batu') {
                 playClick(); 
@@ -533,7 +554,7 @@
                     setTimeout(() => {
                         sembunyikanSemuaSlide();
                         document.getElementById('slideSoal').classList.add('active');
-                        document.getElementById('starUI').style.display = 'none'; // Sembunyikan total agar tidak menumpuk teks soal
+                        document.getElementById('starUI').style.display = 'none'; 
                         document.getElementById('robotSpeech').innerText = "Log kuno terbuka. Tentukan tindakan strategi ekspedisimu, Kapten!";
                     }, 100);
 
@@ -545,34 +566,60 @@
             }
         }
 
-        // EVALUASI STRATEGI SEBAB AKIBAT
+        // ==========================================
+        // SISTEM FEEDBACK EFEK BENAR/SALAH (BARU)
+        // ==========================================
         function eksekusiPilihOpsi(opsi) {
-            playClick();
+            // Mencegah double click
+            let overlayFeed = document.getElementById('feedbackOverlay');
+            if(overlayFeed.style.display === 'flex') return;
             
-            jumlahBintang += 1;
-            document.getElementById('starCount').innerText = jumlahBintang;
+            let isCorrect = (opsi === 'B');
+            let feedbackMsg = document.getElementById('feedbackMsg');
             
-            // KUNCI EFISIENSI BARU: Langsung memuat SA(Nomor Skenario).png
-            let namaFileSebabAkibat = "SA" + skenarioSekarang + ".png";
-            document.getElementById('assetSebabAkibatImg').src = namaFileSebabAkibat;
-            
-            sembunyikanSemuaSlide();
-            document.getElementById('slideSebabAkibat').classList.add('active');
-            
-            // KHUSUS PADA LAYAR INFOGRAFIS: Posisikan robot di ATAS agar grafik data di bawah terbaca jelas!
-            const r = document.getElementById('robotAktor');
-            r.classList.remove('robot-bawah');
-            r.classList.add('robot-atas');
-
-            if (opsi === 'B') {
-                document.getElementById('robotSpeech').innerText = "⚔️ Log Jurnal: Eksplorasi Cara B mendokumentasikan pola aksara secara cepat dan efisien! Analisis infografis data di bawah!";
+            // Tampilkan Efek Jawaban
+            if (isCorrect) {
+                soundCorrect.currentTime = 0;
+                soundCorrect.play().catch(e=>{});
+                feedbackMsg.className = 'feedback-box feedback-correct';
+                feedbackMsg.innerHTML = "🌟 RUTE EFISIEN!<br><span style='font-size:16px; color:#fff; text-shadow:none; font-weight:normal;'>Logika Pemetaan Berhasil</span>";
+                
+                jumlahBintang += 1;
+                document.getElementById('starCount').innerText = jumlahBintang;
             } else {
-                document.getElementById('robotSpeech').innerText = "🧭 Log Jurnal: Eksplorasi Cara A mencatat seluruh detail fisik prasasti secara manual meski memakan waktu lama. Pelajari infografis data di bawah!";
+                soundWrong.currentTime = 0;
+                soundWrong.play().catch(e=>{});
+                feedbackMsg.className = 'feedback-box feedback-wrong';
+                feedbackMsg.innerHTML = "⚠️ RUTE LAMBAT!<br><span style='font-size:16px; color:#fff; text-shadow:none; font-weight:normal;'>Eksplorasi Memakan Banyak Waktu</span>";
             }
+            
+            overlayFeed.style.display = 'flex';
+            
+            // Jeda 1.5 detik untuk melihat efek, baru menuju SA1.png
+            setTimeout(() => {
+                overlayFeed.style.display = 'none';
+                
+                let namaFileSebabAkibat = "SA" + skenarioSekarang + ".png";
+                document.getElementById('assetSebabAkibatImg').src = namaFileSebabAkibat;
+                
+                sembunyikanSemuaSlide();
+                document.getElementById('slideSebabAkibat').classList.add('active');
+                
+                // Posisikan robot di ATAS agar tidak menimpa infografis
+                const r = document.getElementById('robotAktor');
+                r.classList.remove('robot-bawah');
+                r.classList.add('robot-atas');
+
+                if (isCorrect) {
+                    document.getElementById('robotSpeech').innerText = "⚔️ Log Jurnal: Eksplorasi Cara B mendokumentasikan pola aksara secara cepat dan efisien! Analisis infografis data di bawah!";
+                } else {
+                    document.getElementById('robotSpeech').innerText = "🧭 Log Jurnal: Eksplorasi Cara A mencatat seluruh detail fisik prasasti secara manual. Pelajari infografis data di bawah!";
+                }
+            }, 1500);
         }
 
         // ==========================================
-        // ALUR EKSPEDISI ANTAR-SKENARIO OTOMATIS
+        // ALUR MENUJU SKENARIO BERIKUTNYA
         // ==========================================
         function lanjutKeLayarNextSatu() {
             playClick();
@@ -583,11 +630,11 @@
             r.classList.remove('robot-atas');
             r.classList.add('robot-bawah');
             
-            // Tampilkan layar transisi peta laut baru, bintang tersimpan aman
+            // Tampilkan peta laut (next1.jpg)
             document.getElementById('slideNextSatu').classList.add('active');
             document.getElementById('starUI').style.display = 'flex'; 
             
-            document.getElementById('robotSpeech').innerText = "Skenario 1 Selesai! Ketuk objek KAPAL kita di peta laut untuk berlayar menuju wilayah Madura!";
+            document.getElementById('robotSpeech').innerText = "Skenario 1 Tuntas! Ketuk objek KAPAL kita di peta laut untuk berlayar menuju wilayah Madura!";
         }
 
         function berlayarKeMadura() {
@@ -597,10 +644,10 @@
             const transisi = document.getElementById('cloudTransition');
             transisi.style.display = 'flex'; void transisi.offsetWidth; transisi.classList.add('transition-active');
             
-            // Langsung memicu mendarat ke Skenario 2 (Blijãh) dengan background 3.jpg secara instan!
+            // Langsung mendarat ke Skenario 2 (Blijãh / 3.jpg)
             setTimeout(() => {
                 sembunyikanSemuaSlide();
-                skenarioSekarang = 2; // Naikkan indeks skenario ke-2 secara otomatis
+                skenarioSekarang = 2; // Otomatis naik indeks
                 
                 document.getElementById('slideSkenarioDuaUtama').classList.add('active');
                 document.getElementById('starUI').style.display = 'flex'; 
