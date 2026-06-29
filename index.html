@@ -7,7 +7,7 @@
     
     <style>
         /* ============================
-           RESET & FONT PSIKOLOGI (ANTI-PUSING)
+           RESET & FONT PETUALANGAN (RAMAH OTAK)
         ============================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -17,7 +17,7 @@
             min-height: 100vh; 
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             overflow: hidden;
-            color: #ffffff;
+            color: #dff9fb; /* Warna teks utama: Ice Blue yang tenang */
         }
 
         /* ============================
@@ -56,32 +56,32 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* ============================
-           GAME CONTAINER (KUNCI RASIO MURNI 3:2)
+           GAME CONTAINER (3:2 RATIO UTUH)
         ============================ */
         .game-container {
             position: relative; width: 100%; max-width: 900px; aspect-ratio: 3 / 2; 
             background-color: #000; overflow: hidden; box-shadow: 0 0 30px rgba(0,0,0,0.8); display: none;
         }
         
-        /* PANEL AUDIO PENGATUR ± VITAL */
+        /* PANEL AUDIO CONTROLLER ± */
         .audio-panel {
             position: absolute; top: 15px; right: 15px; z-index: 60;
-            background: rgba(44, 62, 80, 0.9); border: 2px solid #74b9ff;
+            background: rgba(44, 62, 80, 0.85); border: 2px solid #74b9ff;
             border-radius: 30px; padding: 5px 15px; display: flex;
             align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
-        .audio-toggle { background: transparent; color: white; font-weight: bold; border: none; cursor: pointer; font-size: 16px; }
+        .audio-toggle { background: transparent; color: #dff9fb; font-weight: bold; border: none; cursor: pointer; font-size: 16px; }
         .volume-slider { width: 70px; cursor: pointer; accent-color: #00a8ff; }
 
         .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
         .slide.active { display: block; }
         
-        /* LATAR BELAKANG */
-        .bg-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease-out; transform-origin: 50% 50%; display: block; }
+        /* IMAGE CONTROLLER WITH FAST TRANSITION */
+        .bg-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease-out; transform-origin: 50% 50%; display: block; }
         .batu-zoomed .bg-img { transform: scale(1.6) translateY(-5%); }
 
         /* ============================
-           UI BERANDA & HUB INTERIOR
+           HUB BERANDA INTERFACE
         ============================ */
         .bottom-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 12%; display: flex; justify-content: center; align-items: center; cursor: pointer; }
         .start-text { color: #ffffff; font-size: 3vw; font-weight: 900; letter-spacing: 2px; text-shadow: 0px 4px 10px #0984e3; animation: pulse-glow 1.5s infinite; }
@@ -90,7 +90,7 @@
         .puzzle-btn { left: 24.5%; } .book-btn { left: 42.5%; } .ship-btn { left: 61%; }
 
         /* ============================
-           ZONA TAP RESPONSIF
+           ZONA TAP RESPONSIVE FAST
         ============================ */
         .tap-zone { position: absolute; background: rgba(0, 168, 255, 0.02); border: 2px dashed #00a8ff; cursor: pointer; z-index: 30; animation: pulse-glow 2s infinite ease-in-out; }
         .tap-zone.ready { border-color: #2ecc71; background: rgba(46, 204, 113, 0.05); }
@@ -110,81 +110,80 @@
         @keyframes blackFlash020 { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
 
         /* ============================
-           DESAIN STRUKTUR SOAL PADA 'soalback.png' (TANPA BOX PUTIH)
+           RPG ADVENTURE INTERFACE SOAL (DI ATAS 'soalback.png')
         ============================ */
         .soal-panel-wrapper {
             position: absolute; 
-            top: 5%; left: 5%; 
-            width: 62%; height: 90%; /* Menyisakan area kanan 100% lega bebas tumpukan untuk robot */
+            top: 6%; left: 5%; 
+            width: 62%; height: 88%; 
             z-index: 45; 
             display: flex; flex-direction: column; justify-content: center;
-            background: transparent; /* Box putih dihapus total sesuai request! */
-            border: none; padding: 10px; box-shadow: none;
+            background: transparent; padding: 10px; /* Box putih dihapus total! */
         }
         
-        /* Teks Situasi langsung menempel di gambar dengan high-contrast shadow */
+        /* Teks jurnal perjalanan langsung menyatu di layar, misterius & estetik */
         .soal-situasi-box {
-            background: rgba(0, 0, 0, 0.45); /* Perlindungan bar transparan tipis agar teks tetap terbaca */
-            border-left: 6px solid #00a8ff; padding: 12px 18px;
-            font-size: 15px; font-weight: 700; color: #ffffff; line-height: 1.5;
-            border-radius: 6px; margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+            background: rgba(26, 37, 47, 0.75); 
+            border-left: 4px solid #00a8ff; padding: 14px 18px;
+            font-size: 15px; font-weight: 700; color: #dff9fb; line-height: 1.6;
+            border-radius: 6px; margin-bottom: 18px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
         .choose-title {
-            text-align: left; font-size: 15px; font-weight: 900; color: #ffffff;
-            margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+            text-align: left; font-size: 14px; font-weight: 900; color: #74b9ff;
+            margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1.5px;
+            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.9);
         }
         
         .opsi-container { display: flex; flex-direction: column; gap: 12px; }
         
+        /* TOMBOL PILIHAN KEMBAR TOTAL SECARA VISUAL (MANIPULASI PSIKOLOGI MURNI) */
         .opsi-button-card {
-            border: 2px solid; border-radius: 10px; padding: 12px 18px;
-            cursor: pointer; transition: 0.15s ease; display: flex; align-items: center; gap: 15px;
+            background: rgba(26, 37, 47, 0.85); 
+            border: 2px solid #00a8ff; 
+            border-radius: 10px; padding: 14px 18px;
+            cursor: pointer; transition: 0.12s ease-in-out; 
+            display: flex; align-items: center; gap: 15px;
+            color: #dff9fb;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        /* Kedua tombol bereaksi persis sama saat di-hover, tidak membocorkan petunjuk */
+        .opsi-button-card:hover { 
+            background: rgba(9, 132, 227, 0.35); 
+            border-color: #74b9ff; 
+            transform: translateX(6px); 
+            box-shadow: 0 0 15px rgba(0,168,255,0.5); 
         }
         
-        /* PSIKOLOGI WARNA TOMBOL */
-        /* Opsi A: Sengaja dibuat Flat & Transparan agar dipandang otak sebagai opsi "lambat/kuno" */
-        .card-a { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.6); color: #ffffff; }
-        .card-a:hover { background: rgba(255, 255, 255, 0.25); border-color: #ffffff; transform: translateX(4px); }
-        .badge-a { background: rgba(255, 255, 255, 0.3); color: #ffffff; border: 1px solid #fff; }
-
-        /* Opsi B (KUNCI): Diberi pancaran Tech Blue cerah yang memicu insting otak untuk memilihnya */
-        .card-b { background: rgba(0, 168, 255, 0.2); border-color: #00a8ff; color: #ffffff; box-shadow: 0 0 10px rgba(0,168,255,0.3); }
-        .card-b:hover { background: rgba(0, 168, 255, 0.4); border-color: #00a8ff; transform: translateX(4px); box-shadow: 0 0 15px rgba(0,168,255,0.7); }
-        .badge-b { background: #00a8ff; color: #ffffff; box-shadow: 0 0 10px rgba(0,168,255,0.6); }
-
         .opsi-badge {
             width: 36px; height: 36px; border-radius: 50%; display: flex; justify-content: center; 
             align-items: center; font-weight: 900; font-size: 16px; flex-shrink: 0;
+            background: #00a8ff; color: #1a252f; box-shadow: 0 0 8px rgba(0,168,255,0.4);
         }
-        .opsi-text-content { display: flex; flex-direction: column; gap: 3px; text-shadow: 1px 1px 3px rgba(0,0,0,0.9); }
-        .opsi-judul { font-size: 15px; font-weight: 800; }
-        .opsi-dampak { font-size: 13px; font-weight: 600; }
-        
-        .card-a .opsi-dampak { color: #ffeaa7; } /* Kuning tanda lambat */
-        .card-b .opsi-dampak { color: #55efc4; } /* Hijau tanda sukses cerdas */
+        .opsi-text-content { display: flex; flex-direction: column; gap: 4px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+        .opsi-judul { font-size: 15px; font-weight: 800; letter-spacing: 0.5px; }
+        .opsi-dampak { font-size: 13px; font-weight: 600; color: #dff9fb; opacity: 0.95; } /* Seluruh teks menggunakan Ice Blue kustom uniform */
 
         /* ============================
-           TRANSISI AWAN ( Sherwood ⛅ )
+           TRANSISI AWAN (⛅)
         ============================ */
         .cloud-transition-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 80; pointer-events: none; display: none; }
-        .cloud-half { width: 50%; height: 100%; background: #e3f2fd; transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1); position: absolute; top: 0; display: flex; align-items: center; justify-content: center; }
+        .cloud-half { width: 50%; height: 100%; background: #e3f2fd; transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); position: absolute; top: 0; display: flex; align-items: center; justify-content: center; }
         .left-cloud { left: 0; transform: translateX(-100%); border-radius: 0 50px 50px 0; }
         .right-cloud { right: 0; transform: translateX(100%); border-radius: 50px 0 0 50px; }
         .cloud-half::before { content: "⛅"; font-size: 60px; opacity: 0.8; position: absolute; }
         .transition-active .left-cloud, .transition-active .right-cloud { transform: translateX(0); }
 
         /* ============================
-           HUD (BINTANG & ROBOT) - ANTI TIMPA
+           HUD GLOBAL (ROBOT & BINTANG CENTER TOP)
         ============================ */
         #globalUI, #starUI { display: none; } 
         
-        /* Bintang dikunci di TENGAH ATAS secara aman & minimalis */
         .star-container { 
             position: absolute; top: 15px; left: 50%; transform: translateX(-50%); 
-            background: rgba(9, 132, 227, 0.95); padding: 6px 18px; border-radius: 30px; 
+            background: rgba(44, 62, 80, 0.9); padding: 6px 18px; border-radius: 30px; 
             color: #ffeaa7; font-size: 16px; font-weight: 900; z-index: 60; 
             border: 2px solid #ffeaa7; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             display: flex; align-items: center; gap: 5px;
@@ -200,7 +199,7 @@
         }
         .speech-bubble::after { content: ''; position: absolute; bottom: -10px; right: 30px; border-width: 10px 10px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; }
 
-        /* NAVIGASI HUD HUD */
+        /* TOMBOL LOG PENJELAJAHAN */
         .btn-kembali-hud { position: absolute; top: 15px; left: 15px; width: 100px; padding: 8px; background: #0984e3; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; z-index: 50; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
         .btn-kembali-hud:hover { background: #00a8ff; }
         
@@ -224,15 +223,15 @@
 
     <div id="desktopWarning">
         <div class="warning-box">
-            <h2>⚠️ INFO PENTING!</h2>
-            <p>Main di HP/Tablet? Wajib ubah ke tampilan <b>Situs Desktop!</b> (Klik titik 3 di pojok kanan atas browser).</p>
-            <button class="btn-oke" onclick="tutupWarning()">Siap, Udah Desktop!</button>
+            <h2>⚠️ INFO JURNAL EKSPEDISI</h2>
+            <p>Buka menggunakan browser dalam mode <b>Situs Desktop</b> agar visual penjelajahan pulau tidak terpotong! (Klik titik 3 pojok kanan atas browser).</p>
+            <button class="btn-oke" onclick="tutupWarning()">Siap, Buka Akses!</button>
         </div>
     </div>
 
     <div id="loadingScreen">
         <div class="spinner"></div>
-        <h2 style="margin-bottom: 5px; color: #00a8ff;">Menyiapkan Pelabuhan...</h2>
+        <h2 style="margin-bottom: 5px; color: #00a8ff;">Menautkan Server Jurnal Kuno...</h2>
     </div>
 
     <div class="game-container" id="gameContainer">
@@ -274,26 +273,26 @@
             
             <div class="soal-panel-wrapper">
                 <div class="soal-situasi-box">
-                    📜 <b>SITUASI:</b><br>
-                    Kamu menemukan 1 Prasasti Kedukan Bukit (batu bertulis kuno dari Kerajaan Sriwijaya). Tugasmu: dokumentasikan prasasti ini ke dalam sistem digital tanpa merusak batu kuno itu.
+                    🧭 <b>JURNAL PENJELAJAHAN:</b><br>
+                    Kamu menemukan 1 Prasasti Kedukan Bukit (batu bertulis kuno dari Kerajaan Sriwijaya). Dokumentasikan temuan rahasia leluhur ini ke dalam sistem digital kapal tanpa merusak fisik batu kuno tersebut!
                 </div>
                 
-                <div class="choose-title">❓ TENTUKAN PILIHAN METODE KAMU:</div>
+                <div class="choose-title">⚔️ TENTUKAN AKSI/RUTE PENJELAJAHANMU:</div>
                 
                 <div class="opsi-container">
-                    <div class="opsi-button-card card-a" onclick="eksekusiPilihOpsi('A')">
-                        <div class="opsi-badge badge-a">A</div>
+                    <div class="opsi-button-card" onclick="eksekusiPilihOpsi('A')">
+                        <div class="opsi-badge">A</div>
                         <div class="opsi-text-content">
-                            <div class="opsi-judul">Dokumentasi Biasa</div>
-                            <div class="opsi-dampak">Foto, ukur, tulis semua detail satu per satu. Selesai 1 hari, akurat tapi lambat.</div>
+                            <div class="opsi-judul">Rute Pencatatan Fisik Kuno</div>
+                            <div class="opsi-dampak">Foto, ukur, dan tulis manual detail satu per satu. (Estimasi: Selesai 1 hari, akurat namun lambat).</div>
                         </div>
                     </div>
 
-                    <div class="opsi-button-card card-b" onclick="eksekusiPilihOpsi('B')">
-                        <div class="opsi-badge badge-b">B</div>
+                    <div class="opsi-button-card" onclick="eksekusiPilihOpsi('B')">
+                        <div class="opsi-badge">B</div>
                         <div class="opsi-text-content">
-                            <div class="opsi-judul">Dokumentasi Pola</div>
-                            <div class="opsi-dampak">Cari pola dan sistem penulisan prasasti. Selesai lebih cepat, paham sistemnya!</div>
+                            <div class="opsi-judul">Rute Pemetaan Struktur Komputasi</div>
+                            <div class="opsi-dampak">Cari pola matematika dan sistem inti penulisan prasasti. (Estimasi: Selesai instan & memahami sistemnya).</div>
                         </div>
                     </div>
                 </div>
@@ -303,7 +302,7 @@
 
         <div id="slideSebabAkibat" class="slide">
             <img id="assetSebabAkibatImg" src="" alt="Penjelasan Sebab Akibat" class="bg-img">
-            <button class="btn-selesai" onclick="kembaliKeMenu()">⚓ Selesai & Balik Menu</button>
+            <button class="btn-selesai" onclick="kembaliKeMenu()">⚓ Lanjutkan Eksplorasi</button>
         </div>
 
         <div id="globalUI">
@@ -330,7 +329,7 @@
         let skenarioSekarang = 1; 
         let volumeSistem = 1;
 
-        // KUNCI FAILSAFE RE-RUN BACKSOUND INSTAN (0,0001 DETIK)
+        // INSTANT RE-LOOP BACKSOUND FAILSAFE (0,0001 DETIK)
         soundBgm.addEventListener('ended', function() {
             if (!audioMuted) {
                 this.currentTime = 0;
@@ -347,7 +346,7 @@
             }, 2500);
         }
 
-        // FUNGSI PENGATUR AUDIO ± VOLUME
+        // AUDIO PANEL REGULATOR ±
         function setSistemVolume(val) {
             volumeSistem = val;
             if(!audioMuted) {
@@ -404,7 +403,7 @@
             
             document.getElementById('globalUI').style.display = 'block'; 
             document.getElementById('starUI').style.display = 'none'; 
-            document.getElementById('robotSpeech').innerText = "Selamat datang kapten! Siap berlayar!";
+            document.getElementById('robotSpeech').innerText = "Selamat datang kapten! Siap menjelajah pulau kuno nusantara?";
         }
 
         function openMenu(menuType) {
@@ -417,9 +416,9 @@
                 document.getElementById('zonePulau').classList.remove('ready');
                 document.getElementById('slidePetualangan1').classList.add('active');
                 document.getElementById('starUI').style.display = 'flex'; 
-                document.getElementById('robotSpeech').innerText = "Skenario 1. Ketuk dek KAPAL kita terlebih dahulu untuk memberi sinyal aman ke pulau!";
+                document.getElementById('robotSpeech').innerText = "Skenario 1 Dimulai! Ketuk dek KAPAL terlebih dahulu untuk memancarkan sinyal pemindai aman ke area pulau kuno!";
             } else {
-                alert("Fitur Menu Rules/Cara Main sedang diminimalkan untuk fokus ke inti cerita Skenario 1. Kembali ke beranda otomatis.");
+                alert("Fitur menu rules/cara main sedang diminimalkan untuk optimalisasi petualangan inti Skenario 1.");
                 kembaliKeMenu();
             }
         }
@@ -429,27 +428,25 @@
             sembunyikanSemuaSlide();
             document.getElementById('slide2').classList.add('active');
             document.getElementById('starUI').style.display = 'none'; 
-            document.getElementById('robotSpeech').innerText = "Ayo lanjut eksplorasi, Kapten!";
+            document.getElementById('robotSpeech').innerText = "Rute diatur ulang. Ingin melanjutkan penjelajahan samudra kuno, Kapten?";
         }
 
-        // ==========================================
-        // ALUR MEKANIK KETUK KAPAL BARU PULAU
-        // ==========================================
+        // KAPAL & PULAU CONTROLLER
         function interaksiLayar1(tipe) {
             if (tipe === 'kapal') {
                 playClickShip(); 
                 sinyalTerkirim = true;
                 document.getElementById('zonePulau').classList.add('ready');
-                document.getElementById('robotSpeech').innerText = "🛰️ Sinyal aman! Pulau siap diketuk.";
+                document.getElementById('robotSpeech').innerText = "🛰️ Pemindai aman aktif! Sinyal pelabuhan merespon balik. Sekarang kapten bisa aman mendarat dengan cara mengetuk PULAU!";
             } 
             else if (tipe === 'pulau') {
                 if (!sinyalTerkirim) {
                     playClick(); 
-                    document.getElementById('robotSpeech').innerText = "❌ Ketuk dek KAPAL terlebih dahulu!";
+                    document.getElementById('robotSpeech').innerText = "❌ Sinyal belum aman! Lakukan enkripsi pelindung dengan mengetuk dek KAPAL terlebih dahulu!";
                     return;
                 }
                 playClickShip();
-                document.getElementById('robotSpeech').innerText = "Mendarat...";
+                document.getElementById('robotSpeech').innerText = "Menurunkan jangkar... Kapal merapat ke tepi pulau.";
                 
                 const transisi = document.getElementById('cloudTransition');
                 transisi.style.display = 'flex'; void transisi.offsetWidth; transisi.classList.add('transition-active');
@@ -457,77 +454,70 @@
                 setTimeout(() => {
                     sembunyikanSemuaSlide();
                     document.getElementById('slidePetualangan2').classList.add('active');
-                    document.getElementById('robotSpeech').innerText = "Pendaratan berhasil! Klik BATU kuno itu!";
-                }, 1200);
+                    document.getElementById('robotSpeech').innerText = "Pendaratan sukses! Temukan artefak batu raksasa di tengah lembah, dekati dengan cara klik BATU kuno tersebut!";
+                }, 800); // Durasi loading dipangkas responsif
 
                 setTimeout(() => {
                     transisi.classList.remove('transition-active'); transisi.style.display = 'none'; 
-                }, 2400);
+                }, 1600);
             }
         }
 
-        // ==========================================
-        // KONTROL PENDEK DURASI TRANSISI (ANTI-LAG)
-        // ==========================================
+        // ZOOM -> KEDIP HITAM INSTAN 0.20s -> SOAL PADA 'soalback.png'
         function interaksiLayar2(tipe) {
             if (tipe === 'batu') {
                 playClick(); 
                 
-                // 1. Zoom Sinematik Dipercepat Gerakannya
+                // 1. Jalankan Gerakan Zoom Sinematik Cepat (0.4 detik sesuai CSS)
                 document.getElementById('slidePetualangan2').classList.add('batu-zoomed');
                 document.getElementById('zoneBatu').style.display = 'none'; 
-                document.getElementById('robotSpeech').innerText = "Menganalisis sistem...";
+                document.getElementById('robotSpeech').innerText = "Memulai dekripsi teks batu kuno Kerajaan Sriwijaya...";
 
-                // 2. Jeda dipangkas ekstrim menjadi hanya 200 milidetik (0.2 detik) agar terasa instan!
+                // 2. Transisi langsung melempar kilat kedip hitam (Dipangkas instan tanpa lag!)
                 setTimeout(() => {
                     const blinkOverlay = document.getElementById('blackBlinkOverlay');
-                    blinkOverlay.classList.add('flash-animation'); // Menjalankan durasi kedip 0.20 detik
+                    blinkOverlay.classList.add('flash-animation'); 
                     
-                    // 3. Tepat di detik ke-0.10, ganti background ke layar Soal
+                    // 3. Tepat di detik ke-0.10 (tengah kedip), pindahkan layar Soal diam-diam
                     setTimeout(() => {
                         sembunyikanSemuaSlide();
                         document.getElementById('slideSoal').classList.add('active');
                         
-                        // KUNCI UTAMA: Bintang literasi dihilangkan total saat menjawab soal!
+                        // CRITICAL: Bintang literasi dihilangkan total saat menjawab agar bersih dari tumpukan
                         document.getElementById('starUI').style.display = 'none'; 
                         
-                        document.getElementById('robotSpeech').innerText = "Analisis selesai! Tentukan tindakan cerdasmu!";
+                        document.getElementById('robotSpeech').innerText = "Jurnal Sriwijaya terbuka! Kapten, pilih keputusan rute taktis penjelajahanmu!";
                     }, 100);
 
-                    // Bersihkan class kedip hitam
                     setTimeout(() => {
                         blinkOverlay.classList.remove('flash-animation');
                     }, 200);
 
-                }, 200); // Penundaan zoom diturunkan dari 1000ms menjadi 200ms agar instan!
+                }, 400); // Penundaan dipotong dari 1000ms menjadi 400ms menyesuaikan durasi zoom baru (Sangat Responsif!)
             }
         }
 
-        // ==========================================
-        // EKSEKUSI PENAMAAN GAMBAR SEBAB AKIBAT
-        // ==========================================
+        // STRUKTUR DATA SEBAB AKIBAT STRATEGI DINAMIS
         function eksekusiPilihOpsi(opsi) {
             playClick();
             
-            // Tambah Poin Bintang Literasi
+            // Tambah Bintang di Log Ekspedisi Akhir
             jumlahBintang += 1;
             document.getElementById('starCount').innerText = jumlahBintang;
             
-            // Perangkaian String Kode Dinamis Otomatis -> SAA1.png / SAB1.png
+            // Formula string otomatis: SA + Huruf Opsi + Angka Skenario (Contoh Skenario 1: SAA1.png / SAB1.png)
             let namaFileSebabAkibat = "SA" + opsi + skenarioSekarang + ".png";
             
-            // Panggil file gambar ke elemen img
             document.getElementById('assetSebabAkibatImg').src = namaFileSebabAkibat;
             
-            // Tampilkan Slide Konsekuensi Akibat
             sembunyikanSemuaSlide();
             document.getElementById('slideSebabAkibat').classList.add('active');
             
-            // Pengondisian Respons Psikologi Pesan Robot
+            // Respons petualangan emosional tanpa kesan kuis/ujian kaku
             if (opsi === 'B') {
-                document.getElementById('robotSpeech').innerText = "🎉 Cerdas! Opsi B sangat efisien. Pelajari sebab akibatnya di layar! (+1 ⭐)";
+                document.getElementById('robotSpeech').innerText = "⚔️ Keputusan Brilian! Pemetaan pola berhasil mengurai rahasia etnomatematika Sriwijaya secara efisien! Pelajari log sebab akibatnya di layar! (+1 ⭐)";
             } else {
-                document.getElementById('robotSpeech').innerText = "⚠️ Opsi A memakan banyak waktu. Pelajari konsekuensinya di layar! (+1 ⭐)";
+                document.getElementById('robotSpeech').innerText = "🧭 Eksplorasi Manual Dipilih! Rute ini memakan sisa waktu kru di pulau, namun mencatat sejarah fisik. Pelajari log sebab akibatnya di layar! (+1 ⭐)";
             }
         }
     </script>
