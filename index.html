@@ -65,7 +65,7 @@
         
         /* REGULATOR VOLUME AUDIO PANEL ± */
         .audio-panel {
-            position: absolute; top: 15px; right: 15px; z-index: 60;
+            position: absolute; top: 15px; right: 15px; z-index: 70;
             background: rgba(44, 62, 80, 0.85); border: 2px solid #74b9ff;
             border-radius: 30px; padding: 5px 15px; display: flex;
             align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
@@ -110,7 +110,7 @@
         @keyframes blackFlash020 { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
 
         /* ============================
-           PANEL MENU: RULES & CARA MAIN (GAYA RPG TRANS-GOLD)
+           PANEL MENU: RULES & CARA MAIN
         ============================ */
         .menu-panel-wrapper {
             position: absolute; top: 10%; left: 10%; width: 55%; height: 80%;
@@ -169,7 +169,7 @@
         .transition-active .left-cloud, .transition-active .right-cloud { transform: translateX(0); }
 
         /* ============================
-           HUD INTERFACE GLOBAL
+           HUD INTERFACE GLOBAL & ROBOT ENGINE
         ============================ */
         #globalUI, #starUI { display: none; } 
         
@@ -181,15 +181,29 @@
             display: flex; align-items: center; gap: 5px;
         }
 
-        .robot-wrapper { position: absolute; bottom: -2%; right: -2%; width: 30%; max-width: 280px; z-index: 60; display: flex; flex-direction: column; align-items: flex-end; }
+        /* Batasan Pembungkus Robot Dinamis */
+        .robot-wrapper { 
+            position: absolute; 
+            width: 30%; max-width: 280px; z-index: 60; 
+            display: flex; flex-direction: column; transition: all 0.3s ease-in-out;
+        }
+        /* State Default: Robot di kanan bawah */
+        .robot-bawah { bottom: -2%; right: -2%; align-items: flex-end; }
+        /* State Modifikasi: Robot pindah ke kanan atas agar tidak menimpa isi infografis SA1.png */
+        .robot-atas { top: 12%; right: 2%; align-items: flex-end; }
+
         .robot-img { width: 100%; height: auto; filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.5)); }
         
         .speech-bubble {
             background: #ffffff; border-radius: 12px; padding: 12px; margin-right: 25px; margin-bottom: -10px; font-size: 1.2vw;
             color: #2c3e50; font-weight: 700; text-align: center; box-shadow: 0px 4px 10px rgba(0,0,0,0.2); position: relative; z-index: 61; border: 2px solid #74b9ff;
-            width: 260px; max-height: 180px; overflow-y: auto;
+            width: 260px; max-height: 140px; overflow-y: auto;
         }
-        .speech-bubble::after { content: ''; position: absolute; bottom: -10px; right: 30px; border-width: 10px 10px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; }
+        
+        /* Modifikasi panah ekor gelembung bicara sesuai posisi robot */
+        .robot-bawah .speech-bubble::after { content: ''; position: absolute; bottom: -10px; right: 30px; border-width: 10px 10px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; }
+        .robot-atas .speech-bubble { margin-bottom: 0; margin-top: -10px; }
+        .robot-atas .speech-bubble::after { content: ''; position: absolute; top: -10px; right: 30px; border-width: 0 10px 10px; border-style: solid; border-color: transparent transparent #ffffff transparent; }
 
         /* REGULASI NAVIGASI UTAMA */
         .btn-kembali-hud { position: absolute; top: 15px; left: 15px; width: 100px; padding: 8px; background: #0984e3; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; z-index: 50; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
@@ -325,13 +339,18 @@
 
         <div id="slideSebabAkibat" class="slide">
             <img id="assetSebabAkibatImg" src="" alt="Penjelasan Sebab Akibat" class="bg-img">
-            <button class="btn-selesai" onclick="kembaliKeMenu()">⚓ Lanjutkan Pelayaran</button>
+            <button class="btn-selesai" onclick="pindahKeLayarAkhir()">⚓ Lihat Kesimpulan Akhir</button>
+        </div>
+
+        <div id="slideLast" class="slide">
+            <img src="last1.png" alt="Akhir Skenario 1" class="bg-img">
+            <button class="btn-selesai" style="background: #e67e22;" onclick="kembaliKeMenu()">⚓ Selesai Ekspedisi</button>
         </div>
 
         <div id="globalUI">
             <div id="starUI" class="star-container">🌟 <span id="starCount">0</span></div>
             
-            <div class="robot-wrapper">
+            <div class="robot-wrapper robot-bawah" id="robotAktor">
                 <div class="speech-bubble" id="robotSpeech">Halo! Pilih ikon untuk mulai!</div>
                 <img src="robot.jpg" alt="Robot Nusantara" class="robot-img" onerror="this.src='https://via.placeholder.com/300x400.png?text=Robot'">
             </div>
@@ -414,6 +433,11 @@
             document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active'));
             document.getElementById('slidePetualangan2').classList.remove('batu-zoomed');
             document.getElementById('zoneBatu').style.display = 'block'; 
+            
+            // Kembalikan posisi robot ke bawah secara normal
+            const r = document.getElementById('robotAktor');
+            r.classList.remove('robot-atas');
+            r.classList.add('robot-bawah');
         }
 
         function startGame() {
@@ -520,19 +544,36 @@
             jumlahBintang += 1;
             document.getElementById('starCount').innerText = jumlahBintang;
             
-            // FOKUS EFISIENSI TOTAL: Langsung memuat SA(Nomor Skenario).png murni bebas sub-opsi!
+            // Langsung memuat SA(Nomor).png murni bebas sub-opsi
             let namaFileSebabAkibat = "SA" + skenarioSekarang + ".png";
-            
             document.getElementById('assetSebabAkibatImg').src = namaFileSebabAkibat;
             
             sembunyikanSemuaSlide();
             document.getElementById('slideSebabAkibat').classList.add('active');
             
+            // KHUSUS SCREEN SA1.png: Naikkan robot ke atas agar data infografis terbaca jelas!
+            const r = document.getElementById('robotAktor');
+            r.classList.remove('robot-bawah');
+            r.classList.add('robot-atas');
+
             if (opsi === 'B') {
-                document.getElementById('robotSpeech').innerText = "⚔️ Log Aktivitas: Eksplorasi dengan Cara B berhasil mendokumentasikan pola aksara secara cepat dan efisien! Pelajari analisismu pada layar! (+1 ⭐)";
+                document.getElementById('robotSpeech').innerText = "⚔️ Log Aktivitas: Eksplorasi Cara B mendokumentasikan pola aksara secara cepat dan efisien! Analisis infografisnya di bawah ini!";
             } else {
-                document.getElementById('robotSpeech').innerText = "🧭 Log Aktivitas: Eksplorasi dengan Cara A mencatat seluruh detail fisik prasasti secara manual meski memakan waktu lama. Pelajari analisismu pada layar! (+1 ⭐)";
+                document.getElementById('robotSpeech').innerText = "🧭 Log Aktivitas: Eksplorasi Cara A mencatat seluruh detail fisik prasasti secara manual meski memakan waktu lama. Pelajari data infografisnya!";
             }
+        }
+
+        function pindahKeLayarAkhir() {
+            playClick();
+            sembunyikanSemuaSlide();
+            document.getElementById('slideLast').classList.add('active');
+            
+            // Pada layar ending, robot tetap di atas atau disesuaikan
+            const r = document.getElementById('robotAktor');
+            r.classList.remove('robot-bawah');
+            r.classList.add('robot-atas');
+            
+            document.getElementById('robotSpeech').innerText = "Luar biasa Kapten! Skenario 1 telah tuntas diselesaikan dengan sempurna! Bersiap menuju petualangan berikutnya!";
         }
     </script>
 </body>
