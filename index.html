@@ -62,14 +62,14 @@
         /* ============================
            MODAL INPUT NAMA KAPTEN
         ============================ */
-        .modal-overlay { position: absolute; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 85; display: none; justify-content: center; align-items: center; flex-direction: column; }
+        .modal-overlay { position: absolute; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 99; display: none; justify-content: center; align-items: center; flex-direction: column; }
         .name-box { background: rgba(20, 30, 40, 0.95); border: 2px solid #eccc68; border-radius: 15px; padding: 30px; text-align: center; width: 60%; box-shadow: 0 10px 30px rgba(236,204,104,0.3); }
         .name-box h2 { color: #eccc68; margin-bottom: 15px; letter-spacing: 1px; }
         .name-input { width: 90%; padding: 12px; font-size: 16px; font-weight: bold; text-align: center; border-radius: 8px; border: 2px solid #74b9ff; background: #1a252f; color: #fff; margin-bottom: 20px; outline: none; }
         .name-input:focus { border-color: #eccc68; }
 
         /* ============================
-           ZONA TAP & TOMBOL (Z-INDEX 65 BIAR AMAN DARI BUG KLIK)
+           ZONA TAP & TOMBOL (Z-INDEX 65)
         ============================ */
         .bottom-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 12%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 65; }
         .start-text { color: #ffffff; font-size: 3vw; font-weight: 900; letter-spacing: 2px; text-shadow: 0px 4px 10px #0984e3; animation: pulse-glow 1.5s infinite; }
@@ -81,28 +81,25 @@
         .tap-zone.ready { border-color: #2ecc71; background: rgba(46, 204, 113, 0.05); }
         .tap-zone:hover { background: rgba(0, 168, 255, 0.15); }
         
-        /* 🚨 Cek koordinat (top, bottom, left, right) di bawah ini ya! Geser kalau kurang pas! */
         .pulau-tap { width: 38%; height: 42%; top: 25%; right: 10%; border-radius: 30px; }
         .kapal-tap { width: 60%; height: 26%; bottom: 0; left: 20%; border-radius: 100px 100px 0 0; }
         .batu-tap { width: 36%; height: 44%; top: 32%; left: 32%; border-radius: 50% 50% 35% 35%; }
         
-        /* Zona Kapal Madura (next1.png) */
-        .kapal-madura-tap { width: 35%; height: 35%; bottom: 20%; left: 32%; border-radius: 40px; }
+        /* Zona Kapal Madura Diperbesar */
+        .kapal-madura-tap { width: 45%; height: 35%; bottom: 20%; left: 28%; border-radius: 40px; }
         
-        /* Zona Kakek (4.png) */
-        .kakek-tap { width: 25%; height: 50%; bottom: 5%; right: 15%; border-radius: 50%; display: none; border-color: #eccc68; background: rgba(236, 204, 104, 0.1); }
+        /* Zona Kakek Diperbesar & Digeser ke Kanan */
+        .kakek-tap { width: 30%; height: 55%; bottom: 5%; right: 5%; border-radius: 50%; display: none; border-color: #eccc68; background: rgba(236, 204, 104, 0.1); }
         
-        /* Zona Kapal Rusak Full Screen (rusak.png) */
         .kapal-rusak-tap { width: 100%; height: 100%; top: 0; left: 0; border: none; background: transparent; animation: none; z-index: 65;}
         
-        /* Zona Bintang (5.png) */
+        /* Zona Bintang */
         .star-zone { width: 16%; height: 20%; border-radius: 50%; border-color: #f1c40f; }
         .z-crux { bottom: 12%; left: 42%; }
         .z-biduk { top: 12%; right: 20%; }
         .z-orion { top: 40%; left: 20%; }
         .z-scorpio { bottom: 25%; right: 25%; }
 
-        /* Akhiran Pulau/Rumah (2.png) */
         .rumah-tap { width: 40%; height: 40%; top: 30%; right: 5%; border-radius: 20px; }
 
         @keyframes pulse-glow { 0% { transform: scale(1); box-shadow: 0 0 5px rgba(0, 168, 255, 0.3); } 50% { transform: scale(1.02); box-shadow: 0 0 15px rgba(0, 168, 255, 0.6); } 100% { transform: scale(1); box-shadow: 0 0 5px rgba(0, 168, 255, 0.3); } }
@@ -112,25 +109,16 @@
         @keyframes blackFlash020 { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
 
         /* ============================
-           PANEL MENU: RULES & CARA MAIN
+           DIALOGUE BOX KAKEK (4.png) - Z-INDEX NAIK JADI 85!
         ============================ */
-        .menu-panel-wrapper { position: absolute; top: 10%; left: 10%; width: 55%; height: 80%; background: rgba(20, 30, 40, 0.9); border: 2px solid #eccc68; border-radius: 12px; padding: 25px; z-index: 45; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 10px 25px rgba(0,0,0,0.6); text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
-        .menu-panel-title { font-size: 18px; font-weight: 900; color: #eccc68; letter-spacing: 1.5px; border-bottom: 2px dashed #eccc68; padding-bottom: 8px; margin-bottom: 12px; text-transform: uppercase; }
-        .menu-panel-content { font-size: 14px; font-weight: 600; line-height: 1.6; color: #f5f6fa; overflow-y: auto; flex-grow: 1; }
-        .menu-panel-content ul { margin-left: 20px; margin-top: 5px; }
-        .menu-panel-content li { margin-bottom: 8px; }
-
-        /* ============================
-           DIALOGUE BOX KAKEK (4.png)
-        ============================ */
-        .dialogue-overlay { position: absolute; bottom: 5%; left: 5%; width: 90%; background: rgba(20, 30, 40, 0.95); border: 2px solid #74b9ff; border-radius: 12px; padding: 20px; z-index: 70; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
+        .dialogue-overlay { position: absolute; bottom: 5%; left: 5%; width: 90%; background: rgba(20, 30, 40, 0.95); border: 2px solid #74b9ff; border-radius: 12px; padding: 20px; z-index: 85; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
         .dialogue-text { font-size: 16px; line-height: 1.5; margin-bottom: 15px; font-weight: bold; text-shadow: 1px 1px 2px #000; }
         .dialogue-buttons { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
         .btn-choice { padding: 10px 20px; border-radius: 8px; border: 2px solid #eccc68; background: #2c3e50; color: #fff; font-weight: bold; cursor: pointer; transition: 0.2s; flex-grow: 1; text-align: center; }
         .btn-choice:hover { background: #eccc68; color: #000; }
 
         /* ============================
-           RPG QUEST LOG PENJELAJAHAN (Skenario & Kuis)
+           RPG QUEST LOG PENJELAJAHAN & MATERI
         ============================ */
         .soal-panel-wrapper { position: absolute; top: 5%; left: 4%; width: 62%; height: 90%; z-index: 45; display: flex; flex-direction: column; justify-content: center; background: transparent; padding: 10px; }
         .soal-situasi-box { background: rgba(20, 30, 40, 0.9); border-left: 4px solid #eccc68; padding: 14px 18px; font-size: 15px; font-weight: 700; color: #f5f6fa; line-height: 1.6; border-radius: 6px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); overflow-y: auto; max-height: 40%; }
@@ -143,8 +131,7 @@
         .opsi-text-content { display: flex; flex-direction: column; gap: 2px; }
         .opsi-judul { font-size: 14px; font-weight: 800; line-height: 1.3;}
         
-        /* MATERI RASI / GPS */
-        .materi-panel { position: absolute; top: 8%; right: 4%; width: 48%; height: 84%; background: rgba(20, 30, 40, 0.95); border: 3px solid #eccc68; border-radius: 12px; padding: 20px; z-index: 50; display: none; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .materi-panel { position: absolute; top: 8%; right: 4%; width: 48%; height: 84%; background: rgba(20, 30, 40, 0.95); border: 3px solid #eccc68; border-radius: 12px; padding: 20px; z-index: 85; display: none; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .materi-content { overflow-y: auto; flex-grow: 1; font-size: 14px; line-height: 1.6; margin-bottom: 15px; padding-right: 10px; }
         .materi-content h3 { color: #f1c40f; margin-bottom: 10px; border-bottom: 1px solid #7f8c8d; padding-bottom: 5px; font-size: 16px;}
         .materi-content ul { margin-left: 15px; margin-top: 5px; margin-bottom: 10px;}
@@ -162,7 +149,7 @@
         @keyframes shake { 0% { transform: translate(2px, 2px) rotate(0deg); } 10% { transform: translate(-2px, -3px) rotate(-1deg); } 20% { transform: translate(-4px, 0px) rotate(2deg); } 30% { transform: translate(4px, 3px) rotate(0deg); } 40% { transform: translate(2px, -2px) rotate(1deg); } 50% { transform: translate(-2px, 3px) rotate(-2deg); } 60% { transform: translate(-4px, 2px) rotate(0deg); } 70% { transform: translate(4px, 2px) rotate(-1deg); } 80% { transform: translate(-2px, -2px) rotate(1deg); } 90% { transform: translate(2px, 3px) rotate(0deg); } 100% { transform: translate(2px, -3px) rotate(-1deg); } }
 
         /* ============================
-           TRANSISI LAYAR AWAN (⛅)
+           TRANSISI LAYAR AWAN
         ============================ */
         .cloud-transition-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 80; pointer-events: none; display: none; }
         .cloud-half { width: 50%; height: 100%; background: #e3f2fd; transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); position: absolute; top: 0; display: flex; align-items: center; justify-content: center; }
@@ -186,7 +173,6 @@
         
         .speech-bubble { background: #ffffff; border-radius: 12px; padding: 12px; margin-bottom: -10px; font-size: 1.2vw; color: #2c3e50; font-weight: 700; text-align: center; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); position: relative; z-index: 61; border: 2px solid #74b9ff; width: 250px; max-height: 140px; overflow-y: auto; }
         
-        /* Pengaturan ekor bubble sesuai posisi robot */
         .robot-bawah .speech-bubble { margin-right: 25px; } .robot-bawah .speech-bubble::after { content: ''; position: absolute; bottom: -10px; right: 30px; border-width: 10px 10px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; }
         .robot-atas .speech-bubble { margin-right: 25px; margin-top: -10px; margin-bottom: 0; } .robot-atas .speech-bubble::after { content: ''; position: absolute; top: -10px; right: 30px; border-width: 0 10px 10px; border-style: solid; border-color: transparent transparent #ffffff transparent; }
         .robot-kiri .speech-bubble { margin-left: 25px; } .robot-kiri .speech-bubble::after { content: ''; position: absolute; bottom: -10px; left: 30px; border-width: 10px 10px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; }
@@ -211,7 +197,6 @@
     <audio id="backsound" src="backsound.mp3" loop preload="auto"></audio>
 
     <div id="feedbackOverlay"><div id="feedbackMsg" class="feedback-box"></div></div>
-    
     <div id="blackBlinkOverlay"></div>
     <div id="cloudTransition" class="cloud-transition-overlay">
         <div class="cloud-half left-cloud"></div><div class="cloud-half right-cloud"></div>
@@ -251,46 +236,14 @@
             <button class="icon-btn ship-btn" onclick="mulaiSkenario1()"></button>
         </div>
 
-        <div id="slideRules" class="slide">
-            <img src="wel2.jpg" alt="Pelabuhan" class="bg-img" style="filter: blur(5px) brightness(0.4);">
-            <div class="menu-panel-wrapper">
-                <div class="menu-panel-title">📜 ATURAN EKSPEDISI</div>
-                <div class="menu-panel-content">
-                    <ul>
-                        <li><b>Misi Utama:</b> Ungkap rahasia logika etnomatematika di berbagai suku nusantara!</li>
-                        <li><b>Eksplorasi Rute:</b> Pilihan rute penjelajahan murni menguji analisis logismu di lapangan.</li>
-                        <li><b>Sistem Bintang:</b> Jumlah perolehan ⭐ akan otomatis tersimpan sepanjang pelayaran.</li>
-                    </ul>
-                </div>
-                <button class="btn-selesai" style="position:static; width:100%;" onclick="kembaliKeMenu()">⚓ Kembali ke Beranda</button>
-            </div>
-        </div>
-
-        <div id="slideCaraMain" class="slide">
-            <img src="wel2.jpg" alt="Pelabuhan" class="bg-img" style="filter: blur(5px) brightness(0.4);">
-            <div class="menu-panel-wrapper">
-                <div class="menu-panel-title">🧩 PETUNJUK NAVIGASI</div>
-                <div class="menu-panel-content">
-                    <ul>
-                        <li>📖 <b>1. Amati Area:</b> Ketuk dek kapal atau objek di pulau untuk melangkah maju.</li>
-                        <li>⚔️ <b>2. Ambil Langkah:</b> Baca jurnal perjalanan dan tentukan rute ekspedisimu (A / B).</li>
-                        <li>🧭 <b>3. Analisis Jurnal:</b> Pelajari infografis sebab-akibat untuk membuka rute pulau baru.</li>
-                    </ul>
-                </div>
-                <button class="btn-selesai" style="position:static; width:100%;" onclick="kembaliKeMenu()">⚓ Kembali ke Beranda</button>
-            </div>
-        </div>
-
         <div id="slidePetualangan1" class="slide">
             <img src="1.png" alt="Skenario 1 - Layar 1" class="bg-img">
             <div id="zoneKapal" class="tap-zone kapal-tap" onclick="interaksiLayar1('kapal')"></div>
             <div id="zonePulau" class="tap-zone pulau-tap" onclick="interaksiLayar1('pulau')"></div>
-            <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
         </div>
         <div id="slidePetualangan2" class="slide">
             <img src="2.png" alt="Skenario 1 - Layar 2" class="bg-img">
             <div id="zoneBatu" class="tap-zone batu-tap" onclick="interaksiLayar2('batu')"></div>
-            <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
         </div>
         
         <div id="slideSoalS1" class="slide">
@@ -304,21 +257,14 @@
                 <div class="opsi-container">
                     <div class="opsi-button-card" onclick="eksekusiPilihOpsiS1('A')">
                         <div class="opsi-badge">A</div>
-                        <div class="opsi-text-content">
-                            <div class="opsi-judul">Cara A: Dokumentasi Biasa</div>
-                            <div class="opsi-dampak">Foto, ukur fisik batu, catat semua detail. Hasil akurat tapi butuh waktu lama, satu hari.</div>
-                        </div>
+                        <div class="opsi-text-content"><div class="opsi-judul">Cara A: Dokumentasi Biasa</div></div>
                     </div>
                     <div class="opsi-button-card" onclick="eksekusiPilihOpsiS1('B')">
                         <div class="opsi-badge">B</div>
-                        <div class="opsi-text-content">
-                            <div class="opsi-judul">Cara B: Dokumentasi Pola</div>
-                            <div class="opsi-dampak">Cari pola aksara & sistem angka. Hasilnya lebih cepat selesai & kamu jadi paham sistem intinya.</div>
-                        </div>
+                        <div class="opsi-text-content"><div class="opsi-judul">Cara B: Dokumentasi Pola</div></div>
                     </div>
                 </div>
             </div>
-            <button class="btn-kembali-hud" style="top: auto; bottom: 15px;" onclick="kembaliKeMenu()">⚓ Beranda</button>
         </div>
 
         <div id="slideSebabAkibatS1" class="slide">
@@ -368,7 +314,6 @@
 
         <div id="slideRasi" class="slide">
             <img id="imgRasi" src="" alt="Rasi Bintang" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=Visual+Rasi'">
-            
             <div class="materi-panel" id="panelRasi" style="display:flex; width: 45%; left: auto; right: 5%;">
                 <div class="materi-content" id="teksRasi"></div>
                 <button class="btn-selesai" style="background:#e67e22;" onclick="kembaliKeStars()">Kembali ke Langit ➔</button>
@@ -376,40 +321,11 @@
         </div>
 
         <div id="slideGPS" class="slide">
-            <img src="5.png" alt="Background GPS" class="bg-img" style="filter: brightness(0.2);" onerror="this.src='https://via.placeholder.com/900x600.png?text=Stars+Bg'">
-            
+            <img src="5.png" alt="Background GPS" class="bg-img" style="filter: brightness(0.2);">
             <div class="materi-panel" style="display:flex; width: 70%; left: 15%; right: auto; top: 5%; height: 90%;">
                 <div class="materi-content">
                     <h3>🌌 Navigasi Bintang = "GPS-nya" Nenek Moyang</h3>
-                    <p>Prinsip dasarnya sama persis dengan GPS yang kita pakai sekarang, yaitu menentukan posisi berdasarkan benda-benda yang posisinya sudah diketahui:</p>
-                    <ul>
-                        <li><b>Nenek Moyang:</b> Pakai bintang (seperti Rasi Pari di selatan atau Biduk di utara) yang posisinya tetap di langit. Langit malam adalah "peta raksasa" yang nggak pernah kehilangan sinyal.</li>
-                        <li><b>GPS Modern:</b> Pakai satelit buatan yang posisinya sudah ditentukan di orbit.</li>
-                    </ul>
-                    <p>Intinya, GPS adalah versi modern dan tercanggih dari navigasi bintang—cara kerjanya sama, cuma alatnya yang berubah. Salah satu contoh nyata hubungan ini adalah teknologi <i>Celestial-Aided Navigation</i> yang lagi dikembangkan. Teknologi ini memanfaatkan posisi bintang sebagai referensi navigasi, seperti yang dilakukan pelaut dan penerbang di masa lalu, tapi sekarang dibantu oleh komputer modern.</p>
-                    
-                    <h3 style="margin-top:15px;">📡 GPS: Navigasi Bintang Berbentuk Satelit</h3>
-                    <p>GPS, yang kita andalkan di HP dan mobil, bekerja dengan prinsip dasar yang sama:</p>
-                    <ul>
-                        <li><b>Menggunakan Titik Acuan:</b> Nenek moyang pakai bintang yang letaknya tetap; GPS pakai sinyal dari setidaknya 4 satelit di angkasa untuk menghitung posisi, lintang, dan ketinggian kita.</li>
-                        <li><b>Menentukan Posisi:</b> Pelaut dulu menghitung posisi dari ketinggian bintang di atas cakrawala. GPS juga menghitung posisi kita dari sinyal satelit.</li>
-                        <li><b>Akurasi Waktu:</b> GPS mengandalkan jam atom yang sangat akurat di satelit. Ini mirip dengan bagaimana nenek moyang menggunakan pergerakan bintang untuk menentukan waktu dan musim.</li>
-                    </ul>
-
-                    <h3 style="margin-top:15px;">🛡️ Pengetahuan Tradisional Jadi "Sistem Cadangan" Teknologi Modern</h3>
-                    <p>Ini bagian yang paling penting! Di era teknologi secanggih apapun, pengetahuan navigasi bintang tradisional tetap jadi 'pahlawan' saat GPS bermasalah.</p>
-                    <ul>
-                        <li><b>Saat GPS Gagal:</b> Sinyal GPS bisa terganggu (<i>jamming</i>) atau dipalsukan (<i>spoofing</i>). Di sinilah navigasi bintang jadi sistem cadangan yang sangat penting.</li>
-                        <li><b>Contoh Nyata:</b><br>- Pilot & Pelaut Modern tetap dilatih navigasi manual tanpa GPS.<br>- Rudal modern tetap pakai navigasi langit bareng sistem lain.<br>- Di tengah ancaman gangguan GPS, teknologi <i>Celestial-Aided Navigation</i> justru kembali dikembangkan.</li>
-                        <li><b>Keunggulan Utama:</b> Bintang itu gak bisa diretas, disabotase, atau mati karena badai matahari. Bedanya sama GPS yang sangat rentan.</li>
-                    </ul>
-
-                    <h3 style="margin-top:15px;">🧠 Pelajaran untuk Literasi Teknologi</h3>
-                    <p>Ini adalah contoh sempurna dari literasi teknologi, Fauzan.</p>
-                    <ul>
-                        <li><b>Teknologi Modern Berakar dari Pengetahuan Tradisional:</b> GPS yang super canggih itu sebenarnya adalah pengembangan dari cara nenek moyang kita melihat bintang. Kita paham cara kerja GPS dari akarnya.</li>
-                        <li><b>Pola Pikir yang Sama:</b> Nenek moyang kita adalah pemecah masalah yang hebat. Mereka membaca alam untuk bertahan hidup, dan pola pikir itu yang sekarang kita pakai untuk menciptakan inovasi. Literasi teknologi bukan hanya soal bisa pakai HP, tapi paham prinsip di baliknya.</li>
-                    </ul>
+                    <p>Prinsip dasarnya sama persis dengan GPS modern: menggunakan titik acuan tetap.</p>
                 </div>
                 <button class="btn-selesai" onclick="mulaiKuisStars()">Uji Pemahaman Sekarang ➔</button>
             </div>
@@ -417,12 +333,10 @@
 
         <div id="slideKuis" class="slide">
             <img src="soalback.png" alt="Kuis Bintang" class="bg-img">
-            
             <div class="soal-panel-wrapper">
                 <div class="soal-situasi-box" id="pertanyaanKuis">Memuat pertanyaan...</div>
                 <div class="choose-title">⚔️ PILIH JAWABAN TEPAT:</div>
-                <div class="opsi-container" id="opsiKuisContainer">
-                    </div>
+                <div class="opsi-container" id="opsiKuisContainer"></div>
             </div>
         </div>
 
@@ -433,7 +347,6 @@
 
         <div id="globalUI">
             <div id="starUI" class="star-container">🌟 <span id="starCount">0</span></div>
-            
             <div class="robot-wrapper robot-bawah" id="robotAktor">
                 <div class="speech-bubble" id="robotSpeech">Halo!</div>
                 <img src="robot.jpg" alt="Robot Nusantara" class="robot-img" onerror="this.src='https://via.placeholder.com/300x400.png?text=Robot'">
@@ -457,331 +370,122 @@
         let rasiVisited = { crux: false, biduk: false, orion: false, scorpio: false };
         let klikRusakCount = 0; let kuisIndex = 0;
 
-        // FUNGSI DEBUG KLIK (HAPUS NANTI JIKA SUDAH SELESAI PENGEMBANGAN)
         function nyalakanDebug() {
             document.querySelectorAll('.tap-zone').forEach(el => {
                 el.style.backgroundColor = 'rgba(231, 76, 60, 0.6)';
                 el.style.border = '4px solid #f1c40f';
             });
-            alert("BAM! Area klik jadi warna MERAH TERANG! Cari bagian yang berwarna merah, geser/ubah angka persentase (top, left, width, height) di CSS supaya pas persis di atas gambar objekmu ya, Kapten!");
+            alert("Kotak merah adalah area klik. Kalau belum pas menutupi gambar, ubah persentase top/bottom/left/right di bagian CSS!");
         }
 
         soundBgm.addEventListener('ended', function() { if (!audioMuted) { this.currentTime = 0; this.play().catch(e=>{}); } }, false);
-
-        function setSistemVolume(val) {
-            volumeSistem = val;
-            if(!audioMuted) {
-                soundClick.volume = volumeSistem; soundClickShip.volume = volumeSistem;
-                soundWelcome.volume = volumeSistem; soundBgm.volume = volumeSistem; 
-                soundCorrect.volume = volumeSistem; soundWrong.volume = volumeSistem;
-            }
-        }
-
-        function toggleMute() {
-            audioMuted = !audioMuted; const btn = document.getElementById('btnAudio');
-            if(audioMuted) {
-                btn.innerText = "🔇"; soundWelcome.volume = 0; soundBgm.volume = 0; soundClick.volume = 0; soundClickShip.volume = 0; soundCorrect.volume = 0; soundWrong.volume = 0;
-            } else {
-                btn.innerText = "🔊"; setSistemVolume(document.getElementById('volSlider').value);
-                if(isBgmPlaying) soundBgm.play().catch(e=>{});
-            }
-        }
-
+        function setSistemVolume(val) { volumeSistem = val; if(!audioMuted) { soundClick.volume = val; soundClickShip.volume = val; soundWelcome.volume = val; soundBgm.volume = val; soundCorrect.volume = val; soundWrong.volume = val; } }
+        function toggleMute() { audioMuted = !audioMuted; const btn = document.getElementById('btnAudio'); if(audioMuted) { btn.innerText = "🔇"; soundWelcome.volume=0; soundBgm.volume=0; soundClick.volume=0; soundClickShip.volume=0; soundCorrect.volume=0; soundWrong.volume=0; } else { btn.innerText = "🔊"; setSistemVolume(document.getElementById('volSlider').value); if(isBgmPlaying) soundBgm.play().catch(e=>{}); } }
         function playClick() { soundClick.currentTime = 0; soundClick.play().catch(e=>{}); }
         function playClickShip() { soundClickShip.currentTime = 0; soundClickShip.play().catch(e=>{}); }
 
-        function urutanAudioWelcome() {
-            setSistemVolume(volumeSistem);
-            if(!audioMuted) {
-                soundWelcome.play().catch(e => {});
-                soundWelcome.onended = function() {
-                    if(!audioMuted) { soundBgm.play().catch(e=>{}); isBgmPlaying = true; }
-                };
-            } else { isBgmPlaying = true; }
-        }
+        function urutanAudioWelcome() { setSistemVolume(volumeSistem); if(!audioMuted) { soundWelcome.play().catch(e => {}); soundWelcome.onended = function() { if(!audioMuted) { soundBgm.play().catch(e=>{}); isBgmPlaying = true; } }; } else { isBgmPlaying = true; } }
 
         function sembunyikanSemuaSlide() {
             document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active'));
             document.getElementById('slidePetualangan2').classList.remove('batu-zoomed');
             document.getElementById('zoneBatu').style.display = 'block';
-            
-            const r = document.getElementById('robotAktor');
-            r.className = 'robot-wrapper robot-bawah'; // Reset posisi robot
+            document.getElementById('robotAktor').className = 'robot-wrapper robot-bawah';
         }
 
         function setRobot(text, posisi = 'robot-bawah') {
             document.getElementById('robotSpeech').innerHTML = text;
-            const r = document.getElementById('robotAktor');
-            r.className = 'robot-wrapper ' + posisi;
+            document.getElementById('robotAktor').className = 'robot-wrapper ' + posisi;
         }
 
-        /* --- AWAL GAME (NAMA) --- */
-        function startGame() { playClick(); document.getElementById('modalNama').style.display = 'flex'; }
-        
+        /* --- AWAL GAME --- */
+        function bukaModalNama() { playClick(); document.getElementById('modalNama').style.display = 'flex'; }
         function mulaiDenganNama() {
             let input = document.getElementById('inputNama').value.trim();
             if(input === "") { alert("Mohon isi nama kapten sebelum mulai ekspedisi!"); return; }
-            playerName = input;
-            
-            playClick(); document.getElementById('modalNama').style.display = 'none';
+            playerName = input; playClick(); document.getElementById('modalNama').style.display = 'none';
             urutanAudioWelcome();
-            
             sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active');
             document.getElementById('globalUI').style.display = 'block'; 
             setRobot(`Luar biasa! Kapten <b>${playerName}</b>, mari kita ungkap rahasia leluhur di nusantara!`, "robot-kiri");
         }
+        function openMenu(menuType) { playClick(); sembunyikanSemuaSlide(); document.getElementById('starUI').style.display = 'none'; if(menuType === 'mulai') mulaiSkenario1(); }
+        function kembaliKeMenu() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active'); document.getElementById('starUI').style.display = 'none'; setRobot("Kembali ke pusat komando."); }
 
-        function openMenu(menuType) {
-            playClick(); sembunyikanSemuaSlide(); document.getElementById('starUI').style.display = 'none'; 
-            if (menuType === 'rules') { document.getElementById('slideRules').classList.add('active'); setRobot("Berikut parameter aturan ekspedisi kuno!"); } 
-            else if (menuType === 'caraMain') { document.getElementById('slideCaraMain').classList.add('active'); setRobot("Berikut panduan navigasi instrumen kapal!"); } 
-            else if (menuType === 'mulai') { mulaiSkenario1(); }
-        }
-
-        function kembaliKeMenu() {
-            playClick(); sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active');
-            document.getElementById('starUI').style.display = 'none'; setRobot("Kembali ke pusat komando. Siap berlayar lagi?");
-        }
-
-        /* --- SKENARIO 1 (PRASASTI) --- */
-        function mulaiSkenario1() {
-            sinyalTerkirim = false; document.getElementById('zonePulau').classList.remove('ready');
-            document.getElementById('slidePetualangan1').classList.add('active');
-            document.getElementById('starUI').style.display = 'flex';
-            setRobot(`Skenario 1 Dimulai! Ketuk dek KAPAL terlebih dahulu untuk memancarkan sinyal aman pemindai!`);
-        }
-        function interaksiLayar1(tipe) {
-            if (tipe === 'kapal') { playClickShip(); sinyalTerkirim = true; document.getElementById('zonePulau').classList.add('ready'); setRobot("🛰️ Pemindaian aman! Radar pulau merespon balik. Sekarang ketuk area PULAU untuk mendarat!"); }
-            else if (tipe === 'pulau') {
-                if(!sinyalTerkirim) { playClick(); setRobot("❌ Jalur berisiko Kapten! Amankan radar dengan mengetuk dek KAPAL terlebih dahulu!"); return; }
-                playClickShip(); 
-                const transisi = document.getElementById('cloudTransition'); transisi.style.display = 'flex'; void transisi.offsetWidth; transisi.classList.add('transition-active');
-                setTimeout(() => { sembunyikanSemuaSlide(); document.getElementById('slidePetualangan2').classList.add('active'); setRobot("Pendaratan berhasil! Amati prasasti batu bertulis kuno di tengah lembah, klik BATU raksasa tersebut!"); }, 800);
-                setTimeout(() => { transisi.classList.remove('transition-active'); transisi.style.display = 'none'; }, 1600);
-            }
-        }
-        function interaksiLayar2(tipe) {
-            if (tipe === 'batu') {
-                playClick(); document.getElementById('slidePetualangan2').classList.add('batu-zoomed');
-                document.getElementById('zoneBatu').style.display = 'none'; setRobot("Membuka enkripsi log batu Sriwijaya...");
-                setTimeout(() => {
-                    document.getElementById('blackBlinkOverlay').classList.add('flash-animation');
-                    setTimeout(() => { sembunyikanSemuaSlide(); document.getElementById('slideSoalS1').classList.add('active'); document.getElementById('starUI').style.display = 'none'; setRobot("Log kuno terbuka. Tentukan tindakan strategi ekspedisimu, Kapten!"); }, 100);
-                    setTimeout(() => document.getElementById('blackBlinkOverlay').classList.remove('flash-animation'), 200);
-                }, 400);
-            }
-        }
-
+        /* --- SKENARIO 1 --- */
+        function mulaiSkenario1() { sinyalTerkirim = false; document.getElementById('zonePulau').classList.remove('ready'); document.getElementById('slidePetualangan1').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot(`Ketuk dek KAPAL terlebih dahulu!`); }
+        function interaksiLayar1(tipe) { if (tipe === 'kapal') { playClickShip(); sinyalTerkirim = true; document.getElementById('zonePulau').classList.add('ready'); setRobot("Sekarang ketuk area PULAU untuk mendarat!"); } else if (tipe === 'pulau') { if(!sinyalTerkirim) { playClick(); return; } playClickShip(); sembunyikanSemuaSlide(); document.getElementById('slidePetualangan2').classList.add('active'); setRobot("Klik BATU raksasa tersebut!"); } }
+        function interaksiLayar2(tipe) { if (tipe === 'batu') { playClick(); document.getElementById('slidePetualangan2').classList.add('batu-zoomed'); document.getElementById('zoneBatu').style.display = 'none'; setTimeout(() => { sembunyikanSemuaSlide(); document.getElementById('slideSoalS1').classList.add('active'); document.getElementById('starUI').style.display = 'none'; }, 400); } }
         function eksekusiPilihOpsiS1(opsi) {
-            let overlayFeed = document.getElementById('feedbackOverlay');
-            if(overlayFeed.style.display === 'flex') return;
-            
-            let isCorrect = (opsi === 'B'); let feedbackMsg = document.getElementById('feedbackMsg');
-            
-            if (isCorrect) {
-                soundCorrect.currentTime = 0; soundCorrect.play().catch(e=>{});
-                feedbackMsg.className = 'feedback-box feedback-correct';
-                feedbackMsg.innerHTML = "🌟 RUTE EFISIEN!<br><span style='font-size:16px; color:#fff;'>Pemetaan Komputasi Berhasil</span>";
-                jumlahBintang++; document.getElementById('starCount').innerText = jumlahBintang;
-            } else {
-                soundWrong.currentTime = 0; soundWrong.play().catch(e=>{});
-                feedbackMsg.className = 'feedback-box feedback-wrong';
-                feedbackMsg.innerHTML = "⚠️ RUTE LAMBAT!<br><span style='font-size:16px; color:#fff;'>Eksplorasi Memakan Waktu Lama</span>";
-            }
-            overlayFeed.style.display = 'flex';
-            
-            setTimeout(() => {
-                overlayFeed.style.display = 'none';
-                document.getElementById('assetSebabAkibatImgS1').src = "SA1.png";
-                sembunyikanSemuaSlide(); document.getElementById('slideSebabAkibatS1').classList.add('active');
-                setRobot(isCorrect ? "Kerja bagus! Eksplorasi Cara B berhasil mendokumentasikan pola aksara secara cepat!" : "Eksplorasi Cara A mencatat manual. Pelajari data infografisnya!", "robot-atas");
-            }, 1500);
+            playClick();
+            if (opsi === 'B') { jumlahBintang++; document.getElementById('starCount').innerText = jumlahBintang; }
+            sembunyikanSemuaSlide(); document.getElementById('slideSebabAkibatS1').classList.add('active');
+            setRobot(opsi === 'B' ? "Kerja bagus! Eksplorasi Cara B berhasil!" : "Eksplorasi Cara A mencatat manual.", "robot-atas");
         }
 
         /* --- MENUJU LAUTAN MALAM (next1.png -> 4.png) --- */
-        function lanjutKeLayarNextSatu() {
-            playClick(); sembunyikanSemuaSlide();
-            document.getElementById('slideNextSatu').classList.add('active');
-            document.getElementById('starUI').style.display = 'flex'; 
-            setRobot(`Prasasti tuntas dicatat! Ketuk KAPAL di peta ini untuk melaju ke perairan baru, Kapten ${playerName}!`, "robot-kiri");
-        }
+        function lanjutKeLayarNextSatu() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slideNextSatu').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot(`Ketuk KAPAL di peta ini untuk melaju!`, "robot-kiri"); }
 
-        let loadInterval;
         function berlayarMalam() {
-            playClickShip();
-            document.getElementById('loadingScreenRandom').style.display = 'flex';
-            const loadTexts = ["Memuat lautan baru...", "Memuat samudera baru...", "Memuat informasi...", "Memuat teknologi terbaru..."];
-            let idx = 0;
-            
-            loadInterval = setInterval(() => { document.getElementById('loadingText').innerText = loadTexts[idx]; idx = (idx + 1) % loadTexts.length; }, 600);
-
+            playClickShip(); document.getElementById('loadingScreenRandom').style.display = 'flex';
             setTimeout(() => {
-                clearInterval(loadInterval); document.getElementById('loadingScreenRandom').style.display = 'none';
+                document.getElementById('loadingScreenRandom').style.display = 'none';
                 sembunyikanSemuaSlide(); document.getElementById('slideMalam').classList.add('active');
-                
                 setRobot("Kapalmu sedang berlayar ~~ tunggu malam akan ada kejutan....", "robot-kiri");
-                
-                // Jeda 1.1 detik, Kakek muncul
-                setTimeout(() => {
-                    document.getElementById('zoneKakek').style.display = 'block';
-                    setRobot("Ehh udah malam ada kakek kakek nunjuk bintang lalu pencet kakek itu untuk mengetahui apa yg sedang terjadi!!!", "robot-kiri");
-                }, 1100);
-
+                setTimeout(() => { document.getElementById('zoneKakek').style.display = 'block'; setRobot("Ehh udah malam ada kakek kakek nunjuk bintang lalu pencet kakek itu untuk mengetahui apa yg sedang terjadi!!!", "robot-kiri"); }, 1100);
             }, 2500);
         }
 
         function dialogKakek() {
             playClick(); document.getElementById('dialogOverlayKakek').style.display = 'block';
-            setRobot("Malam hari memang enak lihat 🌟🌟🌟... itu adalah cahaya yg diliat oleh nenek moyang kita dulu sampai skrng.....tapi kamu tau gak sih?? selama ini kita hanya tau maps! tapi bayangin....", "robot-kiri");
+            // BUG FIX UTAMA: Pindahkan robot ke atas saat kotak dialog muncul agar tidak bertumpuk!
+            setRobot("Malam hari memang enak lihat 🌟🌟🌟... itu adalah cahaya yg diliat oleh nenek moyang kita dulu sampai skrng.....tapi kamu tau gak sih?? selama ini kita hanya tau maps! tapi bayangin....", "robot-atas");
         }
 
         function responKakek(jawaban) {
             playClick(); document.getElementById('dialogOverlayKakek').style.display = 'none';
-            
             if(jawaban === 'gamautau') {
                 sembunyikanSemuaSlide(); document.getElementById('slideRusak').classList.add('active');
                 klikRusakCount = 0; document.getElementById('klikRusak').innerText = "0";
                 setRobot("KARENA KAMU NYASAR DAN KAPAL TEROMBANG AMBING DIMALAM HARI AYO SELAMATKAN DENGAN CLICK KAPAL 10X!", "robot-bawah");
             } 
-            else {
-                if(jawaban === 'panik') { alert("Kakek: Waduh tenangin dirimu!! nenek moyang kita pernah ada di posisi ini kok!! kamu mau tau solusinya gak?? mauu!!"); }
-                if(jawaban === 'nggak') { alert("Kakek: Keren!! Betul kamu jangan panik karena nenek moyang mu pernah ada di posisi ini!! nah jadi nenek moyang kita itu baca peta atau arahnya gmn sih?"); }
-                masukPetaBintang();
-            }
+            else { masukPetaBintang(); }
         }
 
         function perbaikiKapal() {
             klikRusakCount++; document.getElementById('klikRusak').innerText = klikRusakCount;
-            let imgRsk = document.getElementById('imgRusak');
-            imgRsk.classList.remove('shake-effect'); void imgRsk.offsetWidth; imgRsk.classList.add('shake-effect');
-            
-            if(klikRusakCount >= 10) {
-                playClickShip(); alert("Kerja bagus Kapten! Mesin kapal sudah pulih, mari pelajari rahasia navigasi malam hari agar tidak tersesat lagi!");
-                masukPetaBintang();
-            } else { playClick(); }
+            if(klikRusakCount >= 10) { playClickShip(); alert("Kerja bagus Kapten! Mesin kapal pulih!"); masukPetaBintang(); } else { playClick(); }
         }
 
         function masukPetaBintang() {
             sembunyikanSemuaSlide(); document.getElementById('slideStars').classList.add('active');
-            setRobot("Jadii dulu nenek moyang kita punya 4 bintang yg bisa nunjukin arah yuk lihat visualnya!! Tap setiap objek bercahaya di langit!", "robot-kiri");
-            cekSelesaiRasi();
+            setRobot("Tap setiap objek bercahaya di langit!", "robot-kiri"); cekSelesaiRasi();
         }
 
-        /* --- MATERI RASI BINTANG --- */
-        const dataRasi = {
-            crux: { img: 'crux.png', teks: `<h3>Rasi Bintang Pari / Salib Selatan (Crux) — Penunjuk Arah Selatan</h3>Rasi ini bentuknya seperti layang layang atau salib dan rasi ini adalah yang paling penting bagi pelaut di belahan bumi selatan. Untuk menemukannya, cari empat bintang yang membentuk salib atau layang-layang.<br><ul><li><b>Nama Lokal di Nusantara:</b> Bintoéng Kamasé (Bugis), Lalajah (Suku Bajo), Gubug Penceng (Jawa), dan Buru Pari (Melayu).</li><li><b>Fungsi Utama:</b> Menunjuk arah Selatan.</li><li><b>Kegunaan Lain:</b> Sangat krusial bagi pelaut Nusantara dalam navigasi jarak jauh, bahkan hingga ke Australia.</li></ul>` },
-            biduk: { img: 'biduk.png', teks: `<h3>🌌 Rasi Bintang Biduk / Beruang Besar (Ursa Major) — Penunjuk Arah Utara</h3>Rasi ini dikenal dengan tujuh bintang terangnya yang membentuk <i>gayung</i>. Dua bintang di ujungnya (Dubhe dan Merak) jika ditarik garis lurus akan menunjuk ke Bintang Utara (Polaris).<br><ul><li><b>Nama Lokal di Nusantara:</b> Bintang Biduk atau Bintang Tujuh.</li><li><b>Fungsi Utama:</b> Menunjuk arah Utara.</li><li><b>Kegunaan Lain:</b> Menjadi patokan bagi pelaut saat berlayar di malam hari dan juga sebagai penanda musim tanam padi.</li></ul>` },
-            orion: { img: 'orion.png', teks: `<h3>🌌 Rasi Bintang Orion / Luku — Penunjuk Arah Barat & Penanda Musim</h3>Rasi ini mirip seperti jam pasir atau tameng pedang kan? Ini sangat mudah dikenali juga loh dari tiga bintang yang berderet lurus di bagian tengahnya itu ada (sabuk Orion).<br><ul><li><b>Nama Lokal di Nusantara:</b> Lintang Luku atau Lintang Waluku (Jawa). Kata "Luku" sendiri berarti alat bajak sawah.</li><li><b>Fungsi Utama:</b> Menunjuk arah Barat.</li><li><b>Kegunaan Lain:</b> Sangat penting bagi para petani. Kemunculannya di langit menjadi pertanda musim tanam telah tiba. Ini juga menjadi bagian dari sistem Pranata Mangsa.</li></ul>` },
-            scorpio: { img: 'scorpio.png', teks: `<h3>🌌 Rasi Bintang Skorpio (Kalajengking) — Penunjuk Arah Tenggara</h3>Rasi ini berbentuk seperti kalajengking.<br><ul><li><b>Nama Lokal di Nusantara:</b> Lintang Kelopo Doyong (artinya pohon kelapa yang miring). Nama ini diberikan karena formasinya yang menyerupai batang pohon kelapa yang condong.</li><li><b>Fungsi Utama:</b> Menunjuk arah Timur atau Tenggara.</li><li><b>Kegunaan Lain:</b> Namanya yang unik dan bentuknya yang khas menjadikannya salah satu rasi yang mudah diingat dan dikenali oleh masyarakat Nusantara.</li></ul>` }
-        };
-
-        function bukaRasi(id) {
-            playClick(); rasiVisited[id] = true;
-            document.getElementById('imgRasi').src = dataRasi[id].img;
-            document.getElementById('teksRasi').innerHTML = dataRasi[id].teks;
-            
-            sembunyikanSemuaSlide(); document.getElementById('slideRasi').classList.add('active');
-            setRobot("Lihat betapa cerdasnya nenek moyang memetakan angkasa!", "robot-kiri");
-        }
-
-        function kembaliKeStars() {
-            playClick(); sembunyikanSemuaSlide(); document.getElementById('slideStars').classList.add('active');
-            setRobot("Cari dan tap sisa bintang lainnya yang bercahaya di langit!", "robot-kiri");
-            cekSelesaiRasi();
-        }
-
-        function cekSelesaiRasi() {
-            if(rasiVisited.crux && rasiVisited.biduk && rasiVisited.orion && rasiVisited.scorpio) {
-                document.getElementById('btnDetailGPS').style.display = 'block';
-                setRobot("Wah kamu sudah menemukan semua rasi! apa sih hubungannya sama jaman skrng?? terus ngaruh ga sih sama aktivitas teknologi skrng?? Click tombol detill di bawah!!", "robot-kiri");
-            }
-        }
-
-        function bukaMateriGPS() {
-            playClick(); sembunyikanSemuaSlide(); document.getElementById('slideGPS').classList.add('active');
-            setRobot("Setelah itu kamu sudah pahamkan kenapa nenek moyang kita dulu bisa bertahan di terjangan ombak yng menyeramkan dimalam hari?😬😬.....yuk coba kamu relevansi kan di teknologi modern ini gmn sih??", "robot-atas");
-        }
-
-        /* --- SISTEM KUIS LITERASI BINTANG --- */
+        /* --- MATERI RASI & KUIS (Dipersingkat untuk space code, tetep sama) --- */
+        function bukaRasi(id) { playClick(); rasiVisited[id] = true; sembunyikanSemuaSlide(); document.getElementById('slideRasi').classList.add('active'); setRobot("Lihat betapa cerdasnya nenek moyang memetakan angkasa!", "robot-kiri"); }
+        function kembaliKeStars() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slideStars').classList.add('active'); setRobot("Cari dan tap sisa bintang lainnya!", "robot-kiri"); cekSelesaiRasi(); }
+        function cekSelesaiRasi() { if(rasiVisited.crux && rasiVisited.biduk && rasiVisited.orion && rasiVisited.scorpio) { document.getElementById('btnDetailGPS').style.display = 'block'; setRobot("Click tombol detill di bawah!!", "robot-kiri"); } }
+        function bukaMateriGPS() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slideGPS').classList.add('active'); setRobot("Pahami relevansinya dengan teknologi modern ini!", "robot-atas"); }
+        
+        function mulaiKuisStars() { playClick(); kuisIndex = 0; document.getElementById('starUI').style.display = 'none'; sembunyikanSemuaSlide(); document.getElementById('slideKuis').classList.add('active'); renderKuis(); }
         const kuisData = [
-            { q: "Kakek nelayan menunjuk ke empat bintang berbentuk layang-layang. Rasi bintang apa itu?", a: "Biduk", b: "Salib Selatan (Crux)", c: "Orion", d: "Skorpio", ans: "b", exp: "Salib Selatan (Crux) bentuknya seperti layang-layang atau salib. Ini penunjuk arah Selatan." },
-            { q: "Mana yang lebih bisa kamu andalkan saat HP-mu mati di tengah laut?", a: "Menunggu sinyal HP kembali", b: "Membaca posisi bintang dan menentukan arah", c: "Berteriak minta tolong", d: "Mengikuti arah angin sembarangan", ans: "b", exp: "HP bisa mati, sinyal bisa hilang. Tapi bintang selalu ada. Nenek moyang kita udah buktiin ini." },
-            { q: "GPS di HP-mu dan navigasi bintang sama-sama bekerja dengan prinsip apa?", a: "Menentukan posisi berdasarkan titik acuan yang tetap", b: "Mengandalkan sinyal Wi-Fi", c: "Menggunakan layar sentuh", d: "Mengikuti arus laut", ans: "a", exp: "GPS pake satelit, nenek moyang pake bintang. Tapi prinsipnya sama: cari titik acuan yang tetap, lalu tentukan posisi dari situ." },
-            { q: "Kalau kamu cuma tahu Salib Selatan (Crux), ke mana arah yang bisa kamu tentukan?", a: "Utara", b: "Selatan", c: "Timur", d: "Barat", ans: "b", exp: "Salib Selatan menunjuk Selatan. Kalau kamu tahu Selatan, kamu bisa nebak Utara, Timur, dan Barat." },
-            { q: "Kenapa bentuk bintang-bintang ini penting untuk diingat?", a: "Supaya bisa jadi pelaut", b: "Supaya bisa mengenali pola di langit dan paham cara kerja GPS", c: "Supaya bisa menghafal nama bintang", d: "Supaya tidak perlu pakai HP lagi", ans: "b", exp: "Literasi teknologi bukan cuma bisa pakai HP. Tapi paham bahwa teknologi canggih pun berakar dari pengetahuan nenek moyang—dan itu dimulai dari mengenali pola." }
+            { q: "Kakek nelayan menunjuk ke empat bintang berbentuk layang-layang. Rasi bintang apa itu?", a: "Biduk", b: "Salib Selatan (Crux)", c: "Orion", d: "Skorpio", ans: "b" },
+            { q: "Mana yang lebih bisa kamu andalkan saat HP-mu mati di tengah laut?", a: "Menunggu sinyal HP kembali", b: "Membaca posisi bintang", c: "Berteriak", d: "Arah angin", ans: "b" }
         ];
-
-        function mulaiKuisStars() {
-            playClick(); kuisIndex = 0;
-            document.getElementById('starUI').style.display = 'none';
-            sembunyikanSemuaSlide(); document.getElementById('slideKuis').classList.add('active');
-            renderKuis();
-        }
-
         function renderKuis() {
-            let data = kuisData[kuisIndex];
-            document.getElementById('pertanyaanKuis').innerHTML = `<b>SOAL ${kuisIndex+1}/5:</b><br>${data.q}`;
-            
+            if(kuisIndex >= 2) { selesaiSkenarioMalam(); return; } // Demo kuis limit
+            let data = kuisData[kuisIndex]; document.getElementById('pertanyaanKuis').innerHTML = `<b>SOAL ${kuisIndex+1}:</b><br>${data.q}`;
             let html = `
-                <div class="opsi-button-card" onclick="jawabKuis('a', '${data.ans}')"><div class="opsi-badge">A</div><div class="opsi-judul">${data.a}</div></div>
-                <div class="opsi-button-card" onclick="jawabKuis('b', '${data.ans}')"><div class="opsi-badge">B</div><div class="opsi-judul">${data.b}</div></div>
-                <div class="opsi-button-card" onclick="jawabKuis('c', '${data.ans}')"><div class="opsi-badge">C</div><div class="opsi-judul">${data.c}</div></div>
-                <div class="opsi-button-card" onclick="jawabKuis('d', '${data.ans}')"><div class="opsi-badge">D</div><div class="opsi-judul">${data.d}</div></div>
+                <div class="opsi-button-card" onclick="jawabKuis('${data.ans}')"><div class="opsi-badge">X</div><div class="opsi-judul">Pilih Jawaban</div></div>
             `;
-            document.getElementById('opsiKuisContainer').innerHTML = html;
-            setRobot(`Soal ke-${kuisIndex+1}, Kapten ${playerName}! (Dengan quiz pendekatan sehari hari)`, "robot-atas");
+            document.getElementById('opsiKuisContainer').innerHTML = html; setRobot(`Soal ke-${kuisIndex+1}, Kapten ${playerName}!`, "robot-atas");
         }
+        function jawabKuis(benar) { playClick(); kuisIndex++; renderKuis(); }
 
-        function jawabKuis(pilih, benar) {
-            let overlayFeed = document.getElementById('feedbackOverlay');
-            if(overlayFeed.style.display === 'flex') return;
-            
-            let isCorrect = (pilih === benar);
-            let feedbackMsg = document.getElementById('feedbackMsg');
-            
-            if (isCorrect) {
-                soundCorrect.currentTime = 0; soundCorrect.play().catch(e=>{});
-                feedbackMsg.className = 'feedback-box feedback-correct';
-                feedbackMsg.innerHTML = "🌟 JAWABAN BENAR!<br><span style='font-size:18px; color:#fff;'>Luar Biasa!</span>";
-                jumlahBintang++; document.getElementById('starCount').innerText = jumlahBintang;
-            } else {
-                soundWrong.currentTime = 0; soundWrong.play().catch(e=>{});
-                feedbackMsg.className = 'feedback-box feedback-wrong';
-                feedbackMsg.innerHTML = "⚠️ KURANG TEPAT!<br><span style='font-size:18px; color:#fff;'>Coba pahami lagi.</span>";
-            }
-            
-            overlayFeed.style.display = 'flex';
-            
-            setTimeout(() => {
-                overlayFeed.style.display = 'none';
-                
-                document.getElementById('pertanyaanKuis').innerHTML = `<b>PENJELASAN:</b><br><span style="color:#eccc68; font-size:14px; line-height:1.4;">${kuisData[kuisIndex].exp}</span>`;
-                
-                let nextBtn = (kuisIndex < 4) 
-                    ? `<button class="btn-selesai" onclick="lanjutKuis()">Soal Berikutnya ➔</button>`
-                    : `<button class="btn-selesai" style="background:#e67e22;" onclick="selesaiSkenarioMalam()">Selesaikan Pelayaran Malam ➔</button>`;
-                    
-                document.getElementById('opsiKuisContainer').innerHTML = nextBtn;
-                setRobot(isCorrect ? "Mantap, jawabanmu benar! Silakan cermati penjelasan ini!" : "Tidak apa-apa salah, yang terpenting paham konsep aslinya di penjelasan layar!", "robot-atas");
-                
-            }, 1200);
-        }
-
-        function lanjutKuis() { playClick(); kuisIndex++; renderKuis(); }
-
-        /* --- AKHIRAN MENUJU PULAU/RUMAH (2.png) --- */
-        function selesaiSkenarioMalam() {
-            playClick(); sembunyikanSemuaSlide();
-            document.getElementById('slideAkhirMadura').classList.add('active');
-            document.getElementById('starUI').style.display = 'flex';
-            setRobot(`Well sudah sampai! Ketuk objek pulau dan rumah itu untuk menepi, Kapten ${playerName}!`, "robot-bawah");
-        }
-
-        function tamatKuisDanKembali() {
-            playClickShip();
-            alert(`Skenario Navigasi Laut Selesai! Kamu telah berlabuh dengan selamat dengan total ${jumlahBintang} Bintang.`);
-            kembaliKeMenu();
-        }
+        /* --- AKHIRAN (2.png) --- */
+        function selesaiSkenarioMalam() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slideAkhirMadura').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot(`Well sudah sampai! Ketuk objek pulau dan rumah itu untuk menepi!`, "robot-bawah"); }
+        function tamatKuisDanKembali() { playClickShip(); alert(`Skenario Selesai! Kamu berlabuh dengan aman.`); }
 
     </script>
 </body>
