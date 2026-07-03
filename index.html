@@ -7,7 +7,7 @@
     
     <style>
         /* ============================
-           RESET & FONT JURNAL PETUALANGAN
+           RESET & FONT
         ============================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -32,7 +32,7 @@
         .btn-oke:hover { transform: scale(1.05); background: #fdcb6e; }
 
         /* ============================
-           GAME FRAME CANVAS (3:2 RATIO MURNI)
+           GAME FRAME CANVAS (3:2)
         ============================ */
         .game-container {
             position: relative; width: 100%; max-width: 900px; aspect-ratio: 3 / 2; 
@@ -49,7 +49,7 @@
         .batu-zoomed .bg-img { transform: scale(1.6) translateY(-5%); }
 
         /* ============================
-           LOADING SCREEN SYSTEM
+           LOADING SCREEN
         ============================ */
         #loadingScreen, #loadingScreenRandom {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -60,7 +60,7 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* ============================
-           MODAL INPUT NAMA KAPTEN
+           MODAL
         ============================ */
         .modal-overlay { position: absolute; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 99; display: none; justify-content: center; align-items: center; flex-direction: column; }
         .name-box { background: rgba(20, 30, 40, 0.95); border: 2px solid #eccc68; border-radius: 15px; padding: 30px; text-align: center; width: 60%; box-shadow: 0 10px 30px rgba(236,204,104,0.3); }
@@ -69,7 +69,7 @@
         .name-input:focus { border-color: #eccc68; }
 
         /* ============================
-           ZONA TAP & TOMBOL (Z-INDEX 65)
+           ZONA TAP & TOMBOL (FIXED COORDINATES)
         ============================ */
         .bottom-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 12%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 65; }
         .start-text { color: #ffffff; font-size: 3vw; font-weight: 900; letter-spacing: 2px; text-shadow: 0px 4px 10px #0984e3; animation: pulse-glow 1.5s infinite; }
@@ -81,14 +81,19 @@
         .tap-zone.ready { border-color: #2ecc71; background: rgba(46, 204, 113, 0.05); }
         .tap-zone:hover { background: rgba(0, 168, 255, 0.15); }
         
+        /* SKENARIO 1 */
         .pulau-tap { width: 38%; height: 42%; top: 25%; right: 10%; border-radius: 30px; }
         .kapal-tap { width: 60%; height: 26%; bottom: 0; left: 20%; border-radius: 100px 100px 0 0; }
         .batu-tap { width: 36%; height: 44%; top: 32%; left: 32%; border-radius: 50% 50% 35% 35%; }
         
-        /* Zona Kapal di next1.jpg dan next2.png */
-        .kapal-madura-tap { width: 45%; height: 35%; bottom: 20%; left: 28%; border-radius: 40px; }
+        /* 🔥 FIXED: Zona Kapal di next1.jpg & next2.png (Tidak terlalu besar agar tak nutup teks UI) */
+        .kapal-madura-tap { width: 22%; height: 25%; bottom: 25%; left: 38%; border-radius: 30px; }
+        
+        /* Zona Kakek */
         .kakek-tap { width: 30%; height: 55%; bottom: 5%; right: 5%; border-radius: 50%; display: none; border-color: #eccc68; background: rgba(236, 204, 104, 0.1); }
-        .kapal-rusak-tap { width: 100%; height: 100%; top: 0; left: 0; border: none; background: transparent; animation: none; z-index: 65;}
+        
+        /* 🔥 FIXED: Zona Kapal Rusak (Hanya menutupi area tengah bawah, TIDAK nutup teks atas) */
+        .kapal-rusak-tap { width: 60%; height: 50%; bottom: 10%; left: 20%; border: none; background: transparent; animation: none; z-index: 65; border-radius: 20px;}
         
         /* Zona Bintang Besar di 5.png */
         .star-zone { width: 25%; height: 25%; border-radius: 50%; border-color: #f1c40f; }
@@ -101,7 +106,7 @@
         @keyframes blackFlash020 { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
 
         /* ============================
-           PANEL MENU & MATERI (BG SOALBACK)
+           PANEL MENU & MATERI
         ============================ */
         .menu-panel-wrapper { position: absolute; top: 10%; left: 10%; width: 55%; height: 80%; background: rgba(20, 30, 40, 0.9); border: 2px solid #eccc68; border-radius: 12px; padding: 25px; z-index: 45; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 10px 25px rgba(0,0,0,0.6); text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
         .menu-panel-title { font-size: 18px; font-weight: 900; color: #eccc68; letter-spacing: 1.5px; border-bottom: 2px dashed #eccc68; padding-bottom: 8px; margin-bottom: 12px; text-transform: uppercase; }
@@ -115,7 +120,7 @@
         .materi-content ul { margin-left: 15px; margin-top: 5px; margin-bottom: 10px;}
 
         /* ============================
-           DIALOGUE BOX KAKEK (Z-INDEX 85)
+           DIALOGUE BOX KAKEK
         ============================ */
         .dialogue-overlay { position: absolute; bottom: 5%; left: 5%; width: 90%; background: rgba(20, 30, 40, 0.95); border: 2px solid #74b9ff; border-radius: 12px; padding: 20px; z-index: 85; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
         .dialogue-text { font-size: 16px; line-height: 1.5; margin-bottom: 15px; font-weight: bold; text-shadow: 1px 1px 2px #000; }
@@ -137,7 +142,7 @@
         .opsi-judul { font-size: 14px; font-weight: 800; line-height: 1.3;}
         
         /* ============================
-           EFEK FEEDBACK BETUL/SALAH & SHAKE
+           EFEK FEEDBACK
         ============================ */
         #feedbackOverlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 100; display: none; flex-direction: column; justify-content: center; align-items: center; }
         .feedback-box { padding: 25px 45px; border-radius: 15px; font-size: 26px; font-weight: 900; text-align: center; text-transform: uppercase; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; line-height: 1.4; }
@@ -148,7 +153,7 @@
         @keyframes shake { 0% { transform: translate(2px, 2px) rotate(0deg); } 10% { transform: translate(-2px, -3px) rotate(-1deg); } 20% { transform: translate(-4px, 0px) rotate(2deg); } 30% { transform: translate(4px, 3px) rotate(0deg); } 40% { transform: translate(2px, -2px) rotate(1deg); } 50% { transform: translate(-2px, 3px) rotate(-2deg); } 60% { transform: translate(-4px, 2px) rotate(0deg); } 70% { transform: translate(4px, 2px) rotate(-1deg); } 80% { transform: translate(-2px, -2px) rotate(1deg); } 90% { transform: translate(2px, 3px) rotate(0deg); } 100% { transform: translate(2px, -3px) rotate(-1deg); } }
 
         /* ============================
-           TRANSISI LAYAR AWAN
+           TRANSISI
         ============================ */
         .cloud-transition-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 80; pointer-events: none; display: none; }
         .cloud-half { width: 50%; height: 100%; background: #e3f2fd; transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); position: absolute; top: 0; display: flex; align-items: center; justify-content: center; }
@@ -158,7 +163,7 @@
         .transition-active .left-cloud, .transition-active .right-cloud { transform: translateX(0); }
 
         /* ============================
-           HUD INTERFACE GLOBAL & ROBOT
+           HUD GLOBAL
         ============================ */
         #globalUI, #starUI { display: none; } 
         .star-container { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: rgba(44, 62, 80, 0.95); padding: 6px 18px; border-radius: 30px; color: #ffeaa7; font-size: 16px; font-weight: 900; z-index: 60; border: 2px solid #ffeaa7; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
@@ -240,7 +245,7 @@
                     <ul>
                         <li><b>Misi Utama:</b> Ungkap rahasia logika etnomatematika di berbagai suku nusantara!</li>
                         <li><b>Eksplorasi Rute:</b> Pilihan rute penjelajahan murni menguji analisis logismu di lapangan.</li>
-                        <li><b>Sistem Bintang:</b> Jumlah perolehan ⭐ akan otomatis tersimpan sepanjang pelayaran.</li>
+                        <li><b>Sistem Bintang:</b> Jumlah perolehan ⭐ akan otomatis tersimpan.</li>
                     </ul>
                 </div>
                 <button class="btn-selesai" style="position:static; width:100%;" onclick="kembaliKeMenu()">⚓ Kembali ke Beranda</button>
@@ -253,9 +258,9 @@
                 <div class="menu-panel-title">🧩 PETUNJUK NAVIGASI</div>
                 <div class="menu-panel-content">
                     <ul>
-                        <li>📖 <b>1. Amati Area:</b> Ketuk dek kapal atau objek di pulau untuk melangkah maju.</li>
-                        <li>⚔️ <b>2. Ambil Langkah:</b> Baca jurnal perjalanan dan tentukan rute ekspedisimu (A / B).</li>
-                        <li>🧭 <b>3. Analisis Jurnal:</b> Pelajari infografis sebab-akibat untuk membuka rute pulau baru.</li>
+                        <li>📖 <b>1. Amati Area:</b> Ketuk dek kapal atau objek di pulau.</li>
+                        <li>⚔️ <b>2. Ambil Langkah:</b> Tentukan rute ekspedisimu (A / B).</li>
+                        <li>🧭 <b>3. Analisis Jurnal:</b> Pelajari infografis sebab-akibat.</li>
                     </ul>
                 </div>
                 <button class="btn-selesai" style="position:static; width:100%;" onclick="kembaliKeMenu()">⚓ Kembali ke Beranda</button>
@@ -282,14 +287,8 @@
                 </div>
                 <div class="choose-title">⚔️ ADA DUA CARA:</div>
                 <div class="opsi-container">
-                    <div class="opsi-button-card" onclick="eksekusiPilihOpsiS1('A')">
-                        <div class="opsi-badge">A</div>
-                        <div class="opsi-text-content"><div class="opsi-judul">Cara A: Dokumentasi Biasa</div></div>
-                    </div>
-                    <div class="opsi-button-card" onclick="eksekusiPilihOpsiS1('B')">
-                        <div class="opsi-badge">B</div>
-                        <div class="opsi-text-content"><div class="opsi-judul">Cara B: Dokumentasi Pola</div></div>
-                    </div>
+                    <div class="opsi-button-card" onclick="eksekusiPilihOpsiS1('A')"><div class="opsi-badge">A</div><div class="opsi-text-content"><div class="opsi-judul">Cara A: Dokumentasi Biasa</div></div></div>
+                    <div class="opsi-button-card" onclick="eksekusiPilihOpsiS1('B')"><div class="opsi-badge">B</div><div class="opsi-text-content"><div class="opsi-judul">Cara B: Dokumentasi Pola</div></div></div>
                 </div>
             </div>
         </div>
@@ -321,10 +320,10 @@
 
         <div id="slideRusak" class="slide">
             <img id="imgRusak" src="rusak.png" alt="Kapal Rusak" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=Kapal+Terombang-ambing+(rusak.png)'">
-            <button class="tap-zone kapal-rusak-tap" onclick="perbaikiKapal()"></button>
-            <div style="position:absolute; top:20px; width:100%; text-align:center; font-size:24px; font-weight:900; color:#e74c3c; text-shadow: 2px 2px 4px #000, -2px -2px 0 #fff;">
+            <div style="position:absolute; top:20px; width:100%; text-align:center; font-size:24px; font-weight:900; color:#e74c3c; text-shadow: 2px 2px 4px #000, -2px -2px 0 #fff; z-index: 10;">
                 TAP LAYAR CEPAT UNTUK SELAMATKAN KAPAL! (<span id="klikRusak">0</span>/10)
             </div>
+            <button class="tap-zone kapal-rusak-tap" onclick="perbaikiKapal()"></button>
         </div>
 
         <div id="slideStars" class="slide">
@@ -405,7 +404,7 @@
                 el.style.backgroundColor = 'rgba(231, 76, 60, 0.6)';
                 el.style.border = '4px solid #f1c40f';
             });
-            alert("Area kotak klik diwarnai merah! Sesuaikan jika posisinya meleset dari gambar.");
+            alert("Area kotak klik diwarnai merah! Sesuaikan persentase width/height/bottom/left di CSS kalau belum pas.");
         }
 
         soundBgm.addEventListener('ended', function() { if (!audioMuted) { this.currentTime = 0; this.play().catch(e=>{}); } }, false);
@@ -510,7 +509,7 @@
             setRobot("Jadi dulu nenek moyang kita punya 4 bintang penunjuk arah. Tap area cahaya di langit untuk mulai belajar rasi!", "robot-kiri"); 
         }
 
-        /* --- LOGIKA URUTAN BINTANG (LINEAR SEQUENCE) --- */
+        /* --- LOGIKA URUTAN BINTANG --- */
         const urutanBintang = [
             { img: 'crux.png', teks: `<h3>Rasi Bintang Pari / Salib Selatan (Crux) — Penunjuk Arah Selatan</h3>Rasi ini bentuknya seperti layang layang atau salib. Untuk menemukannya, cari empat bintang yang membentuk salib.<br><ul><li><b>Nama Lokal:</b> Bintoéng Kamasé (Bugis), Lalajah (Bajo).</li><li><b>Fungsi:</b> Penunjuk arah Selatan. Krusial bagi pelaut Nusantara.</li></ul>` },
             { img: 'biduk.png', teks: `<h3>🌌 Rasi Bintang Biduk / Beruang Besar (Ursa Major) — Penunjuk Arah Utara</h3>Dikenal dengan 7 bintang terangnya yang membentuk gayung.<br><ul><li><b>Nama Lokal:</b> Bintang Biduk atau Bintang Tujuh.</li><li><b>Fungsi:</b> Menunjuk arah Utara.</li></ul>` },
@@ -548,11 +547,11 @@
         }
         
         const kuisData = [
-            { q: "Kakek nelayan menunjuk ke empat bintang berbentuk layang-layang. Rasi bintang apa itu?", a: "Biduk", b: "Salib Selatan (Crux)", c: "Orion", d: "Skorpio", ans: "b", exp: "Salib Selatan (Crux) bentuknya seperti layang-layang atau salib. Ini penunjuk arah Selatan." },
-            { q: "Mana yang lebih bisa kamu andalkan saat HP-mu mati di tengah laut?", a: "Menunggu sinyal HP kembali", b: "Membaca posisi bintang dan menentukan arah", c: "Berteriak minta tolong", d: "Mengikuti arah angin sembarangan", ans: "b", exp: "HP bisa mati, sinyal bisa hilang. Tapi bintang selalu ada. Nenek moyang kita udah buktiin ini." },
-            { q: "GPS di HP-mu dan navigasi bintang sama-sama bekerja dengan prinsip apa?", a: "Menentukan posisi berdasarkan titik acuan yang tetap", b: "Mengandalkan sinyal Wi-Fi", c: "Menggunakan layar sentuh", d: "Mengikuti arus laut", ans: "a", exp: "GPS pake satelit, nenek moyang pake bintang. Tapi prinsipnya sama." },
-            { q: "Kalau kamu cuma tahu Salib Selatan (Crux), ke mana arah yang bisa kamu tentukan?", a: "Utara", b: "Selatan", c: "Timur", d: "Barat", ans: "b", exp: "Salib Selatan menunjuk Selatan." },
-            { q: "Kenapa bentuk bintang-bintang ini penting untuk diingat?", a: "Supaya bisa jadi pelaut", b: "Mengenali pola di langit & paham akar GPS", c: "Menghafal nama", d: "Supaya tidak perlu HP", ans: "b", exp: "Teknologi canggih pun berakar dari pengetahuan nenek moyang—dimulai dari mengenali pola." }
+            { q: "Kakek nelayan menunjuk ke empat bintang berbentuk layang-layang. Rasi bintang apa itu?", a: "Biduk", b: "Salib Selatan (Crux)", c: "Orion", d: "Skorpio", ans: "b", exp: "Salib Selatan (Crux) bentuknya seperti layang-layang atau salib." },
+            { q: "Mana yang lebih bisa kamu andalkan saat HP-mu mati di tengah laut?", a: "Menunggu sinyal HP kembali", b: "Membaca posisi bintang", c: "Berteriak minta tolong", d: "Mengikuti arah angin", ans: "b", exp: "HP bisa mati, sinyal bisa hilang. Tapi bintang selalu ada." },
+            { q: "GPS di HP-mu dan navigasi bintang sama-sama bekerja dengan prinsip apa?", a: "Menentukan posisi berdasarkan titik acuan tetap", b: "Mengandalkan sinyal Wi-Fi", c: "Menggunakan layar sentuh", d: "Mengikuti arus laut", ans: "a", exp: "GPS pake satelit, nenek moyang pake bintang. Prinsipnya sama." },
+            { q: "Kalau kamu cuma tahu Salib Selatan (Crux), ke mana arah yang bisa kamu tentukan?", a: "Utara", b: "Selatan", c: "Timur", d: "Barat", ans: "b", exp: "Salib Selatan menunjuk ke arah Selatan." },
+            { q: "Kenapa bentuk bintang-bintang ini penting untuk diingat?", a: "Supaya bisa jadi pelaut", b: "Mengenali pola di langit & paham akar GPS", c: "Menghafal nama", d: "Tidak perlu HP", ans: "b", exp: "Teknologi canggih pun berakar dari pengetahuan nenek moyang." }
         ];
 
         function mulaiKuisStars() { playClick(); kuisIndex = 0; document.getElementById('starUI').style.display = 'none'; sembunyikanSemuaSlide(); document.getElementById('slideKuis').classList.add('active'); renderKuis(); }
