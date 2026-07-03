@@ -69,7 +69,7 @@
         .name-input:focus { border-color: #eccc68; }
 
         /* ============================
-           ZONA TAP & TOMBOL (FIXED COORDINATES)
+           ZONA TAP & TOMBOL
         ============================ */
         .bottom-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 12%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 65; }
         .start-text { color: #ffffff; font-size: 3vw; font-weight: 900; letter-spacing: 2px; text-shadow: 0px 4px 10px #0984e3; animation: pulse-glow 1.5s infinite; }
@@ -86,14 +86,14 @@
         .kapal-tap { width: 60%; height: 26%; bottom: 0; left: 20%; border-radius: 100px 100px 0 0; }
         .batu-tap { width: 36%; height: 44%; top: 32%; left: 32%; border-radius: 50% 50% 35% 35%; }
         
-        /* 🔥 FIXED: Zona Kapal di next1.jpg & next2.png (Tidak terlalu besar agar tak nutup teks UI) */
-        .kapal-madura-tap { width: 22%; height: 25%; bottom: 25%; left: 38%; border-radius: 30px; }
+        /* 🔥 FIXED: Zona Kapal di next1.jpg & next2.png (Dibuat presisi ke badan kapal, lebih kecil & ke tengah) */
+        .kapal-madura-tap { width: 25%; height: 20%; bottom: 30%; left: 37%; border-radius: 30px; }
         
         /* Zona Kakek */
         .kakek-tap { width: 30%; height: 55%; bottom: 5%; right: 5%; border-radius: 50%; display: none; border-color: #eccc68; background: rgba(236, 204, 104, 0.1); }
         
-        /* 🔥 FIXED: Zona Kapal Rusak (Hanya menutupi area tengah bawah, TIDAK nutup teks atas) */
-        .kapal-rusak-tap { width: 60%; height: 50%; bottom: 10%; left: 20%; border: none; background: transparent; animation: none; z-index: 65; border-radius: 20px;}
+        /* 🔥 FIXED: Zona Kapal Rusak (Koordinat dikecilkan & dijauhkan dari teks atas) */
+        .kapal-rusak-tap { width: 40%; height: 35%; bottom: 20%; left: 30%; border-radius: 20px; border: none; background: transparent; animation: none; z-index: 65; }
         
         /* Zona Bintang Besar di 5.png */
         .star-zone { width: 25%; height: 25%; border-radius: 50%; border-color: #f1c40f; }
@@ -320,9 +320,11 @@
 
         <div id="slideRusak" class="slide">
             <img id="imgRusak" src="rusak.png" alt="Kapal Rusak" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=Kapal+Terombang-ambing+(rusak.png)'">
-            <div style="position:absolute; top:20px; width:100%; text-align:center; font-size:24px; font-weight:900; color:#e74c3c; text-shadow: 2px 2px 4px #000, -2px -2px 0 #fff; z-index: 10;">
+            
+            <div style="position:absolute; top:30px; width:100%; text-align:center; font-size:24px; font-weight:900; color:#e74c3c; text-shadow: 2px 2px 4px #000, -2px -2px 0 #fff; z-index: 100; pointer-events: none;">
                 TAP LAYAR CEPAT UNTUK SELAMATKAN KAPAL! (<span id="klikRusak">0</span>/10)
             </div>
+            
             <button class="tap-zone kapal-rusak-tap" onclick="perbaikiKapal()"></button>
         </div>
 
@@ -404,7 +406,7 @@
                 el.style.backgroundColor = 'rgba(231, 76, 60, 0.6)';
                 el.style.border = '4px solid #f1c40f';
             });
-            alert("Area kotak klik diwarnai merah! Sesuaikan persentase width/height/bottom/left di CSS kalau belum pas.");
+            alert("Area kotak klik diwarnai merah! Coba klik, teks seharusnya aman karena sudah kebal hitbox.");
         }
 
         soundBgm.addEventListener('ended', function() { if (!audioMuted) { this.currentTime = 0; this.play().catch(e=>{}); } }, false);
