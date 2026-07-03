@@ -86,13 +86,13 @@
         .kapal-tap { width: 60%; height: 26%; bottom: 0; left: 20%; border-radius: 100px 100px 0 0; }
         .batu-tap { width: 36%; height: 44%; top: 32%; left: 32%; border-radius: 50% 50% 35% 35%; }
         
-        /* 🔥 FIXED AKURAT: Zona Kapal di next1.jpg (Kapalnya ada di KANAN ATAS Peta!) */
-        .kapal-madura-tap { width: 16%; height: 22%; top: 22%; left: 63%; border-radius: 20px; }
+        /* 🔥 FIXED AKURAT: Zona Kapal di next1.jpg (Digeser ke kiri jadi left 55%) */
+        .kapal-madura-tap { width: 16%; height: 22%; top: 22%; left: 55%; border-radius: 20px; }
         
         /* Zona Kakek */
         .kakek-tap { width: 30%; height: 55%; bottom: 5%; right: 5%; border-radius: 50%; display: none; border-color: #eccc68; background: rgba(236, 204, 104, 0.1); }
         
-        /* 🔥 FIXED TIGHT: Zona Kapal Rusak (Kotak presisi nempel di objek tengah) */
+        /* Zona Kapal Rusak */
         .kapal-rusak-tap { width: 25%; height: 25%; bottom: 35%; left: 37%; border-radius: 20px; border: none; background: transparent; animation: none; z-index: 65; }
         
         /* Zona Bintang Besar di 5.png */
@@ -408,7 +408,7 @@
                 el.style.backgroundColor = 'rgba(231, 76, 60, 0.6)';
                 el.style.border = '4px solid #f1c40f';
             });
-            alert("Udah gue arahin ke kanan atas (top: 22%, left: 63%). Tinggal cek merah-merahnya udah nyaplok kapal belum!");
+            alert("Kotaknya udah digeser ke kiri (left 55%)! Kalo misal butuh lebih ke kiri lagi, turunin jadi 50% atau 45%. Cek langsung ya!");
         }
 
         soundBgm.addEventListener('ended', function() { if (!audioMuted) { this.currentTime = 0; this.play().catch(e=>{}); } }, false);
