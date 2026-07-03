@@ -86,18 +86,20 @@
         .kapal-tap { width: 60%; height: 26%; bottom: 0; left: 20%; border-radius: 100px 100px 0 0; }
         .batu-tap { width: 36%; height: 44%; top: 32%; left: 32%; border-radius: 50% 50% 35% 35%; }
         
-        /* 🔥 FIXED: Zona Kapal di next1.jpg & next2.png (Dibuat presisi ke badan kapal, lebih kecil & ke tengah) */
-        .kapal-madura-tap { width: 25%; height: 20%; bottom: 30%; left: 37%; border-radius: 30px; }
+        /* 🔥 FIXED TIGHT: Zona Kapal di next1.jpg & next2.png (Kotak presisi lebih kecil) */
+        .kapal-madura-tap { width: 15%; height: 18%; bottom: 25%; left: 45%; border-radius: 15px; }
         
         /* Zona Kakek */
         .kakek-tap { width: 30%; height: 55%; bottom: 5%; right: 5%; border-radius: 50%; display: none; border-color: #eccc68; background: rgba(236, 204, 104, 0.1); }
         
-        /* 🔥 FIXED: Zona Kapal Rusak (Koordinat dikecilkan & dijauhkan dari teks atas) */
-        .kapal-rusak-tap { width: 40%; height: 35%; bottom: 20%; left: 30%; border-radius: 20px; border: none; background: transparent; animation: none; z-index: 65; }
+        /* 🔥 FIXED TIGHT: Zona Kapal Rusak (Kotak presisi nempel di objek tengah) */
+        .kapal-rusak-tap { width: 35%; height: 25%; bottom: 15%; left: 32%; border-radius: 20px; border: none; background: transparent; animation: none; z-index: 65; }
         
         /* Zona Bintang Besar di 5.png */
         .star-zone { width: 25%; height: 25%; border-radius: 50%; border-color: #f1c40f; }
         .z-crux { top: 10%; right: 20%; }
+        
+        .rumah-tap { width: 40%; height: 40%; top: 30%; right: 5%; border-radius: 20px; }
 
         @keyframes pulse-glow { 0% { transform: scale(1); box-shadow: 0 0 5px rgba(0, 168, 255, 0.3); } 50% { transform: scale(1.02); box-shadow: 0 0 15px rgba(0, 168, 255, 0.6); } 100% { transform: scale(1); box-shadow: 0 0 5px rgba(0, 168, 255, 0.3); } }
         
@@ -406,7 +408,7 @@
                 el.style.backgroundColor = 'rgba(231, 76, 60, 0.6)';
                 el.style.border = '4px solid #f1c40f';
             });
-            alert("Area kotak klik diwarnai merah! Coba klik, teks seharusnya aman karena sudah kebal hitbox.");
+            alert("Area kotak klik diwarnai merah! Sesuaikan jika letaknya butuh digeser sedikit lagi.");
         }
 
         soundBgm.addEventListener('ended', function() { if (!audioMuted) { this.currentTime = 0; this.play().catch(e=>{}); } }, false);
