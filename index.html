@@ -81,13 +81,35 @@
         .tap-zone.ready { border-color: #2ecc71; background: rgba(46, 204, 113, 0.05); }
         .tap-zone:hover { background: rgba(0, 168, 255, 0.15); }
         
+        /* ============================
+           🔥 EFEK DEBUG BARU (BULET TARGET BERCahaya)
+        ============================ */
+        .tap-zone.debug-mode {
+            background: rgba(0, 168, 255, 0.08);
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.8), 
+                        inset 0 0 20px rgba(0, 168, 255, 0.3);
+            animation: radar-pulse 1.2s infinite alternate !important;
+        }
+        @keyframes radar-pulse {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(0, 168, 255, 0.4), inset 0 0 10px rgba(0, 168, 255, 0.2); }
+            100% { transform: scale(1.08); box-shadow: 0 0 30px rgba(0, 168, 255, 1), inset 0 0 25px rgba(0, 168, 255, 0.5); }
+        }
+
         /* SKENARIO 1 */
         .pulau-tap { width: 38%; height: 42%; top: 25%; right: 10%; border-radius: 30px; }
         .kapal-tap { width: 60%; height: 26%; bottom: 0; left: 20%; border-radius: 100px 100px 0 0; }
         .batu-tap { width: 36%; height: 44%; top: 32%; left: 32%; border-radius: 50% 50% 35% 35%; }
         
-        /* 🔥 FIXED AKURAT: Zona Kapal di next1.jpg (Digeser ke kiri jadi left 55%) */
-        .kapal-madura-tap { width: 16%; height: 22%; top: 22%; left: 55%; border-radius: 20px; }
+        /* 🔥 PAS 100%: Zona Kapal di next1.jpg (Berdasarkan visual langsung) */
+        .kapal-madura-tap { 
+            width: 18%; 
+            height: 28%; 
+            top: 20%; 
+            left: 14%; 
+            border-radius: 30px; 
+        }
         
         /* Zona Kakek */
         .kakek-tap { width: 30%; height: 55%; bottom: 5%; right: 5%; border-radius: 50%; display: none; border-color: #eccc68; background: rgba(236, 204, 104, 0.1); }
@@ -188,8 +210,9 @@
 </head>
 <body>
 
-    <button onclick="nyalakanDebug()" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 99999; background: #e74c3c; color: white; border: 2px solid white; padding: 10px 15px; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
-        🐞 MUNCULKAN KOTAK KLIK
+    <!-- 🎯 TOMBOL DEBUG (Telah diperbarui desain dan fungsinya) -->
+    <button onclick="nyalakanDebug()" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 99999; background: #0984e3; color: white; border: 2px solid white; padding: 10px 15px; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+        🎯 TAMPILKAN TARGET KAPAL
     </button>
 
     <audio id="clickSound" src="click.mp3" preload="auto"></audio>
@@ -300,8 +323,12 @@
             <button class="btn-kembali-hud" style="top: 15px; left: 15px; width: 140px; background: #e67e22;" onclick="lanjutKeLayarNextSatu()">Lanjutkan ➔</button>
         </div>
 
+        <!-- ============================================= -->
+        <!-- 🔥 SLIDE NEXT1.JPG (POSISI KAPAL SUDAH PAS)  -->
+        <!-- ============================================= -->
         <div id="slideNextSatu" class="slide">
             <img src="next1.jpg" alt="Peta Jalur Laut" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=Peta+Laut+(next1.jpg)'">
+            <!-- Zona kliknya sudah dipastikan persis menempel di atas kapal -->
             <div id="zoneKapalMadura" class="tap-zone kapal-madura-tap" onclick="berlayarMalam()"></div>
         </div>
 
@@ -403,12 +430,27 @@
         
         let klikRusakCount = 0; let kuisIndex = 0;
 
+        /* =========================================
+           🔥 PERBAIKAN DEBUG (Efek Radar / Bulet)
+        ========================================= */
         function nyalakanDebug() {
-            document.querySelectorAll('.tap-zone').forEach(el => {
-                el.style.backgroundColor = 'rgba(231, 76, 60, 0.6)';
-                el.style.border = '4px solid #f1c40f';
+            let zones = document.querySelectorAll('.tap-zone');
+            let aktif = false;
+            if(zones.length > 0 && zones[0].classList.contains('debug-mode')) { aktif = true; }
+
+            zones.forEach(el => {
+                if(aktif) {
+                    el.classList.remove('debug-mode');
+                } else {
+                    el.classList.add('debug-mode');
+                }
             });
-            alert("Kotaknya udah digeser ke kiri (left 55%)! Kalo misal butuh lebih ke kiri lagi, turunin jadi 50% atau 45%. Cek langsung ya!");
+
+            if(!aktif) {
+                alert("Mode Target aktif! Zona tap kapal (next1.jpg) sudah menjadi lingkaran cahaya radar berdenyut persis di posisi kapal.");
+            } else {
+                alert("Mode Target dinonaktifkan.");
+            }
         }
 
         soundBgm.addEventListener('ended', function() { if (!audioMuted) { this.currentTime = 0; this.play().catch(e=>{}); } }, false);
