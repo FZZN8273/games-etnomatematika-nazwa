@@ -53,9 +53,17 @@
         .star-zone { width: 25%; height: 25%; border-radius: 50%; border-color: #f1c40f; }
         .z-crux { top: 10%; right: 20%; }
 
-        .menu-panel-wrapper { position: absolute; top: 10%; left: 10%; width: 55%; height: 80%; background: rgba(20, 30, 40, 0.9); border: 2px solid #eccc68; border-radius: 12px; padding: 25px; z-index: 60; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 10px 25px rgba(0,0,0,0.6); }
-        .menu-panel-title { font-size: 18px; font-weight: 900; color: #eccc68; border-bottom: 2px dashed #eccc68; padding-bottom: 8px; margin-bottom: 12px; text-transform: uppercase; }
-        .menu-panel-content { font-size: 14px; font-weight: 600; line-height: 1.6; color: #f5f6fa; overflow-y: auto; flex-grow: 1; }
+        /* 🔥 PERBAIKAN: PANEL MENU DIHAPUS KOTAK GELAPNYA */
+        .menu-panel-wrapper { 
+            position: absolute; top: 15%; left: 15%; width: 70%; height: 70%;
+            background: transparent; border: none; padding: 0; z-index: 60;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            box-shadow: none;
+        }
+        .menu-panel-title { font-size: 24px; font-weight: 900; color: #fff; border-bottom: 2px dashed #fff; padding-bottom: 8px; margin-bottom: 15px; text-transform: uppercase; text-shadow: 3px 3px 6px rgba(0,0,0,0.8); }
+        .menu-panel-content { font-size: 16px; font-weight: 700; line-height: 1.6; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); overflow-y: auto; flex-grow: 1; text-align: center; }
+        .menu-panel-content ul { list-style: none; padding: 0; margin: 0; }
+        .menu-panel-content li { margin-bottom: 12px; }
         
         .dialogue-overlay { position: absolute; bottom: 5%; left: 5%; width: 90%; background: rgba(20, 30, 40, 0.9); border: 2px solid #74b9ff; border-radius: 12px; padding: 20px; z-index: 80; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
         .dialogue-text { font-size: 16px; line-height: 1.5; margin-bottom: 15px; font-weight: bold; }
@@ -63,7 +71,6 @@
         .btn-choice { padding: 10px 20px; border-radius: 8px; border: 2px solid #eccc68; background: #2c3e50; color: #fff; font-weight: bold; cursor: pointer; flex-grow: 1; text-align: center; }
         .btn-choice:hover { background: #eccc68; color: #000; }
 
-        /* Layout Soal A/B dengan 2 Kartu Horizontal */
         .soal-panel-wrapper { position: absolute; top: 5%; left: 4%; width: 92%; height: 90%; z-index: 50; display: flex; flex-direction: row; justify-content: space-between; gap: 10px; background: transparent; padding: 10px; }
         .opsi-card { width: 48%; height: 100%; background: rgba(20, 30, 40, 0.9); border-radius: 15px; padding: 20px; display: flex; flex-direction: column; cursor: pointer; transition: 0.2s; border: 3px solid #7f8c8d; justify-content: space-between; }
         .opsi-card:hover { transform: scale(1.02); border-color: #f1c40f; box-shadow: 0 0 20px rgba(241, 196, 15, 0.5); }
@@ -85,11 +92,11 @@
 
         #globalUI, #starUI { display: none; } 
         .star-container { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: rgba(44, 62, 80, 0.95); padding: 6px 18px; border-radius: 30px; color: #ffeaa7; font-size: 16px; font-weight: 900; z-index: 50; border: 2px solid #ffeaa7; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        .robot-wrapper { position: absolute; width: 25%; max-width: 200px; z-index: 40; display: flex; flex-direction: column; pointer-events: none; }
-        .robot-kiri { bottom: -2%; left: 2%; align-items: flex-start; } 
+        .robot-wrapper { position: absolute; width: 28%; max-width: 220px; z-index: 40; display: flex; flex-direction: column; pointer-events: none; }
+        .robot-kiri { bottom: 0%; left: 0%; align-items: flex-start; } 
         .robot-img { width: 100%; height: auto; filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.5)); pointer-events: none; }
-        .speech-bubble { background: #ffffff; border-radius: 10px; padding: 10px; font-size: 1vw; color: #2c3e50; font-weight: 700; text-align: center; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); position: relative; z-index: 41; border: 2px solid #74b9ff; width: 220px; max-width: 80vw; max-height: 120px; overflow-y: auto; pointer-events: auto; line-height: 1.4; margin-bottom: -20px; }
-        .robot-kiri .speech-bubble { margin-left: 20px; } 
+        .speech-bubble { background: #ffffff; border-radius: 10px; padding: 10px; font-size: 1.1vw; color: #2c3e50; font-weight: 700; text-align: left; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); position: relative; z-index: 41; border: 2px solid #74b9ff; width: 250px; max-width: 80vw; max-height: 120px; overflow-y: auto; pointer-events: auto; line-height: 1.4; margin-bottom: -15px; }
+        .robot-kiri .speech-bubble { margin-left: 15px; } 
         .robot-kiri .speech-bubble::after { content: ''; position: absolute; bottom: -10px; left: 25px; border-width: 10px 10px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; }
 
         .btn-selesai { width: 100%; padding: 12px; background: #2ecc71; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 10px rgba(46,204,113,0.4); }
@@ -100,6 +107,7 @@
 
     <button onclick="nyalakanDebug()" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 99999; background: #0984e3; color: white; border: 2px solid white; padding: 10px 15px; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">🎯 TAMPILKAN TARGET OBJEK</button>
 
+    <!-- 🔥 PERBAIKAN: HANYA GUNALAN ATTRIBUT LOOP HTML5 UNTUK BACKSOUND -->
     <audio id="clickSound" src="click.mp3" preload="auto"></audio>
     <audio id="clickShipSound" src="clickship.mp3" preload="auto"></audio>
     <audio id="etnoWelcome" src="etnowelcome.mp3" preload="auto"></audio>
@@ -144,31 +152,35 @@
             <button class="icon-btn ship-btn" onclick="bukaSkenario1()"></button>
         </div>
 
-        <!-- MENU 1 -->
+        <!-- MENU 1: Aturan (Kotak gelap dihapus, teks shadow diperkuat) -->
         <div id="slideRules" class="slide">
             <img src="soalback.png" alt="Background" class="bg-img">
             <div class="menu-panel-wrapper">
                 <div class="menu-panel-title">📜 ATURAN EKSPEDISI</div>
                 <div class="menu-panel-content">
-                    <ul><li><b>Misi Utama:</b> Ungkap rahasia logika etnomatematika!</li>
-                    <li><b>Eksplorasi Rute:</b> Pilihan rute murni menguji analisis logismu.</li>
-                    <li><b>Sistem Bintang:</b> Jumlah perolehan ⭐ akan otomatis tersimpan.</li></ul>
+                    <ul>
+                        <li><b>Misi Utama:</b> Ungkap rahasia logika etnomatematika!</li>
+                        <li><b>Eksplorasi Rute:</b> Pilihan rute murni menguji analisis logismu.</li>
+                        <li><b>Sistem Bintang:</b> Jumlah perolehan ⭐ akan otomatis tersimpan.</li>
+                    </ul>
                 </div>
-                <button class="btn-selesai" style="position:static; width:100%;" onclick="kembaliKeMenu()">⚓ Kembali ke Beranda</button>
+                <button class="btn-selesai" style="position:static; width:80%;" onclick="kembaliKeMenu()">⚓ Kembali ke Beranda</button>
             </div>
         </div>
 
-        <!-- MENU 2 -->
+        <!-- MENU 2: Cara Main (Kotak gelap dihapus, teks shadow diperkuat) -->
         <div id="slideCaraMain" class="slide">
             <img src="soalback.png" alt="Background" class="bg-img">
             <div class="menu-panel-wrapper">
                 <div class="menu-panel-title">🧩 PETUNJUK NAVIGASI</div>
                 <div class="menu-panel-content">
-                    <ul><li>📖 <b>1. Amati Area:</b> Ketuk dek kapal atau objek di pulau.</li>
-                    <li>⚔️ <b>2. Ambil Langkah:</b> Tentukan rute ekspedisimu.</li>
-                    <li>🧭 <b>3. Analisis Jurnal:</b> Pelajari infografis sebab-akibat.</li></ul>
+                    <ul>
+                        <li>📖 <b>1. Amati Area:</b> Ketuk dek kapal atau objek di pulau.</li>
+                        <li>⚔️ <b>2. Ambil Langkah:</b> Tentukan rute ekspedisimu.</li>
+                        <li>🧭 <b>3. Analisis Jurnal:</b> Pelajari infografis sebab-akibat.</li>
+                    </ul>
                 </div>
-                <button class="btn-selesai" style="position:static; width:100%;" onclick="kembaliKeMenu()">⚓ Kembali ke Beranda</button>
+                <button class="btn-selesai" style="position:static; width:80%;" onclick="kembaliKeMenu()">⚓ Kembali ke Beranda</button>
             </div>
         </div>
 
@@ -321,9 +333,11 @@
             alert(aktif ? "Mode Target Dinonaktifkan." : "Mode Target Diaktifkan! Semua zona klik berupa lingkaran radar.");
         }
 
-        soundBgm.addEventListener('ended', function() { if (!audioMuted && !this.paused) { this.currentTime = 0; this.play().catch(e=>{}); } });
+        // 🔥 PERBAIKAN AUDIO: HAPUS EVENT LISTENER ENDED, BIAKKAN HTML LOOP BEKERJA
+        // soundBgm.addEventListener('ended', ...) sudah dihapus.
+
         function setSistemVolume(val) { volumeSistem = val; if(!audioMuted) { soundClick.volume = val; soundClickShip.volume = val; soundWelcome.volume = val; soundBgm.volume = val; soundCorrect.volume = val; soundWrong.volume = val; } }
-        function toggleMute() { audioMuted = !audioMuted; const btn = document.getElementById('btnAudio'); if(audioMuted) { btn.innerText = "🔇"; soundWelcome.volume=0; soundBgm.volume=0; soundClick.volume=0; soundClickShip.volume=0; soundCorrect.volume=0; soundWrong.volume=0; if(isBgmPlaying) soundBgm.pause(); } else { btn.innerText = "🔊"; setSistemVolume(document.getElementById('volSlider').value); if(isBgmPlaying && !isKuisActive) soundBgm.play().catch(e=>{}); } }
+        function toggleMute() { audioMuted = !audioMuted; const btn = document.getElementById('btnAudio'); if(audioMuted) { btn.innerText = "🔇"; soundWelcome.volume=0; soundBgm.volume=0; soundClick.volume=0; soundClickShip.volume=0; soundCorrect.volume=0; soundWrong.volume=0; soundBgm.pause(); } else { btn.innerText = "🔊"; setSistemVolume(document.getElementById('volSlider').value); if(isBgmPlaying && !isKuisActive) soundBgm.play().catch(e=>{}); } }
         function playClick() { soundClick.currentTime = 0; soundClick.play().catch(e=>{}); }
         function playClickShip() { soundClickShip.currentTime = 0; soundClickShip.play().catch(e=>{}); }
 
