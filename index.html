@@ -9,13 +9,12 @@
         body { background-color: #1a252f; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; overflow: hidden; color: #f5f6fa; }
 
         /* ============================
-           WARNING LAYAR DESKTOP (CEGAH BUG HP)
+           WARNING LAYAR DESKTOP
         ============================ */
         #desktopWarning {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 10000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; text-align: center; padding: 20px;
-            /* Tampilkan warning jika lebar layar di bawah 768px (umumnya HP) */
             display: none;
         }
         @media screen and (max-width: 768px) {
@@ -29,7 +28,7 @@
         .btn-oke:hover { transform: scale(1.05); background: #fdcb6e; }
 
         /* ============================
-           GAME FRAME CANVAS
+           GAME FRAME
         ============================ */
         .game-container { position: relative; width: 100%; max-width: 900px; aspect-ratio: 3 / 2; background-color: #000; overflow: hidden; box-shadow: 0 0 30px rgba(0,0,0,0.8); display: none; }
         .audio-panel { position: absolute; top: 15px; right: 15px; z-index: 100; background: rgba(44, 62, 80, 0.85); border: 2px solid #74b9ff; border-radius: 30px; padding: 5px 15px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
@@ -38,14 +37,14 @@
 
         .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; background-color: #1a252f; }
         .slide.active { display: block; }
-        .bg-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .bg-img { width: 100%; height: 100%; object-fit: cover; display: block; background-color: #111; } /* Fallback hitam mencegah layar putih saat loading lambat */
 
         /* ============================
            LOADING SCREEN
         ============================ */
         #loadingScreenRandom { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('4.png'); background-size: cover; background-position: center;
+            background-image: url('4.png'); background-size: cover; background-position: center; background-color: #1a252f;
             color: white; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 200; text-align: center; padding: 20px;
         }
         .spinner { width: 60px; height: 60px; border: 6px solid rgba(255,255,255,0.2); border-top: 6px solid #00a8ff; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; background: rgba(0,0,0,0.5); }
@@ -110,11 +109,9 @@
         #globalUI, #starUI { display: none; } 
         .star-container { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: rgba(44, 62, 80, 0.95); padding: 6px 18px; border-radius: 30px; color: #ffeaa7; font-size: 16px; font-weight: 900; z-index: 60; border: 2px solid #ffeaa7; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 
-        /* 🔥 ROBOT POSITIONING */
         .robot-wrapper { position: absolute; width: 18%; max-width: 140px; z-index: 80; display: flex; flex-direction: column; pointer-events: none; }
         .robot-kiri { bottom: 5px; left: 10px; align-items: flex-start; } 
         .robot-kanan { bottom: 5px; right: 10px; align-items: flex-end; }
-        /* 🔥 ROBOT DI ATAS (UNtUK SA1.PNG) */
         .robot-atas { top: 5px; left: 15px; align-items: flex-start; }
         
         .robot-img { width: 100%; height: auto; filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.8)); pointer-events: none; }
@@ -127,7 +124,6 @@
         .robot-kanan .speech-bubble::after { content: ''; position: absolute; bottom: -12px; right: 25px; border-width: 12px 12px 0; border-style: solid; border-color: #00a8ff transparent transparent transparent; }
         .robot-kanan .speech-bubble::before { content: ''; position: absolute; bottom: -10px; right: 27px; border-width: 10px 10px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; z-index: 82; }
 
-        /* 🔥 ROBOT ATAS */
         .robot-atas .speech-bubble { margin-left: 15px; } 
         .robot-atas .speech-bubble::after { content: ''; position: absolute; bottom: -12px; left: 25px; border-width: 12px 12px 0; border-style: solid; border-color: #00a8ff transparent transparent transparent; }
         .robot-atas .speech-bubble::before { content: ''; position: absolute; bottom: -10px; left: 27px; border-width: 10px 10px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; z-index: 82; }
@@ -144,15 +140,12 @@
         .intro-bubble .step-indicator { font-size: 14px; color: #7f8c8d; margin-bottom: 10px; text-shadow: none; }
         .intro-robot-wrapper { width: 25%; max-width: 180px; display: flex; justify-content: center; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8)); }
         .intro-robot-wrapper img { width: 100%; height: auto; }
-        #introNextBtn { width: auto; padding: 15px 40px; background: #e67e22; border-radius: 30px; border: none; color: white; font-weight: bold; font-size: 16px; cursor: not-allowed; box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: 0.2s; margin-top: 10px; opacity: 0.4; pointer-events: none; }
+        #introNextBtn { width: auto; padding: 15px 40px; background: #e67e22; border-radius: 30px; border: none; color: white; font-weight: bold; font-size: 16px; cursor: not-allowed; box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: 0.2s; margin-top: 10px; opacity: 0.6; pointer-events: none; }
         #introNextBtn.active-btn { opacity: 1; pointer-events: auto; cursor: pointer; animation: pulse-glow 1s infinite; }
     </style>
 </head>
 <body>
 
-    <!-- ============================
-         WARNING DESKTOP ONLY (CEGAH BUG HP)
-    ============================ -->
     <div id="desktopWarning">
         <div class="warning-box">
             <h2>⚠️ Khusus Desktop / Laptop</h2>
@@ -192,7 +185,6 @@
             <input type="range" class="volume-slider" id="volSlider" min="0" max="1" step="0.1" value="1" oninput="setSistemVolume(this.value)">
         </div>
 
-        <!-- SLIDE 1: wel1.jpg -->
         <div id="slide1" class="slide active">
             <img src="wel1.jpg" alt="Selamat Datang" class="bg-img">
             <div class="bottom-bar" onclick="bukaModalNama()">
@@ -200,7 +192,6 @@
             </div>
         </div>
         
-        <!-- SLIDE 2: wel2.jpg -->
         <div id="slide2" class="slide">
             <img src="wel2.jpg" alt="Pelabuhan" class="bg-img">
             <button class="icon-btn puzzle-btn" onclick="openMenu('caraMain')"></button>
@@ -208,7 +199,6 @@
             <button class="icon-btn ship-btn" onclick="bukaSkenario1()"></button>
         </div>
 
-        <!-- SLIDE MENU -->
         <div id="slideRules" class="slide">
             <img src="soalback.png" alt="Background" class="bg-img">
             <div class="menu-panel-wrapper">
@@ -239,7 +229,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 3: INTRO CERITA PRASASTI -->
+        <!-- INTRO CERITA PRASASTI -->
         <div id="slideIntroCerita" class="slide">
             <img src="soalback.png" alt="Background Soal" class="bg-img">
             <div class="intro-wrapper">
@@ -249,25 +239,24 @@
                 </div>
                 <button id="introNextBtn" onclick="goToNextIntro()">⏳ Membaca...</button>
                 <div class="intro-robot-wrapper">
-                    <img src="robot.jpg" alt="Robot Nusantara" class="intro-robot-img" onerror="this.src='https://via.placeholder.com/300x400.png?text=Robot'">
+                    <img src="robot.jpg" alt="Robot Nusantara" class="intro-robot-img">
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 4: 1.png (KAPAL & PULAU) -->
+        <!-- SKENARIO 1 -->
         <div id="slidePetualangan1" class="slide">
             <img src="1.png" alt="Skenario 1 - Layar 1" class="bg-img">
             <div id="zoneKapal" class="tap-zone kapal-tap" onclick="interaksiLayar1('kapal')"></div>
             <div id="zonePulau" class="tap-zone pulau-tap" onclick="interaksiLayar1('pulau')"></div>
         </div>
 
-        <!-- SLIDE 5: 2.png (PRASASTI) -->
         <div id="slidePrasasti" class="slide">
             <img src="2.png" alt="Prasasti Kedukan Bukit" class="bg-img">
             <button class="btn-selesai" style="position:absolute; bottom:15px; left:50%; transform:translateX(-50%); width:auto; padding:10px 30px; background:#e67e22; z-index:70; border-radius:30px;" onclick="lanjutKeSoal()">Lanjutkan ➔</button>
         </div>
         
-        <!-- SLIDE 6: SOAL A/B -->
+        <!-- SOAL A/B -->
         <div id="slideSoalS1" class="slide">
             <img src="soalback.png" alt="Background Soal" class="bg-img">
             <div class="soal-panel-wrapper">
@@ -292,20 +281,19 @@
             </div>
         </div>
 
-        <!-- SLIDE 7: SA1.png -->
+        <!-- SA1.png -->
         <div id="slideSebabAkibatS1" class="slide">
             <img id="assetSebabAkibatImgS1" src="SA1.png" alt="Penjelasan Sebab Akibat" class="bg-img">
-            <!-- 🔥 Tombol SA1 dipindah ke bawah (bottom: 6%) dekat teks kesimpulan, agar tidak menimpa infografis -->
             <button class="btn-selesai" style="position:absolute; bottom:6%; left:50%; transform:translateX(-50%); width:45%; background:#e67e22; z-index:70; padding:12px; border-radius:30px; box-shadow:0 4px 15px rgba(0,0,0,0.5);" onclick="lanjutKeLayarNextSatu()">Lanjutkan ➔</button>
         </div>
         
-        <!-- SLIDE 8: next1.jpg -->
+        <!-- NEXT1.JPG -->
         <div id="slideNextSatu" class="slide">
             <img src="next1.jpg" alt="Peta Jalur Laut" class="bg-img">
             <div id="zoneKapalMadura" class="tap-zone kapal-madura-tap" onclick="berlayarMalam()"></div>
         </div>
         
-        <!-- SLIDE 9: 5.png (Kakek - Hanya Cerita) -->
+        <!-- 5.png (KAKEK) -->
         <div id="slideMalam" class="slide">
             <img src="5.png" alt="Malam Hari & Kakek" class="bg-img">
             <div id="zoneKakek" class="tap-zone kakek-tap"></div>
@@ -319,21 +307,21 @@
             </div>
         </div>
 
-        <!-- SLIDE 10: rusak.png -->
+        <!-- RUSAK.PNG -->
         <div id="slideRusak" class="slide">
             <img id="imgRusak" src="rusak.png" alt="Kapal Rusak" class="bg-img">
             <div style="position:absolute; top:30px; width:100%; text-align:center; font-size:24px; font-weight:900; color:#e74c3c; text-shadow: 2px 2px 4px #000, 0 0 20px rgba(231,76,60,0.5); z-index: 100; pointer-events: none; animation: pulse-glow 1s infinite;">TAP LAYAR CEPAT UNTUK SELAMATKAN KAPAL! (<span id="klikRusak">0</span>/10)</div>
             <button class="tap-zone kapal-rusak-tap" onclick="perbaikiKapal()"></button>
         </div>
         
-        <!-- SLIDE 11: stars.png -->
+        <!-- STARS.PNG -->
         <div id="slideStars" class="slide">
             <img src="stars.png" alt="Peta Bintang Malam" class="bg-img">
             <div style="position:absolute; top:45%; left:0; width:100%; text-align:center; font-size:22px; font-weight:900; color:#f1c40f; text-shadow: 0 0 20px #000, 0 0 40px #000; z-index: 100; pointer-events: none; animation: pulse-glow 1.5s infinite;">✨ KLIK AREA CAHAYA DI LANGIT ✨</div>
             <div class="tap-zone star-zone z-crux" onclick="mulaiUrutanBintang()"></div>
         </div>
         
-        <!-- SLIDE 12: Rasi Bintang -->
+        <!-- RASI BINTANG -->
         <div id="slideRasi" class="slide">
             <img id="imgRasi" src="" alt="Rasi Bintang" class="bg-img">
             <div class="rasi-container">
@@ -342,7 +330,7 @@
             </div>
         </div>
         
-        <!-- SLIDE 13: Materi GPS -->
+        <!-- MATERI GPS -->
         <div id="slideGPS" class="slide">
             <img src="soalback.png" alt="Background GPS" class="bg-img">
             <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:85%; background:rgba(0,0,0,0.7); padding:20px; border-radius:12px; z-index:50; color:#fff; text-align:left; max-height:80vh; overflow-y:auto;">
@@ -357,7 +345,7 @@
             </div>
         </div>
         
-        <!-- SLIDE 14: Kuis -->
+        <!-- KUIS -->
         <div id="slideKuis" class="slide">
             <img src="soalback.png" alt="Kuis Bintang" class="bg-img">
             <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:90%; background:rgba(0,0,0,0.8); padding:20px; border-radius:15px; z-index:50; color:#fff; text-align:center; max-height:80vh; overflow-y:auto;">
@@ -367,18 +355,17 @@
             </div>
         </div>
         
-        <!-- SLIDE 15: next2.png -->
+        <!-- NEXT2.PNG -->
         <div id="slideNextDua" class="slide">
             <img src="next2.png" alt="Peta Jalur Laut Berikutnya" class="bg-img">
             <div class="tap-zone kapal-madura-tap" onclick="tamatKuisDanKembali()"></div>
         </div>
 
-        <!-- GLOBAL UI -->
         <div id="globalUI">
             <div id="starUI" class="star-container">🌟 <span id="starCount">0</span></div>
             <div class="robot-wrapper robot-kiri" id="robotAktor">
                 <div class="speech-bubble" id="robotSpeech">Selamat datang!</div>
-                <img src="robot.jpg" alt="Robot Nusantara" class="robot-img" onerror="this.src='https://via.placeholder.com/300x400.png?text=Robot'">
+                <img src="robot.jpg" alt="Robot Nusantara" class="robot-img">
             </div>
         </div>
     </div>
@@ -421,7 +408,6 @@
         function playClick() { soundClick.currentTime = 0; soundClick.play().catch(e=>{}); }
         function playClickShip() { soundClickShip.currentTime = 0; soundClickShip.play().catch(e=>{}); }
 
-        /* 🔥 Audio Langsung Nyala tanpa delay */
         function urutanAudioWelcome() { 
             setSistemVolume(volumeSistem); 
             if(!audioMuted) { 
@@ -436,10 +422,15 @@
 
         function sembunyikanSemuaSlide() { document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active')); document.getElementById('zoneKakek').style.display = 'none'; document.getElementById('dialogOverlayKakek').style.display = 'none'; }
         
-        /* 🔥 Fungsi untuk memindahkan posisi robot */
         function setRobot(text, posisi = 'robot-kiri') {
             document.getElementById('robotSpeech').innerHTML = text;
             document.getElementById('robotAktor').className = 'robot-wrapper ' + posisi;
+        }
+
+        // 🔥 Fungsi untuk menghilangkan robot (gelembung kosong)
+        function sembunyikanRobot() {
+            document.getElementById('robotSpeech').innerHTML = " ";
+            document.getElementById('robotAktor').className = 'robot-wrapper robot-kiri'; // Tetap di kiri biar ga lompat.
         }
 
         function loadingTransisi(detik, callback) {
@@ -454,6 +445,7 @@
 
         /* INTRO CERITA */
         function bukaIntroCerita() {
+            sembunyikanRobot(); // 🔥 Robot menghilang saat cerita dimulai
             sembunyikanSemuaSlide();
             document.getElementById('slideIntroCerita').classList.add('active');
             introIndex = 0;
@@ -465,13 +457,16 @@
             document.getElementById('introStepIndicator').innerText = `Bagian ${index + 1} dari ${introData.length}`;
             document.getElementById('introText').innerHTML = data.text;
             let btn = document.getElementById('introNextBtn');
-            btn.innerText = `⏳ Baca dulu ya... (${Math.floor(data.delay/1000)} detik)`;
+            
+            // 🔥 TIMER TANPA TEKS HITUNG MUNDUR
+            btn.innerText = "⏳ Membaca...";
             btn.classList.remove('active-btn');
             btn.style.pointerEvents = 'none';
-            btn.style.opacity = '0.5';
+            btn.style.opacity = '0.6';
+            
             clearTimeout(introTimer);
             introTimer = setTimeout(() => {
-                btn.innerText = index === introData.length - 1 ? "Sekarang, ayo kita lihat langsung prasastinya! ➔" : "Baca selesai! Lanjutkan ➔";
+                btn.innerText = index === introData.length - 1 ? "Sekarang, ayo kita lihat langsung prasastinya! ➔" : "Lanjutkan ➔";
                 btn.classList.add('active-btn');
                 btn.style.pointerEvents = 'auto';
                 btn.style.opacity = '1';
@@ -501,7 +496,7 @@
             let input = document.getElementById('inputNama').value.trim();
             if(input === "") { alert("Mohon isi nama kapten sebelum mulai ekspedisi!"); return; }
             playerName = input; playClick(); document.getElementById('modalNama').style.display = 'none';
-            urutanAudioWelcome(); // 🔥 Backsound langsung menyala di sini tanpa delay
+            urutanAudioWelcome(); 
             sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active');
             document.getElementById('globalUI').style.display = 'block'; 
             setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal!`);
@@ -522,7 +517,8 @@
                 setTimeout(() => { 
                     sembunyikanSemuaSlide(); 
                     document.getElementById('slidePrasasti').classList.add('active'); 
-                    setRobot(`Kapten ${playerName}! Ini Prasasti Kedukan Bukit! Berasal dari tahun 682 M. Ini menceritakan perjalanan suci Dapunta Hyang menggunakan perahu. Ini membuktikan betapa hebatnya nenek moyang kita dalam navigasi!`); 
+                    // 🔥 NARASI PRASASTI YANG LOGIS DAN TERHUBUNG DENGAN ANGKA 0 & SISTEM KOMPUTER
+                    setRobot(`Kapten ${playerName}! Perhatikan baik-baik. Prasasti Kedukan Bukit ini berisi angka 604 Saka. Angka 0 di tengahnya adalah bukti nenek moyang kita sudah paham konsep nilai tempat dan sistem desimal.<br><br>Logika inilah yang menjadi fondasi dasar dari sistem biner (0 dan 1), yang membuat semua komputer dan HP bisa menyala. Jadi, teknologi yang kamu pegang sekarang, akarnya ada di prasasti ini. Keren banget, kan?`); 
                 }, 400); 
             } 
         }
@@ -534,7 +530,6 @@
             if (opsi === 'B') { jumlahBintang++; document.getElementById('starCount').innerText = jumlahBintang; }
             loadingTransisi(800, () => {
                 sembunyikanSemuaSlide(); document.getElementById('slideSebabAkibatS1').classList.add('active');
-                // 🔥 Robot dipindahkan ke ATAS (robot-atas) di SA1.png
                 setRobot(opsi === 'B' ? "Kerja bagus! Kamu memilih pola yang tepat!" : "Kamu memilih dokumentasi biasa. Teliti itu penting!", 'robot-atas');
             });
         }
@@ -548,7 +543,7 @@
                 setRobot("Eh udh malam, ada kakek nelayan nunjuk bintang! Ayo dengerin dulu ceritanya!");
                 setTimeout(() => { 
                     document.getElementById('dialogOverlayKakek').style.display = 'block'; 
-                    setRobot(" "); // Robot hilang saat kakek cerita
+                    sembunyikanRobot(); // 🔥 Robot menghilang saat kakek cerita
                 }, 1500);
             });
         }
