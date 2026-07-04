@@ -17,7 +17,6 @@
         .slide.active { display: block; }
         .bg-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        /* LOADING SCREEN (4.PNG) */
         #loadingScreenRandom { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('4.png'); background-size: cover; background-position: center;
@@ -27,23 +26,19 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
         #loadingScreenRandom h2 { color: #eccc68; font-weight: 900; text-shadow: 2px 2px 10px #000; }
 
-        /* MODAL NAMA */
         .modal-overlay { position: absolute; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 99; display: none; justify-content: center; align-items: center; flex-direction: column; }
         .name-box { background: rgba(20, 30, 40, 0.95); border: 2px solid #eccc68; border-radius: 15px; padding: 30px; text-align: center; width: 60%; box-shadow: 0 10px 30px rgba(236,204,104,0.3); }
         .name-box h2 { color: #eccc68; margin-bottom: 15px; letter-spacing: 1px; }
         .name-input { width: 90%; padding: 12px; font-size: 16px; font-weight: bold; text-align: center; border-radius: 8px; border: 2px solid #74b9ff; background: #1a252f; color: #fff; margin-bottom: 20px; outline: none; }
         .name-input:focus { border-color: #eccc68; }
 
-        /* WEL2 TOMBOL */
         .icon-btn { position: absolute; background: transparent; border: none; cursor: pointer; border-radius: 20%; width: 14%; height: 21%; top: 38%; z-index: 65; transition: 0.2s; pointer-events: auto; }
         .icon-btn:hover { box-shadow: 0 0 20px 8px rgba(0, 168, 255, 0.6); }
         .puzzle-btn { left: 24.5%; } .book-btn { left: 42.5%; } .ship-btn { left: 61%; }
 
-        /* FULL BOTTOM BAR (START/LANJUT) */
         .bottom-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 15%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 65; pointer-events: auto; }
         .start-text { color: #ffffff; font-size: 3vw; font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 20px rgba(9, 132, 227, 0.9), 0 4px 10px #000; animation: pulse-glow 1.2s infinite; }
 
-        /* TAP ZONE & OBJEK */
         .tap-zone { position: absolute; background: rgba(0, 168, 255, 0.02); border: 3px dashed #00a8ff; cursor: pointer; z-index: 50; animation: pulse-glow 2s infinite ease-in-out; }
         .tap-zone.ready { border-color: #2ecc71; background: rgba(46, 204, 113, 0.1); }
         .tap-zone.debug-mode { background: rgba(0, 168, 255, 0.08); border: 3px solid #ffffff; border-radius: 50%; box-shadow: 0 0 30px rgba(0, 168, 255, 1); animation: radar-pulse 1.2s infinite alternate !important; }
@@ -52,26 +47,23 @@
 
         .pulau-tap { width: 38%; height: 42%; top: 25%; right: 10%; border-radius: 30px; }
         .kapal-tap { width: 60%; height: 26%; bottom: 0; left: 20%; border-radius: 100px 100px 0 0; }
-        .batu-tap { width: 36%; height: 44%; top: 32%; left: 32%; border-radius: 50% 50% 35% 35%; }
         .kapal-madura-tap { width: 18%; height: 28%; top: 20%; left: 14%; border-radius: 30px; }
         .kakek-tap { width: 20%; height: 35%; top: 25%; right: 25%; border-radius: 20px; display: none; border-color: #eccc68; background: rgba(236, 204, 104, 0.15); border-width: 3px; animation: pulse-glow 2s infinite; }
         .kapal-rusak-tap { width: 25%; height: 25%; bottom: 35%; left: 37%; border-radius: 20px; border: none; background: transparent; animation: none; z-index: 60; }
         .star-zone { width: 25%; height: 25%; border-radius: 50%; border-color: #f1c40f; }
         .z-crux { top: 10%; right: 20%; }
 
-        /* PANEL & MATERI */
         .menu-panel-wrapper { position: absolute; top: 10%; left: 10%; width: 55%; height: 80%; background: rgba(20, 30, 40, 0.9); border: 2px solid #eccc68; border-radius: 12px; padding: 25px; z-index: 60; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 10px 25px rgba(0,0,0,0.6); }
         .menu-panel-title { font-size: 18px; font-weight: 900; color: #eccc68; border-bottom: 2px dashed #eccc68; padding-bottom: 8px; margin-bottom: 12px; text-transform: uppercase; }
         .menu-panel-content { font-size: 14px; font-weight: 600; line-height: 1.6; color: #f5f6fa; overflow-y: auto; flex-grow: 1; }
         
-        /* DIALOG KAKEK */
         .dialogue-overlay { position: absolute; bottom: 5%; left: 5%; width: 90%; background: rgba(20, 30, 40, 0.9); border: 2px solid #74b9ff; border-radius: 12px; padding: 20px; z-index: 80; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
         .dialogue-text { font-size: 16px; line-height: 1.5; margin-bottom: 15px; font-weight: bold; }
         .dialogue-buttons { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
         .btn-choice { padding: 10px 20px; border-radius: 8px; border: 2px solid #eccc68; background: #2c3e50; color: #fff; font-weight: bold; cursor: pointer; flex-grow: 1; text-align: center; }
         .btn-choice:hover { background: #eccc68; color: #000; }
 
-        /* SOAL A/B (Layar Putusan) */
+        /* Layout Soal A/B dengan 2 Kartu Horizontal */
         .soal-panel-wrapper { position: absolute; top: 5%; left: 4%; width: 92%; height: 90%; z-index: 50; display: flex; flex-direction: row; justify-content: space-between; gap: 10px; background: transparent; padding: 10px; }
         .opsi-card { width: 48%; height: 100%; background: rgba(20, 30, 40, 0.9); border-radius: 15px; padding: 20px; display: flex; flex-direction: column; cursor: pointer; transition: 0.2s; border: 3px solid #7f8c8d; justify-content: space-between; }
         .opsi-card:hover { transform: scale(1.02); border-color: #f1c40f; box-shadow: 0 0 20px rgba(241, 196, 15, 0.5); }
@@ -83,7 +75,6 @@
         .opsi-detail { font-size: 14px; font-weight: 600; line-height: 1.6; color: #f5f6fa; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; gap: 10px; }
         .opsi-badge { background: #fff; color: #1a252f; width: 30px; height: 30px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; margin: 0 auto 10px auto; }
 
-        /* FEEDBACK & SHAKE */
         #feedbackOverlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 110; display: none; flex-direction: column; justify-content: center; align-items: center; }
         .feedback-box { padding: 25px 45px; border-radius: 15px; font-size: 26px; font-weight: 900; text-align: center; text-transform: uppercase; animation: popIn 0.3s forwards; }
         .feedback-correct { background: rgba(46, 204, 113, 0.25); border: 4px solid #2ecc71; color: #2ecc71; box-shadow: 0 0 40px rgba(46,204,113,0.6); }
@@ -92,7 +83,6 @@
         .shake-effect { animation: shake 0.4s; }
         @keyframes shake { 0% { transform: translate(1px, 1px) rotate(0deg); } 10% { transform: translate(-1px, -2px) rotate(-1deg); } 20% { transform: translate(-3px, 0px) rotate(1deg); } 30% { transform: translate(3px, 2px) rotate(0deg); } 40% { transform: translate(1px, -1px) rotate(1deg); } 50% { transform: translate(-1px, 2px) rotate(-1deg); } 60% { transform: translate(-3px, 1px) rotate(0deg); } 70% { transform: translate(3px, 1px) rotate(-1deg); } 80% { transform: translate(-1px, -1px) rotate(1deg); } 90% { transform: translate(1px, 2px) rotate(0deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
 
-        /* ROBOT (DIPERKECIL & TIDAK MENIMPA SA1) */
         #globalUI, #starUI { display: none; } 
         .star-container { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: rgba(44, 62, 80, 0.95); padding: 6px 18px; border-radius: 30px; color: #ffeaa7; font-size: 16px; font-weight: 900; z-index: 50; border: 2px solid #ffeaa7; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
         .robot-wrapper { position: absolute; width: 25%; max-width: 200px; z-index: 40; display: flex; flex-direction: column; pointer-events: none; }
@@ -103,6 +93,7 @@
         .robot-kiri .speech-bubble::after { content: ''; position: absolute; bottom: -10px; left: 25px; border-width: 10px 10px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; }
 
         .btn-selesai { width: 100%; padding: 12px; background: #2ecc71; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 10px rgba(46,204,113,0.4); }
+        .btn-kuis-action { width: 85%; padding: 15px; background: #2ecc71; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(46,204,113,0.4); margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -145,7 +136,7 @@
             </div>
         </div>
         
-        <!-- SLIDE 2: wel2.jpg (Menu Pelabuhan) -->
+        <!-- SLIDE 2: wel2.jpg -->
         <div id="slide2" class="slide">
             <img src="wel2.jpg" alt="Pelabuhan" class="bg-img">
             <button class="icon-btn puzzle-btn" onclick="openMenu('caraMain')"></button>
@@ -153,7 +144,7 @@
             <button class="icon-btn ship-btn" onclick="bukaSkenario1()"></button>
         </div>
 
-        <!-- SLIDE MENU 1: Rules -->
+        <!-- MENU 1 -->
         <div id="slideRules" class="slide">
             <img src="soalback.png" alt="Background" class="bg-img">
             <div class="menu-panel-wrapper">
@@ -167,7 +158,7 @@
             </div>
         </div>
 
-        <!-- SLIDE MENU 2: Cara Main -->
+        <!-- MENU 2 -->
         <div id="slideCaraMain" class="slide">
             <img src="soalback.png" alt="Background" class="bg-img">
             <div class="menu-panel-wrapper">
@@ -181,15 +172,20 @@
             </div>
         </div>
 
-        <!-- SLIDE 3: 1.png (Skenario 1) -->
+        <!-- SLIDE 3: 1.png -->
         <div id="slidePetualangan1" class="slide">
             <img src="1.png" alt="Skenario 1 - Layar 1" class="bg-img">
             <div id="zoneKapal" class="tap-zone kapal-tap" onclick="interaksiLayar1('kapal')"></div>
             <div id="zonePulau" class="tap-zone pulau-tap" onclick="interaksiLayar1('pulau')"></div>
-            <button class="btn-selesai" style="position:absolute; bottom:15px; right:15px; width:auto; padding:10px 20px; background:#e74c3c; z-index:70;" onclick="kembaliKeMenu()">🚪 Keluar</button>
         </div>
 
-        <!-- SLIDE 4: Soal Pilihan A/B -->
+        <!-- SLIDE 4: 2.png (Prasasti) -->
+        <div id="slidePrasasti" class="slide">
+            <img src="2.png" alt="Prasasti Kedukan Bukit" class="bg-img">
+            <button class="btn-selesai" style="position:absolute; bottom:15px; left:50%; transform:translateX(-50%); width:auto; padding:10px 30px; background:#e67e22; z-index:70; border-radius:30px;" onclick="lanjutKeSoal()">Lanjutkan ➔</button>
+        </div>
+        
+        <!-- SLIDE 5: Soal A/B -->
         <div id="slideSoalS1" class="slide">
             <img src="soalback.png" alt="Background Soal" class="bg-img">
             <div class="soal-panel-wrapper">
@@ -214,19 +210,19 @@
             </div>
         </div>
 
-        <!-- SLIDE 5: SA1.png -->
+        <!-- SLIDE 6: SA1.png -->
         <div id="slideSebabAkibatS1" class="slide">
             <img id="assetSebabAkibatImgS1" src="SA1.png" alt="Penjelasan Sebab Akibat" class="bg-img">
             <button class="btn-selesai" style="position:absolute; bottom:5%; left:50%; transform:translateX(-50%); width:40%; background:#e67e22; z-index:70; padding:15px; border-radius:30px; box-shadow:0 4px 15px rgba(0,0,0,0.5);" onclick="lanjutKeLayarNextSatu()">Lanjutkan ➔</button>
         </div>
         
-        <!-- SLIDE 6: next1.jpg -->
+        <!-- SLIDE 7: next1.jpg -->
         <div id="slideNextSatu" class="slide">
             <img src="next1.jpg" alt="Peta Jalur Laut" class="bg-img">
             <div id="zoneKapalMadura" class="tap-zone kapal-madura-tap" onclick="berlayarMalam()"></div>
         </div>
         
-        <!-- SLIDE 7: 5.png (Kakek) -->
+        <!-- SLIDE 8: 5.png (Kakek) -->
         <div id="slideMalam" class="slide">
             <img src="5.png" alt="Malam Hari & Kakek" class="bg-img">
             <div id="zoneKakek" class="tap-zone kakek-tap"></div>
@@ -239,21 +235,21 @@
             </div>
         </div>
         
-        <!-- SLIDE 8: rusak.png -->
+        <!-- SLIDE 9: rusak.png -->
         <div id="slideRusak" class="slide">
             <img id="imgRusak" src="rusak.png" alt="Kapal Rusak" class="bg-img">
             <div style="position:absolute; top:30px; width:100%; text-align:center; font-size:24px; font-weight:900; color:#e74c3c; text-shadow: 2px 2px 4px #000, 0 0 20px rgba(231,76,60,0.5); z-index: 100; pointer-events: none; animation: pulse-glow 1s infinite;">TAP LAYAR CEPAT UNTUK SELAMATKAN KAPAL! (<span id="klikRusak">0</span>/10)</div>
             <button class="tap-zone kapal-rusak-tap" onclick="perbaikiKapal()"></button>
         </div>
         
-        <!-- SLIDE 9: stars.png -->
+        <!-- SLIDE 10: stars.png -->
         <div id="slideStars" class="slide">
             <img src="stars.png" alt="Peta Bintang Malam" class="bg-img">
             <div style="position:absolute; top:50%; left:0; width:100%; text-align:center; font-size:22px; font-weight:900; color:#f1c40f; text-shadow: 2px 2px 4px #000, 0 0 20px #f1c40f; z-index: 100; pointer-events: none; animation: pulse-glow 1.5s infinite;">✨ KLIK AREA CAHAYA DI LANGIT ✨</div>
             <div class="tap-zone star-zone z-crux" onclick="mulaiUrutanBintang()"></div>
         </div>
         
-        <!-- SLIDE 10: Rasi -->
+        <!-- SLIDE 11: Rasi (Berganti-ganti) -->
         <div id="slideRasi" class="slide">
             <img id="imgRasi" src="" alt="Rasi Bintang" class="bg-img">
             <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:85%; background:rgba(0,0,0,0.6); padding:20px; border-radius:12px; z-index:50; color:#fff; text-align:center;">
@@ -262,7 +258,7 @@
             </div>
         </div>
         
-        <!-- SLIDE 11: Materi GPS -->
+        <!-- SLIDE 12: Materi GPS -->
         <div id="slideGPS" class="slide">
             <img src="soalback.png" alt="Background GPS" class="bg-img">
             <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:85%; background:rgba(0,0,0,0.7); padding:20px; border-radius:12px; z-index:50; color:#fff; text-align:left; max-height:80vh; overflow-y:auto;">
@@ -277,7 +273,7 @@
             </div>
         </div>
         
-        <!-- SLIDE 12: Kuis -->
+        <!-- SLIDE 13: Kuis -->
         <div id="slideKuis" class="slide">
             <img src="soalback.png" alt="Kuis Bintang" class="bg-img">
             <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:90%; background:rgba(0,0,0,0.8); padding:20px; border-radius:15px; z-index:50; color:#fff; text-align:center; max-height:80vh; overflow-y:auto;">
@@ -287,7 +283,7 @@
             </div>
         </div>
         
-        <!-- SLIDE 13: next2.png -->
+        <!-- SLIDE 14: next2.png -->
         <div id="slideNextDua" class="slide">
             <img src="next2.png" alt="Peta Jalur Laut Berikutnya" class="bg-img">
             <div class="tap-zone kapal-madura-tap" onclick="tamatKuisDanKembali()"></div>
@@ -313,7 +309,7 @@
         
         let audioMuted = false; let isBgmPlaying = false; 
         let jumlahBintang = 0; let volumeSistem = 1;
-        let playerName = ""; let sinyalTerkirim = false; let isS1Batu = false;
+        let playerName = ""; let sinyalTerkirim = false;
         let klikRusakCount = 0; let kuisIndex = 0;
         let isKuisActive = false;
 
@@ -336,14 +332,13 @@
         function sembunyikanSemuaSlide() { document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active')); document.getElementById('zoneKakek').style.display = 'none'; document.getElementById('dialogOverlayKakek').style.display = 'none'; }
         function setRobot(text) { document.getElementById('robotSpeech').innerHTML = text; document.getElementById('robotAktor').className = 'robot-wrapper robot-kiri'; }
 
-        /* MENU AWAL */
         function bukaModalNama() { playClick(); document.getElementById('modalNama').style.display = 'flex'; }
         function mulaiDenganNama() {
             let input = document.getElementById('inputNama').value.trim();
             if(input === "") { alert("Mohon isi nama kapten sebelum mulai ekspedisi!"); return; }
             playerName = input; playClick(); document.getElementById('modalNama').style.display = 'none';
             urutanAudioWelcome();
-            sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active'); // WEL2
+            sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active');
             document.getElementById('globalUI').style.display = 'block'; 
             setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal!`);
         }
@@ -354,34 +349,30 @@
         function kembaliKeMenu() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active'); document.getElementById('starUI').style.display = 'none'; setRobot("Kembali ke pusat komando."); }
         function bukaSkenario1() { playClickShip(); sembunyikanSemuaSlide(); document.getElementById('slidePetualangan1').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot("Kapten, kita udah sampai di Palembang! Di sinilah nenek moyang kita menulis angka 0 pertama kali. Ayo kita temukan prasastinya!"); }
 
-        /* SKENARIO 1 - 1.PNG */
         function interaksiLayar1(tipe) {
             if (tipe === 'kapal') { 
                 playClickShip(); sinyalTerkirim = true; document.getElementById('zonePulau').classList.add('ready'); setRobot("Sekarang ketuk area PULAU untuk mendarat!"); 
             } else if (tipe === 'pulau') { 
                 if(!sinyalTerkirim) { playClick(); return; } 
                 playClickShip(); 
-                // Karena di kode ini kita tidak punya slide batu khusus, kita langsung kasih efek zoom dan muncul soal
                 document.getElementById('slidePetualangan1').classList.add('batu-zoomed'); 
                 setTimeout(() => { 
                     sembunyikanSemuaSlide(); 
-                    document.getElementById('slideSoalS1').classList.add('active'); 
-                    document.getElementById('starUI').style.display = 'none'; 
-                    setRobot("Kamu menemukan Prasasti! Pilih metode dokumentasinya!");
+                    document.getElementById('slidePrasasti').classList.add('active'); 
+                    setRobot(`Kapten ${playerName}! Ini Prasasti Kedukan Bukit! Berasal dari tahun 682 M. Ini menceritakan perjalanan suci Dapunta Hyang menggunakan perahu. Ini membuktikan betapa hebatnya nenek moyang kita dalam navigasi!`); 
                 }, 500); 
             } 
         }
+        
+        function lanjutKeSoal() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slideSoalS1').classList.add('active'); setRobot("Kamu menemukan Prasasti! Pilih metode dokumentasinya!"); }
 
-        /* SOAL A/B -> SA1.png */
         function eksekusiPilihOpsiS1(opsi) {
             playClick();
             if (opsi === 'B') { jumlahBintang++; document.getElementById('starCount').innerText = jumlahBintang; }
             sembunyikanSemuaSlide(); document.getElementById('slideSebabAkibatS1').classList.add('active');
-            // Robot pindah ke kiri bawah, ukuran dikecilkan agar TIDAK menutupi gambar SA1
             setRobot(opsi === 'B' ? "Kerja bagus! Kamu memilih pola yang tepat!" : "Kamu memilih dokumentasi biasa. Teliti itu penting!");
         }
 
-        /* MENUJU NEXT1.JPG & LOADING 4.PNG */
         function lanjutKeLayarNextSatu() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slideNextSatu').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot("Ketuk KAPAL layar di sebelah kiri peta untuk melanjutkan perjalanan!"); }
 
         function berlayarMalam() {
@@ -421,7 +412,6 @@
 
         function masukPetaBintang() { sembunyikanSemuaSlide(); document.getElementById('slideStars').classList.add('active'); setRobot("Jadi dulu nenek moyang kita punya 4 bintang penunjuk arah. Tap area cahaya di langit untuk mulai belajar rasi!"); }
 
-        /* URUTAN RASI BINTANG */
         const urutanBintang = [
             { img: 'crux.png', teks: `<b style="color:#f1c40f; font-size:18px;">1. Rasi Pari / Salib Selatan (Crux)</b><br><br>Bentuk layang-layang. Penunjuk arah Selatan.<br><br>📌 <b>Nama Lokal:</b> Bintoéng Kamasé (Bugis).` },
             { img: 'biduk.png', teks: `<b style="color:#f1c40f; font-size:18px;">2. Rasi Biduk / Beruang Besar (Ursa Major)</b><br><br>7 bintang membentuk gayung. Penunjuk arah Utara.<br><br>📌 <b>Nama Lokal:</b> Bintang Biduk.` },
@@ -461,7 +451,7 @@
             overlayFeed.style.display = 'flex'; setTimeout(() => {
                 overlayFeed.style.display = 'none';
                 document.getElementById('pertanyaanKuis').innerHTML = `<b>PENJELASAN:</b><br><span style="color:#eccc68;">${kuisData[kuisIndex].exp}</span>`;
-                let nextBtn = (kuisIndex < 4) ? `<button class="btn-selesai" style="background:#e67e22; width:auto; padding:10px 30px;" onclick="lanjutKuis()">Soal Berikutnya ➔</button>` : `<button class="btn-selesai" style="background:#e67e22; width:auto; padding:10px 30px;" onclick="selesaiSkenarioMalam()">Selesaikan Pelayaran ➔</button>`;
+                let nextBtn = (kuisIndex < 4) ? `<button class="btn-kuis-action" style="background:#e67e22;" onclick="lanjutKuis()">Soal Berikutnya ➔</button>` : `<button class="btn-kuis-action" onclick="selesaiSkenarioMalam()">Selesaikan Pelayaran ➔</button>`;
                 document.getElementById('opsiKuisContainer').innerHTML = nextBtn;
                 setRobot(isCorrect ? "Benar, pahami penjelasan ini!" : "Cermati penjelasan, gapapa!");
             }, 1200);
