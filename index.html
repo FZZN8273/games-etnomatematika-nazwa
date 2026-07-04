@@ -32,12 +32,13 @@
         .name-input { width: 90%; padding: 12px; font-size: 16px; font-weight: bold; text-align: center; border-radius: 8px; border: 2px solid #74b9ff; background: #1a252f; color: #fff; margin-bottom: 20px; outline: none; }
         .name-input:focus { border-color: #eccc68; }
 
+        /* --- TOMBOL FULL WIDTH --- */
+        .bottom-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 12%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 65; pointer-events: auto; }
+        .start-text { color: #ffffff; font-size: 3vw; font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 20px rgba(9, 132, 227, 0.9), 0 4px 10px #000; animation: pulse-glow 1.2s infinite; }
+
         .icon-btn { position: absolute; background: transparent; border: none; cursor: pointer; border-radius: 20%; width: 14%; height: 21%; top: 38%; z-index: 65; transition: 0.2s; pointer-events: auto; }
         .icon-btn:hover { box-shadow: 0 0 20px 8px rgba(0, 168, 255, 0.6); }
         .puzzle-btn { left: 24.5%; } .book-btn { left: 42.5%; } .ship-btn { left: 61%; }
-
-        .bottom-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 15%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 65; pointer-events: auto; }
-        .start-text { color: #ffffff; font-size: 3vw; font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 20px rgba(9, 132, 227, 0.9), 0 4px 10px #000; animation: pulse-glow 1.2s infinite; }
 
         .tap-zone { position: absolute; background: rgba(0, 168, 255, 0.02); border: 3px dashed #00a8ff; cursor: pointer; z-index: 50; animation: pulse-glow 2s infinite ease-in-out; }
         .tap-zone.ready { border-color: #2ecc71; background: rgba(46, 204, 113, 0.1); }
@@ -53,24 +54,19 @@
         .star-zone { width: 25%; height: 25%; border-radius: 50%; border-color: #f1c40f; }
         .z-crux { top: 10%; right: 20%; }
 
-        /* 🔥 PERBAIKAN: PANEL MENU DIHAPUS KOTAK GELAPNYA */
+        /* 🔥 PERBAIKAN: PANEL MENU TRANSPARAN + TEKS SHADOW */
         .menu-panel-wrapper { 
-            position: absolute; top: 15%; left: 15%; width: 70%; height: 70%;
-            background: transparent; border: none; padding: 0; z-index: 60;
+            position: absolute; top: 20%; left: 15%; width: 70%; height: 60%;
+            background: transparent !important; border: none !important; padding: 0; z-index: 60;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            box-shadow: none;
+            box-shadow: none !important;
         }
-        .menu-panel-title { font-size: 24px; font-weight: 900; color: #fff; border-bottom: 2px dashed #fff; padding-bottom: 8px; margin-bottom: 15px; text-transform: uppercase; text-shadow: 3px 3px 6px rgba(0,0,0,0.8); }
-        .menu-panel-content { font-size: 16px; font-weight: 700; line-height: 1.6; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); overflow-y: auto; flex-grow: 1; text-align: center; }
+        .menu-panel-title { font-size: 22px; font-weight: 900; color: #fff; border-bottom: 2px dashed #fff; padding-bottom: 8px; margin-bottom: 15px; text-transform: uppercase; text-shadow: 3px 3px 6px rgba(0,0,0,0.9); }
+        .menu-panel-content { font-size: 16px; font-weight: 700; line-height: 1.6; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); overflow-y: auto; flex-grow: 1; text-align: center; }
         .menu-panel-content ul { list-style: none; padding: 0; margin: 0; }
         .menu-panel-content li { margin-bottom: 12px; }
-        
-        .dialogue-overlay { position: absolute; bottom: 5%; left: 5%; width: 90%; background: rgba(20, 30, 40, 0.9); border: 2px solid #74b9ff; border-radius: 12px; padding: 20px; z-index: 80; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
-        .dialogue-text { font-size: 16px; line-height: 1.5; margin-bottom: 15px; font-weight: bold; }
-        .dialogue-buttons { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-        .btn-choice { padding: 10px 20px; border-radius: 8px; border: 2px solid #eccc68; background: #2c3e50; color: #fff; font-weight: bold; cursor: pointer; flex-grow: 1; text-align: center; }
-        .btn-choice:hover { background: #eccc68; color: #000; }
 
+        /* --- PANEL SOAL A/B --- */
         .soal-panel-wrapper { position: absolute; top: 5%; left: 4%; width: 92%; height: 90%; z-index: 50; display: flex; flex-direction: row; justify-content: space-between; gap: 10px; background: transparent; padding: 10px; }
         .opsi-card { width: 48%; height: 100%; background: rgba(20, 30, 40, 0.9); border-radius: 15px; padding: 20px; display: flex; flex-direction: column; cursor: pointer; transition: 0.2s; border: 3px solid #7f8c8d; justify-content: space-between; }
         .opsi-card:hover { transform: scale(1.02); border-color: #f1c40f; box-shadow: 0 0 20px rgba(241, 196, 15, 0.5); }
@@ -82,6 +78,13 @@
         .opsi-detail { font-size: 14px; font-weight: 600; line-height: 1.6; color: #f5f6fa; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; gap: 10px; }
         .opsi-badge { background: #fff; color: #1a252f; width: 30px; height: 30px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; margin: 0 auto 10px auto; }
 
+        /* --- DIALOG KAKEK --- */
+        .dialogue-overlay { position: absolute; bottom: 5%; left: 5%; width: 90%; background: rgba(20, 30, 40, 0.9); border: 2px solid #74b9ff; border-radius: 12px; padding: 20px; z-index: 80; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
+        .dialogue-text { font-size: 16px; line-height: 1.5; margin-bottom: 15px; font-weight: bold; }
+        .dialogue-buttons { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        .btn-choice { padding: 10px 20px; border-radius: 8px; border: 2px solid #eccc68; background: #2c3e50; color: #fff; font-weight: bold; cursor: pointer; flex-grow: 1; text-align: center; }
+        .btn-choice:hover { background: #eccc68; color: #000; }
+
         #feedbackOverlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 110; display: none; flex-direction: column; justify-content: center; align-items: center; }
         .feedback-box { padding: 25px 45px; border-radius: 15px; font-size: 26px; font-weight: 900; text-align: center; text-transform: uppercase; animation: popIn 0.3s forwards; }
         .feedback-correct { background: rgba(46, 204, 113, 0.25); border: 4px solid #2ecc71; color: #2ecc71; box-shadow: 0 0 40px rgba(46,204,113,0.6); }
@@ -92,10 +95,20 @@
 
         #globalUI, #starUI { display: none; } 
         .star-container { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: rgba(44, 62, 80, 0.95); padding: 6px 18px; border-radius: 30px; color: #ffeaa7; font-size: 16px; font-weight: 900; z-index: 50; border: 2px solid #ffeaa7; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        .robot-wrapper { position: absolute; width: 28%; max-width: 220px; z-index: 40; display: flex; flex-direction: column; pointer-events: none; }
-        .robot-kiri { bottom: 0%; left: 0%; align-items: flex-start; } 
+
+        /* 🔥 PERBAIKAN POSISI ROBOT & GELUMBUNG (AGAR TIDAK MENIMPA SA1 & TOMBOL) */
+        .robot-wrapper { position: absolute; width: 20%; max-width: 160px; z-index: 40; display: flex; flex-direction: column; pointer-events: none; }
+        .robot-kiri { bottom: -5px; left: 10px; align-items: flex-start; } 
         .robot-img { width: 100%; height: auto; filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.5)); pointer-events: none; }
-        .speech-bubble { background: #ffffff; border-radius: 10px; padding: 10px; font-size: 1.1vw; color: #2c3e50; font-weight: 700; text-align: left; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); position: relative; z-index: 41; border: 2px solid #74b9ff; width: 250px; max-width: 80vw; max-height: 120px; overflow-y: auto; pointer-events: auto; line-height: 1.4; margin-bottom: -15px; }
+        
+        .speech-bubble { 
+            background: #ffffff; border-radius: 10px; padding: 8px 12px; 
+            font-size: 1.1vw; color: #2c3e50; font-weight: 700; text-align: left; 
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.3); position: relative; z-index: 41; 
+            border: 2px solid #74b9ff; width: 230px; max-width: 80vw; max-height: 100px; 
+            overflow-y: auto; pointer-events: auto; line-height: 1.3; 
+            margin-bottom: -10px; /* Beri jarak antara gelembung dan robot */ 
+        }
         .robot-kiri .speech-bubble { margin-left: 15px; } 
         .robot-kiri .speech-bubble::after { content: ''; position: absolute; bottom: -10px; left: 25px; border-width: 10px 10px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; }
 
@@ -107,7 +120,6 @@
 
     <button onclick="nyalakanDebug()" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 99999; background: #0984e3; color: white; border: 2px solid white; padding: 10px 15px; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">🎯 TAMPILKAN TARGET OBJEK</button>
 
-    <!-- 🔥 PERBAIKAN: HANYA GUNALAN ATTRIBUT LOOP HTML5 UNTUK BACKSOUND -->
     <audio id="clickSound" src="click.mp3" preload="auto"></audio>
     <audio id="clickShipSound" src="clickship.mp3" preload="auto"></audio>
     <audio id="etnoWelcome" src="etnowelcome.mp3" preload="auto"></audio>
@@ -152,7 +164,7 @@
             <button class="icon-btn ship-btn" onclick="bukaSkenario1()"></button>
         </div>
 
-        <!-- MENU 1: Aturan (Kotak gelap dihapus, teks shadow diperkuat) -->
+        <!-- SLIDE MENU -->
         <div id="slideRules" class="slide">
             <img src="soalback.png" alt="Background" class="bg-img">
             <div class="menu-panel-wrapper">
@@ -168,7 +180,6 @@
             </div>
         </div>
 
-        <!-- MENU 2: Cara Main (Kotak gelap dihapus, teks shadow diperkuat) -->
         <div id="slideCaraMain" class="slide">
             <img src="soalback.png" alt="Background" class="bg-img">
             <div class="menu-panel-wrapper">
@@ -184,20 +195,20 @@
             </div>
         </div>
 
-        <!-- SLIDE 3: 1.png -->
+        <!-- SLIDE 3: 1.png (KAPAL & PULAU) -->
         <div id="slidePetualangan1" class="slide">
             <img src="1.png" alt="Skenario 1 - Layar 1" class="bg-img">
             <div id="zoneKapal" class="tap-zone kapal-tap" onclick="interaksiLayar1('kapal')"></div>
             <div id="zonePulau" class="tap-zone pulau-tap" onclick="interaksiLayar1('pulau')"></div>
         </div>
 
-        <!-- SLIDE 4: 2.png (Prasasti) -->
+        <!-- SLIDE 4: 2.png (PRASASTI) -->
         <div id="slidePrasasti" class="slide">
             <img src="2.png" alt="Prasasti Kedukan Bukit" class="bg-img">
             <button class="btn-selesai" style="position:absolute; bottom:15px; left:50%; transform:translateX(-50%); width:auto; padding:10px 30px; background:#e67e22; z-index:70; border-radius:30px;" onclick="lanjutKeSoal()">Lanjutkan ➔</button>
         </div>
         
-        <!-- SLIDE 5: Soal A/B -->
+        <!-- SLIDE 5: SOAL A/B (BACKGROUND SOALBACK.PNG) -->
         <div id="slideSoalS1" class="slide">
             <img src="soalback.png" alt="Background Soal" class="bg-img">
             <div class="soal-panel-wrapper">
@@ -222,10 +233,11 @@
             </div>
         </div>
 
-        <!-- SLIDE 6: SA1.png -->
+        <!-- SLIDE 6: SA1.png (PENJELASAN SEBAB AKIBAT) -->
         <div id="slideSebabAkibatS1" class="slide">
             <img id="assetSebabAkibatImgS1" src="SA1.png" alt="Penjelasan Sebab Akibat" class="bg-img">
-            <button class="btn-selesai" style="position:absolute; bottom:5%; left:50%; transform:translateX(-50%); width:40%; background:#e67e22; z-index:70; padding:15px; border-radius:30px; box-shadow:0 4px 15px rgba(0,0,0,0.5);" onclick="lanjutKeLayarNextSatu()">Lanjutkan ➔</button>
+            <!-- TOMBOL LANJUTKAN DI BAGIAN BAWAH AGAR TERLIHAT JELAS DAN TIDAK TERTUTUP ROBOT -->
+            <button class="btn-selesai" style="position:absolute; bottom:5%; left:50%; transform:translateX(-50%); width:35%; background:#e67e22; z-index:70; padding:12px; border-radius:30px; box-shadow:0 4px 15px rgba(0,0,0,0.5);" onclick="lanjutKeLayarNextSatu()">Lanjutkan ➔</button>
         </div>
         
         <!-- SLIDE 7: next1.jpg -->
@@ -261,7 +273,7 @@
             <div class="tap-zone star-zone z-crux" onclick="mulaiUrutanBintang()"></div>
         </div>
         
-        <!-- SLIDE 11: Rasi (Berganti-ganti) -->
+        <!-- SLIDE 11: Rasi Bintang -->
         <div id="slideRasi" class="slide">
             <img id="imgRasi" src="" alt="Rasi Bintang" class="bg-img">
             <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:85%; background:rgba(0,0,0,0.6); padding:20px; border-radius:12px; z-index:50; color:#fff; text-align:center;">
@@ -333,9 +345,6 @@
             alert(aktif ? "Mode Target Dinonaktifkan." : "Mode Target Diaktifkan! Semua zona klik berupa lingkaran radar.");
         }
 
-        // 🔥 PERBAIKAN AUDIO: HAPUS EVENT LISTENER ENDED, BIAKKAN HTML LOOP BEKERJA
-        // soundBgm.addEventListener('ended', ...) sudah dihapus.
-
         function setSistemVolume(val) { volumeSistem = val; if(!audioMuted) { soundClick.volume = val; soundClickShip.volume = val; soundWelcome.volume = val; soundBgm.volume = val; soundCorrect.volume = val; soundWrong.volume = val; } }
         function toggleMute() { audioMuted = !audioMuted; const btn = document.getElementById('btnAudio'); if(audioMuted) { btn.innerText = "🔇"; soundWelcome.volume=0; soundBgm.volume=0; soundClick.volume=0; soundClickShip.volume=0; soundCorrect.volume=0; soundWrong.volume=0; soundBgm.pause(); } else { btn.innerText = "🔊"; setSistemVolume(document.getElementById('volSlider').value); if(isBgmPlaying && !isKuisActive) soundBgm.play().catch(e=>{}); } }
         function playClick() { soundClick.currentTime = 0; soundClick.play().catch(e=>{}); }
@@ -361,7 +370,15 @@
             if(menuType === 'caraMain') { document.getElementById('slideCaraMain').classList.add('active'); setRobot("Baca cara main dengan teliti!"); }
         }
         function kembaliKeMenu() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active'); document.getElementById('starUI').style.display = 'none'; setRobot("Kembali ke pusat komando."); }
-        function bukaSkenario1() { playClickShip(); sembunyikanSemuaSlide(); document.getElementById('slidePetualangan1').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot("Kapten, kita udah sampai di Palembang! Di sinilah nenek moyang kita menulis angka 0 pertama kali. Ayo kita temukan prasastinya!"); }
+        
+        function bukaSkenario1() { 
+            playClickShip(); 
+            sembunyikanSemuaSlide(); 
+            document.getElementById('slidePetualangan1').classList.add('active'); 
+            document.getElementById('starUI').style.display = 'flex'; 
+            // 🔥 PERBAIKAN DIALOG: Sesuai skenario Kapal & Pulau
+            setRobot("Kapten, kita udah sampai di Palembang! Di sinilah nenek moyang kita menulis angka 0 pertama kali. Ayo kita temukan prasastinya!"); 
+        }
 
         function interaksiLayar1(tipe) {
             if (tipe === 'kapal') { 
@@ -374,11 +391,11 @@
                     sembunyikanSemuaSlide(); 
                     document.getElementById('slidePrasasti').classList.add('active'); 
                     setRobot(`Kapten ${playerName}! Ini Prasasti Kedukan Bukit! Berasal dari tahun 682 M. Ini menceritakan perjalanan suci Dapunta Hyang menggunakan perahu. Ini membuktikan betapa hebatnya nenek moyang kita dalam navigasi!`); 
-                }, 500); 
+                }, 400); 
             } 
         }
         
-        function lanjutKeSoal() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slideSoalS1').classList.add('active'); setRobot("Kamu menemukan Prasasti! Pilih metode dokumentasinya!"); }
+        function lanjutKeSoal() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slideSoalS1').classList.add('active'); setRobot("Kamu menemukan Prasasti! Tugasmu dokumentasikan ke digital. Pilih metode dokumentasinya!"); }
 
         function eksekusiPilihOpsiS1(opsi) {
             playClick();
