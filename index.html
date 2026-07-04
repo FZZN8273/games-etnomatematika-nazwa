@@ -86,9 +86,6 @@
 
         .dialogue-overlay { position: absolute; bottom: 5%; left: 5%; width: 90%; background: rgba(20, 30, 40, 0.92); border: 2px solid #74b9ff; border-radius: 12px; padding: 20px; z-index: 80; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
         .dialogue-text { font-size: 16px; line-height: 1.5; margin-bottom: 15px; font-weight: bold; color: #fff; }
-        .dialogue-buttons { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-        .btn-choice { padding: 10px 20px; border-radius: 8px; border: 2px solid #eccc68; background: #2c3e50; color: #fff; font-weight: bold; cursor: pointer; flex-grow: 1; text-align: center; }
-        .btn-choice:hover { background: #eccc68; color: #000; }
 
         #feedbackOverlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 110; display: none; flex-direction: column; justify-content: center; align-items: center; }
         .feedback-box { padding: 25px 45px; border-radius: 15px; font-size: 26px; font-weight: 900; text-align: center; text-transform: uppercase; animation: popIn 0.3s forwards; }
@@ -104,6 +101,8 @@
         /* 🔥 ROBOT UTAMA GAME (POJOK KIRI BAWAH) */
         .robot-wrapper { position: absolute; width: 18%; max-width: 140px; z-index: 80; display: flex; flex-direction: column; pointer-events: none; }
         .robot-kiri { bottom: 5px; left: 10px; align-items: flex-start; } 
+        .robot-kanan { bottom: 5px; right: 10px; align-items: flex-end; } 
+        
         .robot-img { width: 100%; height: auto; filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.8)); pointer-events: none; }
         .speech-bubble { 
             background: #ffffff; border-radius: 12px; padding: 10px 15px; 
@@ -115,6 +114,10 @@
         .robot-kiri .speech-bubble { margin-left: 15px; } 
         .robot-kiri .speech-bubble::after { content: ''; position: absolute; bottom: -12px; left: 25px; border-width: 12px 12px 0; border-style: solid; border-color: #00a8ff transparent transparent transparent; }
         .robot-kiri .speech-bubble::before { content: ''; position: absolute; bottom: -10px; left: 27px; border-width: 10px 10px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; z-index: 82; }
+
+        .robot-kanan .speech-bubble { margin-right: 15px; text-align: right; } 
+        .robot-kanan .speech-bubble::after { content: ''; position: absolute; bottom: -12px; right: 25px; border-width: 12px 12px 0; border-style: solid; border-color: #00a8ff transparent transparent transparent; }
+        .robot-kanan .speech-bubble::before { content: ''; position: absolute; bottom: -10px; right: 27px; border-width: 10px 10px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; z-index: 82; }
 
         /* 🔥 RASI BINTANG TANPA KOTAK */
         .rasi-container { 
@@ -301,21 +304,21 @@
             <div id="zoneKapalMadura" class="tap-zone kapal-madura-tap" onclick="berlayarMalam()"></div>
         </div>
         
-        <!-- SLIDE 9: 5.png (Kakek) -->
+        <!-- SLIDE 9: 5.png (Kakek - Hanya Cerita, No Panik Button Yet) -->
         <div id="slideMalam" class="slide">
             <img src="5.png" alt="Malam Hari & Kakek" class="bg-img">
             <div id="zoneKakek" class="tap-zone kakek-tap"></div>
             <div id="dialogOverlayKakek" class="dialogue-overlay">
                 <div class="dialogue-text" id="textDialogKakek">
-                    "Dulu kakek sering berlayar tanpa maps, hanya mengandalkan bintang. Kamu tahu gak, kalau kita panik saat tersesat di lautan, malah bahaya. Ini yang namanya Navigasi Bintang, cara nenek moyang kita dulu.<br><br>Sekarang bayangin kamu dikapal yang terombang-ambing, maps tidak berfungsi... apa yang kamu lakukan?"
+                    "Dulu kakek sering berlayar tanpa maps, hanya mengandalkan bintang. Kakek tahu, kalau kita panik saat tersesat di lautan, malah bahaya. Ini yang namanya Navigasi Bintang, cara nenek moyang kita dulu. Kakek ingin kamu tau ilmu ini."
                 </div>
+                <!-- Hanya ada tombol Lanjut (Klik Selesai Baca), tanpa tombol Panik/Nggak -->
                 <div class="dialogue-buttons">
-                    <button class="btn-choice" onclick="responKakek('panik')">Panik Banget!</button>
-                    <button class="btn-choice" onclick="responKakek('nggak')">Nggak Dong</button>
+                    <button class="btn-choice" onclick="kakekSelesaiCerita()">Lanjut ➔</button>
                 </div>
             </div>
         </div>
-        
+
         <!-- SLIDE 10: rusak.png -->
         <div id="slideRusak" class="slide">
             <img id="imgRusak" src="rusak.png" alt="Kapal Rusak" class="bg-img">
@@ -398,11 +401,11 @@
         let introIndex = 0;
         let introTimer = null;
         const introData = [
-            { text: "Kapten, sebelum kita lihat prasastinya, aku mau kasih tahu sesuatu yang penting banget.<br><br>Kamu tahu nggak, kalau nenek moyang kita udah pake angka nol dan sistem desimal sejak tahun 682 Masehi? Bahkan dua abad lebih tua dari penemuan nol di India!", delay: 18000 },
-            { text: "Ini ditemukan di Prasasti Kedukan Bukit, Palembang. Prasasti ini ditulis pake huruf Pallawa dan bahasa Melayu Kuno dan terdiri dari 10 baris.<br><br>Di prasasti itu ada angka 604 Saka yang pakai sistem nilai tempat berbasis 10 sama kaya yang kita pake sekarang. Dalam angka 604, angka 6 menempati posisi ratusan, angka 0 di posisi puluhan, dan 4 di satuan.", delay: 20000 },
-            { text: "Terus, yang bikin keren: angka nol di prasasti ini bentuknya lingkaran kecil berongga — sama persis kaya angka nol yang kita tulis sekarang!", delay: 12000 },
-            { text: "Nah, hubungannya sama teknologi apa?<br><br>Bayangin, tanpa angka nol dan sistem desimal, gak bakal ada sistem biner (0 dan 1) yang jadi fondasi semua HP, komputer, dan internet yang kamu pake sekarang.", delay: 18000 },
-            { text: "Jadi, prasasti ini bukan cuma batu kuno. Ini adalah bukti bahwa nenek moyang kita udah paham logika yang sama yang dipake di teknologi modern.", delay: 15000 }
+            { text: "Kapten, sebelum kita lihat prasastinya, aku mau kasih tahu sesuatu yang penting banget.<br><br>Kamu tahu nggak, kalau nenek moyang kita udah pake angka nol dan sistem desimal sejak tahun 682 Masehi? Bahkan dua abad lebih tua dari penemuan nol di India!", delay: 6000 },
+            { text: "Ini ditemukan di Prasasti Kedukan Bukit, Palembang. Prasasti ini ditulis pake huruf Pallawa dan bahasa Melayu Kuno dan terdiri dari 10 baris.<br><br>Di prasasti itu ada angka 604 Saka yang pakai sistem nilai tempat berbasis 10 sama kaya yang kita pake sekarang. Dalam angka 604, angka 6 menempati posisi ratusan, angka 0 di posisi puluhan, dan 4 di satuan.", delay: 7000 },
+            { text: "Terus, yang bikin keren: angka nol di prasasti ini bentuknya lingkaran kecil berongga — sama persis kaya angka nol yang kita tulis sekarang!", delay: 5000 },
+            { text: "Nah, hubungannya sama teknologi apa?<br><br>Bayangin, tanpa angka nol dan sistem desimal, gak bakal ada sistem biner (0 dan 1) yang jadi fondasi semua HP, komputer, dan internet yang kamu pake sekarang.", delay: 6000 },
+            { text: "Jadi, prasasti ini bukan cuma batu kuno. Ini adalah bukti bahwa nenek moyang kita udah paham logika yang sama yang dipake di teknologi modern.", delay: 6000 }
         ];
 
         function nyalakanDebug() {
@@ -421,7 +424,12 @@
         function urutanAudioWelcome() { setSistemVolume(volumeSistem); if(!audioMuted) { soundWelcome.play().catch(e => {}); soundWelcome.onended = function() { if(!audioMuted) { soundBgm.play().catch(e=>{}); isBgmPlaying = true; } }; } else { isBgmPlaying = true; } }
 
         function sembunyikanSemuaSlide() { document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active')); document.getElementById('zoneKakek').style.display = 'none'; document.getElementById('dialogOverlayKakek').style.display = 'none'; }
-        function setRobot(text) { document.getElementById('robotSpeech').innerHTML = text; document.getElementById('robotAktor').className = 'robot-wrapper robot-kiri'; }
+        
+        /* 🔥 FUNGSI SET ROBOT (BISA KIRI ATAU KANAN) */
+        function setRobot(text, posisi = 'robot-kiri') {
+            document.getElementById('robotSpeech').innerHTML = text;
+            document.getElementById('robotAktor').className = 'robot-wrapper ' + posisi;
+        }
 
         /* 🔥 FUNGSI LOADING UNTUK SETIAP PERPINDAHAN SLIDE */
         function loadingTransisi(detik, callback) {
@@ -455,7 +463,6 @@
             
             clearTimeout(introTimer);
             introTimer = setTimeout(() => {
-                // Setelah delay selesai, aktifkan tombol
                 btn.innerText = index === introData.length - 1 ? "Sekarang, ayo kita lihat langsung prasastinya! ➔" : "Baca selesai! Lanjutkan ➔";
                 btn.classList.add('active-btn');
                 btn.style.pointerEvents = 'auto';
@@ -476,12 +483,10 @@
         }
 
         function finishIntroAndStartGame() {
-            // Pindah ke 1.png (slidePetualangan1)
             loadingTransisi(500, () => {
                 sembunyikanSemuaSlide();
                 document.getElementById('slidePetualangan1').classList.add('active');
                 document.getElementById('starUI').style.display = 'flex';
-                // Robot di 1.png bercerita
                 setRobot("Kapten, kita udah sampai di Palembang! Di sinilah nenek moyang kita menulis angka 0 pertama kali. Ayo kita temukan prasastinya!"); 
             });
         }
@@ -505,8 +510,7 @@
         
         function bukaSkenario1() { 
             playClickShip(); 
-            // 🔥 GANTI: Buka Intro Cerita Prasasti dulu, bukan langsung 1.png
-            bukaIntroCerita();
+            bukaIntroCerita(); // Masuk ke intro dulu
         }
 
         function interaksiLayar1(tipe) {
@@ -550,20 +554,35 @@
             });
         }
 
+        /* ---- LOGIKA MALAM (KAKEK -> ROBOT KANAN -> PANIK/NGGAK) ---- */
         function berlayarMalam() {
             playClickShip(); 
             loadingTransisi(2500, () => {
                 sembunyikanSemuaSlide(); document.getElementById('slideMalam').classList.add('active');
-                setRobot("Eh udh malam, ada kakek nelayan nunjuk bintang! Dengerin dulu yuk ceritanya!");
+                setRobot("Eh udh malam, ada kakek nelayan nunjuk bintang! Ayo dengerin dulu ceritanya!");
                 setTimeout(() => { 
                     document.getElementById('dialogOverlayKakek').style.display = 'block'; 
-                }, 1800);
+                }, 1500);
             });
         }
 
+        function kakekSelesaiCerita() {
+            playClick();
+            document.getElementById('dialogOverlayKakek').style.display = 'none';
+            // Robot pindah ke kanan bawah untuk sharing
+            setRobot("Wah, seru ya cerita Kakek tadi. Kakek bilang, kunci utamanya adalah jangan panik dan percaya sama petunjuk alam. Iya nggak sih?<br><br>Nah, kalau kamu ada di posisi kapal yang terombang-ambing tanpa maps, apakah kamu akan panik?", 'robot-kanan');
+            // Tambahkan tombol pilihan panik/nggak di gelembung robot
+            let bubble = document.getElementById('robotSpeech');
+            bubble.innerHTML += `<br><br><span style="display:flex; justify-content:center; gap:10px; margin-top:10px;">
+                <button onclick="responKakek('panik')" style="padding:5px 15px; background:#e74c3c; color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Panik Banget!</button>
+                <button onclick="responKakek('nggak')" style="padding:5px 15px; background:#2ecc71; color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Nggak Dong</button>
+            </span>`;
+        }
+
         function responKakek(jawaban) {
-            playClick(); document.getElementById('dialogOverlayKakek').style.display = 'none';
+            playClick();
             if(jawaban === 'panik') {
+                // Pindahkan robot kembali ke kiri
                 setRobot("Waduh tenangin dirimu!! Kalau panik, kapal bisa hilang kendali!");
                 sembunyikanSemuaSlide(); document.getElementById('slideRusak').classList.add('active');
                 klikRusakCount = 0; document.getElementById('klikRusak').innerText = "0";
