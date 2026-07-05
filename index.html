@@ -144,7 +144,6 @@
         #introNextBtn { width: auto; padding: 15px 40px; background: #e67e22; border-radius: 30px; border: none; color: white; font-weight: bold; font-size: 16px; cursor: not-allowed; box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: 0.2s; margin-top: 10px; opacity: 0.6; pointer-events: none; }
         #introNextBtn.active-btn { opacity: 1; pointer-events: auto; cursor: pointer; animation: pulse-glow 1s infinite; }
 
-        /* 🔥 TOMBOL KEMBALI YANG KONSISTEN DI SEMUA SLIDE */
         .btn-kembali-hud { 
             position: absolute; top: 15px; left: 15px; width: auto; padding: 8px 15px; 
             background: rgba(44, 62, 80, 0.9); border: 2px solid #eccc68; border-radius: 8px; 
@@ -195,6 +194,7 @@
             <input type="range" class="volume-slider" id="volSlider" min="0" max="1" step="0.1" value="1" oninput="setSistemVolume(this.value)">
         </div>
 
+        <!-- SLIDE 1: wel1.jpg -->
         <div id="slide1" class="slide active">
             <img src="wel1.jpg" alt="Selamat Datang" class="bg-img">
             <div class="bottom-bar" onclick="bukaModalNama()">
@@ -202,6 +202,7 @@
             </div>
         </div>
         
+        <!-- SLIDE 2: wel2.jpg (Menu Pelabuhan) - Robot kiri Wajib Hilang -->
         <div id="slide2" class="slide">
             <img src="wel2.jpg" alt="Pelabuhan" class="bg-img">
             <button class="icon-btn puzzle-btn" onclick="openMenu('caraMain')"></button>
@@ -209,6 +210,7 @@
             <button class="icon-btn ship-btn" onclick="bukaSkenario1()"></button>
         </div>
 
+        <!-- SLIDE MENU -->
         <div id="slideRules" class="slide">
             <img src="soalback.png" alt="Background" class="bg-img">
             <div class="menu-panel-wrapper">
@@ -448,7 +450,6 @@
             document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active')); 
             document.getElementById('zoneKakek').style.display = 'none'; 
             document.getElementById('dialogOverlayKakek').style.display = 'none'; 
-            tampilkanRobotKiri();
         }
         
         /* 🔥 FUNGSI UNTUK MENYEMBUNYIKAN & MEMUNCULKAN ROBOT POJOK KIRI */
@@ -490,7 +491,6 @@
             document.getElementById('introText').innerHTML = data.text;
             let btn = document.getElementById('introNextBtn');
             
-            // 🔥 TIMER DETIK BERJALAN
             let totalTime = data.delay;
             let displayTime = totalTime / 1000;
             btn.innerText = `⏳ Membaca... ${displayTime}s`;
@@ -537,7 +537,7 @@
         /* GAME LOGIC */
         function bukaModalNama() { 
             playClick(); 
-            sembunyikanRobotKiri(); // 🔥 Robot wajib hilang total dari layar wel1
+            sembunyikanRobotKiri(); // Robot wajib hilang total dari layar wel1
             document.getElementById('modalNama').style.display = 'flex'; 
         }
         function mulaiDenganNama() {
@@ -547,11 +547,12 @@
             urutanAudioWelcome(); 
             sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active');
             document.getElementById('globalUI').style.display = 'block'; 
-            sembunyikanRobotKiri(); // 🔥 Robot tetap hilang di wel2, hanya akan muncul saat dipanggil di skenario
+            sembunyikanRobotKiri(); // Robot di menu wel2 wajib hilang
         }
         function openMenu(menuType) { playClick(); sembunyikanSemuaSlide(); document.getElementById('starUI').style.display = 'none'; 
             if(menuType === 'rules') { document.getElementById('slideRules').classList.add('active'); }
             if(menuType === 'caraMain') { document.getElementById('slideCaraMain').classList.add('active'); }
+            sembunyikanRobotKiri(); // Robot di Rules dan Cara Main wajib hilang
         }
         function kembaliKeMenu() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active'); document.getElementById('starUI').style.display = 'none'; sembunyikanRobotKiri(); }
         function bukaSkenario1() { playClickShip(); bukaIntroCerita(); }
@@ -578,7 +579,7 @@
             loadingTransisi(800, () => {
                 sembunyikanSemuaSlide(); 
                 document.getElementById('slideSebabAkibatS1').classList.add('active');
-                sembunyikanRobotKiri(); // 🔥 Hilangkan robot kiri sebelum robot atas bicara
+                sembunyikanRobotKiri(); // Hilangkan robot kiri sebelum robot atas bicara (Hapus gelembung putih kosong)
                 setRobot(opsi === 'B' ? "Kerja bagus! Kamu memilih pola yang tepat!" : "Kamu memilih dokumentasi biasa. Teliti itu penting!", 'robot-atas');
             });
         }
@@ -588,7 +589,6 @@
         function berlayarMalam() {
             playClickShip(); 
             
-            // 🔥 URUTAN YANG BENAR: Loading dulu, baru refleksi cerita di slide 5.png
             const randomText = ["Memuat lautan baru", "Memuat samudera baru", "Memuat informasi", "Memuat teknologi terbaru"];
             document.getElementById('loadingText').innerText = randomText[Math.floor(Math.random() * randomText.length)];
             document.getElementById('loadingScreenRandom').style.display = 'flex';
@@ -598,7 +598,6 @@
                 sembunyikanSemuaSlide(); 
                 document.getElementById('slideMalam').classList.add('active');
                 
-                // 🔥 Setelah loading, robot muncul di slide 5.png dengan refleksi cerita
                 setRobot("Kapten, kita meninggalkan Palembang. Lautan malam menanti... Kita telah belajar tentang angka 0 dan sistem desimal. Sekarang saatnya mendengar cerita sang kakek.");
                 
                 setTimeout(() => { 
@@ -693,7 +692,6 @@
             playClick(); isKuisActive = false; if(!audioMuted && isBgmPlaying) soundBgm.play().catch(e=>{}); 
             loadingTransisi(800, () => {
                 sembunyikanSemuaSlide(); document.getElementById('slideNextDua').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; 
-                // 🔥 PENUTUPAN CERITA / REFLEKSI PERJALANAN
                 setRobot(`Terima kasih telah mampir ke Palembang, Kapten ${playerName}. Prasasti Kedukan Bukit mengajarkan kita bahwa logika teknologi (sistem biner, angka 0) berakar dari peradaban Nusantara 682 Masehi.<br><br>Kita tidak sekadar bermain game, kita belajar menghargai warisan leluhur yang luar biasa! Sampai jumpa di ekspedisi berikutnya.`); 
             });
         }
