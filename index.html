@@ -33,18 +33,27 @@
         .slide.active { display: block; }
         .bg-img { width: 100%; height: 100%; object-fit: cover; display: block; background-color: #111; }
 
-        /* 🔥 LOADING SCREEN SPINNER MUTER-MUTER SAJA (Background 4.png) */
+        /* 🔥 PROFESSIONAL LOADING SCREEN (Tanpa 4.png, Full CSS Ship) */
         #loadingScreenRandom { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('4.png'); background-size: cover; background-position: center; background-color: #1a252f;
+            background: radial-gradient(circle at center, #2c3e50 0%, #1a252f 100%); /* Gradasi Profesional */
             color: white; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 200; text-align: center; padding: 20px;
         }
-        .spinner { 
-            width: 60px; height: 60px; border: 6px solid rgba(255,255,255,0.2); border-top: 6px solid #00a8ff; border-radius: 50%; 
-            animation: spin 1s linear infinite; margin-bottom: 20px; background: rgba(0,0,0,0.5); 
+        /* Animasi Kapal Layar CSS Profesional */
+        .ship-loading-wrapper {
+            display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; margin-bottom: 15px;
         }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        #loadingScreenRandom h2 { color: #eccc68; font-weight: 900; font-size: 24px; text-shadow: 2px 2px 15px #000; }
+        .ship-scene { position: relative; width: 100px; height: 80px; animation: floatShip 2s ease-in-out infinite alternate; }
+        .hull { position: absolute; bottom: 0; left: 0; width: 100px; height: 25px; background: #5D4037; border-radius: 0 0 40px 10px; }
+        .mast { position: absolute; bottom: 20px; left: 45px; width: 4px; height: 65px; background: #3E2723; }
+        .sail { position: absolute; border-left: 5px solid transparent; border-right: 5px solid transparent; }
+        .sail-left { bottom: 25px; left: 10px; border-bottom: 40px solid #ffffff; border-right: 30px solid transparent; transform: rotate(10deg); box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+        .sail-right { bottom: 25px; left: 40px; border-bottom: 45px solid #f5f5f5; border-left: 25px solid transparent; transform: rotate(-10deg); box-shadow: -2px 2px 5px rgba(0,0,0,0.1); }
+        .waves-container { width: 140px; height: 20px; margin-top: -10px; position: relative; overflow: hidden; }
+        .wave { position: absolute; width: 200%; height: 100%; background: repeating-linear-gradient(90deg, rgba(0, 168, 255, 0.6) 0px, rgba(0, 168, 255, 0.6) 15px, rgba(0, 168, 255, 0.1) 15px, rgba(0, 168, 255, 0.1) 30px); border-radius: 50%; animation: waveMove 2.5s linear infinite; }
+        @keyframes floatShip { 0% { transform: translateY(0px) rotate(-4deg); } 100% { transform: translateY(-12px) rotate(4deg); } }
+        @keyframes waveMove { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        #loadingScreenRandom h2 { color: #eccc68; font-weight: 900; font-size: 22px; text-shadow: 0 0 20px rgba(0,0,0,0.5); margin-top: 20px; letter-spacing: 1px; }
 
         .modal-overlay { position: absolute; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 99; display: none; justify-content: center; align-items: center; flex-direction: column; }
         .name-box { background: rgba(20, 30, 40, 0.95); border: 2px solid #eccc68; border-radius: 15px; padding: 30px; text-align: center; width: 60%; box-shadow: 0 10px 30px rgba(236,204,104,0.3); }
@@ -71,13 +80,13 @@
         .kakek-tap { width: 20%; height: 35%; top: 25%; right: 25%; border-radius: 20px; display: none; border-color: #eccc68; background: rgba(236, 204, 104, 0.15); border-width: 3px; animation: pulse-glow 2s infinite; }
         .kapal-rusak-tap { width: 25%; height: 25%; bottom: 35%; left: 37%; border-radius: 20px; border: 4px solid rgba(255, 0, 0, 0.8); background: rgba(255, 0, 0, 0.15); animation: pulse-warning 1s infinite ease-in-out; z-index: 60; }
         @keyframes pulse-warning { 0% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); } 50% { border-color: rgba(255, 0, 0, 1); background: rgba(255, 0, 0, 0.3); box-shadow: 0 0 40px rgba(255,0,0,0.8); } 100% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); } }
-        .star-zone { width: 20%; height: 20%; border-radius: 50%; border-color: #f1c40f; }
-        .z-crux { top: 60%; right: 15%; }
+
+        /* 🔥 POSISI BINTANG CRUX DIPASTIKAN PAS DI KANAN BAWAH */
+        .star-zone { width: 15%; height: 20%; border-radius: 50%; border-color: #f1c40f; }
+        .z-crux { top: 60%; right: 12%; }
 
         /* 🔥 ZONA KLIK TABLET DI MEJA.PNG */
-        .tablet-tap { 
-            width: 30%; height: 25%; top: 30%; left: 35%; border-radius: 15px; 
-        }
+        .tablet-tap { width: 30%; height: 25%; top: 30%; left: 35%; border-radius: 15px; }
 
         .menu-panel-wrapper { position: absolute; top: 20%; left: 10%; width: 80%; height: 60%; background: transparent !important; border: none !important; padding: 0; z-index: 60; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: none !important; }
         .menu-panel-title { font-size: 26px; font-weight: 900; color: #fff; border-bottom: 2px dashed #fff; padding-bottom: 8px; margin-bottom: 20px; text-transform: uppercase; text-shadow: 0 0 15px #000, 0 0 30px #000; }
@@ -190,8 +199,19 @@
         </div>
     </div>
 
+    <!-- 🔥 LOADING SCREEN PROFESIONAL (TANPA BACKGROUND 4.PNG) -->
     <div id="loadingScreenRandom">
-        <div class="spinner"></div>
+        <div class="ship-loading-wrapper">
+            <div class="ship-scene">
+                <div class="hull"></div>
+                <div class="mast"></div>
+                <div class="sail sail-left"></div>
+                <div class="sail sail-right"></div>
+            </div>
+            <div class="waves-container">
+                <div class="wave"></div>
+            </div>
+        </div>
         <h2 id="loadingText" style="color: #eccc68; font-weight: 900; letter-spacing: 2px;">Memuat lautan baru...</h2>
     </div>
 
@@ -393,11 +413,10 @@
             <div class="tap-zone kapal-madura-tap" onclick="tamatKuisDanKembali()"></div>
         </div>
 
-        <!-- 🔥 SLIDE MEJA.PNG (SETELAH NEXT2) -->
+        <!-- MEJA.PNG -->
         <div id="slideMeja" class="slide">
             <img src="meja.png" alt="Meja Kayu dengan Tablet" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=Meja+Kayu+(meja.png)'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
-            <!-- Zona klik di atas tablet -->
             <div id="zoneTablet" class="tap-zone tablet-tap" onclick="klikTablet()"></div>
         </div>
 
@@ -422,7 +441,6 @@
         let jumlahBintang = 0; let volumeSistem = 1;
         let playerName = ""; let sinyalTerkirim = false;
         let klikRusakCount = 0; let kuisIndex = 0;
-        let isKuisActive = false;
 
         /* INTRO CERITA VARIABEL */
         let introIndex = 0;
@@ -445,7 +463,7 @@
         }
 
         function setSistemVolume(val) { volumeSistem = val; if(!audioMuted) { soundClick.volume = val; soundClickShip.volume = val; soundWelcome.volume = val; soundBgm.volume = val; soundCorrect.volume = val; soundWrong.volume = val; } }
-        function toggleMute() { audioMuted = !audioMuted; const btn = document.getElementById('btnAudio'); if(audioMuted) { btn.innerText = "🔇"; soundWelcome.volume=0; soundBgm.volume=0; soundClick.volume=0; soundClickShip.volume=0; soundCorrect.volume=0; soundWrong.volume=0; soundBgm.pause(); } else { btn.innerText = "🔊"; setSistemVolume(document.getElementById('volSlider').value); if(isBgmPlaying && !isKuisActive) soundBgm.play().catch(e=>{}); } }
+        function toggleMute() { audioMuted = !audioMuted; const btn = document.getElementById('btnAudio'); if(audioMuted) { btn.innerText = "🔇"; soundWelcome.volume=0; soundBgm.volume=0; soundClick.volume=0; soundClickShip.volume=0; soundCorrect.volume=0; soundWrong.volume=0; soundBgm.pause(); } else { btn.innerText = "🔊"; setSistemVolume(document.getElementById('volSlider').value); if(isBgmPlaying) soundBgm.play().catch(e=>{}); } }
         function playClick() { soundClick.currentTime = 0; soundClick.play().catch(e=>{}); }
         function playClickShip() { soundClickShip.currentTime = 0; soundClickShip.play().catch(e=>{}); }
 
@@ -465,10 +483,9 @@
             document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active')); 
             document.getElementById('zoneKakek').style.display = 'none'; 
             document.getElementById('dialogOverlayKakek').style.display = 'none'; 
-            sembunyikanRobotKiri(); // 🔥 PASTIKAN ROBOT KIRI HILANG SETIAP KALI PINDAH SLIDE
+            sembunyikanRobotKiri(); 
         }
         
-        /* 🔥 FUNGSI UNTUK MENYEMBUNYIKAN & MEMUNCULKAN ROBOT POJOK KIRI */
         function sembunyikanRobotKiri() {
             document.getElementById('robotAktor').classList.add('robot-hidden-ui');
         }
@@ -477,7 +494,7 @@
         }
         
         function setRobot(text, posisi = 'robot-kiri') {
-            tampilkanRobotKiri(); // Pastikan robot muncul sebelum bicara
+            tampilkanRobotKiri(); 
             document.getElementById('robotSpeech').innerHTML = text;
             document.getElementById('robotAktor').className = 'robot-wrapper ' + posisi;
         }
@@ -541,7 +558,7 @@
         }
 
         function finishIntroAndStartGame() {
-            tampilkanRobotKiri(); // Tampilkan kembali robot setelah intro selesai
+            tampilkanRobotKiri(); 
             loadingTransisi(500, () => {
                 sembunyikanSemuaSlide();
                 document.getElementById('slidePetualangan1').classList.add('active');
@@ -553,7 +570,7 @@
         /* GAME LOGIC */
         function bukaModalNama() { 
             playClick(); 
-            sembunyikanRobotKiri(); // Robot wajib hilang total dari layar wel1
+            sembunyikanRobotKiri(); 
             document.getElementById('modalNama').style.display = 'flex'; 
         }
         function mulaiDenganNama() {
@@ -563,12 +580,12 @@
             urutanAudioWelcome(); 
             sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active');
             document.getElementById('globalUI').style.display = 'block'; 
-            sembunyikanRobotKiri(); // Robot di menu wel2 wajib hilang
+            sembunyikanRobotKiri(); 
         }
         function openMenu(menuType) { playClick(); sembunyikanSemuaSlide(); document.getElementById('starUI').style.display = 'none'; 
             if(menuType === 'rules') { document.getElementById('slideRules').classList.add('active'); }
             if(menuType === 'caraMain') { document.getElementById('slideCaraMain').classList.add('active'); }
-            sembunyikanRobotKiri(); // Robot di Rules dan Cara Main wajib hilang
+            sembunyikanRobotKiri(); 
         }
         function kembaliKeMenu() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active'); document.getElementById('starUI').style.display = 'none'; sembunyikanRobotKiri(); }
         function bukaSkenario1() { playClickShip(); bukaIntroCerita(); }
@@ -595,12 +612,11 @@
             loadingTransisi(800, () => {
                 sembunyikanSemuaSlide(); 
                 document.getElementById('slideSebabAkibatS1').classList.add('active');
-                sembunyikanRobotKiri(); // Hilangkan robot kiri sebelum robot atas bicara (Hapus gelembung putih kosong)
+                sembunyikanRobotKiri(); 
                 setRobot(opsi === 'B' ? "Kerja bagus! Kamu memilih pola yang tepat!" : "Kamu memilih dokumentasi biasa. Teliti itu penting!", 'robot-atas');
             });
         }
 
-        /* 🔥 NEXT1.JPG: MUNCULKAN TEKS PALEMBANG YANG PANJANG */
         function lanjutKeLayarNextSatu() { 
             playClick(); 
             loadingTransisi(800, () => { 
@@ -623,12 +639,10 @@
                 sembunyikanSemuaSlide(); 
                 document.getElementById('slideMalam').classList.add('active');
 
-                // 🔥 ROBOT KIRI PASTI HILANG SAAT MALAM
                 sembunyikanRobotKiri();
 
                 setTimeout(() => { 
                     document.getElementById('dialogOverlayKakek').style.display = 'block'; 
-                    // Pastikan robot tetap hilang saat Kakek bicara
                     sembunyikanRobotKiri(); 
                 }, 1500);
             }, 2500);
@@ -691,7 +705,17 @@
             { q: "Kenapa bentuk bintang penting?", a: "Jadi pelaut", b: "Pahami pola langit & akar GPS", c: "Hafal nama", d: "Tidak perlu HP", ans: "b", exp: "Literasi teknologi berakar dari pengetahuan tradisional!" }
         ];
 
-        function mulaiKuisStars() { playClick(); loadingTransisi(600, () => { kuisIndex = 0; isKuisActive = true; soundBgm.pause(); document.getElementById('starUI').style.display = 'none'; sembunyikanSemuaSlide(); document.getElementById('slideKuis').classList.add('active'); renderKuis(); }); }
+        function mulaiKuisStars() { 
+            playClick(); 
+            // 🔥 BACKSOUND TETAP JALAN, TIDAK DI PAUSE LAGI
+            loadingTransisi(600, () => { 
+                kuisIndex = 0; 
+                document.getElementById('starUI').style.display = 'none'; 
+                sembunyikanSemuaSlide(); 
+                document.getElementById('slideKuis').classList.add('active'); 
+                renderKuis(); 
+            }); 
+        }
         function renderKuis() {
             let data = kuisData[kuisIndex]; document.getElementById('pertanyaanKuis').innerHTML = `<b>SOAL ${kuisIndex+1}/5:</b><br>${data.q}`;
             let html = `<div class="opsi-btn" onclick="jawabKuis('a', '${data.ans}')"><div class="opsi-badge-kuis">A</div><div>${data.a}</div></div>
@@ -716,7 +740,7 @@
         function lanjutKuis() { playClick(); kuisIndex++; renderKuis(); }
 
         function selesaiSkenarioMalam() { 
-            playClick(); isKuisActive = false; if(!audioMuted && isBgmPlaying) soundBgm.play().catch(e=>{}); 
+            playClick(); 
             loadingTransisi(800, () => {
                 sembunyikanSemuaSlide(); document.getElementById('slideNextDua').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; 
                 setRobot(`Hebat Kapten ${playerName}! Kita telah belajar banyak tentang rasi bintang dan navigasi. Ayo pulang ke daratan!`); 
@@ -732,7 +756,6 @@
             });
         }
 
-        /* 🔥 FUNGSI SAAT TABLET DI MEJA.PNG DI KLIK */
         function klikTablet() {
             playClick();
             let overlay = document.getElementById('feedbackOverlay');
