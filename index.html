@@ -33,93 +33,28 @@
         .slide.active { display: block; }
         .bg-img { width: 100%; height: 100%; object-fit: cover; display: block; background-color: #111; }
 
-        /* 🔥 LOADING SCREEN DENGAN ANIMASI KAPAL + OMBAK (TANPA SPINNER BIASA) */
         #loadingScreenRandom { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('4.png'); background-size: cover; background-position: center; background-color: #1a252f;
             color: white; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 200; text-align: center; padding: 20px;
         }
 
-        /* 🔥 DESAIN KAPAL LAYAR CSS */
+        /* Kapal CSS & Ombak Loading */
         .ship-loading-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            margin-bottom: 15px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; margin-bottom: 15px;
         }
-        .ship-scene {
-            position: relative;
-            width: 100px;
-            height: 80px;
-            animation: floatShip 2s ease-in-out infinite alternate;
-        }
-        .hull {
-            position: absolute; bottom: 0; left: 0;
-            width: 100px; height: 25px;
-            background: #5D4037; /* Warna kayu */
-            border-radius: 0 0 40px 10px;
-        }
-        .mast {
-            position: absolute; bottom: 20px; left: 45px;
-            width: 4px; height: 65px;
-            background: #3E2723;
-        }
-        .sail {
-            position: absolute;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-        }
-        .sail-left {
-            bottom: 25px; left: 10px;
-            border-bottom: 40px solid #ffffff;
-            border-right: 30px solid transparent;
-            transform: rotate(10deg);
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-        }
-        .sail-right {
-            bottom: 25px; left: 40px;
-            border-bottom: 45px solid #f5f5f5;
-            border-left: 25px solid transparent;
-            transform: rotate(-10deg);
-            box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
-        }
-        .waves-container {
-            width: 140px;
-            height: 20px;
-            margin-top: -10px;
-            position: relative;
-            overflow: hidden;
-        }
-        .wave {
-            position: absolute;
-            width: 200%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                90deg,
-                rgba(0, 168, 255, 0.6) 0px,
-                rgba(0, 168, 255, 0.6) 15px,
-                rgba(0, 168, 255, 0.1) 15px,
-                rgba(0, 168, 255, 0.1) 30px
-            );
-            border-radius: 50%;
-            animation: waveMove 2.5s linear infinite;
-        }
-        @keyframes floatShip {
-            0% { transform: translateY(0px) rotate(-4deg); }
-            100% { transform: translateY(-12px) rotate(4deg); }
-        }
-        @keyframes waveMove {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        #loadingScreenRandom h2 { 
-            color: #eccc68; font-weight: 900; font-size: 24px; text-shadow: 2px 2px 15px #000; 
-            margin-top: 20px;
-        }
+        .ship-scene { position: relative; width: 100px; height: 80px; animation: floatShip 2s ease-in-out infinite alternate; }
+        .hull { position: absolute; bottom: 0; left: 0; width: 100px; height: 25px; background: #5D4037; border-radius: 0 0 40px 10px; }
+        .mast { position: absolute; bottom: 20px; left: 45px; width: 4px; height: 65px; background: #3E2723; }
+        .sail { position: absolute; border-left: 5px solid transparent; border-right: 5px solid transparent; }
+        .sail-left { bottom: 25px; left: 10px; border-bottom: 40px solid #ffffff; border-right: 30px solid transparent; transform: rotate(10deg); box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+        .sail-right { bottom: 25px; left: 40px; border-bottom: 45px solid #f5f5f5; border-left: 25px solid transparent; transform: rotate(-10deg); box-shadow: -2px 2px 5px rgba(0,0,0,0.1); }
+        .waves-container { width: 140px; height: 20px; margin-top: -10px; position: relative; overflow: hidden; }
+        .wave { position: absolute; width: 200%; height: 100%; background: repeating-linear-gradient(90deg, rgba(0, 168, 255, 0.6) 0px, rgba(0, 168, 255, 0.6) 15px, rgba(0, 168, 255, 0.1) 15px, rgba(0, 168, 255, 0.1) 30px); border-radius: 50%; animation: waveMove 2.5s linear infinite; }
+        @keyframes floatShip { 0% { transform: translateY(0px) rotate(-4deg); } 100% { transform: translateY(-12px) rotate(4deg); } }
+        @keyframes waveMove { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        #loadingScreenRandom h2 { color: #eccc68; font-weight: 900; font-size: 24px; text-shadow: 2px 2px 15px #000; margin-top: 20px; }
 
-        /* ------------- SISA KODE UI SEBELUMNYA (TIDAK DIUBAH) ------------- */
         .modal-overlay { position: absolute; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 99; display: none; justify-content: center; align-items: center; flex-direction: column; }
         .name-box { background: rgba(20, 30, 40, 0.95); border: 2px solid #eccc68; border-radius: 15px; padding: 30px; text-align: center; width: 60%; box-shadow: 0 10px 30px rgba(236,204,104,0.3); }
         .name-box h2 { color: #eccc68; margin-bottom: 15px; letter-spacing: 1px; }
@@ -180,13 +115,10 @@
 
         .robot-wrapper { position: absolute; width: 20%; max-width: 150px; z-index: 80; display: flex; flex-direction: column; pointer-events: none; }
         .robot-hidden-ui { display: none !important; }
-        
         .robot-kiri { bottom: 5px; left: 10px; align-items: flex-start; } 
         .robot-kanan { bottom: 5px; right: 10px; align-items: flex-end; }
         .robot-atas { top: 5px; left: 15px; align-items: flex-start; }
-        
         .robot-img { width: 100%; height: auto; filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.8)); pointer-events: none; }
-        
         .speech-bubble { 
             background: #ffffff; border-radius: 12px; padding: 12px 18px; 
             font-size: 1.3vw; color: #2c3e50; font-weight: 600; text-align: left; 
@@ -261,7 +193,6 @@
         </div>
     </div>
 
-    <!-- 🔥 LOADING SCREEN DENGAN KAPAL CSS (GANTI SPINNER PUTAR) -->
     <div id="loadingScreenRandom">
         <div class="ship-loading-wrapper">
             <div class="ship-scene">
@@ -674,13 +605,14 @@
             });
         }
 
+        /* 🔥 NEXT1.JPG: MUNCULKAN TEKS PALEMBANG YANG PANJANG */
         function lanjutKeLayarNextSatu() { 
             playClick(); 
             loadingTransisi(800, () => { 
                 sembunyikanSemuaSlide(); 
                 document.getElementById('slideNextSatu').classList.add('active'); 
                 document.getElementById('starUI').style.display = 'flex'; 
-                setRobot("Terima kasih telah ke Palembang......ayo lanjutkan petualangan ditengah samudera....."); 
+                setRobot(`Terima kasih telah mampir ke Palembang, Kapten ${playerName}. Prasasti Kedukan Bukit mengajarkan kita bahwa logika teknologi (sistem biner, angka 0) berakar dari peradaban Nusantara 682 Masehi.<br><br>Kita tidak sekadar ke Palembang tapi kita belajar menghargai warisan leluhur yang luar biasa! Mari kita jelajahi laut Nusantara balik ke dek kapalmu! tekan kapal di kiri atas ini.`); 
             });
         }
 
@@ -695,13 +627,15 @@
                 document.getElementById('loadingScreenRandom').style.display = 'none';
                 sembunyikanSemuaSlide(); 
                 document.getElementById('slideMalam').classList.add('active');
-                
-                setRobot("Kapten, kita meninggalkan Palembang. Lautan malam menanti... Kita telah belajar tentang angka 0 dan sistem desimal. Sekarang saatnya mendengar cerita sang kakek.");
-                
+
+                // 🔥 ROBOT KIRI PASTI HILANG SAAT MALAM
+                sembunyikanRobotKiri();
+
                 setTimeout(() => { 
                     document.getElementById('dialogOverlayKakek').style.display = 'block'; 
+                    // Pastikan robot tetap hilang saat Kakek bicara
                     sembunyikanRobotKiri(); 
-                }, 2000);
+                }, 1500);
             }, 2500);
         }
 
@@ -790,7 +724,7 @@
             playClick(); isKuisActive = false; if(!audioMuted && isBgmPlaying) soundBgm.play().catch(e=>{}); 
             loadingTransisi(800, () => {
                 sembunyikanSemuaSlide(); document.getElementById('slideNextDua').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; 
-                setRobot(`Terima kasih telah mampir ke Palembang, Kapten ${playerName}. Prasasti Kedukan Bukit mengajarkan kita bahwa logika teknologi (sistem biner, angka 0) berakar dari peradaban Nusantara 682 Masehi.<br><br>Kita tidak sekadar bermain game, kita belajar menghargai warisan leluhur yang luar biasa! Sampai jumpa di ekspedisi berikutnya.`); 
+                setRobot(`Hebat Kapten ${playerName}! Kita telah belajar banyak tentang rasi bintang dan navigasi. Ayo pulang ke daratan!`); 
             });
         }
         function tamatKuisDanKembali() { playClickShip(); loadingTransisi(600, () => { setRobot("Sampai jumpa, Kapten! Semangat terus belajar!"); sembunyikanSemuaSlide(); document.getElementById('slidePetualangan1').classList.add('active'); sinyalTerkirim = false; document.getElementById('zonePulau').classList.remove('ready'); }); }
