@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Etnomatematika - Sistem Ekspedisi Nusantara</title>
+    
+    <!-- Preload Assets Using Link Tags -->
+    <link rel="preload" as="image" href="stars.png">
+    <link rel="preload" as="image" href="meja.png">
+    <link rel="preload" as="image" href="SA1.png">
+    <link rel="preload" as="image" href="1.png">
+    <link rel="preload" as="image" href="5.png">
+    <link rel="preload" as="image" href="next1.jpg">
+    <link rel="preload" as="image" href="next2.png">
+    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: #1a252f; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; overflow: hidden; color: #f5f6fa; }
@@ -33,16 +43,13 @@
         .slide.active { display: block; }
         .bg-img { width: 100%; height: 100%; object-fit: cover; display: block; background-color: #111; }
 
-        /* 🔥 PROFESSIONAL LOADING SCREEN (Tanpa 4.png, Full CSS Ship) */
+        /* 🔥 LOADING SCREEN PROFESSIONAL */
         #loadingScreenRandom { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #2c3e50 0%, #1a252f 100%); /* Gradasi Profesional */
+            background: radial-gradient(circle at center, #2c3e50 0%, #1a252f 100%); 
             color: white; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 200; text-align: center; padding: 20px;
         }
-        /* Animasi Kapal Layar CSS Profesional */
-        .ship-loading-wrapper {
-            display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; margin-bottom: 15px;
-        }
+        .ship-loading-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; margin-bottom: 15px; }
         .ship-scene { position: relative; width: 100px; height: 80px; animation: floatShip 2s ease-in-out infinite alternate; }
         .hull { position: absolute; bottom: 0; left: 0; width: 100px; height: 25px; background: #5D4037; border-radius: 0 0 40px 10px; }
         .mast { position: absolute; bottom: 20px; left: 45px; width: 4px; height: 65px; background: #3E2723; }
@@ -81,12 +88,12 @@
         .kapal-rusak-tap { width: 25%; height: 25%; bottom: 35%; left: 37%; border-radius: 20px; border: 4px solid rgba(255, 0, 0, 0.8); background: rgba(255, 0, 0, 0.15); animation: pulse-warning 1s infinite ease-in-out; z-index: 60; }
         @keyframes pulse-warning { 0% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); } 50% { border-color: rgba(255, 0, 0, 1); background: rgba(255, 0, 0, 0.3); box-shadow: 0 0 40px rgba(255,0,0,0.8); } 100% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); } }
 
-        /* 🔥 POSISI BINTANG CRUX DIPASTIKAN PAS DI KANAN BAWAH */
-        .star-zone { width: 15%; height: 20%; border-radius: 50%; border-color: #f1c40f; }
-        .z-crux { top: 60%; right: 12%; }
+        /* 🔥 POSISI CRUX PAS BANGET DENGAN GAMBAR */
+        .star-zone { width: 16%; height: 20%; border-radius: 50%; border-color: #f1c40f; }
+        .z-crux { top: 56%; right: 12%; }
 
-        /* 🔥 ZONA KLIK TABLET DI MEJA.PNG */
-        .tablet-tap { width: 30%; height: 25%; top: 30%; left: 35%; border-radius: 15px; }
+        /* 🔥 POSISI TABLET AGAR PAS DI TENGAH LAYAR DAN KEBAWAH DIKIT */
+        .tablet-tap { width: 30%; height: 24%; top: 32%; left: 35%; border-radius: 15px; }
 
         .menu-panel-wrapper { position: absolute; top: 20%; left: 10%; width: 80%; height: 60%; background: transparent !important; border: none !important; padding: 0; z-index: 60; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: none !important; }
         .menu-panel-title { font-size: 26px; font-weight: 900; color: #fff; border-bottom: 2px dashed #fff; padding-bottom: 8px; margin-bottom: 20px; text-transform: uppercase; text-shadow: 0 0 15px #000, 0 0 30px #000; }
@@ -199,7 +206,7 @@
         </div>
     </div>
 
-    <!-- 🔥 LOADING SCREEN PROFESIONAL (TANPA BACKGROUND 4.PNG) -->
+    <!-- 🔥 LOADING PROFESIONAL -->
     <div id="loadingScreenRandom">
         <div class="ship-loading-wrapper">
             <div class="ship-scene">
@@ -442,6 +449,18 @@
         let playerName = ""; let sinyalTerkirim = false;
         let klikRusakCount = 0; let kuisIndex = 0;
 
+        /* 🔥 PRELOAD ASSET AGAR GAMBAR TIDAK DILEY SAAT DIKLIK (SUPPORT JARINGAN LEMAH) */
+        const assetsToPreload = [
+            'stars.png', 'meja.png', 'SA1.png', '1.png', '5.png', 'next1.jpg', 'next2.png', 'rusak.png', '2.png'
+        ];
+        function preloadAssets() {
+            assetsToPreload.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        }
+        preloadAssets();
+
         /* INTRO CERITA VARIABEL */
         let introIndex = 0;
         let introTimer = null;
@@ -580,7 +599,9 @@
             urutanAudioWelcome(); 
             sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active');
             document.getElementById('globalUI').style.display = 'block'; 
-            sembunyikanRobotKiri(); 
+            
+            // 🔥 ROBOT DI KANAN SEBAGAI PEMANDU DI WEL2
+            setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal di sebelah kanan ini!`, 'robot-kanan');
         }
         function openMenu(menuType) { playClick(); sembunyikanSemuaSlide(); document.getElementById('starUI').style.display = 'none'; 
             if(menuType === 'rules') { document.getElementById('slideRules').classList.add('active'); }
@@ -588,7 +609,13 @@
             sembunyikanRobotKiri(); 
         }
         function kembaliKeMenu() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active'); document.getElementById('starUI').style.display = 'none'; sembunyikanRobotKiri(); }
-        function bukaSkenario1() { playClickShip(); bukaIntroCerita(); }
+        
+        function bukaSkenario1() { 
+            playClickShip(); 
+            bukaIntroCerita(); 
+            // 🔥 SAAT SKENARIO DIMULAI, ROBOT DIPINDAHKAN KE KIRI
+            setTimeout(() => { setRobot("", "robot-kiri"); }, 100); 
+        }
 
         function interaksiLayar1(tipe) {
             if (tipe === 'kapal') { 
@@ -608,13 +635,29 @@
 
         function eksekusiPilihOpsiS1(opsi) {
             playClick();
-            if (opsi === 'B') { jumlahBintang++; document.getElementById('starCount').innerText = jumlahBintang; }
-            loadingTransisi(800, () => {
-                sembunyikanSemuaSlide(); 
-                document.getElementById('slideSebabAkibatS1').classList.add('active');
-                sembunyikanRobotKiri(); 
-                setRobot(opsi === 'B' ? "Kerja bagus! Kamu memilih pola yang tepat!" : "Kamu memilih dokumentasi biasa. Teliti itu penting!", 'robot-atas');
-            });
+            // 🔥 EFEK DAN SUARA UNTUK JAWABAN A/B
+            let overlayFeed = document.getElementById('feedbackOverlay');
+            let feedbackMsg = document.getElementById('feedbackMsg');
+            
+            if (opsi === 'B') { // Asumsikan B adalah jawaban lebih tepat sesuai logika
+                soundCorrect.currentTime = 0; soundCorrect.play().catch(e=>{});
+                feedbackMsg.className = 'feedback-box feedback-correct'; feedbackMsg.innerHTML = "🌟 PILIHAN TEPAT!";
+                jumlahBintang++; document.getElementById('starCount').innerText = jumlahBintang;
+            } else {
+                soundWrong.currentTime = 0; soundWrong.play().catch(e=>{});
+                feedbackMsg.className = 'feedback-box feedback-wrong'; feedbackMsg.innerHTML = "⚠️ PILIHAN KURANG TEPAT!";
+            }
+            overlayFeed.style.display = 'flex';
+            
+            setTimeout(() => {
+                overlayFeed.style.display = 'none';
+                loadingTransisi(800, () => {
+                    sembunyikanSemuaSlide(); 
+                    document.getElementById('slideSebabAkibatS1').classList.add('active');
+                    sembunyikanRobotKiri(); 
+                    setRobot(opsi === 'B' ? "Kerja bagus! Kamu memilih pola yang tepat!" : "Kamu memilih dokumentasi biasa. Teliti itu penting!", 'robot-atas');
+                });
+            }, 1200);
         }
 
         function lanjutKeLayarNextSatu() { 
@@ -707,9 +750,9 @@
 
         function mulaiKuisStars() { 
             playClick(); 
-            // 🔥 BACKSOUND TETAP JALAN, TIDAK DI PAUSE LAGI
             loadingTransisi(600, () => { 
                 kuisIndex = 0; 
+                // 🔥 BACKSOUND TETAP JALAN SEPANJANG KUIS
                 document.getElementById('starUI').style.display = 'none'; 
                 sembunyikanSemuaSlide(); 
                 document.getElementById('slideKuis').classList.add('active'); 
