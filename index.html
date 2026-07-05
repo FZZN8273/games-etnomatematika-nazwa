@@ -100,10 +100,8 @@
         #globalUI, #starUI { display: none; } 
         .star-container { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: rgba(44, 62, 80, 0.95); padding: 6px 18px; border-radius: 30px; color: #ffeaa7; font-size: 16px; font-weight: 900; z-index: 60; border: 2px solid #ffeaa7; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 
-        /* 🔥 PERBAIKAN: ROBOT DAN GELUMBUNG */
         .robot-wrapper { position: absolute; width: 20%; max-width: 150px; z-index: 80; display: flex; flex-direction: column; pointer-events: none; }
-        
-        .robot-hidden-ui { display: none !important; } /* Untuk menyembunyikan robot pojok kiri total */
+        .robot-hidden-ui { display: none !important; }
         
         .robot-kiri { bottom: 5px; left: 10px; align-items: flex-start; } 
         .robot-kanan { bottom: 5px; right: 10px; align-items: flex-end; }
@@ -111,13 +109,11 @@
         
         .robot-img { width: 100%; height: auto; filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.8)); pointer-events: none; }
         
-        /* 🔥 GELUMBUNG YANG BERADAPTASI (TANPA SCROLL) */
         .speech-bubble { 
             background: #ffffff; border-radius: 12px; padding: 12px 18px; 
             font-size: 1.3vw; color: #2c3e50; font-weight: 600; text-align: left; 
             box-shadow: 0px 4px 15px rgba(0,0,0,0.4); position: relative; z-index: 81; 
             border: 2px solid #00a8ff; width: 240px; max-width: 85vw; 
-            /* 🔥 HAPUS BATASAN TINGGI AGAR MEMBESAR SENDIRI */
             height: auto !important; max-height: none !important; overflow: visible !important;
             pointer-events: auto; line-height: 1.5; transform: translateY(-5px); 
         }
@@ -289,7 +285,8 @@
         <!-- SA1.png -->
         <div id="slideSebabAkibatS1" class="slide">
             <img id="assetSebabAkibatImgS1" src="SA1.png" alt="Penjelasan Sebab Akibat" class="bg-img">
-            <button class="btn-selesai" style="position:absolute; bottom:6%; left:50%; transform:translateX(-50%); width:45%; background:#e67e22; z-index:70; padding:12px; border-radius:30px; box-shadow:0 4px 15px rgba(0,0,0,0.5);" onclick="lanjutKeLayarNextSatu()">Lanjutkan ➔</button>
+            <!-- 🔥 TOMBOL SA1 DIPINDAHKAN KE ATAS (Top: 25%) AGAR TIDAK MENIMPA TEKS BAWAH, DAN BERADA DI BAWAH ROBOT -->
+            <button class="btn-selesai" style="position:absolute; top:25%; left:50%; transform:translateX(-50%); width:35%; background:#e67e22; z-index:70; padding:12px; border-radius:30px; box-shadow:0 4px 15px rgba(0,0,0,0.5);" onclick="lanjutKeLayarNextSatu()">Lanjutkan ➔</button>
         </div>
         
         <!-- NEXT1.JPG -->
@@ -429,7 +426,6 @@
             document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active')); 
             document.getElementById('zoneKakek').style.display = 'none'; 
             document.getElementById('dialogOverlayKakek').style.display = 'none'; 
-            // 🔥 KEMBALIKAN ROBOT POJOK KIRI SAAT PINDAH SLIDE
             tampilkanRobotKiri();
         }
         
@@ -459,7 +455,6 @@
 
         /* INTRO CERITA */
         function bukaIntroCerita() {
-            // 🔥 ROBOT POJOK KIRI HILANG TOTAL SAAT INTRO CERITA
             sembunyikanRobotKiri(); 
             sembunyikanSemuaSlide();
             document.getElementById('slideIntroCerita').classList.add('active');
@@ -543,7 +538,12 @@
             playClick();
             if (opsi === 'B') { jumlahBintang++; document.getElementById('starCount').innerText = jumlahBintang; }
             loadingTransisi(800, () => {
-                sembunyikanSemuaSlide(); document.getElementById('slideSebabAkibatS1').classList.add('active');
+                sembunyikanSemuaSlide(); 
+                document.getElementById('slideSebabAkibatS1').classList.add('active');
+                
+                // 🔥 PASTIKAN ROBOT KIRI HILANG SEBELUM ROBOT ATAS MUNCUL (HAPUS GELUMBUNG PUTIH KOSONG)
+                sembunyikanRobotKiri(); 
+                
                 setRobot(opsi === 'B' ? "Kerja bagus! Kamu memilih pola yang tepat!" : "Kamu memilih dokumentasi biasa. Teliti itu penting!", 'robot-atas');
             });
         }
@@ -557,7 +557,6 @@
                 setRobot("Eh udh malam, ada kakek nelayan nunjuk bintang! Ayo dengerin dulu ceritanya!");
                 setTimeout(() => { 
                     document.getElementById('dialogOverlayKakek').style.display = 'block'; 
-                    // 🔥 ROBOT KIRI HILANG SAAT KAKEK CERITA
                     sembunyikanRobotKiri(); 
                 }, 1500);
             });
@@ -566,7 +565,6 @@
         function kakekSelesaiCerita() {
             playClick();
             document.getElementById('dialogOverlayKakek').style.display = 'none';
-            // 🔥 ROBOT KIRI MUNCUL KEMBALI DAN PINDAH KE KANAN
             setRobot("Wah, seru ya cerita Kakek tadi. Kakek bilang, kunci utamanya adalah jangan panik dan percaya sama petunjuk alam. Iya nggak sih?<br><br>Nah, kalau kamu ada di posisi kapal yang terombang-ambing tanpa maps, apakah kamu akan panik?", 'robot-kanan');
             let bubble = document.getElementById('robotSpeech');
             bubble.innerHTML += `<br><br><span style="display:flex; justify-content:center; gap:10px; margin-top:10px;">
