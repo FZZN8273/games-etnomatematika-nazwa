@@ -62,6 +62,45 @@
         @keyframes waveMove { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         #loadingScreenRandom h2 { color: #eccc68; font-weight: 900; font-size: 22px; text-shadow: 0 0 20px rgba(0,0,0,0.5); margin-top: 20px; letter-spacing: 1px; }
 
+        /* 🔥 LOADING MOBIL (DARI KANAN KE KIRI) */
+        #loadingCarTransition {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #2c3e50; /* Background gelap */
+            color: white; display: none; flex-direction: column; justify-content: flex-end; align-items: center; z-index: 300; text-align: center; overflow: hidden;
+            padding-bottom: 20px;
+        }
+        .car-container {
+            position: relative; width: 100%; height: 60px; margin-top: 40px;
+        }
+        .car {
+            position: absolute; right: -150px; width: 120px; height: 50px;
+            background: #e67e22; border-radius: 10px 10px 0 0;
+            animation: driveCar 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .car::after { /* Body mobil */
+            content: ''; position: absolute; top: -25px; left: 15px; width: 90px; height: 30px;
+            background: #f1c40f; border-radius: 15px 15px 0 0;
+        }
+        .car::before { /* Kaca mobil */
+            content: ''; position: absolute; top: -15px; left: 20px; width: 80px; height: 20px;
+            background: #74b9ff; border-radius: 10px 10px 0 0;
+        }
+        .wheel {
+            position: absolute; bottom: -10px; width: 20px; height: 20px;
+            background: #2d3436; border-radius: 50%; border: 3px solid #555;
+            animation: spinWheel 0.5s linear infinite;
+        }
+        .wheel-left { left: 15px; }
+        .wheel-right { right: 15px; }
+        @keyframes driveCar {
+            0% { transform: translateX(0); right: -150px; }
+            100% { transform: translateX(0); right: 50%; }
+        }
+        @keyframes spinWheel {
+            100% { transform: rotate(360deg); }
+        }
+        #loadingCarTransition h2 { color: #eccc68; font-weight: 900; font-size: 22px; text-shadow: 0 0 20px rgba(0,0,0,0.5); margin-top: 20px; letter-spacing: 1px; }
+
         .modal-overlay { position: absolute; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 99; display: none; justify-content: center; align-items: center; flex-direction: column; }
         .name-box { background: rgba(20, 30, 40, 0.95); border: 2px solid #eccc68; border-radius: 15px; padding: 30px; text-align: center; width: 60%; box-shadow: 0 10px 30px rgba(236,204,104,0.3); }
         .name-box h2 { color: #eccc68; margin-bottom: 15px; letter-spacing: 1px; }
@@ -92,8 +131,8 @@
         .star-zone { width: 16%; height: 20%; border-radius: 50%; border-color: #f1c40f; }
         .z-crux { top: 56%; right: 12%; }
 
-        /* 🔥 POSISI TABLET AGAR PAS DI TENGAH LAYAR DAN KEBAWAH DIKIT */
-        .tablet-tap { width: 30%; height: 24%; top: 32%; left: 35%; border-radius: 15px; }
+        /* 🔥 POSISI TABLET AGAR PAS DI TENGAH LAYAR DAN LEBIH KEBAWAH */
+        .tablet-tap { width: 32%; height: 24%; top: 36%; left: 34%; border-radius: 15px; }
 
         .menu-panel-wrapper { position: absolute; top: 20%; left: 10%; width: 80%; height: 60%; background: transparent !important; border: none !important; padding: 0; z-index: 60; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: none !important; }
         .menu-panel-title { font-size: 26px; font-weight: 900; color: #fff; border-bottom: 2px dashed #fff; padding-bottom: 8px; margin-bottom: 20px; text-transform: uppercase; text-shadow: 0 0 15px #000, 0 0 30px #000; }
@@ -220,6 +259,17 @@
             </div>
         </div>
         <h2 id="loadingText" style="color: #eccc68; font-weight: 900; letter-spacing: 2px;">Memuat lautan baru...</h2>
+    </div>
+
+    <!-- 🔥 LOADING MOBIL (DARI KANAN KE KIRI) -->
+    <div id="loadingCarTransition">
+        <div class="car-container">
+            <div class="car">
+                <div class="wheel wheel-left"></div>
+                <div class="wheel wheel-right"></div>
+            </div>
+        </div>
+        <h2>Kembali ke daratan...</h2>
     </div>
 
     <div class="game-container" id="gameContainer" style="display:block;">
@@ -481,10 +531,43 @@
             alert(aktif ? "Mode Target Dinonaktifkan." : "Mode Target Diaktifkan! Semua zona klik berupa lingkaran radar.");
         }
 
-        function setSistemVolume(val) { volumeSistem = val; if(!audioMuted) { soundClick.volume = val; soundClickShip.volume = val; soundWelcome.volume = val; soundBgm.volume = val; soundCorrect.volume = val; soundWrong.volume = val; } }
-        function toggleMute() { audioMuted = !audioMuted; const btn = document.getElementById('btnAudio'); if(audioMuted) { btn.innerText = "🔇"; soundWelcome.volume=0; soundBgm.volume=0; soundClick.volume=0; soundClickShip.volume=0; soundCorrect.volume=0; soundWrong.volume=0; soundBgm.pause(); } else { btn.innerText = "🔊"; setSistemVolume(document.getElementById('volSlider').value); if(isBgmPlaying) soundBgm.play().catch(e=>{}); } }
-        function playClick() { soundClick.currentTime = 0; soundClick.play().catch(e=>{}); }
-        function playClickShip() { soundClickShip.currentTime = 0; soundClickShip.play().catch(e=>{}); }
+        function setSistemVolume(val) { 
+            volumeSistem = val; 
+            if(!audioMuted) { 
+                soundClick.volume = val; 
+                soundClickShip.volume = val * 1.2; // Lebih kencang dari backsound
+                soundWelcome.volume = val * 0.8; 
+                soundBgm.volume = val * 0.5; // Backsound pelan agar efek suara jelas
+                soundCorrect.volume = val * 1.2; 
+                soundWrong.volume = val * 1.2; 
+            } 
+        }
+        function toggleMute() { 
+            audioMuted = !audioMuted; 
+            const btn = document.getElementById('btnAudio'); 
+            if(audioMuted) { 
+                btn.innerText = "🔇"; 
+                soundWelcome.volume=0; 
+                soundBgm.volume=0; 
+                soundClick.volume=0; 
+                soundClickShip.volume=0; 
+                soundCorrect.volume=0; 
+                soundWrong.volume=0; 
+                soundBgm.pause(); 
+            } else { 
+                btn.innerText = "🔊"; 
+                setSistemVolume(document.getElementById('volSlider').value); 
+                if(isBgmPlaying) soundBgm.play().catch(e=>{}); 
+            } 
+        }
+        function playClick() { 
+            soundClick.currentTime = 0; 
+            soundClick.play().catch(e=>{}); 
+        }
+        function playClickShip() { 
+            soundClickShip.currentTime = 0; 
+            soundClickShip.play().catch(e=>{}); 
+        }
 
         function urutanAudioWelcome() { 
             setSistemVolume(volumeSistem); 
@@ -502,7 +585,7 @@
             document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active')); 
             document.getElementById('zoneKakek').style.display = 'none'; 
             document.getElementById('dialogOverlayKakek').style.display = 'none'; 
-            sembunyikanRobotKiri(); 
+            sembunyikanRobotKiri(); // 🔥 PASTIKAN ROBOT HILANG DI SETIAP SLIDE BARU
         }
         
         function sembunyikanRobotKiri() {
@@ -524,6 +607,15 @@
             document.getElementById('loadingScreenRandom').style.display = 'flex';
             setTimeout(() => {
                 document.getElementById('loadingScreenRandom').style.display = 'none';
+                callback();
+            }, detik);
+        }
+
+        /* 🔥 LOADING MOBIL (Dari Kanan ke Kiri) */
+        function loadingCarTransisi(detik, callback) {
+            document.getElementById('loadingCarTransition').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('loadingCarTransition').style.display = 'none';
                 callback();
             }, detik);
         }
@@ -600,7 +692,8 @@
             sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active');
             document.getElementById('globalUI').style.display = 'block'; 
             
-            // 🔥 ROBOT DI KANAN SEBAGAI PEMANDU DI WEL2
+            // 🔥 ROBOT DI KANAN SEBAGAI PEMANDU DI WEL2, KIRI HILANG TOTAL
+            sembunyikanRobotKiri();
             setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal di sebelah kanan ini!`, 'robot-kanan');
         }
         function openMenu(menuType) { playClick(); sembunyikanSemuaSlide(); document.getElementById('starUI').style.display = 'none'; 
@@ -608,7 +701,10 @@
             if(menuType === 'caraMain') { document.getElementById('slideCaraMain').classList.add('active'); }
             sembunyikanRobotKiri(); 
         }
-        function kembaliKeMenu() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active'); document.getElementById('starUI').style.display = 'none'; sembunyikanRobotKiri(); }
+        function kembaliKeMenu() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active'); document.getElementById('starUI').style.display = 'none'; 
+            sembunyikanRobotKiri(); 
+            setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal di sebelah kanan ini!`, 'robot-kanan');
+        }
         
         function bukaSkenario1() { 
             playClickShip(); 
@@ -682,18 +778,20 @@
                 sembunyikanSemuaSlide(); 
                 document.getElementById('slideMalam').classList.add('active');
 
-                sembunyikanRobotKiri();
-
+                // 🔥 ROBOT PENGANTAR SEBELUM KAKEK
+                setRobot("Eh udh malam, ada kakek nelayan nunjuk bintang! Dengerin dulu yuk ceritanya!");
+                
                 setTimeout(() => { 
                     document.getElementById('dialogOverlayKakek').style.display = 'block'; 
-                    sembunyikanRobotKiri(); 
-                }, 1500);
+                    sembunyikanRobotKiri(); // Robot hilang saat Kakek cerita
+                }, 2000);
             }, 2500);
         }
 
         function kakekSelesaiCerita() {
             playClick();
             document.getElementById('dialogOverlayKakek').style.display = 'none';
+            // 🔥 ROBOT PINDAH KE KANAN UNTUK SHARING & MENANYAKAN PANIK
             setRobot("Wah, seru ya cerita Kakek tadi. Kakek bilang, kunci utamanya adalah jangan panik dan percaya sama petunjuk alam. Iya nggak sih?<br><br>Nah, kalau kamu ada di posisi kapal yang terombang-ambing tanpa maps, apakah kamu akan panik?", 'robot-kanan');
             let bubble = document.getElementById('robotSpeech');
             bubble.innerHTML += `<br><br><span style="display:flex; justify-content:center; gap:10px; margin-top:10px;">
@@ -792,7 +890,7 @@
 
         function tamatKuisDanKembali() { 
             playClickShip(); 
-            loadingTransisi(800, () => {
+            loadingCarTransisi(2500, () => {
                 sembunyikanSemuaSlide(); 
                 document.getElementById('slideMeja').classList.add('active');
                 setRobot(`Kapten ${playerName}, kita udah sampe di rumah. Tuh, ada tablet di atas meja. Coba lihat, ada apa aja di dalamnya....tuh`, 'robot-kiri');
@@ -804,12 +902,19 @@
             let overlay = document.getElementById('feedbackOverlay');
             let msg = document.getElementById('feedbackMsg');
             msg.className = 'feedback-box feedback-correct';
-            msg.innerHTML = "🌟 SELAMAT! <br><br> Kamu telah menyelesaikan seluruh ekspedisi! <br> Ayo kembali ke beranda untuk memulai petualangan baru!";
+            msg.innerHTML = "🌟 SELAMAT! <br><br> Kamu telah menyelesaikan seluruh ekspedisi!";
             overlay.style.display = 'flex';
+            
+            // 🔥 GELUMBUNG KEDUA SETELAH KLIK TABLET
             setTimeout(() => {
                 overlay.style.display = 'none';
+                setRobot("Hebat, Kapten! Kamu sudah memecahkan semua misteri logika leluhur! Ayo kembali ke daratan dan rakit kembali semangat petualanganmu!", 'robot-kiri');
+            }, 2500);
+            
+            // Kembali ke menu setelah gelembung kedua selesai
+            setTimeout(() => {
                 kembaliKeMenu();
-            }, 4000);
+            }, 5000);
         }
 
     </script>
