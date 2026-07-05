@@ -78,9 +78,24 @@
         .kapal-tap { width: 60%; height: 26%; bottom: 0; left: 20%; border-radius: 100px 100px 0 0; }
         .kapal-madura-tap { width: 18%; height: 28%; top: 20%; left: 14%; border-radius: 30px; }
         .kakek-tap { width: 20%; height: 35%; top: 25%; right: 25%; border-radius: 20px; display: none; border-color: #eccc68; background: rgba(236, 204, 104, 0.15); border-width: 3px; animation: pulse-glow 2s infinite; }
-        .kapal-rusak-tap { width: 25%; height: 25%; bottom: 35%; left: 37%; border-radius: 20px; border: none; background: transparent; animation: none; z-index: 60; }
-        .star-zone { width: 25%; height: 25%; border-radius: 50%; border-color: #f1c40f; }
-        .z-crux { top: 10%; right: 20%; }
+        
+        /* 🔥 PERBAIKAN: BULATAN KAPAL RUSAK JADI KELIATAN (Garis Merah Berdenyut) */
+        .kapal-rusak-tap { 
+            width: 25%; height: 25%; bottom: 35%; left: 37%; border-radius: 20px; 
+            border: 4px solid rgba(255, 0, 0, 0.8);
+            background: rgba(255, 0, 0, 0.15);
+            animation: pulse-warning 1s infinite ease-in-out;
+            z-index: 60; 
+        }
+        @keyframes pulse-warning {
+            0% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); }
+            50% { border-color: rgba(255, 0, 0, 1); background: rgba(255, 0, 0, 0.3); box-shadow: 0 0 40px rgba(255,0,0,0.8); }
+            100% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); }
+        }
+
+        /* 🔥 PERBAIKAN: ZONA BINTANG CRUX DITURUNKAN POSISINYA */
+        .star-zone { width: 20%; height: 20%; border-radius: 50%; border-color: #f1c40f; }
+        .z-crux { top: 60%; right: 15%; }
 
         .menu-panel-wrapper { position: absolute; top: 20%; left: 10%; width: 80%; height: 60%; background: transparent !important; border: none !important; padding: 0; z-index: 60; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: none !important; }
         .menu-panel-title { font-size: 26px; font-weight: 900; color: #fff; border-bottom: 2px dashed #fff; padding-bottom: 8px; margin-bottom: 20px; text-transform: uppercase; text-shadow: 0 0 15px #000, 0 0 30px #000; }
@@ -350,7 +365,7 @@
         <div id="slideRusak" class="slide">
             <img id="imgRusak" src="rusak.png" alt="Kapal Rusak" class="bg-img">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
-            <div style="position:absolute; top:30px; width:100%; text-align:center; font-size:24px; font-weight:900; color:#e74c3c; text-shadow: 2px 2px 4px #000, 0 0 20px rgba(231,76,60,0.5); z-index: 100; pointer-events: none; animation: pulse-glow 1s infinite;">TAP LAYAR CEPAT UNTUK SELAMATKAN KAPAL! (<span id="klikRusak">0</span>/10)</div>
+            <div style="position:absolute; top:30px; width:100%; text-align:center; font-size:24px; font-weight:900; color:#e74c3c; text-shadow: 2px 2px 4px #000, 0 0 20px rgba(231,76,60,0.5); z-index: 100; pointer-events: none; animation: pulse-warning 1s infinite;">TAP LAYAR CEPAT UNTUK SELAMATKAN KAPAL! (<span id="klikRusak">0</span>/10)</div>
             <button class="tap-zone kapal-rusak-tap" onclick="perbaikiKapal()"></button>
         </div>
         
