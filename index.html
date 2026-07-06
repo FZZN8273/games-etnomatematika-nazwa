@@ -682,12 +682,24 @@
         function bukaModalNama() { 
             playClick(); 
             sembunyikanRobotKiri(); 
+            
+            // 🔥 AUTO FILL NAMA DARI LOCALSTORAGE
+            let savedName = localStorage.getItem('etnoCaptainName');
+            if(savedName) {
+                document.getElementById('inputNama').value = savedName;
+            }
+            
             document.getElementById('modalNama').style.display = 'flex'; 
         }
         function mulaiDenganNama() {
             let input = document.getElementById('inputNama').value.trim();
             if(input === "") { alert("Mohon isi nama kapten sebelum mulai ekspedisi!"); return; }
-            playerName = input; playClick(); document.getElementById('modalNama').style.display = 'none';
+            
+            // 🔥 SIMPAN KE LOCALSTORAGE
+            playerName = input;
+            localStorage.setItem('etnoCaptainName', playerName);
+            
+            playClick(); document.getElementById('modalNama').style.display = 'none';
             urutanAudioWelcome(); 
             sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active');
             document.getElementById('globalUI').style.display = 'block'; 
