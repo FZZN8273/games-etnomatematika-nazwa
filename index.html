@@ -149,9 +149,9 @@
 
         /* 🔥 POSISI CRUX PAS BANGET DENGAN GAMBAR */
         .star-zone { width: 22%; height: 22%; border-radius: 50%; border-color: #f1c40f; }
-        .z-crux { top: 55%; right: 8%; }
+        .z-crux { top: 52%; right: 8%; }
 
-        /* 🔥 POSISI TABLET AGAR PAS DI TENGAH LAYAR DAN LEBIH KEBAWAH */
+        /* 🔥 POSISI TABLET */
         .tablet-tap { width: 32%; height: 24%; top: 36%; left: 34%; border-radius: 15px; }
 
         .menu-panel-wrapper { position: absolute; top: 20%; left: 10%; width: 80%; height: 60%; background: transparent !important; border: none !important; padding: 0; z-index: 60; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: none !important; }
@@ -308,7 +308,7 @@
 
         <!-- SLIDE 1: wel1.jpg -->
         <div id="slide1" class="slide active">
-            <img src="wel1.jpg" alt="Selamat Datang" class="bg-img">
+            <img src="wel1.jpg" alt="Selamat Datang" class="bg-img" onerror="this.style.display='none'">
             <div class="bottom-bar" onclick="bukaModalNama()">
                 <span class="start-text">START GAME!!!</span>
             </div>
@@ -316,7 +316,7 @@
         
         <!-- SLIDE 2: wel2.jpg -->
         <div id="slide2" class="slide">
-            <img src="wel2.jpg" alt="Pelabuhan" class="bg-img">
+            <img src="wel2.jpg" alt="Pelabuhan" class="bg-img" onerror="this.style.display='none'">
             <button class="icon-btn puzzle-btn" onclick="openMenu('caraMain')"></button>
             <button class="icon-btn book-btn" onclick="openMenu('rules')"></button>
             <button class="icon-btn ship-btn" onclick="bukaSkenario1()"></button>
@@ -324,7 +324,7 @@
 
         <!-- SLIDE MENU -->
         <div id="slideRules" class="slide">
-            <img src="soalback.png" alt="Background" class="bg-img">
+            <img src="soalback.png" alt="Background" class="bg-img" onerror="this.style.display='none'">
             <div class="menu-panel-wrapper">
                 <div class="menu-panel-title">📜 ATURAN EKSPEDISI</div>
                 <div class="menu-panel-content">
@@ -339,7 +339,7 @@
         </div>
 
         <div id="slideCaraMain" class="slide">
-            <img src="soalback.png" alt="Background" class="bg-img">
+            <img src="soalback.png" alt="Background" class="bg-img" onerror="this.style.display='none'">
             <div class="menu-panel-wrapper">
                 <div class="menu-panel-title">🧩 PETUNJUK NAVIGASI</div>
                 <div class="menu-panel-content">
@@ -355,7 +355,7 @@
 
         <!-- INTRO CERITA PRASASTI -->
         <div id="slideIntroCerita" class="slide">
-            <img src="soalback.png" alt="Background Soal" class="bg-img">
+            <img src="soalback.png" alt="Background Soal" class="bg-img" onerror="this.style.display='none'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div class="intro-wrapper">
                 <div class="intro-bubble">
@@ -364,28 +364,28 @@
                 </div>
                 <button id="introNextBtn" onclick="goToNextIntro()">⏳ Membaca...</button>
                 <div class="intro-robot-wrapper">
-                    <img src="robot.jpg" alt="Robot Nusantara" class="intro-robot-img">
+                    <img src="robot.jpg" alt="Robot Nusantara" class="intro-robot-img" onerror="this.style.display='none'">
                 </div>
             </div>
         </div>
 
         <!-- SKENARIO 1 -->
         <div id="slidePetualangan1" class="slide">
-            <img src="1.png" alt="Skenario 1 - Layar 1" class="bg-img">
+            <img src="1.png" alt="Skenario 1 - Layar 1" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=1.png+Gagal+Load'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div id="zoneKapal" class="tap-zone kapal-tap" onclick="interaksiLayar1('kapal')"></div>
             <div id="zonePulau" class="tap-zone pulau-tap" onclick="interaksiLayar1('pulau')"></div>
         </div>
 
         <div id="slidePrasasti" class="slide">
-            <img src="2.png" alt="Prasasti Kedukan Bukit" class="bg-img">
+            <img src="2.png" alt="Prasasti Kedukan Bukit" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=2.png+Gagal+Load'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <button class="btn-selesai" style="position:absolute; bottom:15px; left:50%; transform:translateX(-50%); width:auto; padding:10px 30px; background:#e67e22; z-index:70; border-radius:30px;" onclick="lanjutKeSoal()">Lanjutkan ➔</button>
         </div>
         
         <!-- SOAL A/B -->
         <div id="slideSoalS1" class="slide">
-            <img src="soalback.png" alt="Background Soal" class="bg-img">
+            <img src="soalback.png" alt="Background Soal" class="bg-img" onerror="this.style.display='none'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div class="soal-panel-wrapper">
                 <div class="opsi-card opsi-card-a" onclick="eksekusiPilihOpsiS1('A')">
@@ -411,21 +411,21 @@
 
         <!-- SA1.png -->
         <div id="slideSebabAkibatS1" class="slide">
-            <img id="assetSebabAkibatImgS1" src="SA1.png" alt="Penjelasan Sebab Akibat" class="bg-img">
+            <img id="assetSebabAkibatImgS1" src="SA1.png" alt="Penjelasan Sebab Akibat" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=SA1.png+Gagal+Load'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <button class="btn-selesai" style="position:absolute; top:25%; left:50%; transform:translateX(-50%); width:35%; background:#e67e22; z-index:70; padding:12px; border-radius:30px; box-shadow:0 4px 15px rgba(0,0,0,0.5);" onclick="lanjutKeLayarNextSatu()">Lanjutkan ➔</button>
         </div>
         
         <!-- NEXT1.JPG -->
         <div id="slideNextSatu" class="slide">
-            <img src="next1.jpg" alt="Peta Jalur Laut" class="bg-img">
+            <img src="next1.jpg" alt="Peta Jalur Laut" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=next1.jpg+Gagal+Load'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div id="zoneKapalMadura" class="tap-zone kapal-madura-tap" onclick="berlayarMalam()"></div>
         </div>
         
         <!-- 5.png (KAKEK) -->
         <div id="slideMalam" class="slide">
-            <img src="5.png" alt="Malam Hari & Kakek" class="bg-img">
+            <img src="5.png" alt="Malam Hari & Kakek" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=5.png+Gagal+Load'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div id="zoneKakek" class="tap-zone kakek-tap"></div>
             <div id="dialogOverlayKakek" class="dialogue-overlay">
@@ -440,7 +440,7 @@
 
         <!-- RUSAK.PNG -->
         <div id="slideRusak" class="slide">
-            <img id="imgRusak" src="rusak.png" alt="Kapal Rusak" class="bg-img">
+            <img id="imgRusak" src="rusak.png" alt="Kapal Rusak" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=rusak.png+Gagal+Load'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div style="position:absolute; top:30px; width:100%; text-align:center; font-size:24px; font-weight:900; color:#e74c3c; text-shadow: 2px 2px 4px #000, 0 0 20px rgba(231,76,60,0.5); z-index: 100; pointer-events: none; animation: pulse-warning 1s infinite;">TAP LAYAR CEPAT UNTUK SELAMATKAN KAPAL! (<span id="klikRusak">0</span>/10)</div>
             <button class="tap-zone kapal-rusak-tap" onclick="perbaikiKapal()"></button>
@@ -448,16 +448,16 @@
         
         <!-- STARS.PNG -->
         <div id="slideStars" class="slide">
-            <img src="stars.png" alt="Peta Bintang Malam" class="bg-img">
+            <img src="stars.png" alt="Peta Bintang Malam" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=stars.png+Gagal+Load'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
-            <!-- 🔥 TEKS INI SUDAH SAYA PINDAHKAN KE BAWAH -->
-            <div style="position:absolute; top:65%; left:0; width:100%; text-align:center; font-size:22px; font-weight:900; color:#f1c40f; text-shadow: 0 0 20px #000, 0 0 40px #000; z-index: 100; pointer-events: none; animation: pulse-glow 1.5s infinite;">✨ KLIK AREA CAHAYA DI LANGIT ✨</div>
+            <!-- 🔥 TEKS DIPINDAHKAN KE BAWAH (Top: 73%) -->
+            <div style="position:absolute; top:73%; left:0; width:100%; text-align:center; font-size:22px; font-weight:900; color:#f1c40f; text-shadow: 0 0 20px #000, 0 0 40px #000; z-index: 100; pointer-events: none; animation: pulse-glow 1.5s infinite;">✨ KLIK AREA CAHAYA DI LANGIT ✨</div>
             <div class="tap-zone star-zone z-crux" onclick="mulaiUrutanBintang()"></div>
         </div>
         
         <!-- RASI BINTANG -->
         <div id="slideRasi" class="slide">
-            <img id="imgRasi" src="" alt="Rasi Bintang" class="bg-img">
+            <img id="imgRasi" src="" alt="Rasi Bintang" class="bg-img" onerror="this.style.display='none'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div class="rasi-container">
                 <div id="teksRasi" style="font-size:16px; line-height:1.6;"></div>
@@ -467,7 +467,7 @@
         
         <!-- MATERI GPS -->
         <div id="slideGPS" class="slide">
-            <img src="soalback.png" alt="Background GPS" class="bg-img">
+            <img src="soalback.png" alt="Background GPS" class="bg-img" onerror="this.style.display='none'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:85%; background:rgba(0,0,0,0.7); padding:20px; border-radius:12px; z-index:50; color:#fff; text-align:left; max-height:80vh; overflow-y:auto;">
                 <h3 style="color:#f1c40f; text-align:center; margin-bottom:10px;">🌌 Navigasi Bintang = "GPS-nya" Nenek Moyang</h3>
@@ -483,7 +483,7 @@
         
         <!-- KUIS -->
         <div id="slideKuis" class="slide">
-            <img src="soalback.png" alt="Kuis Bintang" class="bg-img">
+            <img src="soalback.png" alt="Kuis Bintang" class="bg-img" onerror="this.style.display='none'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:90%; background:rgba(0,0,0,0.8); padding:20px; border-radius:15px; z-index:50; color:#fff; text-align:center; max-height:80vh; overflow-y:auto;">
                 <h3 style="color:#f1c40f; margin-bottom:15px;">⚔️ PILIH JAWABAN TEPAT</h3>
@@ -494,14 +494,14 @@
         
         <!-- NEXT2.PNG -->
         <div id="slideNextDua" class="slide">
-            <img src="next2.png" alt="Peta Jalur Laut Berikutnya" class="bg-img">
+            <img src="next2.png" alt="Peta Jalur Laut Berikutnya" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=next2.png+Gagal+Load'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div class="tap-zone kapal-madura-tap" onclick="tamatKuisDanKembali()"></div>
         </div>
 
         <!-- MEJA.PNG -->
         <div id="slideMeja" class="slide">
-            <img src="meja.png" alt="Meja Kayu dengan Tablet" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=Meja+Kayu+(meja.png)'">
+            <img src="meja.png" alt="Meja Kayu dengan Tablet" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=meja.png+Gagal+Load'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div id="zoneTablet" class="tap-zone tablet-tap" onclick="klikTablet()"></div>
         </div>
@@ -647,7 +647,7 @@
             document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active')); 
             document.getElementById('zoneKakek').style.display = 'none'; 
             document.getElementById('dialogOverlayKakek').style.display = 'none'; 
-            sembunyikanRobotKiri(); // 🔥 PASTIKAN ROBOT KIRI HILANG 100% SETIAP KALI PINDAH SLIDE
+            sembunyikanRobotKiri(); 
         }
         
         function sembunyikanRobotKiri() {
@@ -663,14 +663,50 @@
             document.getElementById('robotAktor').className = 'robot-wrapper ' + posisi;
         }
 
-        function loadingTransisi(detik, callback) {
+        // 🔥 FUNGSI LOADING TANPA DILEY (PRELOAD GAMBAR SEBELUM TAMPIL)
+        function loadingTransisi(detik, slideElementId, callback) {
             const randomText = ["Memuat lautan baru", "Memuat samudera baru", "Memuat informasi", "Memuat teknologi terbaru"];
             document.getElementById('loadingText').innerText = randomText[Math.floor(Math.random() * randomText.length)];
             document.getElementById('loadingScreenRandom').style.display = 'flex';
+
+            // Pastikan gambar pada slide tujuan sudah ter-load 100% sebelum transisi
+            const targetSlide = document.getElementById(slideElementId);
+            let imageLoaded = false;
+            
+            if(targetSlide) {
+                const img = targetSlide.querySelector('img');
+                if(img && img.src && !img.src.includes('placeholder')) {
+                    if(img.complete && img.naturalHeight !== 0) {
+                        imageLoaded = true;
+                    } else {
+                        img.onload = () => { imageLoaded = true; };
+                        img.onerror = () => { imageLoaded = true; }; // Tetap lanjut meski error
+                    }
+                } else {
+                    imageLoaded = true;
+                }
+            } else {
+                imageLoaded = true;
+            }
+
+            // Tunggu minimum detik (0.8s agar terasa transisi) dan pastikan gambar termuat
             setTimeout(() => {
-                document.getElementById('loadingScreenRandom').style.display = 'none';
-                callback();
-            }, detik);
+                const checkInterval = setInterval(() => {
+                    if(imageLoaded) {
+                        clearInterval(checkInterval);
+                        document.getElementById('loadingScreenRandom').style.display = 'none';
+                        callback();
+                    }
+                }, 50);
+                // Jika loading terlalu lama (5 detik), paksa lewati agar game tidak stuck
+                setTimeout(() => {
+                    clearInterval(checkInterval);
+                    if(document.getElementById('loadingScreenRandom').style.display !== 'none') {
+                        document.getElementById('loadingScreenRandom').style.display = 'none';
+                        callback();
+                    }
+                }, 5000);
+            }, Math.max(600, detik));
         }
 
         /* 🔥 LOADING MOBIL (Dari Kanan ke Kiri) */
@@ -732,7 +768,7 @@
 
         function finishIntroAndStartGame() {
             tampilkanRobotKiri(); 
-            loadingTransisi(500, () => {
+            loadingTransisi(500, 'slidePetualangan1', () => {
                 sembunyikanSemuaSlide();
                 document.getElementById('slidePetualangan1').classList.add('active');
                 document.getElementById('starUI').style.display = 'flex';
@@ -800,7 +836,7 @@
             } 
         }
         
-        function lanjutKeSoal() { playClick(); loadingTransisi(800, () => { sembunyikanSemuaSlide(); document.getElementById('slideSoalS1').classList.add('active'); setRobot("Kamu menemukan Prasasti! Tugasmu dokumentasikan ke digital. Pilih metode dokumentasinya!"); }); }
+        function lanjutKeSoal() { playClick(); loadingTransisi(800, 'slideSoalS1', () => { sembunyikanSemuaSlide(); document.getElementById('slideSoalS1').classList.add('active'); setRobot("Kamu menemukan Prasasti! Tugasmu dokumentasikan ke digital. Pilih metode dokumentasinya!"); }); }
 
         function eksekusiPilihOpsiS1(opsi) {
             playClick();
@@ -819,7 +855,7 @@
             
             setTimeout(() => {
                 overlayFeed.style.display = 'none';
-                loadingTransisi(800, () => {
+                loadingTransisi(800, 'slideSebabAkibatS1', () => {
                     sembunyikanSemuaSlide(); 
                     document.getElementById('slideSebabAkibatS1').classList.add('active');
                     sembunyikanRobotKiri(); 
@@ -830,7 +866,7 @@
 
         function lanjutKeLayarNextSatu() { 
             playClick(); 
-            loadingTransisi(800, () => { 
+            loadingTransisi(800, 'slideNextSatu', () => { 
                 sembunyikanSemuaSlide(); 
                 document.getElementById('slideNextSatu').classList.add('active'); 
                 document.getElementById('starUI').style.display = 'flex'; 
@@ -850,11 +886,13 @@
                 sembunyikanSemuaSlide(); 
                 document.getElementById('slideMalam').classList.add('active');
 
-                setRobot("Eh udh malam, ada kakek nelayan nunjuk bintang! Dengerin dulu yuk ceritanya!");
-                
+                // 🔥 PASTIKAN ROBOT KIRI HILANG SEBELUM BICARA
+                sembunyikanRobotKiri();
+
                 setTimeout(() => { 
                     document.getElementById('dialogOverlayKakek').style.display = 'block'; 
-                    sembunyikanRobotKiri(); // Robot hilang saat Kakek cerita
+                    // Pastikan robot kiri tetap hilang saat dialog muncul
+                    sembunyikanRobotKiri(); 
                 }, 2000);
             }, 2500);
         }
@@ -893,7 +931,7 @@
         }
 
         function masukPetaBintang() { 
-            // 🔥 PASTIKAN ROBOT KIRI HILANG SEBELUM MASUK SLIDE BINTANG
+            // 🔥 PASTIKAN ROBOT KIRI HILANG SAAT MASUK SLIDE BINTANG
             sembunyikanRobotKiri(); 
             sembunyikanSemuaSlide(); 
             document.getElementById('slideStars').classList.add('active');
@@ -908,11 +946,11 @@
         ];
         let indexBintang = 0;
 
-        function mulaiUrutanBintang() { playClick(); loadingTransisi(600, () => { indexBintang = 0; tampilkanBintangSaatIni(); }); }
+        function mulaiUrutanBintang() { playClick(); loadingTransisi(800, 'slideRasi', () => { indexBintang = 0; tampilkanBintangSaatIni(); }); }
         function tampilkanBintangSaatIni() { sembunyikanSemuaSlide(); document.getElementById('slideRasi').classList.add('active'); document.getElementById('imgRasi').src = urutanBintang[indexBintang].img; document.getElementById('teksRasi').innerHTML = urutanBintang[indexBintang].teks; setRobot(`Formasi rasi ke-${indexBintang+1}! Klik Lanjutkan untuk rasi selanjutnya.`); }
-        function lanjutBintangBerikutnya() { playClick(); loadingTransisi(600, () => { indexBintang++; if(indexBintang < urutanBintang.length) { tampilkanBintangSaatIni(); } else { document.getElementById('starUI').style.display = 'none'; bukaMateriGPS(); } }); }
+        function lanjutBintangBerikutnya() { playClick(); loadingTransisi(800, 'slideRasi', () => { indexBintang++; if(indexBintang < urutanBintang.length) { tampilkanBintangSaatIni(); } else { document.getElementById('starUI').style.display = 'none'; bukaMateriGPS(); } }); }
 
-        function bukaMateriGPS() { loadingTransisi(800, () => { sembunyikanSemuaSlide(); document.getElementById('slideGPS').classList.add('active'); setRobot("Paham rasi? Yuk uji pemahaman!"); }); }
+        function bukaMateriGPS() { loadingTransisi(800, 'slideGPS', () => { sembunyikanSemuaSlide(); document.getElementById('slideGPS').classList.add('active'); setRobot("Paham rasi? Yuk uji pemahaman!"); }); }
 
         const kuisData = [
             { q: "Kakek menunjuk ke 4 bintang layang-layang. Rasi apa?", a: "Biduk", b: "Salib Selatan (Crux)", c: "Orion", d: "Skorpio", ans: "b", exp: "Bentuk layang-layang = Salib Selatan (Crux)." },
@@ -924,7 +962,7 @@
 
         function mulaiKuisStars() { 
             playClick(); 
-            loadingTransisi(600, () => { 
+            loadingTransisi(800, 'slideKuis', () => { 
                 kuisIndex = 0; 
                 document.getElementById('starUI').style.display = 'none'; 
                 sembunyikanSemuaSlide(); 
@@ -957,7 +995,7 @@
 
         function selesaiSkenarioMalam() { 
             playClick(); 
-            loadingTransisi(800, () => {
+            loadingTransisi(800, 'slideNextDua', () => {
                 sembunyikanSemuaSlide(); document.getElementById('slideNextDua').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; 
                 setRobot(`Hebat Kapten ${playerName}! Kita telah belajar banyak tentang rasi bintang dan navigasi. Ayo pulang ke daratan!`); 
             });
