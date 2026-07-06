@@ -147,11 +147,11 @@
         .kapal-rusak-tap { width: 25%; height: 25%; bottom: 35%; left: 37%; border-radius: 20px; border: 4px solid rgba(255, 0, 0, 0.8); background: rgba(255, 0, 0, 0.15); animation: pulse-warning 1s infinite ease-in-out; z-index: 60; }
         @keyframes pulse-warning { 0% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); } 50% { border-color: rgba(255, 0, 0, 1); background: rgba(255, 0, 0, 0.3); box-shadow: 0 0 40px rgba(255,0,0,0.8); } 100% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); } }
 
-        /* 🔥 POSISI CRUX */
-        .star-zone { width: 16%; height: 20%; border-radius: 50%; border-color: #f1c40f; }
-        .z-crux { top: 56%; right: 12%; }
+        /* 🔥 POSISI CRUX PAS BANGET DENGAN GAMBAR */
+        .star-zone { width: 22%; height: 22%; border-radius: 50%; border-color: #f1c40f; }
+        .z-crux { top: 55%; right: 8%; }
 
-        /* 🔥 POSISI TABLET */
+        /* 🔥 POSISI TABLET AGAR PAS DI TENGAH LAYAR DAN LEBIH KEBAWAH */
         .tablet-tap { width: 32%; height: 24%; top: 36%; left: 34%; border-radius: 15px; }
 
         .menu-panel-wrapper { position: absolute; top: 20%; left: 10%; width: 80%; height: 60%; background: transparent !important; border: none !important; padding: 0; z-index: 60; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: none !important; }
@@ -450,7 +450,8 @@
         <div id="slideStars" class="slide">
             <img src="stars.png" alt="Peta Bintang Malam" class="bg-img">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
-            <div style="position:absolute; top:45%; left:0; width:100%; text-align:center; font-size:22px; font-weight:900; color:#f1c40f; text-shadow: 0 0 20px #000, 0 0 40px #000; z-index: 100; pointer-events: none; animation: pulse-glow 1.5s infinite;">✨ KLIK AREA CAHAYA DI LANGIT ✨</div>
+            <!-- 🔥 TEKS INI SUDAH SAYA PINDAHKAN KE BAWAH -->
+            <div style="position:absolute; top:65%; left:0; width:100%; text-align:center; font-size:22px; font-weight:900; color:#f1c40f; text-shadow: 0 0 20px #000, 0 0 40px #000; z-index: 100; pointer-events: none; animation: pulse-glow 1.5s infinite;">✨ KLIK AREA CAHAYA DI LANGIT ✨</div>
             <div class="tap-zone star-zone z-crux" onclick="mulaiUrutanBintang()"></div>
         </div>
         
@@ -540,7 +541,6 @@
             statusDesc.textContent = "Nyari sinyal dulu bang, jangan kemana-mana! 🌊";
             
             if (navigator.onLine) {
-                // Jika online
                 setTimeout(() => {
                     statusIcon.textContent = "📶";
                     statusTitle.textContent = "Sinyal Nusantara aman!";
@@ -549,12 +549,9 @@
                     setTimeout(() => {
                         document.getElementById('internetLoading').style.display = 'none';
                         document.getElementById('gameContainer').style.display = 'block';
-                        // Jika ingin suara awal diputar otomatis (jika diizinkan browser)
-                        // urutanAudioWelcome(); 
                     }, 1500);
                 }, 800);
             } else {
-                // Jika offline
                 statusIcon.textContent = "📶🚫";
                 statusTitle.textContent = "Aduh! Jaringannya ilang!";
                 statusDesc.textContent = "Coba nyalain Wi-Fi/Data dulu dong Kapten! 😱";
@@ -562,7 +559,6 @@
             }
         }
 
-        // Jalankan pengecekan internet saat halaman pertama kali dimuat
         window.addEventListener('load', cekInternet);
 
         /* 🔥 PRELOAD ASSET AGAR GAMBAR TIDAK DILEY SAAT DIKLIK (SUPPORT JARINGAN LEMAH) */
@@ -749,7 +745,6 @@
             playClick(); 
             sembunyikanRobotKiri(); 
             
-            // 🔥 AUTO FILL NAMA DARI LOCALSTORAGE
             let savedName = localStorage.getItem('etnoCaptainName');
             if(savedName) {
                 document.getElementById('inputNama').value = savedName;
@@ -762,21 +757,17 @@
             let input = document.getElementById('inputNama').value.trim();
             if(input === "") { alert("Mohon isi nama kapten sebelum mulai ekspedisi!"); return; }
             
-            // 🔥 SIMPAN KE LOCALSTORAGE
             playerName = input;
             localStorage.setItem('etnoCaptainName', playerName);
             
-            // 🔥 FIX BUG STUCK: Jalankan UI slide2 segera tanpa di-block audio
             playClick(); 
             document.getElementById('modalNama').style.display = 'none';
             sembunyikanSemuaSlide(); 
             document.getElementById('slide2').classList.add('active');
             document.getElementById('globalUI').style.display = 'block'; 
             
-            // 🔥 ROBOT DI KANAN SEBAGAI PEMANDU DI WEL2
             setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal di sebelah kanan ini!`, 'robot-kanan');
             
-            // 🔥 Jalankan audio di background agar tidak memblock UI
             urutanAudioWelcome(); 
         }
 
@@ -813,11 +804,10 @@
 
         function eksekusiPilihOpsiS1(opsi) {
             playClick();
-            // 🔥 EFEK DAN SUARA UNTUK JAWABAN A/B
             let overlayFeed = document.getElementById('feedbackOverlay');
             let feedbackMsg = document.getElementById('feedbackMsg');
             
-            if (opsi === 'B') { // Asumsikan B adalah jawaban lebih tepat sesuai logika
+            if (opsi === 'B') {
                 soundCorrect.currentTime = 0; soundCorrect.play().catch(e=>{});
                 feedbackMsg.className = 'feedback-box feedback-correct'; feedbackMsg.innerHTML = "🌟 PILIHAN TEPAT!";
                 jumlahBintang++; document.getElementById('starCount').innerText = jumlahBintang;
@@ -860,7 +850,6 @@
                 sembunyikanSemuaSlide(); 
                 document.getElementById('slideMalam').classList.add('active');
 
-                // 🔥 ROBOT PENGANTAR SEBELUM KAKEK (Hanya muncul sebentar, lalu hilang)
                 setRobot("Eh udh malam, ada kakek nelayan nunjuk bintang! Dengerin dulu yuk ceritanya!");
                 
                 setTimeout(() => { 
@@ -873,7 +862,6 @@
         function kakekSelesaiCerita() {
             playClick();
             document.getElementById('dialogOverlayKakek').style.display = 'none';
-            // 🔥 ROBOT PINDAH KE KANAN UNTUK SHARING & MENANYAKAN PANIK
             setRobot("Wah, seru ya cerita Kakek tadi. Kakek bilang, kunci utamanya adalah jangan panik dan percaya sama petunjuk alam. Iya nggak sih?<br><br>Nah, kalau kamu ada di posisi kapal yang terombang-ambing tanpa maps, apakah kamu akan panik?", 'robot-kanan');
             let bubble = document.getElementById('robotSpeech');
             bubble.innerHTML += `<br><br><span style="display:flex; justify-content:center; gap:10px; margin-top:10px;">
@@ -904,7 +892,13 @@
             } else { playClick(); }
         }
 
-        function masukPetaBintang() { sembunyikanSemuaSlide(); document.getElementById('slideStars').classList.add('active'); setRobot("Jadi dulu nenek moyang kita punya 4 bintang penunjuk arah. Tap area cahaya di langit untuk mulai belajar rasi!"); }
+        function masukPetaBintang() { 
+            // 🔥 PASTIKAN ROBOT KIRI HILANG SEBELUM MASUK SLIDE BINTANG
+            sembunyikanRobotKiri(); 
+            sembunyikanSemuaSlide(); 
+            document.getElementById('slideStars').classList.add('active');
+            setRobot("Jadi dulu nenek moyang kita punya 4 bintang penunjuk arah. Tap area cahaya di langit untuk mulai belajar rasi!"); 
+        }
 
         const urutanBintang = [
             { img: 'crux.png', teks: `<h3>1. Rasi Pari / Salib Selatan (Crux)</h3><p style="margin-bottom: 10px;">Bentuk layang-layang. Penunjuk arah Selatan.</p><p style="font-size: 14px; margin-bottom: 5px;">📌 <b>Nama Lokal:</b> Bintoéng Kamasé (Bugis).</p><p style="font-size: 14px;">📌 <b>Fungsi:</b> Krusial bagi pelaut Nusantara.</p>` },
@@ -932,7 +926,6 @@
             playClick(); 
             loadingTransisi(600, () => { 
                 kuisIndex = 0; 
-                // 🔥 BACKSOUND TETAP JALAN SEPANJANG KUIS
                 document.getElementById('starUI').style.display = 'none'; 
                 sembunyikanSemuaSlide(); 
                 document.getElementById('slideKuis').classList.add('active'); 
@@ -987,13 +980,11 @@
             msg.innerHTML = "🌟 SELAMAT! <br><br> Kamu telah menyelesaikan seluruh ekspedisi!";
             overlay.style.display = 'flex';
             
-            // 🔥 GELUMBUNG KEDUA SETELAH KLIK TABLET
             setTimeout(() => {
                 overlay.style.display = 'none';
                 setRobot("Hebat, Kapten! Kamu sudah memecahkan semua misteri logika leluhur! Ayo kembali ke daratan dan rakit kembali semangat petualanganmu!", 'robot-kiri');
             }, 2500);
             
-            // Kembali ke menu setelah gelembung kedua selesai
             setTimeout(() => {
                 kembaliKeMenu();
             }, 5000);
