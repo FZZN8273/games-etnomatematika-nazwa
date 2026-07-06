@@ -35,12 +35,12 @@
         .btn-oke { background: #ffeaa7; color: #2d3436; font-size: 16px; font-weight: bold; padding: 10px 25px; border: none; border-radius: 30px; cursor: pointer; transition: 0.2s; }
         .btn-oke:hover { transform: scale(1.05); background: #fdcb6e; }
 
-        /* 🔥 INTERNET CHECK SCREEN */
+        /* 🔥 INTERNET CHECK SCREEN - Start Visible untuk mencegah Blank Screen */
         #internetLoading {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at center, #2c3e50 0%, #1a252f 100%);
             z-index: 99999;
-            display: none;
+            display: flex; 
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -116,16 +116,15 @@
         .kapal-rusak-tap { width: 25%; height: 25%; bottom: 35%; left: 37%; border-radius: 20px; border: 4px solid rgba(255, 0, 0, 0.8); background: rgba(255, 0, 0, 0.15); animation: pulse-warning 1s infinite ease-in-out; z-index: 60; }
         @keyframes pulse-warning { 0% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); } 50% { border-color: rgba(255, 0, 0, 1); background: rgba(255, 0, 0, 0.3); box-shadow: 0 0 40px rgba(255,0,0,0.8); } 100% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); } }
 
-        /* 🔥 POSISI CRUX YANG SUDAH DIPASKAN DENGAN GAMBAR (Kuadran Kanan Bawah) */
+        /* 🔥 POSISI CRUX (Kuadran Kanan Bawah) */
         .star-zone { 
             position: absolute;
             width: 20%; 
             height: 25%; 
             border-radius: 50%; 
             border-color: #f1c40f;
-            transform: translate(-50%, -50%); /* Kunci koordinat tepat di TENGAH */
+            transform: translate(-50%, -50%); 
         }
-        /* Mengarah tepat ke rasi Crux berdasarkan layout grid bintang */
         .z-crux { top: 68%; left: 65%; }
 
         .tablet-tap { width: 32%; height: 24%; top: 36%; left: 34%; border-radius: 15px; }
@@ -492,7 +491,7 @@
         const soundCorrect = document.getElementById('soundCorrect');
         const soundWrong = document.getElementById('soundWrong');
         
-        let audioMuted = true; // 🔥 Bawaan di set true agar diam sampai dihidupkan
+        let audioMuted = true;
         let isBgmPlaying = false; 
         let jumlahBintang = 0; let volumeSistem = 1;
         let playerName = ""; let sinyalTerkirim = false;
@@ -528,7 +527,8 @@
             }
         }
 
-        window.addEventListener('load', cekInternet);
+        // 🔥 PERUBAHAN PENTING: Panggil lebih cepat biar gak nunggu gambar/MP3 lama di HP
+        document.addEventListener('DOMContentLoaded', cekInternet);
 
         const assetsToPreload = ['stars.png', 'meja.png', 'SA1.png', '1.png', '5.png', 'next1.jpg', 'next2.png', 'rusak.png', '2.png'];
         function preloadAssets() { assetsToPreload.forEach(src => { const img = new Image(); img.src = src; }); }
@@ -553,7 +553,6 @@
             alert(aktif ? "Mode Target Dinonaktifkan." : "Mode Target Diaktifkan! Semua zona klik berupa lingkaran radar.");
         }
 
-        /* 🔥 LOGIKA MODAL AUDIO & VOLUME */
         function setSistemVolume(val) { 
             volumeSistem = val; 
             if(!audioMuted) { 
@@ -567,7 +566,7 @@
         }
 
         function toggleMute() { 
-            playClick(); // Mainkan klik (meski dimute, fungsi ini akan coba mainkan kalau belum di lock full)
+            playClick(); 
             let modal = document.getElementById('modalAudio');
             let title = document.getElementById('audioTitle');
             let desc = document.getElementById('audioDesc');
@@ -593,10 +592,10 @@
                 audioMuted = false;
                 btn.innerText = "🔊"; 
                 setSistemVolume(document.getElementById('volSlider').value); 
-                // 👇👇👇 TRIGGER UNTUK MENYALAKAN BACKSOUND ADA DI SINI 👇👇👇
+                
                 soundBgm.play().catch(e=>{}); 
                 isBgmPlaying = true;
-                soundClick.play().catch(e=>{}); // Mainkan bunyi klik validasi
+                soundClick.play().catch(e=>{}); 
             } else {
                 audioMuted = true;
                 btn.innerText = "🔇"; 
@@ -607,7 +606,6 @@
             }
         }
 
-        /* 👇👇👇 TRIGGER UNTUK KLIK AUDIO ADA DI SINI 👇👇👇 */
         function playClick() { if(!audioMuted){ soundClick.currentTime = 0; soundClick.play().catch(e=>{}); } }
         function playClickShip() { if(!audioMuted){ soundClickShip.currentTime = 0; soundClickShip.play().catch(e=>{}); } }
 
@@ -615,7 +613,6 @@
             setSistemVolume(volumeSistem); 
             if(!audioMuted) { 
                 soundWelcome.play().catch(e=>{}); 
-                // BGM sengaja tidak auto play di sini, agar mengikuti state modal Audio
             } 
         }
 
@@ -722,7 +719,6 @@
             
             setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal di sebelah kanan ini!`, 'robot-kanan');
             
-            // Tampilkan pop-up audio setelah berhasil input nama
             toggleMute();
         }
 
