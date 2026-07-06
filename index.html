@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Etnomatematika - Sistem Ekspedisi Nusantara</title>
     
-    <!-- Preload Assets Using Link Tags -->
+    <!-- Preload Assets -->
     <link rel="preload" as="image" href="stars.png">
     <link rel="preload" as="image" href="meja.png">
     <link rel="preload" as="image" href="SA1.png">
@@ -13,6 +13,8 @@
     <link rel="preload" as="image" href="5.png">
     <link rel="preload" as="image" href="next1.jpg">
     <link rel="preload" as="image" href="next2.png">
+    <link rel="preload" as="image" href="wel1.jpg">
+    <link rel="preload" as="image" href="wel2.jpg">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -33,6 +35,42 @@
         .warning-box p { font-size: 16px; line-height: 1.5; margin-bottom: 20px; }
         .btn-oke { background: #ffeaa7; color: #2d3436; font-size: 16px; font-weight: bold; padding: 10px 25px; border: none; border-radius: 30px; cursor: pointer; transition: 0.2s; }
         .btn-oke:hover { transform: scale(1.05); background: #fdcb6e; }
+
+        /* 🔥 INTERNET CHECK SCREEN (NUSANTARA STYLE) */
+        #internetLoading {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #2c3e50 0%, #1a252f 100%);
+            z-index: 99999;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        #internetLoading .internet-icon {
+            font-size: 80px;
+            animation: pulse-wifi 2s infinite ease-in-out;
+        }
+        @keyframes pulse-wifi {
+            0% { opacity: 0.6; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.6; transform: scale(0.9); }
+        }
+        #internetLoading h1 {
+            color: #eccc68; font-size: 28px; font-weight: 900;
+            margin-top: 15px; text-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+        #internetLoading p {
+            color: #fff; font-size: 18px; font-weight: 600;
+            margin-top: 10px; text-shadow: 0 0 15px #000;
+        }
+        .btn-retry-internet {
+            margin-top: 20px; padding: 12px 30px; background: #0984e3; border: none;
+            border-radius: 30px; color: white; font-weight: bold; font-size: 16px;
+            cursor: pointer; display: none; transition: 0.2s;
+        }
+        .btn-retry-internet:hover { background: #00a8ff; transform: scale(1.05); }
 
         .game-container { position: relative; width: 100%; max-width: 900px; aspect-ratio: 3 / 2; background-color: #000; overflow: hidden; box-shadow: 0 0 30px rgba(0,0,0,0.8); display: none; }
         .audio-panel { position: absolute; top: 15px; right: 15px; z-index: 100; background: rgba(44, 62, 80, 0.85); border: 2px solid #74b9ff; border-radius: 30px; padding: 5px 15px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
@@ -65,40 +103,22 @@
         /* 🔥 LOADING MOBIL (DARI KANAN KE KIRI) */
         #loadingCarTransition {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: #2c3e50; /* Background gelap */
-            color: white; display: none; flex-direction: column; justify-content: flex-end; align-items: center; z-index: 300; text-align: center; overflow: hidden;
+            background: #2c3e50; color: white; display: none; flex-direction: column; justify-content: flex-end; align-items: center; z-index: 300; text-align: center; overflow: hidden;
             padding-bottom: 20px;
         }
-        .car-container {
-            position: relative; width: 100%; height: 60px; margin-top: 40px;
-        }
+        .car-container { position: relative; width: 100%; height: 60px; margin-top: 40px; }
         .car {
             position: absolute; right: -150px; width: 120px; height: 50px;
             background: #e67e22; border-radius: 10px 10px 0 0;
             animation: driveCar 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
-        .car::after { /* Body mobil */
-            content: ''; position: absolute; top: -25px; left: 15px; width: 90px; height: 30px;
-            background: #f1c40f; border-radius: 15px 15px 0 0;
-        }
-        .car::before { /* Kaca mobil */
-            content: ''; position: absolute; top: -15px; left: 20px; width: 80px; height: 20px;
-            background: #74b9ff; border-radius: 10px 10px 0 0;
-        }
-        .wheel {
-            position: absolute; bottom: -10px; width: 20px; height: 20px;
-            background: #2d3436; border-radius: 50%; border: 3px solid #555;
-            animation: spinWheel 0.5s linear infinite;
-        }
+        .car::after { content: ''; position: absolute; top: -25px; left: 15px; width: 90px; height: 30px; background: #f1c40f; border-radius: 15px 15px 0 0; }
+        .car::before { content: ''; position: absolute; top: -15px; left: 20px; width: 80px; height: 20px; background: #74b9ff; border-radius: 10px 10px 0 0; }
+        .wheel { position: absolute; bottom: -10px; width: 20px; height: 20px; background: #2d3436; border-radius: 50%; border: 3px solid #555; animation: spinWheel 0.5s linear infinite; }
         .wheel-left { left: 15px; }
         .wheel-right { right: 15px; }
-        @keyframes driveCar {
-            0% { transform: translateX(0); right: -150px; }
-            100% { transform: translateX(0); right: 50%; }
-        }
-        @keyframes spinWheel {
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes driveCar { 0% { transform: translateX(0); right: -150px; } 100% { transform: translateX(0); right: 50%; } }
+        @keyframes spinWheel { 100% { transform: rotate(360deg); } }
         #loadingCarTransition h2 { color: #eccc68; font-weight: 900; font-size: 22px; text-shadow: 0 0 20px rgba(0,0,0,0.5); margin-top: 20px; letter-spacing: 1px; }
 
         .modal-overlay { position: absolute; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 99; display: none; justify-content: center; align-items: center; flex-direction: column; }
@@ -127,11 +147,11 @@
         .kapal-rusak-tap { width: 25%; height: 25%; bottom: 35%; left: 37%; border-radius: 20px; border: 4px solid rgba(255, 0, 0, 0.8); background: rgba(255, 0, 0, 0.15); animation: pulse-warning 1s infinite ease-in-out; z-index: 60; }
         @keyframes pulse-warning { 0% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); } 50% { border-color: rgba(255, 0, 0, 1); background: rgba(255, 0, 0, 0.3); box-shadow: 0 0 40px rgba(255,0,0,0.8); } 100% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); } }
 
-        /* 🔥 POSISI CRUX PAS BANGET DENGAN GAMBAR */
+        /* 🔥 POSISI CRUX */
         .star-zone { width: 16%; height: 20%; border-radius: 50%; border-color: #f1c40f; }
         .z-crux { top: 56%; right: 12%; }
 
-        /* 🔥 POSISI TABLET AGAR PAS DI TENGAH LAYAR DAN LEBIH KEBAWAH */
+        /* 🔥 POSISI TABLET */
         .tablet-tap { width: 32%; height: 24%; top: 36%; left: 34%; border-radius: 15px; }
 
         .menu-panel-wrapper { position: absolute; top: 20%; left: 10%; width: 80%; height: 60%; background: transparent !important; border: none !important; padding: 0; z-index: 60; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: none !important; }
@@ -224,6 +244,14 @@
             <button class="btn-oke" onclick="document.getElementById('desktopWarning').style.display='none'">Tetap Lanjutkan</button>
             <p style="font-size: 14px; margin-top: 10px; color: #bbb;">*Jika tampilan berantakan di HP, kami tidak bertanggung jawab.</p>
         </div>
+    </div>
+
+    <!-- 🔥 INTERNET CHECK SCREEN (Sebelum Slide 1) -->
+    <div id="internetLoading">
+        <div class="internet-icon">📶</div>
+        <h1 id="internetStatusTitle">Menyusuri lautan digital...</h1>
+        <p id="internetStatusDesc">Nyari sinyal dulu bang, jangan kemana-mana! 🌊</p>
+        <button class="btn-retry-internet" onclick="cekInternet()">🔄 Coba Nyari Sinyal Lagi</button>
     </div>
 
     <button onclick="nyalakanDebug()" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 99999; background: #0984e3; color: white; border: 2px solid white; padding: 10px 15px; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">🎯 TAMPILKAN TARGET OBJEK</button>
@@ -499,6 +527,44 @@
         let playerName = ""; let sinyalTerkirim = false;
         let klikRusakCount = 0; let kuisIndex = 0;
 
+        /* 🔥 FUNGSI CEK INTERNET SEBELUM GAME DIMULAI */
+        function cekInternet() {
+            const statusIcon = document.querySelector('#internetLoading .internet-icon');
+            const statusTitle = document.getElementById('internetStatusTitle');
+            const statusDesc = document.getElementById('internetStatusDesc');
+            const retryBtn = document.querySelector('.btn-retry-internet');
+            
+            retryBtn.style.display = 'none';
+            statusIcon.textContent = "⏳";
+            statusTitle.textContent = "Menyusuri lautan digital...";
+            statusDesc.textContent = "Nyari sinyal dulu bang, jangan kemana-mana! 🌊";
+            
+            if (navigator.onLine) {
+                // Jika online
+                setTimeout(() => {
+                    statusIcon.textContent = "📶";
+                    statusTitle.textContent = "Sinyal Nusantara aman!";
+                    statusDesc.textContent = "Selamat datang, Kapten! 🚀";
+                    
+                    setTimeout(() => {
+                        document.getElementById('internetLoading').style.display = 'none';
+                        document.getElementById('gameContainer').style.display = 'block';
+                        // Jika ingin suara awal diputar otomatis (jika diizinkan browser)
+                        // urutanAudioWelcome(); 
+                    }, 1500);
+                }, 800);
+            } else {
+                // Jika offline
+                statusIcon.textContent = "📶🚫";
+                statusTitle.textContent = "Aduh! Jaringannya ilang!";
+                statusDesc.textContent = "Coba nyalain Wi-Fi/Data dulu dong Kapten! 😱";
+                retryBtn.style.display = 'block';
+            }
+        }
+
+        // Jalankan pengecekan internet saat halaman pertama kali dimuat
+        window.addEventListener('load', cekInternet);
+
         /* 🔥 PRELOAD ASSET AGAR GAMBAR TIDAK DILEY SAAT DIKLIK (SUPPORT JARINGAN LEMAH) */
         const assetsToPreload = [
             'stars.png', 'meja.png', 'SA1.png', '1.png', '5.png', 'next1.jpg', 'next2.png', 'rusak.png', '2.png'
@@ -691,6 +757,7 @@
             
             document.getElementById('modalNama').style.display = 'flex'; 
         }
+        
         function mulaiDenganNama() {
             let input = document.getElementById('inputNama').value.trim();
             if(input === "") { alert("Mohon isi nama kapten sebelum mulai ekspedisi!"); return; }
@@ -699,14 +766,20 @@
             playerName = input;
             localStorage.setItem('etnoCaptainName', playerName);
             
-            playClick(); document.getElementById('modalNama').style.display = 'none';
-            urutanAudioWelcome(); 
-            sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active');
+            // 🔥 FIX BUG STUCK: Jalankan UI slide2 segera tanpa di-block audio
+            playClick(); 
+            document.getElementById('modalNama').style.display = 'none';
+            sembunyikanSemuaSlide(); 
+            document.getElementById('slide2').classList.add('active');
             document.getElementById('globalUI').style.display = 'block'; 
             
             // 🔥 ROBOT DI KANAN SEBAGAI PEMANDU DI WEL2
             setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal di sebelah kanan ini!`, 'robot-kanan');
+            
+            // 🔥 Jalankan audio di background agar tidak memblock UI
+            urutanAudioWelcome(); 
         }
+
         function openMenu(menuType) { playClick(); sembunyikanSemuaSlide(); document.getElementById('starUI').style.display = 'none'; 
             if(menuType === 'rules') { document.getElementById('slideRules').classList.add('active'); }
             if(menuType === 'caraMain') { document.getElementById('slideCaraMain').classList.add('active'); }
