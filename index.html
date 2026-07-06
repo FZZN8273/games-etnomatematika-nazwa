@@ -236,6 +236,7 @@
     <audio id="etnoWelcome" src="etnowelcome.mp3" preload="auto"></audio>
     <audio id="soundCorrect" src="correct.mp3" preload="auto"></audio>
     <audio id="soundWrong" src="wrong.mp3" preload="auto"></audio>
+    
     <audio id="backsound" src="backsound.mp3" loop preload="auto"></audio>
 
     <div id="feedbackOverlay"><div id="feedbackMsg" class="feedback-box"></div></div>
@@ -593,6 +594,7 @@
                 audioMuted = false;
                 btn.innerText = "🔊"; 
                 setSistemVolume(document.getElementById('volSlider').value); 
+                // 👇👇👇 TRIGGER UNTUK MENYALAKAN BACKSOUND ADA DI SINI 👇👇👇
                 soundBgm.play().catch(e=>{}); 
                 isBgmPlaying = true;
                 soundClick.play().catch(e=>{}); // Mainkan bunyi klik validasi
