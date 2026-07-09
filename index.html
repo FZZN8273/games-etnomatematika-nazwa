@@ -15,6 +15,7 @@
     <link rel="preload" as="image" href="wel1.jpg">
     <link rel="preload" as="image" href="wel2.jpg">
     <link rel="preload" as="image" href="tablet.jpg">
+    <link rel="preload" as="image" href="sertifikat.png">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -262,33 +263,61 @@
         .btn-kembali-hud { position: absolute; top: 15px; left: 15px; width: auto; padding: 8px 15px; background: rgba(44, 62, 80, 0.9); border: 2px solid #eccc68; border-radius: 8px; color: #fff; font-weight: bold; cursor: pointer; z-index: 70; box-shadow: 0 4px 6px rgba(0,0,0,0.4); text-shadow: 1px 1px 2px #000; transition: 0.2s; }
         .btn-kembali-hud:hover { background: #e74c3c; transform: scale(1.05); }
 
-        /* --- SERTIFIKAT OVERLAY & CSS --- */
-        #sertifikatOverlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85); z-index: 999;
-            display: none; flex-direction: column; justify-content: center; align-items: center;
+        /* --- SLIDE APRESIASI & SERTIFIKAT BARU --- */
+        #slideApresiasi {
+            background: radial-gradient(circle at center, #2c3e50 0%, #1a252f 100%);
+            display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 5%;
+            z-index: 200;
         }
-        .sertif-wrap {
-            width: 95%; height: 95%;
-            background-image: url('sertifikat.png');
-            background-size: contain; background-position: center; background-repeat: no-repeat;
-            position: relative;
+        #slideApresiasi h1 { color: #f1c40f; font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 10px; text-shadow: 0 0 30px rgba(241,196,15,0.4); }
+        #slideApresiasi .subtitle { color: #ecf0f1; font-size: clamp(1rem, 2vw, 1.6rem); margin-bottom: 20px; }
+        #slideApresiasi .list-pencapaian { color: #fff; font-size: clamp(0.9rem, 1.5vw, 1.4rem); line-height: 2; text-align: left; display: inline-block; margin: 0 auto 20px; }
+        #slideApresiasi .list-pencapaian li { list-style: none; }
+        #slideApresiasi .list-pencapaian li::before { content: "✅ "; }
+        #slideApresiasi .bintang-total { color: #ffeaa7; font-size: clamp(1.2rem, 2.5vw, 2rem); margin-bottom: 20px; }
+        .btn-ambil-sertifikat { 
+            background: #d4af37; color: #2c3e50; border: none; padding: 15px 40px; font-size: clamp(1.2rem, 2vw, 1.8rem); 
+            font-weight: 900; border-radius: 40px; cursor: pointer; box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5); 
+            transition: 0.3s; opacity: 0.5; pointer-events: none; 
         }
-        .sertif-content {
-            position: absolute; 
-            top: 20%; left: 15%; width: 70%; height: 60%;
+        .btn-ambil-sertifikat.aktif { opacity: 1; pointer-events: auto; animation: pulse-glow 1.5s infinite; }
+        .btn-ambil-sertifikat.aktif:hover { transform: scale(1.05); background: #e6c45a; }
+
+        /* Overlay Sertifikat - Analisis Posisi: top 18%, kiri 12%, width 76%, height 62% */
+        #slideSertifikat {
+            background: #000; display: none; justify-content: center; align-items: center; z-index: 300;
+        }
+        .sertifikat-wrapper {
+            position: relative; width: 100%; max-width: 900px; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+        }
+        .sertifikat-wrapper img.bg-sertif {
+            width: 100%; height: 100%; object-fit: contain; display: block;
+        }
+        .sertifikat-overlay {
+            position: absolute; top: 18%; left: 12.5%; width: 75%; height: 62%;
             display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-            color: #4a2e1b; font-family: 'Georgia', serif;
+            color: #3e2723; font-family: 'Georgia', 'Times New Roman', serif; padding: 10px; pointer-events: none;
         }
-        .sertif-content h2 { font-size: 2.2vw; font-weight: bold; margin-bottom: 2px; color: #4a2e1b; }
-        .sertif-content .sertif-sub { font-size: 1.8vw; font-weight: bold; margin: 5px 0; color: #4a2e1b; }
-        .sertif-content #sertifNama { font-size: 2.5vw; font-weight: bold; font-family: 'Georgia', serif; color: #4a2e1b; margin: 10px 0; text-shadow: 0 0 5px rgba(0,0,0,0.1); }
-        .sertif-content .sertif-desc { font-size: 1.2vw; margin-top: 10px; color: #4a2e1b; }
-        .sertif-content .sertif-list { font-size: 1.1vw; color: #4a2e1b; line-height: 1.5; }
-        .sertif-content .sertif-bintang { font-size: 1.5vw; font-weight: bold; margin-top: 10px; color: #4a2e1b; }
-        .sertif-content button {
-            margin-top: 15px; padding: 10px 25px; background: #e67e22; border: none; border-radius: 20px;
-            color: white; font-weight: bold; cursor: pointer; font-size: 1.2vw;
+        .sertifikat-overlay > * { pointer-events: auto; }
+        
+        .sertif-nama { font-size: clamp(1.8rem, 4vw, 3.2rem); font-weight: 700; color: #3e2723; margin-bottom: 10px; text-shadow: 0 1px 2px rgba(255,255,255,0.5); }
+        .sertif-pencapaian { font-size: clamp(0.8rem, 1.6vw, 1.3rem); line-height: 1.8; color: #3e2723; list-style: none; padding: 0; margin: 10px 0; }
+        .sertif-pencapaian li::before { content: "✅ "; font-size: 1.2em; }
+        .sertif-bintang { font-size: clamp(1rem, 2vw, 1.6rem); font-weight: 600; color: #b8860b; margin-top: 5px; }
+        .sertif-actions { margin-top: 15px; display: flex; gap: 15px; }
+        .sertif-actions button {
+            padding: 8px 20px; background: #d4af37; border: none; border-radius: 20px; font-weight: bold; cursor: pointer;
+            transition: 0.2s; font-size: clamp(0.8rem, 1.2vw, 1rem); color: #2c3e50;
+        }
+        .sertif-actions button:hover { transform: scale(1.05); background: #e6c45a; }
+        .sertif-actions button.btn-tutup { background: #7f8c8d; color: white; }
+        .sertif-actions button.btn-tutup:hover { background: #95a5a6; }
+
+        @media (max-width: 600px) {
+            .sertifikat-overlay { top: 20%; left: 12%; width: 76%; height: 58%; }
+            .sertif-nama { font-size: 5vw; }
+            .sertif-pencapaian { font-size: 2.2vw; line-height: 1.6; }
         }
     </style>
 </head>
@@ -566,9 +595,9 @@
             
             <div class="tablet-overlay">
                 <div class="tablet-menu-buttons">
-                    <div class="tablet-btn" onclick="bukaApp('chat')"><span>CHAT</span></div>
-                    <div class="tablet-btn" onclick="bukaApp('browser')"><span>BROWSER</span></div>
-                    <div class="tablet-btn" onclick="bukaApp('security')"><span>SECURITY</span></div>
+                    <div class="tablet-btn" id="btnChat" onclick="bukaApp('chat')"><span>CHAT</span></div>
+                    <div class="tablet-btn" id="btnBrowser" onclick="bukaApp('browser')"><span>BROWSER</span></div>
+                    <div class="tablet-btn" id="btnSecurity" onclick="bukaApp('security')"><span>SECURITY</span></div>
                 </div>
             </div>
 
@@ -593,6 +622,46 @@
                     <canvas id="gameCanvas" width="800" height="400"></canvas>
                 </div>
             </div>
+            
+            <!-- Notifikasi Selesai (ditampilkan jika semua app selesai) -->
+            <div id="notifSelesaiApp" style="display:none; position:absolute; bottom:5%; left:50%; transform:translateX(-50%); background:rgba(46,204,113,0.9); padding:15px 30px; border-radius:30px; z-index:80; text-align:center; box-shadow:0 5px 20px rgba(0,0,0,0.6);">
+                <p style="color:#fff; font-weight:bold; font-size:1.2vw;">🎉 Semua Aplikasi Selesai! Kembali ke Meja untuk Ambil Sertifikat.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE APRESIASI DAN SERTIFIKAT (BARU) -->
+        <div id="slideApresiasi" class="slide">
+            <h1>🎉 SELAMAT, KAPTEN!</h1>
+            <div class="subtitle">Kamu berhasil menyelesaikan seluruh petualangan <b>ETNOSATEK</b>!</div>
+            <div class="subtitle">Kamu sudah belajar 3 literasi teknologi yang penting:</div>
+            <ul class="list-pencapaian">
+                <li><b>Pengetahuan Teknologi</b> — Sistem biner di HP (dari Prasasti Kedukan Bukit)</li>
+                <li><b>Navigasi & GPS</b> — Cara kerja GPS dari navigasi bintang nenek moyang</li>
+                <li><b>Literasi Digital</b> — Cek hoaks, hindari phishing, lawan cyberbullying</li>
+            </ul>
+            <div class="bintang-total">🌟 Total Bintang yang didapat: <span id="bintangAkhir">0</span></div>
+            <div class="subtitle" style="font-size:1.5vw; color:#eccc68;">📜 Kamu sekarang resmi menjadi <b>Pahlawan Literasi Nusantara</b>!</div>
+            <button class="btn-ambil-sertifikat" id="btnAmbilSertifikat" onclick="bukaOverlaySertifikat()">Ambil Sertifikat</button>
+        </div>
+
+        <!-- OVERLAY SERTIFIKAT (BACKGROUND PNG + TEXT CSS) -->
+        <div id="slideSertifikat" class="slide">
+            <div class="sertifikat-wrapper">
+                <img src="sertifikat.png" alt="Sertifikat" class="bg-sertif" onerror="this.src='https://via.placeholder.com/900x600?text=Sertifikat+(sertifikat.png)'">
+                <div class="sertifikat-overlay">
+                    <div class="sertif-nama" id="sertifNama">— Nama Pemain —</div>
+                    <ul class="sertif-pencapaian">
+                        <li>Prasasti Kedukan Bukit (Sistem Biner)</li>
+                        <li>Laut Nusantara (Navigasi Bintang)</li>
+                        <li>Literasi Digital (Hoaks, Phishing, Cyberbullying)</li>
+                    </ul>
+                    <div class="sertif-bintang">⭐ Total Bintang: <span id="sertifBintang">0</span></div>
+                    <div class="sertif-actions">
+                        <button onclick="window.print()">🖨️ Cetak</button>
+                        <button class="btn-tutup" onclick="tutupSertifikat()">✕ Tutup</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="globalUI">
@@ -600,25 +669,6 @@
             <div class="robot-wrapper robot-kiri" id="robotAktor">
                 <div class="speech-bubble" id="robotSpeech">Selamat datang!</div>
                 <img src="robot.jpg" alt="Robot Nusantara" class="robot-img" onerror="this.src='https://via.placeholder.com/300x400.png?text=Robot'">
-            </div>
-        </div>
-    </div>
-
-    <!-- OVERLAY SERTIFIKAT -->
-    <div id="sertifikatOverlay">
-        <div class="sertif-wrap">
-            <div class="sertif-content">
-                <h2>🏆 SERTIFIKAT LITERASI NUSANTARA</h2>
-                <div class="sertif-sub">Diberikan kepada:</div>
-                <div id="sertifNama">[NAMA PEMAIN]</div>
-                <div class="sertif-desc">Telah menyelesaikan:</div>
-                <div class="sertif-list">
-                    ✅ Prasasti Kedukan Bukit (Sistem Biner)<br>
-                    ✅ Laut Nusantara (Navigasi Bintang)<br>
-                    ✅ Literasi Digital (Hoaks, Phishing, Cyberbullying)
-                </div>
-                <div class="sertif-bintang">⭐ Total Bintang: <span id="sertifBintang">0</span></div>
-                <button onclick="tutupSertifikat()">Selesai & Kembali</button>
             </div>
         </div>
     </div>
@@ -636,6 +686,15 @@
         let playerName = ""; let sinyalTerkirim = false;
         let klikRusakCount = 0; let kuisIndex = 0;
         let isSlowNetwork = false;
+
+        // State Progress untuk Sertifikat
+        let progress = {
+            prasasti: false,
+            laut: false,
+            chat: false,
+            browser: false,
+            security: false
+        };
 
         /* DETEKSI JARINGAN */
         function checkNetworkSpeed() {
@@ -693,7 +752,6 @@
             setTimeout(() => { document.getElementById('loadingCarTransition').style.display = 'none'; callback(); }, detik);
         }
 
-        /* AUDIO FIX */
         function setSistemVolume(val) { volumeSistem = val; if(!audioMuted) { soundClick.volume = val; soundClickShip.volume = val * 1.3; soundWelcome.volume = val; soundBgm.volume = val * 0.5; soundCorrect.volume = val * 1.3; soundWrong.volume = val * 1.3; } }
         function toggleMute() { audioMuted = !audioMuted; const btn = document.getElementById('btnAudio'); if(audioMuted) { btn.innerText = "🔇"; soundWelcome.volume=0; soundBgm.volume=0; soundClick.volume=0; soundClickShip.volume=0; soundCorrect.volume=0; soundWrong.volume=0; soundBgm.pause(); } else { btn.innerText = "🔊"; setSistemVolume(document.getElementById('volSlider').value); if(isBgmPlaying) soundBgm.play().catch(e=>{}); } }
         function playClick() { soundClick.currentTime = 0; soundClick.play().catch(e=>{}); }
@@ -733,7 +791,6 @@
         }
         function kembaliKeMenu() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active'); document.getElementById('starUI').style.display = 'none'; sembunyikanRobotKiri(); setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal di sebelah kanan ini!`, 'robot-kanan'); }
         
-        /* PERBAIKAN: Reset state setiap kali memulai skenario baru */
         function bukaSkenario1() { 
             sinyalTerkirim = false;
             klikRusakCount = 0;
@@ -748,7 +805,7 @@
         /* LOGIKA SKENARIO 1 */
         function interaksiLayar1(tipe) {
             if (tipe === 'kapal') { playClickShip(); sinyalTerkirim = true; document.getElementById('zonePulau').classList.add('ready'); setRobot("Sekarang ketuk area PULAU untuk mendarat!"); } 
-            else if (tipe === 'pulau') { if(!sinyalTerkirim) { playClick(); return; } playClickShip(); document.getElementById('slidePetualangan1').classList.add('batu-zoomed'); setTimeout(() => { sembunyikanSemuaSlide(); document.getElementById('slidePrasasti').classList.add('active'); setRobot(`Kapten ${playerName}! Perhatikan baik-baik. Prasasti Kedukan Bukit ini berisi angka 604 Saka. Angka 0 di tengahnya adalah bukti nenek moyang kita sudah paham konsep nilai tempat dan sistem desimal.<br><br>Logika inilah yang menjadi fondasi dasar dari sistem biner (0 dan 1), yang membuat semua komputer dan HP bisa menyala. Jadi, teknologi yang kamu pegang sekarang, akarnya ada di prasasti ini. Keren banget, kan?`); }, 400); }
+            else if (tipe === 'pulau') { if(!sinyalTerkirim) { playClick(); return; } playClickShip(); document.getElementById('slidePetualangan1').classList.add('batu-zoomed'); setTimeout(() => { sembunyikanSemuaSlide(); document.getElementById('slidePrasasti').classList.add('active'); progress.prasasti = true; setRobot(`Kapten ${playerName}! Perhatikan baik-baik. Prasasti Kedukan Bukit ini berisi angka 604 Saka. Angka 0 di tengahnya adalah bukti nenek moyang kita sudah paham konsep nilai tempat dan sistem desimal.<br><br>Logika inilah yang menjadi fondasi dasar dari sistem biner (0 dan 1), yang membuat semua komputer dan HP bisa menyala. Jadi, teknologi yang kamu pegang sekarang, akarnya ada di prasasti ini. Keren banget, kan?`); }, 400); }
         }
         function lanjutKeSoal() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideSoalS1').classList.add('active'); setRobot("Kamu menemukan Prasasti! Tugasmu dokumentasikan ke digital. Pilih metode dokumentasinya!"); }); }
         function eksekusiPilihOpsiS1(opsi) {
@@ -762,12 +819,10 @@
 
         /* LOGIKA SKENARIO 2, 3 (Kuis & Kakek) */
         function berlayarMalam() { playClickShip(); const randomText = ["Memuat lautan baru", "Memuat samudera baru", "Memuat informasi", "Memuat teknologi terbaru"]; document.getElementById('loadingText').innerText = randomText[Math.floor(Math.random() * randomText.length)]; document.getElementById('loadingScreenRandom').style.display = 'flex'; setTimeout(() => { document.getElementById('loadingScreenRandom').style.display = 'none'; sembunyikanSemuaSlide(); document.getElementById('slideMalam').classList.add('active'); sembunyikanRobotKiri(); setTimeout(() => { document.getElementById('dialogOverlayKakek').style.display = 'block'; }, 1500); }, 2500); }
-
         function bukaDialogKakek() { playClick(); document.getElementById('dialogOverlayKakek').style.display = 'block'; }
-
         function kakekSelesaiCerita() { playClick(); document.getElementById('dialogOverlayKakek').style.display = 'none'; setRobot("Wah, seru ya cerita Kakek tadi. Kakek bilang, kunci utamanya adalah jangan panik dan percaya sama petunjuk alam. Iya nggak sih?<br><br>Nah, kalau kamu ada di posisi kapal yang terombang-ambing tanpa maps, apakah kamu akan panik?", 'robot-kanan'); let bubble = document.getElementById('robotSpeech'); bubble.innerHTML += `<br><br><span style="display:flex; justify-content:center; gap:10px; margin-top:10px;"><button onclick="responKakek('panik')" style="padding:5px 15px; background:#e74c3c; color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Panik Banget!</button><button onclick="responKakek('nggak')" style="padding:5px 15px; background:#2ecc71; color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Nggak Dong</button></span>`; }
         function responKakek(jawaban) { playClick(); if(jawaban === 'panik') { setRobot("Waduh tenangin dirimu!! Kalau panik, kapal bisa hilang kendali!"); sembunyikanSemuaSlide(); document.getElementById('slideRusak').classList.add('active'); klikRusakCount = 0; document.getElementById('klikRusak').innerText = "0"; setRobot("KARENA KAMU PANIK, KAPAL TEROMBANG AMBING! AYO SELAMATKAN DENGAN CLICK KAPAL 10X!"); } else { setRobot("Keren!! Betul kamu jangan panik! Yuk belajar membaca langit!"); setTimeout(() => { masukPetaBintang(); }, 2000); } }
-        function perbaikiKapal() { klikRusakCount++; document.getElementById('klikRusak').innerText = klikRusakCount; let imgRsk = document.getElementById('imgRusak'); imgRsk.classList.remove('shake-effect'); void imgRsk.offsetWidth; imgRsk.classList.add('shake-effect'); if(klikRusakCount >= 10) { playClickShip(); setRobot("Syukurlah! Mesin kapal pulih! Kita belajar bintang yuk!"); setTimeout(() => { masukPetaBintang(); }, 2000); } else { playClick(); } }
+        function perbaikiKapal() { klikRusakCount++; document.getElementById('klikRusak').innerText = klikRusakCount; let imgRsk = document.getElementById('imgRusak'); imgRsk.classList.remove('shake-effect'); void imgRsk.offsetWidth; imgRsk.classList.add('shake-effect'); if(klikRusakCount >= 10) { playClickShip(); setRobot("Syukurlah! Mesin kapal pulih! Kita belajar bintang yuk!"); setTimeout(() => { masukPetaBintang(); }, 2000); progress.laut = true; } else { playClick(); } }
         function masukPetaBintang() { sembunyikanRobotKiri(); sembunyikanSemuaSlide(); document.getElementById('slideStars').classList.add('active'); }
         
         const urutanBintang = [
@@ -777,10 +832,7 @@
             { img: 'scorpio.png', teks: `<h3>4. Rasi Skorpio (Kalajengking)</h3><p style="margin-bottom: 10px;">Berbentuk kalajengking. Arah Timur atau Tenggara.</p><p style="font-size: 14px; margin-bottom: 5px;">📌 <b>Nama Lokal:</b> Lintang Kelopo Doyong.</p><p style="font-size: 14px;">📌 <b>Fungsi:</b> Arah Timur atau Tenggara.</p>` }
         ];
         let indexBintang = 0;
-        function mulaiUrutanBintang() { 
-            indexBintang = 0; 
-            playClick(); loadingTransisi(null, () => { tampilkanBintangSaatIni(); }); 
-        }
+        function mulaiUrutanBintang() { indexBintang = 0; playClick(); loadingTransisi(null, () => { tampilkanBintangSaatIni(); }); }
         function tampilkanBintangSaatIni() { sembunyikanSemuaSlide(); document.getElementById('slideRasi').classList.add('active'); document.getElementById('imgRasi').src = urutanBintang[indexBintang].img; document.getElementById('teksRasi').innerHTML = urutanBintang[indexBintang].teks; setRobot(`Formasi rasi ke-${indexBintang+1}! Klik Lanjutkan untuk rasi selanjutnya.`); }
         function lanjutBintangBerikutnya() { playClick(); loadingTransisi(null, () => { indexBintang++; if(indexBintang < urutanBintang.length) { tampilkanBintangSaatIni(); } else { document.getElementById('starUI').style.display = 'none'; bukaMateriGPS(); } }); }
         function bukaMateriGPS() { loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideGPS').classList.add('active'); setRobot("Paham rasi? Yuk uji pemahaman!"); }); }
@@ -792,10 +844,7 @@
             { q: "Tahu Crux, bisa tentukan arah apa?", a: "Utara", b: "Selatan", c: "Timur", d: "Barat", ans: "b", exp: "Crux = Arah Selatan." },
             { q: "Kenapa bentuk bintang penting?", a: "Jadi pelaut", b: "Pahami pola langit & akar GPS", c: "Hafal nama", d: "Tidak perlu HP", ans: "b", exp: "Literasi teknologi berakar dari pengetahuan tradisional!" }
         ];
-        function mulaiKuisStars() { 
-            kuisIndex = 0; 
-            playClick(); loadingTransisi(null, () => { document.getElementById('starUI').style.display = 'none'; sembunyikanSemuaSlide(); document.getElementById('slideKuis').classList.add('active'); renderKuis(); }); 
-        }
+        function mulaiKuisStars() { kuisIndex = 0; playClick(); loadingTransisi(null, () => { document.getElementById('starUI').style.display = 'none'; sembunyikanSemuaSlide(); document.getElementById('slideKuis').classList.add('active'); renderKuis(); }); }
         function renderKuis() {
             let data = kuisData[kuisIndex]; document.getElementById('pertanyaanKuis').innerHTML = `<b>SOAL ${kuisIndex+1}/5:</b><br>${data.q}`;
             let html = `<div class="opsi-btn" onclick="jawabKuis('a', '${data.ans}')"><div class="opsi-badge-kuis">A</div><div>${data.a}</div></div>
@@ -816,21 +865,33 @@
 
         /* LOGIKA MEJA & TABLET */
         function tamatKuisDanKembali() { playClickShip(); loadingCarTransisi(2500, () => { sembunyikanSemuaSlide(); document.getElementById('slideMeja').classList.add('active'); setRobot(`Kapten ${playerName}, kita udah sampe di rumah. Tuh, ada tablet di atas meja. Coba lihat, ada apa aja di dalamnya....tuh`, 'robot-kiri'); }); }
-        function klikTablet() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideTablet').classList.add('active'); }); }
+        function klikTablet() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideTablet').classList.add('active'); // Set status tombol berdasarkan progress
+            document.getElementById('btnChat').style.opacity = progress.chat ? '0.5' : '1';
+            document.getElementById('btnChat').style.pointerEvents = progress.chat ? 'none' : 'auto';
+            document.getElementById('btnBrowser').style.opacity = (!progress.chat || progress.browser) ? '0.5' : '1';
+            document.getElementById('btnBrowser').style.pointerEvents = (!progress.chat || progress.browser) ? 'none' : 'auto';
+            document.getElementById('btnSecurity').style.opacity = (!progress.browser || progress.security) ? '0.5' : '1';
+            document.getElementById('btnSecurity').style.pointerEvents = (!progress.browser || progress.security) ? 'none' : 'auto';
+            if(progress.chat && progress.browser && progress.security) {
+                document.getElementById('notifSelesaiApp').style.display = 'block';
+            } else {
+                document.getElementById('notifSelesaiApp').style.display = 'none';
+            }
+        }); }
 
-        /* --- SKENARIO BARU & MINI GAME UNTUK TABLET --- */
+        /* --- SKENARIO & MINI GAME UNTUK TABLET --- */
         const scenarios = {
             chat: [
-                { id: 1, type: 'chat', prompt: "Grup WA kelas 9A lagi rame. Ada pesan dari akun gak jelas:\n'Besok sekolah diliburkan! Ada demo di sekitar sekolah.'\nUdah banyak yang share ke grup lain tanpa ngecek.", optionA: "Share ke grup lain", optionB: "Cek kebenaran di website sekolah", correct: 'B', icon: "💬", feedback: `❌ Kurang tepat, Kapten! Kamu langsung share tanpa cek kebenaran. Akibatnya, berita hoaks menyebar ke grup lain dan bikin panik banyak orang. Orang tua jadi khawatir, teman-teman jadi bingung, dan guru harus meluruskan informasi yang salah.<br><br>Seharusnya: Pilih B. Cek kebenaran di website sekolah dulu. Biasanya sekolah punya pengumuman resmi di website atau grup resmi guru. Dengan cek fakta, kamu gak ikut nyebarin hoaks. Itu yang dilakukan orang melek digital!` },
-                { id: 2, type: 'chat', prompt: "Temanmu (Rina) ngepost hasil karya gambarnya di grup. Ada komentar dari teman lain:\n'Jelek banget sih, mending hapus aja!'", optionA: "Balas komentar lebih kasar", optionB: "Komen positif & laporkan yang jahat", correct: 'B', icon: "💬", feedback: `❌ Waduh, Kapten! Kamu balas komentar kasar dengan lebih kasar. Ini bukan menyelesaikan masalah — malah bikin situasi tambah panas. Temanmu (Rina) jadi tambah sedih, dan kamu ikut jadi pelaku bully. Komentar jahat itu gak hilang, malah makin rame.<br><br>Seharusnya: Pilih B. Komen positif buat dukung Rina, dan laporkan komentar jahat ke pihak platform. Dengan begitu, temanmu merasa didukung dan komentar negatif bisa dihapus. Di dunia digital, kita harus saling jaga, bukan saling serang!` }
+                { id: 1, type: 'chat', prompt: "Grup WA kelas 9A lagi rame. Ada pesan dari akun gak jelas:\n'Besok sekolah diliburkan! Ada demo di sekitar sekolah.'\nUdah banyak yang share ke grup lain tanpa ngecek.", optionA: "Share ke grup lain", optionB: "Cek kebenaran di website sekolah", correct: 'B', feedback: "Tepat sekali, Kapten! Kamu cek kebenaran di website sekolah sebelum share. Ternyata berita itu hoaks — sekolah tetap masuk seperti biasa. Kamu selamatkan banyak orang dari kepanikan yang gak perlu.<br><br>Pelajaran: Hoaks itu mudah menyebar, apalagi di grup WA. Kebiasaan cek fakta dulu sebelum share adalah ciri orang yang paham literasi digital. Kamu hebat!", wrongFeedback: "Kurang tepat, Kapten! Kamu langsung share tanpa cek kebenaran. Akibatnya, berita hoaks menyebar ke grup lain dan bikin panik banyak orang. Orang tua jadi khawatir, teman-teman jadi bingung, dan guru harus meluruskan informasi yang salah.<br><br>Seharusnya: Cek kebenaran di website sekolah dulu. Biasanya sekolah punya pengumuman resmi di website atau grup resmi guru. Dengan cek fakta, kamu gak ikut nyebarin hoaks. Itu yang dilakukan orang melek digital!", icon: "💬" },
+                { id: 2, type: 'chat', prompt: "Temanmu (Rina) ngepost hasil karya gambarnya di grup. Ada komentar dari teman lain:\n'Jelek banget sih, mending hapus aja!'", optionA: "Balas komentar lebih kasar", optionB: "Komen positif & laporkan yang jahat", correct: 'B', feedback: "Keren banget, Kapten! Kamu memilih membela teman dan melaporkan komentar jahat. Rina pasti merasa didukung dan dihargai. Komentar negatifnya juga dilaporkan ke pihak platform, jadi bisa segera ditindaklanjuti.<br><br>Pelajaran: Cyberbullying adalah masalah serius di dunia digital. Dengan memilih membela korban dan melaporkan pelaku, kamu jadi bagian dari solusi, bukan masalah.", wrongFeedback: "Waduh, Kapten! Kamu balas komentar kasar dengan lebih kasar. Ini bukan menyelesaikan masalah — malah bikin situasi tambah panas. Temanmu (Rina) jadi tambah sedih, dan kamu ikut jadi pelaku bully.<br><br>Seharusnya: Komen positif buat dukung Rina, dan laporkan komentar jahat ke pihak platform. Di dunia digital, kita harus saling jaga, bukan saling serang!", icon: "💬" }
             ],
             browser: [
-                { id: 1, type: 'browser', prompt: "Kamu buka aplikasi berita. Ada judul menarik:\n'Ternyata ini penyebab utama anak muda malas belajar!'\nKamu penasaran, tapi sumbernya dari blog gak jelas.", optionA: "Langsung percaya dan share", optionB: "Cari sumber lain yang lebih kredibel", correct: 'B', icon: "📰", feedback: `❌ Aduh, Kapten! Kamu langsung percaya sama berita dari blog gak jelas dan langsung share. Tanpa kamu sadari, kamu udah ikut nyebarin informasi yang belum tentu benar. Ini bisa bikin orang lain salah paham dan terpengaruh.<br><br>Seharusnya: Pilih B. Cari sumber lain yang lebih kredibel — misalnya dari situs berita resmi atau media terpercaya. Dengan begitu, kamu bisa bedain mana fakta dan mana opini. Jangan mudah percaya sama judul yang bombastis!` },
-                { id: 2, type: 'browser', prompt: "Kamu liat iklan di aplikasi berita:\n'Hanya hari ini! Sepatu branded diskon 90%! Klik di sini!'\nHarganya terlalu murah, mencurigakan.", optionA: "Langsung klik", optionB: "Cari tahu toko online tersebut di browser", correct: 'B', icon: "📰", feedback: `❌ Awas, Kapten! Kamu langsung klik iklan dengan harga terlalu murah. Ini trik penipuan klasik! Harga 90% diskon dari toko gak jelas itu biasanya jebakan untuk mencuri data atau uangmu. Kamu bisa kalah uang atau HP kena virus.<br><br>Seharusnya: Pilih B. Cari tahu toko online tersebut di browser. Cek review, cek alamat toko, cek apakah ada website resminya. Kalau toko itu gak punya track record yang jelas, lebih baik hindari. Jangan tergiur harga murah tanpa cek dulu!` }
+                { id: 1, type: 'browser', prompt: "Kamu buka aplikasi berita. Ada judul menarik:\n'Ternyata ini penyebab utama anak muda malas belajar!'\nKamu penasaran, tapi sumbernya dari blog gak jelas.", optionA: "Langsung percaya dan share", optionB: "Cari sumber lain yang lebih kredibel", correct: 'B', feedback: "Pintar, Kapten! Kamu gak langsung percaya sama berita dari blog gak jelas. Kamu cari sumber lain yang lebih kredibel. Ternyata itu cuma opini, bukan fakta. Kamu selamat dari jebakan informasi yang salah!<br><br>Pelajaran: Di era digital, kita harus kritis sama setiap informasi. Jangan percaya cuma dari satu sumber, apalagi sumber yang gak jelas.", wrongFeedback: "Aduh, Kapten! Kamu langsung percaya sama berita dari blog gak jelas dan langsung share. Tanpa kamu sadari, kamu udah ikut nyebarin informasi yang belum tentu benar. Ini bisa bikin orang lain salah paham dan terpengaruh.<br><br>Seharusnya: Cari sumber lain yang lebih kredibel — misalnya dari situs berita resmi atau media terpercaya. Jangan mudah percaya sama judul yang bombastis!", icon: "📰" },
+                { id: 2, type: 'browser', prompt: "Kamu liat iklan di aplikasi berita:\n'Hanya hari ini! Sepatu branded diskon 90%! Klik di sini!'\nHarganya terlalu murah, mencurigakan.", optionA: "Langsung klik", optionB: "Cari tahu toko online tersebut di browser", correct: 'B', feedback: "Bagus, Kapten! Kamu gak langsung tergiur harga murah. Kamu cari tahu dulu toko online tersebut. Ternyata itu toko palsu! Banyak orang sudah kena tipu. Kamu selamat dari penipuan yang menggiurkan.<br><br>Pelajaran: Penipuan online makin canggih. Harga terlalu murah, diskon gila-gilaan, atau hadiah menggiurkan bisa jadi jebakan. Biasakan cek dulu sebelum klik atau transaksi.", wrongFeedback: "Awas, Kapten! Kamu langsung klik iklan dengan harga terlalu murah. Ini trik penipuan klasik! Harga 90% diskon dari toko gak jelas itu biasanya jebakan untuk mencuri data atau uangmu.<br><br>Seharusnya: Cari tahu toko online tersebut di browser. Cek review, cek alamat toko, cek apakah ada website resminya. Jangan tergiur harga murah tanpa cek dulu!", icon: "📰" }
             ],
             security: [
-                { id: 1, type: 'security', prompt: "Kamu dapat pesan di HP:\n'Selamat! Kamu memenangkan saldo Rp 200.000. Klik link ini: www.dapetin-saldoku.xyz'", optionA: "Klik link", optionB: "Cek URL-nya dulu", correct: 'B', icon: "🛡️", feedback: `❌ Bahaya banget, Kapten! Kamu klik link tanpa cek dulu. Link www.dapetin-saldoku.xyz itu bukan situs resmi. Dengan klik, data pribadimu — nama, nomor HP, bahkan data bank — bisa dicuri. Ini namanya phishing!<br><br>Seharusnya: Pilih B. Cek URL-nya dulu! Situs resmi biasanya pake .go.id (pemerintah), .ac.id (pendidikan), atau .com terpercaya. Kalau URL-nya aneh, jangan pernah klik. Lebih baik cari tahu di browser dulu sebelum bertindak!` },
-                { id: 2, type: 'security', prompt: "Kamu dapat email dari 'Bank' yang minta verifikasi data karena 'ada transaksi mencurigakan'. Isinya minta kirim nomor PIN dan password.", optionA: "Kirim data karena panik", optionB: "Cek nomor resmi bank di browser", correct: 'B', icon: "🛡️", feedback: `❌ Aduh, Kapten! Kamu panik dan langsung kirim data pribadi ke email yang ngaku dari "Bank". Ini jebakan! Bank gak pernah minta password atau PIN lewat email atau WhatsApp. Dengan kirim data, akun bankmu bisa dibobol!<br><br>Seharusnya: Pilih B. Cek nomor resmi bank di browser atau aplikasi resmi bank. Hubungi call center resmi buat konfirmasi. Jangan pernah kasih data pribadi lewat pesan. Prinsipnya: Bank gak minta password lewat email!` }
+                { id: 1, type: 'security', prompt: "Kamu dapat pesan di HP:\n'Selamat! Kamu memenangkan saldo Rp 200.000. Klik link ini: www.dapetin-saldoku.xyz'", optionA: "Klik link", optionB: "Cek URL-nya dulu", correct: 'B', feedback: "Keren, Kapten! Kamu sadar itu phishing. Kamu cek URL-nya dulu dan tau itu bukan situs resmi. Data pribadimu aman, HP-mu selamat dari virus, dan dompetmu gak jebol.<br><br>Pelajaran: Phishing adalah trik penipuan yang makin marak. Pelaku pake link palsu yang mirip asli buat mencuri data. Selalu cek URL dan jangan asal klik link yang dikirim orang gak jelas.", wrongFeedback: "Bahaya banget, Kapten! Kamu klik link tanpa cek dulu. Link www.dapetin-saldoku.xyz itu bukan situs resmi. Dengan klik, data pribadimu — nama, nomor HP, bahkan data bank — bisa dicuri. Ini namanya phishing!<br><br>Seharusnya: Cek URL-nya dulu! Situs resmi biasanya pake .go.id (pemerintah), .ac.id (pendidikan), atau .com terpercaya. Kalau URL-nya aneh, jangan pernah klik.", icon: "🛡️" },
+                { id: 2, type: 'security', prompt: "Kamu dapat email dari 'Bank' yang minta verifikasi data karena 'ada transaksi mencurigakan'. Isinya minta kirim nomor PIN dan password.", optionA: "Kirim data karena panik", optionB: "Cek nomor resmi bank di browser", correct: 'B', feedback: "Sangat tepat, Kapten! Kamu gak panik dan gak percaya sama email yang ngaku dari 'Bank'. Kamu cek nomor resmi bank di browser dan tau itu penipuan. Data pribadimu aman, dan kamu berhasil melindungi diri dari kejahatan digital.<br><br>Pelajaran: Privasi digital itu mahal harganya. Jangan pernah kasih data pribadi, PIN, password, atau kode OTP ke siapa pun, apalagi lewat pesan. Selalu verifikasi lewat saluran resmi.", wrongFeedback: "Aduh, Kapten! Kamu panik dan langsung kirim data pribadi ke email yang ngaku dari 'Bank'. Ini jebakan! Bank gak pernah minta password atau PIN lewat email atau WhatsApp. Dengan kirim data, akun bankmu bisa dibobol!<br><br>Seharusnya: Cek nomor resmi bank di browser atau aplikasi resmi bank. Hubungi call center resmi buat konfirmasi. Jangan pernah kasih data pribadi lewat pesan.", icon: "🛡️" }
             ]
         };
         let currentApp = '';
@@ -838,9 +899,16 @@
         let scenarioData = [];
 
         function bukaApp(type) {
+            // Cek urutan dan status
+            if(type === 'browser' && !progress.chat) { setRobot("Selesaikan Chat dulu sebelum ke Browser ya!"); return; }
+            if(type === 'security' && !progress.browser) { setRobot("Selesaikan Browser dulu sebelum ke Keamanan ya!"); return; }
+            if(type === 'chat' && progress.chat) { setRobot("Chat sudah selesai! Lanjut ke Browser."); return; }
+            if(type === 'browser' && progress.browser) { setRobot("Browser sudah selesai! Lanjut ke Keamanan."); return; }
+            if(type === 'security' && progress.security) { setRobot("Semua aplikasi sudah selesai! Kembali ke meja."); return; }
+
             playClick();
             currentApp = type;
-            currentScenarioIndex = 0; 
+            currentScenarioIndex = 0;
             if(type === 'chat') { document.getElementById('scenarioTitle').innerText = "💬 CHAT & SOSMED"; scenarioData = scenarios.chat; }
             else if(type === 'browser') { document.getElementById('scenarioTitle').innerText = "📰 BROWSER & BERITA"; scenarioData = scenarios.browser; }
             else if(type === 'security') { document.getElementById('scenarioTitle').innerText = "🛡️ KEAMANAN DIGITAL"; scenarioData = scenarios.security; }
@@ -852,8 +920,26 @@
         function tampilkanSkenario() {
             let body = document.getElementById('scenarioBody');
             if(currentScenarioIndex >= scenarioData.length) {
-                // Semua skenario selesai → tampilkan apresiasi
-                tampilkanApresiasi();
+                document.getElementById('scenarioPanel').style.display = 'none';
+                // Tandai selesai
+                if(currentApp === 'chat') progress.chat = true;
+                else if(currentApp === 'browser') progress.browser = true;
+                else if(currentApp === 'security') progress.security = true;
+                
+                // Update status tombol tablet
+                document.getElementById('btnChat').style.opacity = progress.chat ? '0.5' : '1';
+                document.getElementById('btnChat').style.pointerEvents = progress.chat ? 'none' : 'auto';
+                document.getElementById('btnBrowser').style.opacity = (!progress.chat || progress.browser) ? '0.5' : '1';
+                document.getElementById('btnBrowser').style.pointerEvents = (!progress.chat || progress.browser) ? 'none' : 'auto';
+                document.getElementById('btnSecurity').style.opacity = (!progress.browser || progress.security) ? '0.5' : '1';
+                document.getElementById('btnSecurity').style.pointerEvents = (!progress.browser || progress.security) ? 'none' : 'auto';
+
+                if(progress.chat && progress.browser && progress.security) {
+                    document.getElementById('notifSelesaiApp').style.display = 'block';
+                    setRobot("🎉 Semua aplikasi selesai! Klik 'Kembali ke Meja' untuk ambil sertifikat.");
+                } else {
+                    setRobot(`✅ ${currentApp} selesai! Lanjutkan ke aplikasi berikutnya.`);
+                }
                 return;
             }
 
@@ -902,7 +988,7 @@
             feedbackDiv.innerHTML = `
                 <div class="chat-avatar" style="background:#2ecc71;">🤖</div>
                 <div style="width:100%;">
-                    <div class="chat-bubble" style="background:#2ecc71; color:#fff;">${data.feedback}</div>
+                    <div class="chat-bubble" style="background:#2ecc71; color:#fff;">${isCorrect ? data.feedback : data.wrongFeedback}</div>
                     <button class="chat-choice-btn" style="background:#e67e22; text-align:center; margin-top:10px;" onclick="lanjutSkenario()">Lanjutkan ➔</button>
                 </div>
             `;
@@ -921,49 +1007,6 @@
             document.getElementById('scenarioPanel').style.display = 'none';
             document.getElementById('miniGamePanel').style.display = 'none';
             if(typeof stopGameLoop === 'function') stopGameLoop();
-        }
-
-        /* --- LAYAR APRESIASI & SERTIFIKAT --- */
-        function tampilkanApresiasi() {
-            let body = document.getElementById('scenarioBody');
-            let html = `
-                <div class="chat-bubble-system">
-                    <div class="chat-avatar" style="background:#f1c40f;">🎉</div>
-                    <div style="width:100%;">
-                        <div class="chat-bubble" style="background:#2ecc71; color:#fff; font-size:1.5vw; text-align:center;">
-                            SELAMAT, KAPTEN ${playerName}!<br><br>
-                            Kamu berhasil menyelesaikan seluruh petualangan ETNOSATEK!<br>
-                            Kamu sudah belajar 3 literasi teknologi yang penting:<br><br>
-                            ✅ Pengetahuan Teknologi — Sistem biner di HP (dari Prasasti Kedukan Bukit)<br>
-                            ✅ Navigasi & GPS — Cara kerja GPS dari navigasi bintang nenek moyang<br>
-                            ✅ Literasi Digital — Cek hoaks, hindari phishing, lawan cyberbullying<br><br>
-                            🌟 Total Bintang yang didapat: <b>${jumlahBintang}</b><br><br>
-                            📜 Kamu sekarang resmi menjadi Pahlawan Literasi Nusantara!
-                        </div>
-                        <button class="chat-choice-btn" style="background:#e67e22; text-align:center; margin-top:15px; width:100%;" onclick="tampilkanSertifikat()">Ambil Sertifikat</button>
-                    </div>
-                </div>
-            `;
-            body.innerHTML = html;
-            body.scrollTop = body.scrollHeight;
-            
-            // Sembunyikan header & tombol close agar tidak batal
-            document.querySelector('.scenario-header button').style.display = 'none';
-        }
-
-        function tampilkanSertifikat() {
-            playClick();
-            document.getElementById('sertifNama').innerText = playerName;
-            document.getElementById('sertifBintang').innerText = jumlahBintang;
-            document.getElementById('sertifikatOverlay').style.display = 'flex';
-        }
-
-        function tutupSertifikat() {
-            playClick();
-            document.getElementById('sertifikatOverlay').style.display = 'none';
-            // Kembali ke menu utama
-            kembaliKeMenu();
-            document.querySelector('.scenario-header button').style.display = 'block';
         }
 
         /* --- MINI GAME DINOSAURUS LARI & LOMPAT --- */
@@ -1101,7 +1144,6 @@
             }); 
         }
 
-        // --- SISA KODE INTRO ---
         let introIndex = 0; let introTimer = null; let countdownInterval = null;
         const introData = [
             { text: "Kapten, sebelum kita lihat prasastinya, aku mau kasih tahu sesuatu yang penting banget.<br><br>Kamu tahu nggak, kalau nenek moyang kita udah pake angka nol dan sistem desimal sejak tahun 682 Masehi? Bahkan dua abad lebih tua dari penemuan nol di India!", delay: 6000 },
@@ -1118,7 +1160,62 @@
         function nyalakanDebug() {
             let zones = document.querySelectorAll('.tap-zone'); let aktif = false; if(zones.length > 0 && zones[0].classList.contains('debug-mode')) { aktif = true; } zones.forEach(el => { if(aktif) el.classList.remove('debug-mode'); else el.classList.add('debug-mode'); }); alert(aktif ? "Mode Target Dinonaktifkan." : "Mode Target Diaktifkan! Semua zona klik berupa lingkaran radar.");
         }
-        
+
+        /* --- LOGIKA APRESIASI DAN SERTIFIKAT --- */
+        function cekSertifikat() {
+            // Semua misi harus selesai: Prasasti, Laut, Chat, Browser, Security
+            if(progress.prasasti && progress.laut && progress.chat && progress.browser && progress.security) {
+                document.getElementById('btnAmbilSertifikat').classList.add('aktif');
+                setRobot("🎉 Semua misi selesai! Klik tombol 'Ambil Sertifikat' untuk mendapatkan penghargaan!");
+            } else {
+                document.getElementById('btnAmbilSertifikat').classList.remove('aktif');
+            }
+        }
+
+        function bukaOverlaySertifikat() {
+            if(!document.getElementById('btnAmbilSertifikat').classList.contains('aktif')) return;
+            playClick();
+            // Isi data sertifikat
+            document.getElementById('sertifNama').innerText = playerName;
+            document.getElementById('sertifBintang').innerText = jumlahBintang;
+            // Tampilkan overlay sertifikat
+            sembunyikanSemuaSlide();
+            document.getElementById('slideSertifikat').classList.add('active');
+        }
+
+        function tutupSertifikat() {
+            playClick();
+            document.getElementById('slideSertifikat').classList.remove('active');
+            // Kembali ke apresiasi
+            document.getElementById('slideApresiasi').classList.add('active');
+        }
+
+        // Override kembaliKeMenu untuk mengecek progress
+        const originalKembaliKeMenu = kembaliKeMenu;
+        kembaliKeMenu = function() {
+            originalKembaliKeMenu();
+            // Jika semua progress selesai, tampilkan apresiasi alih-alih menu utama
+            if(progress.prasasti && progress.laut && progress.chat && progress.browser && progress.security) {
+                playClick();
+                sembunyikanSemuaSlide();
+                document.getElementById('slideApresiasi').classList.add('active');
+                document.getElementById('bintangAkhir').innerText = jumlahBintang;
+                cekSertifikat();
+            }
+        }
+
+        // Pastikan tombol Sertifikat terupdate jika user kembali ke meja
+        const originalKlikTablet = klikTablet;
+        klikTablet = function() {
+            originalKlikTablet();
+            // Cek jika semua selesai
+            if(progress.chat && progress.browser && progress.security && progress.prasasti && progress.laut) {
+                document.getElementById('notifSelesaiApp').style.display = 'block';
+            }
+        }
+
+        // Inisialisasi progress dari local storage (opsional)
+        // Bisa ditambahkan jika ingin menyimpan progress.
     </script>
 </body>
 </html>
