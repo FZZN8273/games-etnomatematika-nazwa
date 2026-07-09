@@ -17,29 +17,10 @@
     <link rel="preload" as="image" href="tablet.jpg">
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; touch-action: manipulation; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
         body { background-color: #1a252f; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; overflow: hidden; color: #f5f6fa; }
-
-        /* 🔥 BUG FIX: Tidak ada lagi #desktopWarning. Game berjalan di HP & PC. */
-        .mobile-tips { position: absolute; bottom: 2px; left: 0; width: 100%; z-index: 9998; text-align: center; pointer-events: none; color: rgba(255,255,255,0.3); font-size: 10px; letter-spacing: 0.5px; }
-
-        #internetLoading {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #2c3e50 0%, #1a252f 100%);
-            z-index: 99999;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
-        .signal-icon { font-size: 50px; padding: 15px; border-radius: 50%; border: 3px solid #7f8c8d; box-shadow: 0 0 15px rgba(0,0,0,0.5); animation: pulse-signal 1.5s infinite ease-in-out; background: rgba(0,0,0,0.3); }
-        @keyframes pulse-signal { 0% { transform: scale(1); box-shadow: 0 0 10px rgba(127, 140, 141, 0.4); } 50% { transform: scale(1.08); box-shadow: 0 0 25px rgba(127, 140, 141, 0.8); } 100% { transform: scale(1); box-shadow: 0 0 10px rgba(127, 140, 141, 0.4); } }
-        .signal-desc { font-size: 14px; font-weight: 600; color: #bdc3c7; margin-top: 5px; }
-        #signalText { font-size: 16px; font-weight: bold; margin-top: 5px; }
-        .btn-retry-internet { margin-top: 20px; padding: 12px 30px; background: #0984e3; border: none; border-radius: 30px; color: white; font-weight: bold; font-size: 16px; cursor: pointer; display: none; transition: 0.2s; }
-
+        
+        /* --- BUG FIX: Desktop Warning Dihapus 100% --- */
         .game-container { position: relative; width: 100%; max-width: 900px; aspect-ratio: 3 / 2; background-color: #000; overflow: hidden; box-shadow: 0 0 30px rgba(0,0,0,0.8); display: none; }
         .audio-panel { position: absolute; top: 15px; right: 15px; z-index: 100; background: rgba(44, 62, 80, 0.85); border: 2px solid #74b9ff; border-radius: 30px; padding: 5px 15px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         .audio-toggle { background: transparent; color: #f5f6fa; font-weight: bold; border: none; cursor: pointer; font-size: 16px; }
@@ -49,7 +30,20 @@
         .slide.active { display: block; }
         .bg-img { width: 100%; height: 100%; object-fit: cover; display: block; background-color: #111; }
 
-        /* LOADING SCREENS */
+        /* --- INTERNET & SIGNAL LOADING --- */
+        #internetLoading {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #2c3e50 0%, #1a252f 100%);
+            z-index: 99999; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px;
+        }
+        .signal-icon { font-size: 50px; padding: 15px; border-radius: 50%; border: 3px solid #7f8c8d; box-shadow: 0 0 15px rgba(0,0,0,0.5); animation: pulse-signal 1.5s infinite ease-in-out; background: rgba(0,0,0,0.3); }
+        @keyframes pulse-signal { 0% { transform: scale(1); box-shadow: 0 0 10px rgba(127, 140, 141, 0.4); } 50% { transform: scale(1.08); box-shadow: 0 0 25px rgba(127, 140, 141, 0.8); } 100% { transform: scale(1); box-shadow: 0 0 10px rgba(127, 140, 141, 0.4); } }
+        #signalText { font-size: 16px; font-weight: bold; margin-top: 5px; }
+        #internetStatusTitle { color: #eccc68; font-size: clamp(20px, 2.5vw, 28px); font-weight: 900; text-shadow: 0 0 20px rgba(0,0,0,0.8); margin-top: 10px; }
+        #internetStatusDesc { color: #fff; font-size: 16px; margin-top: 10px; }
+        .btn-retry-internet { margin-top: 20px; padding: 12px 30px; background: #0984e3; border: none; border-radius: 30px; color: white; font-weight: bold; font-size: 16px; cursor: pointer; display: none; transition: 0.2s; }
+
+        /* --- LOADING SCREEN --- */
         #loadingScreenRandom { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #2c3e50 0%, #1a252f 100%); color: white; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 200; text-align: center; padding: 20px; }
         .ship-loading-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; margin-bottom: 15px; }
         .ship-scene { position: relative; width: 100px; height: 80px; animation: floatShip 2s ease-in-out infinite alternate; }
@@ -81,10 +75,11 @@
         .name-box h2 { color: #eccc68; margin-bottom: 15px; letter-spacing: 1px; }
         .name-input { width: 90%; padding: 12px; font-size: 16px; font-weight: bold; text-align: center; border-radius: 8px; border: 2px solid #74b9ff; background: #1a252f; color: #fff; margin-bottom: 20px; outline: none; }
 
-        .bottom-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 12%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 90; pointer-events: auto; touch-action: manipulation; }
-        .start-text { color: #ffffff; font-size: 3vw; font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 20px rgba(9, 132, 227, 0.9), 0 4px 10px #000; animation: pulse-glow 1.2s infinite; }
+        /* --- ZONA KLIK & TAP --- */
+        .bottom-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 15%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 80; pointer-events: auto; }
+        .start-text { color: #ffffff; font-size: 3.5vw; font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 20px rgba(9, 132, 227, 0.9), 0 4px 10px #000; animation: pulse-glow 1.2s infinite; }
 
-        .tap-zone { position: absolute; background: rgba(0, 168, 255, 0.02); border: 3px dashed #00a8ff; cursor: pointer; z-index: 90; animation: pulse-glow 2s infinite ease-in-out; touch-action: manipulation; }
+        .tap-zone { position: absolute; background: rgba(0, 168, 255, 0.02); border: 3px dashed #00a8ff; cursor: pointer; z-index: 90; animation: pulse-glow 2s infinite ease-in-out; }
         .tap-zone.ready { border-color: #2ecc71; background: rgba(46, 204, 113, 0.1); }
         .tap-zone.debug-mode { background: rgba(0, 168, 255, 0.08); border: 3px solid #ffffff; border-radius: 50%; box-shadow: 0 0 30px rgba(0, 168, 255, 1); animation: radar-pulse 1.2s infinite alternate !important; }
         @keyframes radar-pulse { 0% { transform: scale(1); box-shadow: 0 0 10px rgba(0, 168, 255, 0.4); } 100% { transform: scale(1.08); box-shadow: 0 0 40px rgba(0, 168, 255, 1); } }
@@ -96,47 +91,39 @@
         .kakek-tap { width: 20%; height: 35%; top: 25%; right: 25%; border-radius: 20px; display: none; border-color: #eccc68; background: rgba(236, 204, 104, 0.15); border-width: 3px; }
         .kapal-rusak-tap { width: 25%; height: 25%; bottom: 35%; left: 37%; border-radius: 20px; border: 4px solid rgba(255, 0, 0, 0.8); background: rgba(255, 0, 0, 0.15); animation: pulse-warning 1s infinite ease-in-out; z-index: 90; }
         @keyframes pulse-warning { 0% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); } 50% { border-color: rgba(255, 0, 0, 1); background: rgba(255, 0, 0, 0.3); box-shadow: 0 0 40px rgba(255,0,0,0.8); } 100% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); } }
-
         .star-zone { width: 25%; height: 30%; border-radius: 50%; border-color: #f1c40f; }
         .z-crux { top: 55%; right: 10%; }
-
         .tablet-tap { width: 32%; height: 24%; top: 36%; left: 34%; border-radius: 15px; }
 
-        /* --- UI TABLET & SKENARIO --- */
+        /* --- UI TABLET --- */
         .tablet-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 60; padding: 5%; }
         .tablet-menu-buttons { position: absolute; top: 39%; left: 0; width: 100%; height: 32%; display: flex; justify-content: center; align-items: center; gap: 3.5%; z-index: 61; pointer-events: none; }
-        .tablet-btn { width: 21.5%; height: 100%; background: transparent; border: 2px solid rgba(255,255,255,0.2); border-radius: 20px; cursor: pointer; pointer-events: auto; transition: 0.2s; display: flex; justify-content: center; align-items: center; touch-action: manipulation; }
+        .tablet-btn { width: 21.5%; height: 100%; background: transparent; border: 2px solid rgba(255,255,255,0.2); border-radius: 20px; cursor: pointer; pointer-events: auto; transition: 0.2s; display: flex; justify-content: center; align-items: center; }
         .tablet-btn:hover { border-color: #f1c40f; box-shadow: 0 0 20px rgba(241, 196, 15, 0.5); transform: scale(1.05); background: rgba(255, 215, 0, 0.1); }
-        /* 🔥 BUG FIX: Opacity tombol tablet. Diubah menjadi 0.9 agar terlihat jelas */
-        .tablet-btn span { font-size: clamp(12px, 1.5vw, 18px); font-weight: 900; color: #fff; text-shadow: 0 0 10px #000; pointer-events: none; opacity: 0.9; transition: 0.3s; }
-        .tablet-btn:hover span { opacity: 1; }
-
+        .tablet-btn span { font-size: clamp(12px, 1.5vw, 18px); font-weight: 900; color: #fff; text-shadow: 0 0 10px #000; pointer-events: none; opacity: 0.9; }
+        
         .scenario-panel { position: absolute; top: 5%; left: 5%; width: 90%; height: 90%; background: rgba(20, 30, 40, 0.95); border: 2px solid #eccc68; border-radius: 15px; z-index: 70; display: none; flex-direction: column; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .scenario-header { background: #eccc68; color: #1a252f; padding: 10px 20px; font-weight: 900; font-size: clamp(14px, 1.5vw, 18px); display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1c40f; }
-        .scenario-header button { background: transparent; border: none; color: #1a252f; font-weight: bold; cursor: pointer; font-size: clamp(14px, 1.5vw, 18px); touch-action: manipulation; }
+        .scenario-header button { background: transparent; border: none; color: #1a252f; font-weight: bold; cursor: pointer; font-size: clamp(14px, 1.5vw, 18px); }
         .scenario-body { flex-grow: 1; padding: 15px; display: flex; flex-direction: column; overflow-y: auto; gap: 15px; background: #f5f6fa; }
-        
         .chat-bubble-system { align-self: flex-start; width: 100%; display: flex; align-items: flex-start; gap: 10px; max-width: 100%; }
         .chat-avatar { width: 40px; height: 40px; border-radius: 50%; background: #3498db; color: #fff; display: flex; justify-content: center; align-items: center; font-size: 20px; font-weight: bold; flex-shrink: 0; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .chat-bubble { background: #e1e1e1; color: #2c3e50; padding: 12px 16px; border-radius: 0 15px 15px 15px; position: relative; font-size: clamp(12px, 1.1vw, 14px); line-height: 1.5; max-width: 90%; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
         .chat-bubble::before { content: ''; position: absolute; top: 10px; left: -10px; border-width: 5px 10px 5px 0; border-style: solid; border-color: transparent #e1e1e1 transparent transparent; }
         .chat-choices { display: flex; flex-direction: column; gap: 10px; width: 100%; padding-left: 10px; margin-top: 5px; }
-        .chat-choice-btn { background: #2ecc71; padding: 12px 16px; border: none; border-radius: 10px; font-weight: bold; font-size: clamp(12px, 1.1vw, 14px); color: #fff; cursor: pointer; transition: 0.2s; text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.1); touch-action: manipulation; }
+        .chat-choice-btn { background: #2ecc71; padding: 12px 16px; border: none; border-radius: 10px; font-weight: bold; font-size: clamp(12px, 1.1vw, 14px); color: #fff; cursor: pointer; transition: 0.2s; text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .chat-choice-btn:hover { background: #27ae60; transform: scale(1.02); }
-        .chat-choice-btn.wrong-choice { background: #e74c3c; }
-
         .mini-game-overlay { position: absolute; top: 5%; left: 5%; width: 90%; height: 90%; background: rgba(20, 30, 40, 0.95); border: 2px solid #eccc68; border-radius: 15px; z-index: 71; display: none; flex-direction: column; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .mini-game-canvas-wrap { flex-grow: 1; background: #2c3e50; display: flex; justify-content: center; align-items: center; }
         #gameCanvas { display: block; background: #ecf0f1; width: 100%; height: 100%; touch-action: none; }
 
+        /* --- PANEL MENU & SOAL --- */
         .menu-panel-wrapper { position: absolute; top: 20%; left: 10%; width: 80%; height: 60%; background: transparent !important; border: none !important; padding: 0; z-index: 60; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: none !important; }
         .menu-panel-title { font-size: clamp(18px, 2.5vw, 26px); font-weight: 900; color: #fff; border-bottom: 2px dashed #fff; padding-bottom: 8px; margin-bottom: 20px; text-transform: uppercase; text-shadow: 0 0 15px #000, 0 0 30px #000; }
         .menu-panel-content { font-size: clamp(14px, 1.8vw, 18px); font-weight: 700; line-height: 1.6; color: #fff; text-shadow: 0 0 15px #000, 0 0 30px #000; overflow-y: auto; flex-grow: 1; text-align: center; }
-        .menu-panel-content ul { list-style: none; padding: 0; margin: 0; }
-        .menu-panel-content li { margin-bottom: 15px; }
-
+        
         .soal-panel-wrapper { position: absolute; top: 5%; left: 4%; width: 92%; height: 75%; z-index: 90; display: flex; flex-direction: row; justify-content: space-between; gap: 10px; background: transparent; padding: 10px; }
-        .opsi-card { width: 48%; height: 100%; background: transparent !important; border-radius: 15px; padding: 20px; display: flex; flex-direction: column; cursor: pointer; transition: 0.2s; border: 3px solid rgba(255,255,255,0.2); justify-content: center; align-items: center; touch-action: manipulation; }
+        .opsi-card { width: 48%; height: 100%; background: transparent !important; border-radius: 15px; padding: 20px; display: flex; flex-direction: column; cursor: pointer; transition: 0.2s; border: 3px solid rgba(255,255,255,0.2); justify-content: center; align-items: center; }
         .opsi-card:hover { transform: scale(1.02); border-color: #f1c40f; box-shadow: 0 0 30px rgba(241, 196, 15, 0.5); }
         .opsi-card-a { border-color: rgba(230, 126, 34, 0.8); }
         .opsi-card-b { border-color: rgba(52, 152, 219, 0.8); }
@@ -146,6 +133,7 @@
         .opsi-detail { font-size: clamp(12px, 1.5vw, 16px); font-weight: 700; line-height: 1.6; color: #f5f6fa; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; gap: 10px; text-shadow: 0 0 15px #000, 0 0 5px #000; }
         .opsi-badge { background: #fff; color: #1a252f; width: 30px; height: 30px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; margin: 0 auto 10px auto; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
 
+        /* --- DIALOG & GLOBAL UI --- */
         .dialogue-overlay { position: absolute; bottom: 5%; left: 5%; width: 90%; background: rgba(20, 30, 40, 0.92); border: 2px solid #74b9ff; border-radius: 12px; padding: 20px; z-index: 80; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
         .dialogue-text { font-size: clamp(14px, 1.5vw, 16px); line-height: 1.5; margin-bottom: 15px; font-weight: bold; color: #fff; }
 
@@ -158,44 +146,38 @@
         @keyframes shake { 0% { transform: translate(1px, 1px) rotate(0deg); } 10% { transform: translate(-1px, -2px) rotate(-1deg); } 20% { transform: translate(-3px, 0px) rotate(1deg); } 30% { transform: translate(3px, 2px) rotate(0deg); } 40% { transform: translate(1px, -1px) rotate(1deg); } 50% { transform: translate(-1px, 2px) rotate(-1deg); } 60% { transform: translate(-3px, 1px) rotate(0deg); } 70% { transform: translate(3px, 1px) rotate(-1deg); } 80% { transform: translate(-1px, -1px) rotate(1deg); } 90% { transform: translate(1px, 2px) rotate(0deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
 
         #globalUI, #starUI { display: none; } 
-        .star-container { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: rgba(44, 62, 80, 0.95); padding: 6px 18px; border-radius: 30px; color: #ffeaa7; font-size: 16px; font-weight: 900; z-index: 90; border: 2px solid #ffeaa7; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-
+        .star-container { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: rgba(44, 62, 80, 0.95); padding: 6px 18px; border-radius: 30px; color: #ffeaa7; font-size: 16px; font-weight: 900; z-index: 60; border: 2px solid #ffeaa7; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
         .robot-wrapper { position: absolute; width: 20%; max-width: 150px; z-index: 80; display: flex; flex-direction: column; pointer-events: none; }
         .robot-hidden-ui { display: none !important; }
-        .robot-kiri { bottom: 5px; left: 10px; align-items: flex-start; } 
-        .robot-kanan { bottom: 5px; right: 10px; align-items: flex-end; }
-        .robot-atas { top: 5px; left: 15px; align-items: flex-start; }
+        .robot-kiri { bottom: 5px; left: 10px; align-items: flex-start; } .robot-kanan { bottom: 5px; right: 10px; align-items: flex-end; } .robot-atas { top: 5px; left: 15px; align-items: flex-start; }
         .robot-img { width: 100%; height: auto; filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.8)); pointer-events: none; }
         .speech-bubble { background: #ffffff; border-radius: 12px; padding: 12px 18px; font-size: clamp(10px, 1.3vw, 16px); color: #2c3e50; font-weight: 600; text-align: left; box-shadow: 0px 4px 15px rgba(0,0,0,0.4); position: relative; z-index: 81; border: 2px solid #00a8ff; width: 220px; max-width: 85vw; height: auto !important; max-height: none !important; overflow: visible !important; pointer-events: auto; line-height: 1.5; transform: translateY(-5px); }
-
         .rasi-container { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); width: 85%; color: #ffffff; text-align: center; z-index: 50; text-shadow: 0 0 15px rgba(0, 168, 255, 0.9), 0 0 30px #000; }
         .rasi-container h3 { color: #f1c40f; font-size: clamp(18px, 2vw, 22px); margin-bottom: 10px; text-shadow: 0 0 20px #000; }
         .rasi-container p, .rasi-container ul { font-size: clamp(13px, 1.5vw, 15px); line-height: 1.6; text-shadow: 0 0 15px #000, 0 0 10px #000; }
-
-        .btn-selesai { width: 100%; padding: 12px; background: #2ecc71; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 10px rgba(46,204,113,0.4); touch-action: manipulation; }
-        .btn-kuis-action { width: 85%; padding: 15px; background: #2ecc71; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(46,204,113,0.4); margin-top: 10px; touch-action: manipulation; }
+        .btn-selesai { width: 100%; padding: 12px; background: #2ecc71; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 10px rgba(46,204,113,0.4); }
+        .btn-kuis-action { width: 85%; padding: 15px; background: #2ecc71; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(46,204,113,0.4); margin-top: 10px; }
 
         .intro-wrapper { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 60; padding: 10px; }
         .intro-bubble { width: 80%; max-width: 750px; background: rgba(15, 25, 35, 0.92); border: 2px solid #eccc68; border-radius: 20px; padding: 25px; text-align: center; color: #fff; font-size: clamp(14px, 1.5vw, 18px); line-height: 1.6; margin-bottom: 10px; box-shadow: 0 0 30px rgba(0,0,0,0.8); height: auto !important; max-height: none !important; overflow: visible !important; }
         .intro-bubble .step-indicator { font-size: 14px; color: #7f8c8d; margin-bottom: 10px; text-shadow: none; }
         .intro-robot-wrapper { width: 25%; max-width: 180px; display: flex; justify-content: center; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8)); }
-        #introNextBtn { width: auto; padding: 15px 40px; background: #e67e22; border-radius: 30px; border: none; color: white; font-weight: bold; font-size: 16px; cursor: not-allowed; box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: 0.2s; margin-top: 10px; opacity: 0.6; pointer-events: none; touch-action: manipulation; }
+        #introNextBtn { width: auto; padding: 15px 40px; background: #e67e22; border-radius: 30px; border: none; color: white; font-weight: bold; font-size: 16px; cursor: not-allowed; box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: 0.2s; margin-top: 10px; opacity: 0.6; pointer-events: none; }
         #introNextBtn.active-btn { opacity: 1; pointer-events: auto; cursor: pointer; animation: pulse-glow 1s infinite; }
-
-        .btn-kembali-hud { position: absolute; top: 15px; left: 15px; width: auto; padding: 8px 15px; background: rgba(44, 62, 80, 0.9); border: 2px solid #eccc68; border-radius: 8px; color: #fff; font-weight: bold; cursor: pointer; z-index: 90; box-shadow: 0 4px 6px rgba(0,0,0,0.4); text-shadow: 1px 1px 2px #000; transition: 0.2s; touch-action: manipulation; }
+        .btn-kembali-hud { position: absolute; top: 15px; left: 15px; width: auto; padding: 8px 15px; background: rgba(44, 62, 80, 0.9); border: 2px solid #eccc68; border-radius: 8px; color: #fff; font-weight: bold; cursor: pointer; z-index: 90; box-shadow: 0 4px 6px rgba(0,0,0,0.4); text-shadow: 1px 1px 2px #000; transition: 0.2s; }
         .btn-kembali-hud:hover { background: #e74c3c; transform: scale(1.05); }
     </style>
 </head>
 <body>
-
     <div id="internetLoading">
         <div class="signal-icon">📶</div>
-        <h1 id="internetStatusTitle" style="color: #eccc68; font-size: clamp(20px, 2.5vw, 28px); font-weight: 900; text-shadow: 0 0 20px rgba(0,0,0,0.8); margin-top: 10px;">Menyusuri lautan digital...</h1>
-        <p id="internetStatusDesc" style="color: #fff; font-size: 16px; margin-top: 10px;">Nyari sinyal dulu bang, jangan kemana-mana! 🌊</p>
+        <div id="signalText" style="color:#bdc3c7;">Mengecek jaringan...</div>
+        <h1 id="internetStatusTitle">Menyusuri lautan digital...</h1>
+        <p id="internetStatusDesc">Nyari sinyal dulu bang, jangan kemana-mana! 🌊</p>
         <button class="btn-retry-internet" onclick="cekInternet()">🔄 Coba Nyari Sinyal Lagi</button>
     </div>
 
-    <button onclick="nyalakanDebug()" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 99999; background: #0984e3; color: white; border: 2px solid white; padding: 10px 15px; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); touch-action: manipulation;">🎯 TAMPILKAN TARGET OBJEK</button>
+    <button onclick="nyalakanDebug()" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 99999; background: #0984e3; color: white; border: 2px solid white; padding: 10px 15px; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">🎯 TAMPILKAN TARGET OBJEK</button>
 
     <audio id="clickSound" src="click.mp3" preload="auto"></audio>
     <audio id="clickShipSound" src="clickship.mp3" preload="auto"></audio>
@@ -210,21 +192,17 @@
         <div class="name-box">
             <h2>LOG IDENTITAS KAPTEN</h2>
             <input type="text" id="inputNama" class="name-input" placeholder="Masukkan Nama Anda..." autocomplete="off">
-            <button class="btn-selesai" style="background:#e67e22; touch-action: manipulation;" onclick="mulaiDenganNama()">Mulai Ekspedisi</button>
+            <button class="btn-selesai" style="background:#e67e22;" onclick="mulaiDenganNama()">Mulai Ekspedisi</button>
         </div>
     </div>
 
     <div id="loadingScreenRandom">
         <div class="ship-loading-wrapper">
             <div class="ship-scene">
-                <div class="hull"></div>
-                <div class="mast"></div>
-                <div class="sail sail-left"></div>
-                <div class="sail sail-right"></div>
+                <div class="hull"></div><div class="mast"></div>
+                <div class="sail sail-left"></div><div class="sail sail-right"></div>
             </div>
-            <div class="waves-container">
-                <div class="wave"></div>
-            </div>
+            <div class="waves-container"><div class="wave"></div></div>
         </div>
         <h2 id="loadingText" style="color: #eccc68; font-weight: 900; letter-spacing: 2px; font-size: clamp(18px, 2.5vw, 24px);">Memuat lautan baru...</h2>
     </div>
@@ -232,22 +210,18 @@
     <div id="loadingCarTransition">
         <div class="car-container">
             <div class="car">
-                <div class="wheel wheel-left"></div>
-                <div class="wheel wheel-right"></div>
+                <div class="wheel wheel-left"></div><div class="wheel wheel-right"></div>
             </div>
         </div>
         <h2>Kembali ke daratan...</h2>
     </div>
 
     <div class="game-container" id="gameContainer" style="display:block;">
-        <div class="mobile-tips">💡 Untuk performa optimal di HP, aktifkan fitur 'Situs Desktop' melalui menu titik 3 di browser Anda.</div>
-        
         <div class="audio-panel">
             <button class="audio-toggle" id="btnAudio" onclick="toggleMute()">🔊</button>
             <input type="range" class="volume-slider" id="volSlider" min="0" max="1" step="0.1" value="1" oninput="setSistemVolume(this.value)">
         </div>
 
-        <!-- SLIDE 1 -->
         <div id="slide1" class="slide active">
             <img src="wel1.jpg" alt="Selamat Datang" class="bg-img">
             <div class="bottom-bar" onclick="bukaModalNama()">
@@ -255,7 +229,6 @@
             </div>
         </div>
         
-        <!-- SLIDE 2 -->
         <div id="slide2" class="slide">
             <img src="wel2.jpg" alt="Pelabuhan" class="bg-img">
             <button class="icon-btn puzzle-btn" onclick="openMenu('caraMain')"></button>
@@ -263,38 +236,23 @@
             <button class="icon-btn ship-btn" onclick="bukaSkenario1()"></button>
         </div>
 
-        <!-- SLIDE MENU -->
         <div id="slideRules" class="slide">
             <img src="soalback.png" alt="Background" class="bg-img">
             <div class="menu-panel-wrapper">
                 <div class="menu-panel-title">📜 ATURAN EKSPEDISI</div>
-                <div class="menu-panel-content">
-                    <ul>
-                        <li><b>Misi Utama:</b> Ungkap rahasia logika etnomatematika!</li>
-                        <li><b>Eksplorasi Rute:</b> Pilihan rute murni menguji analisis logismu.</li>
-                        <li><b>Sistem Bintang:</b> Jumlah perolehan ⭐ akan otomatis tersimpan.</li>
-                    </ul>
-                </div>
-                <button class="btn-selesai" style="position:static; width:60%; touch-action: manipulation;" onclick="kembaliKeMenu()">⚓ Kembali ke Beranda</button>
+                <div class="menu-panel-content"><ul><li><b>Misi Utama:</b> Ungkap rahasia logika etnomatematika!</li><li><b>Eksplorasi Rute:</b> Pilihan rute murni menguji analisis logismu.</li><li><b>Sistem Bintang:</b> Jumlah perolehan ⭐ akan otomatis tersimpan.</li></ul></div>
+                <button class="btn-selesai" style="position:static; width:60%;" onclick="kembaliKeMenu()">⚓ Kembali ke Beranda</button>
             </div>
         </div>
-
         <div id="slideCaraMain" class="slide">
             <img src="soalback.png" alt="Background" class="bg-img">
             <div class="menu-panel-wrapper">
                 <div class="menu-panel-title">🧩 PETUNJUK NAVIGASI</div>
-                <div class="menu-panel-content">
-                    <ul>
-                        <li>📖 <b>1. Amati Area:</b> Ketuk dek kapal atau objek di pulau.</li>
-                        <li>⚔️ <b>2. Ambil Langkah:</b> Tentukan rute ekspedisimu.</li>
-                        <li>🧭 <b>3. Analisis Jurnal:</b> Pelajari infografis sebab-akibat.</li>
-                    </ul>
-                </div>
-                <button class="btn-selesai" style="position:static; width:60%; touch-action: manipulation;" onclick="kembaliKeMenu()">⚓ Kembali ke Beranda</button>
+                <div class="menu-panel-content"><ul><li>📖 <b>1. Amati Area:</b> Ketuk dek kapal atau objek di pulau.</li><li>⚔️ <b>2. Ambil Langkah:</b> Tentukan rute ekspedisimu.</li><li>🧭 <b>3. Analisis Jurnal:</b> Pelajari infografis sebab-akibat.</li></ul></div>
+                <button class="btn-selesai" style="position:static; width:60%;" onclick="kembaliKeMenu()">⚓ Kembali ke Beranda</button>
             </div>
         </div>
 
-        <!-- INTRO PRASASTI -->
         <div id="slideIntroCerita" class="slide">
             <img src="soalback.png" alt="Background Soal" class="bg-img">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
@@ -304,13 +262,10 @@
                     <div id="introText">Memuat cerita...</div>
                 </div>
                 <button id="introNextBtn" onclick="goToNextIntro()">⏳ Membaca...</button>
-                <div class="intro-robot-wrapper">
-                    <img src="robot.jpg" alt="Robot Nusantara" class="intro-robot-img">
-                </div>
+                <div class="intro-robot-wrapper"><img src="robot.jpg" alt="Robot Nusantara" class="intro-robot-img"></div>
             </div>
         </div>
 
-        <!-- SKENARIO 1 -->
         <div id="slidePetualangan1" class="slide">
             <img src="1.png" alt="Skenario 1 - Layar 1" class="bg-img">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
@@ -321,65 +276,46 @@
         <div id="slidePrasasti" class="slide">
             <img src="2.png" alt="Prasasti Kedukan Bukit" class="bg-img">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
-            <button class="btn-selesai" style="position:absolute; bottom:15px; left:50%; transform:translateX(-50%); width:auto; padding:10px 30px; background:#e67e22; z-index:90; border-radius:30px; touch-action: manipulation;" onclick="lanjutKeSoal()">Lanjutkan ➔</button>
+            <button class="btn-selesai" style="position:absolute; bottom:15px; left:50%; transform:translateX(-50%); width:auto; padding:10px 30px; background:#e67e22; z-index:90; border-radius:30px;" onclick="lanjutKeSoal()">Lanjutkan ➔</button>
         </div>
         
-        <!-- SOAL A/B PRASASTI -->
         <div id="slideSoalS1" class="slide">
             <img src="soalback.png" alt="Background Soal" class="bg-img">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div class="soal-panel-wrapper">
                 <div class="opsi-card opsi-card-a" onclick="eksekusiPilihOpsiS1('A')">
                     <div class="opsi-header opsi-header-a">CARA A</div>
-                    <div class="opsi-detail">
-                        <div class="opsi-badge">A</div>
-                        Dokumentasi Biasa<br>
-                        📸 Foto, ukur, catat detail satu per satu.<br>
-                        ⏱️ Waktu: 1 Hari
-                    </div>
+                    <div class="opsi-detail"><div class="opsi-badge">A</div>Dokumentasi Biasa<br>📸 Foto, ukur, catat detail satu per satu.<br>⏱️ Waktu: 1 Hari</div>
                 </div>
                 <div class="opsi-card opsi-card-b" onclick="eksekusiPilihOpsiS1('B')">
                     <div class="opsi-header opsi-header-b">CARA B</div>
-                    <div class="opsi-detail">
-                        <div class="opsi-badge">B</div>
-                        Dokumentasi Pola<br>
-                        🔍 Cari pola dan sistem penulisan.<br>
-                        ⏱️ Waktu: 1+ Hari (Hasil lebih luas)
-                    </div>
+                    <div class="opsi-detail"><div class="opsi-badge">B</div>Dokumentasi Pola<br>🔍 Cari pola dan sistem penulisan.<br>⏱️ Waktu: 1+ Hari (Hasil lebih luas)</div>
                 </div>
             </div>
         </div>
 
-        <!-- SA1.png -->
         <div id="slideSebabAkibatS1" class="slide">
             <img id="assetSebabAkibatImgS1" src="SA1.png" alt="Penjelasan Sebab Akibat" class="bg-img">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
-            <button class="btn-selesai" style="position:absolute; top:25%; left:50%; transform:translateX(-50%); width:35%; background:#e67e22; z-index:90; padding:12px; border-radius:30px; box-shadow:0 4px 15px rgba(0,0,0,0.5); touch-action: manipulation;" onclick="lanjutKeLayarNextSatu()">Lanjutkan ➔</button>
+            <button class="btn-selesai" style="position:absolute; top:25%; left:50%; transform:translateX(-50%); width:35%; background:#e67e22; z-index:90; padding:12px; border-radius:30px; box-shadow:0 4px 15px rgba(0,0,0,0.5);" onclick="lanjutKeLayarNextSatu()">Lanjutkan ➔</button>
         </div>
         
-        <!-- NEXT1.JPG -->
         <div id="slideNextSatu" class="slide">
             <img src="next1.jpg" alt="Peta Jalur Laut" class="bg-img">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div id="zoneKapalMadura" class="tap-zone kapal-madura-tap" onclick="berlayarMalam()"></div>
         </div>
         
-        <!-- 5.png (MALAM) -->
         <div id="slideMalam" class="slide">
             <img src="5.png" alt="Malam Hari & Kakek" class="bg-img">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div id="zoneKakek" class="tap-zone kakek-tap"></div>
             <div id="dialogOverlayKakek" class="dialogue-overlay">
-                <div class="dialogue-text" id="textDialogKakek">
-                    "Dulu kakek sering berlayar tanpa maps, hanya mengandalkan bintang. Kakek tahu, kalau kita panik saat tersesat di lautan, malah bahaya. Ini yang namanya Navigasi Bintang, cara nenek moyang kita dulu. Kakek ingin kamu tau ilmu ini."
-                </div>
-                <div class="dialogue-buttons">
-                    <button class="btn-choice" onclick="kakekSelesaiCerita()">Lanjut ➔</button>
-                </div>
+                <div class="dialogue-text" id="textDialogKakek">"Dulu kakek sering berlayar tanpa maps, hanya mengandalkan bintang. Kakek tahu, kalau kita panik saat tersesat di lautan, malah bahaya. Ini yang namanya Navigasi Bintang, cara nenek moyang kita dulu. Kakek ingin kamu tau ilmu ini."</div>
+                <div class="dialogue-buttons"><button class="btn-choice" onclick="kakekSelesaiCerita()">Lanjut ➔</button></div>
             </div>
         </div>
 
-        <!-- RUSAK.PNG -->
         <div id="slideRusak" class="slide">
             <img id="imgRusak" src="rusak.png" alt="Kapal Rusak" class="bg-img">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
@@ -387,7 +323,6 @@
             <button class="tap-zone kapal-rusak-tap" onclick="perbaikiKapal()"></button>
         </div>
         
-        <!-- STARS.PNG -->
         <div id="slideStars" class="slide">
             <img src="stars.png" alt="Peta Bintang Malam" class="bg-img">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
@@ -395,17 +330,12 @@
             <div class="tap-zone star-zone z-crux" onclick="mulaiUrutanBintang()"></div>
         </div>
         
-        <!-- RASI BINTANG -->
         <div id="slideRasi" class="slide">
             <img id="imgRasi" src="" alt="Rasi Bintang" class="bg-img">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
-            <div class="rasi-container">
-                <div id="teksRasi" style="font-size:16px; line-height:1.6;"></div>
-                <button class="btn-selesai" style="width:auto; padding:10px 30px; background:#e67e22; margin-top:15px; border-radius:25px; touch-action: manipulation;" onclick="lanjutBintangBerikutnya()">Lanjutkan ➔</button>
-            </div>
+            <div class="rasi-container"><div id="teksRasi" style="font-size:16px; line-height:1.6;"></div><button class="btn-selesai" style="width:auto; padding:10px 30px; background:#e67e22; margin-top:15px; border-radius:25px;" onclick="lanjutBintangBerikutnya()">Lanjutkan ➔</button></div>
         </div>
         
-        <!-- MATERI GPS -->
         <div id="slideGPS" class="slide">
             <img src="soalback.png" alt="Background GPS" class="bg-img">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
@@ -417,11 +347,10 @@
                     <li><b>GPS Modern:</b> Pakai satelit buatan.</li>
                     <li><b>Intinya:</b> GPS adalah versi modern dan tercanggih dari navigasi bintang—cara kerjanya sama, cuma alatnya yang berubah.</li>
                 </ul>
-                <button class="btn-selesai" style="background:#3498db; margin-top:15px; touch-action: manipulation;" onclick="mulaiKuisStars()">Uji Pemahaman Sekarang ➔</button>
+                <button class="btn-selesai" style="background:#3498db; margin-top:15px;" onclick="mulaiKuisStars()">Uji Pemahaman Sekarang ➔</button>
             </div>
         </div>
         
-        <!-- KUIS GPS -->
         <div id="slideKuis" class="slide">
             <img src="soalback.png" alt="Kuis Bintang" class="bg-img">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
@@ -432,25 +361,21 @@
             </div>
         </div>
 
-        <!-- NEXT2.PNG -->
         <div id="slideNextDua" class="slide">
             <img src="next2.png" alt="Peta Jalur Laut Berikutnya" class="bg-img">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div class="tap-zone kapal-madura-tap" onclick="tamatKuisDanKembali()"></div>
         </div>
 
-        <!-- MEJA.PNG -->
         <div id="slideMeja" class="slide">
             <img src="meja.png" alt="Meja Kayu dengan Tablet" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=Meja+Kayu+(meja.png)'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div id="zoneTablet" class="tap-zone tablet-tap" onclick="klikTablet()"></div>
         </div>
 
-        <!-- 🔥 SLIDE TABLET JPG (ETNOSATEK DIGITAL TABLET) -->
         <div id="slideTablet" class="slide">
             <img src="tablet.jpg" alt="Tablet Menu" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=Tablet+(tablet.jpg)'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
-            
             <div class="tablet-overlay">
                 <div class="tablet-menu-buttons">
                     <div class="tablet-btn" onclick="bukaApp('chat')"><span>CHAT</span></div>
@@ -458,22 +383,17 @@
                     <div class="tablet-btn" onclick="bukaApp('security')"><span>SECURITY</span></div>
                 </div>
             </div>
-
-            <!-- PANEL SKENARIO APP -->
             <div id="scenarioPanel" class="scenario-panel">
                 <div class="scenario-header">
                     <span id="scenarioTitle">Aplikasi</span>
-                    <button onclick="tutupApp()" style="background:transparent; border:none; color:#1a252f; font-weight:bold; cursor:pointer; font-size:clamp(14px, 1.5vw, 18px); touch-action:manipulation;">✕</button>
+                    <button onclick="tutupApp()" style="background:transparent; border:none; color:#1a252f; font-weight:bold; cursor:pointer; font-size:clamp(14px, 1.5vw, 18px);">✕</button>
                 </div>
-                <div id="scenarioBody" class="scenario-body">
-                </div>
+                <div id="scenarioBody" class="scenario-body"></div>
             </div>
-
-            <!-- PANEL MINI GAME -->
             <div id="miniGamePanel" class="mini-game-overlay">
                 <div class="scenario-header">
                     <span id="gameTitle">Mini Game</span>
-                    <button onclick="tutupApp()" style="background:transparent; border:none; color:#1a252f; font-weight:bold; cursor:pointer; font-size:clamp(14px, 1.5vw, 18px); touch-action:manipulation;">✕</button>
+                    <button onclick="tutupApp()" style="background:transparent; border:none; color:#1a252f; font-weight:bold; cursor:pointer; font-size:clamp(14px, 1.5vw, 18px);">✕</button>
                 </div>
                 <div class="mini-game-canvas-wrap">
                     <canvas id="gameCanvas" width="800" height="400"></canvas>
@@ -504,16 +424,6 @@
         let klikRusakCount = 0; let kuisIndex = 0;
         let isSlowNetwork = false;
 
-        // === 3. AUTO SAVE & LOAD LOCALSTORAGE ===
-        function loadGameState() {
-            const savedName = localStorage.getItem('etnoCaptainName');
-            const savedStars = localStorage.getItem('etnoStars');
-            if (savedName) playerName = savedName;
-            if (savedStars) {
-                jumlahBintang = parseInt(savedStars, 10);
-                document.getElementById('starCount').innerText = jumlahBintang;
-            }
-        }
         function saveGameState() {
             if(playerName) localStorage.setItem('etnoCaptainName', playerName);
             localStorage.setItem('etnoStars', jumlahBintang);
@@ -521,11 +431,13 @@
         window.addEventListener('beforeunload', saveGameState);
 
         window.addEventListener('load', () => {
-            loadGameState();
+            const savedName = localStorage.getItem('etnoCaptainName');
+            const savedStars = localStorage.getItem('etnoStars');
+            if (savedName) playerName = savedName;
+            if (savedStars) { jumlahBintang = parseInt(savedStars, 10); document.getElementById('starCount').innerText = jumlahBintang; }
             if(playerName) document.getElementById('inputNama').value = playerName;
         });
 
-        /* DETEKSI JARINGAN & SIGNAL INDICATOR */
         function updateSignalUI(color, title, icon, desc, retryVisible = false) {
             const iconEl = document.getElementById('internetLoading').querySelector('.signal-icon');
             const textEl = document.getElementById('signalText');
@@ -533,31 +445,31 @@
             const statusDesc = document.getElementById('internetStatusDesc');
             const retryBtn = document.querySelector('.btn-retry-internet');
 
-            iconEl.style.borderColor = color;
-            iconEl.style.boxShadow = `0 0 25px ${color}`;
-            iconEl.style.animation = `pulse-signal 1.5s infinite ease-in-out`;
-            iconEl.textContent = icon;
-            
-            textEl.textContent = title;
-            textEl.style.color = color;
-            statusTitle.textContent = "Menyusuri lautan digital...";
-            statusDesc.textContent = desc;
-            retryBtn.style.display = retryVisible ? 'block' : 'none';
+            if(iconEl) {
+                iconEl.style.borderColor = color;
+                iconEl.style.boxShadow = `0 0 25px ${color}`;
+                iconEl.style.animation = `pulse-signal 1.5s infinite ease-in-out`;
+                iconEl.textContent = icon;
+            }
+            if(textEl) { textEl.textContent = title; textEl.style.color = color; }
+            if(statusTitle) statusTitle.textContent = "Menyusuri lautan digital...";
+            if(statusDesc) statusDesc.textContent = desc;
+            if(retryBtn) retryBtn.style.display = retryVisible ? 'block' : 'none';
         }
 
         async function cekInternet() {
             const retryBtn = document.querySelector('.btn-retry-internet');
-            retryBtn.style.display = 'none';
+            if(retryBtn) retryBtn.style.display = 'none';
             
             const iconEl = document.getElementById('internetLoading').querySelector('.signal-icon');
-            iconEl.style.borderColor = '#7f8c8d';
-            iconEl.style.boxShadow = '0 0 15px rgba(127, 140, 141, 0.4)';
-            iconEl.textContent = "⏳";
-            document.getElementById('signalText').textContent = "Mengecek jaringan...";
-            document.getElementById('signalText').style.color = "#bdc3c7";
+            const textEl = document.getElementById('signalText');
+            if(iconEl) { iconEl.style.borderColor = '#7f8c8d'; iconEl.style.boxShadow = '0 0 15px rgba(127, 140, 141, 0.4)'; iconEl.textContent = "⏳"; }
+            if(textEl) { textEl.textContent = "Mengecek jaringan..."; textEl.style.color = "#bdc3c7"; }
             
-            document.getElementById('internetStatusTitle').textContent = "Menyusuri lautan digital...";
-            document.getElementById('internetStatusDesc').textContent = "Nyari sinyal dulu bang, jangan kemana-mana! 🌊";
+            const statusTitle = document.getElementById('internetStatusTitle');
+            const statusDesc = document.getElementById('internetStatusDesc');
+            if(statusTitle) statusTitle.textContent = "Menyusuri lautan digital...";
+            if(statusDesc) statusDesc.textContent = "Nyari sinyal dulu bang, jangan kemana-mana! 🌊";
 
             if (navigator.onLine) {
                 let connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
@@ -577,9 +489,14 @@
                     };
                     img.onerror = () => { isSlowNetwork = 'slow'; updateSignalUI('#e74c3c', 'Jaringan Terdeteksi Lambat', '📶📶', 'Loading dimodifikasi untuk jaringan lemot.'); };
                     setTimeout(() => { if (!img.complete) { isSlowNetwork = 'slow'; updateSignalUI('#e74c3c', 'Jaringan Terdeteksi Lambat', '📶📶', 'Loading dimodifikasi untuk jaringan lemot.'); } }, 5000);
-                    return;
+                    return; // Wait for fallback result
                 }
-                setTimeout(() => { document.getElementById('internetLoading').style.display = 'none'; document.getElementById('gameContainer').style.display = 'block'; }, 1500);
+                setTimeout(() => {
+                    const loadingScreen = document.getElementById('internetLoading');
+                    const gameContainer = document.getElementById('gameContainer');
+                    if(loadingScreen) loadingScreen.style.display = 'none';
+                    if(gameContainer) gameContainer.style.display = 'block';
+                }, 1500);
             } else {
                 isSlowNetwork = 'slow';
                 updateSignalUI('#e74c3c', 'Tidak Ada Jaringan', '📶🚫', 'Coba nyalain Wi-Fi/Data dulu dong Kapten! 😱', true);
@@ -593,16 +510,64 @@
             return 3500;
         }
 
-        /* AUDIO LOGIC */
         function setSistemVolume(val) { volumeSistem = val; if(!audioMuted) { soundClick.volume = val; soundClickShip.volume = val * 1.3; soundWelcome.volume = val; soundBgm.volume = val * 0.5; soundCorrect.volume = val * 1.3; soundWrong.volume = val * 1.3; } }
         function toggleMute() { audioMuted = !audioMuted; const btn = document.getElementById('btnAudio'); if(audioMuted) { btn.innerText = "🔇"; soundWelcome.volume=0; soundBgm.volume=0; soundClick.volume=0; soundClickShip.volume=0; soundCorrect.volume=0; soundWrong.volume=0; soundBgm.pause(); } else { btn.innerText = "🔊"; setSistemVolume(document.getElementById('volSlider').value); if(isBgmPlaying) soundBgm.play().catch(e=>{}); } }
         function playClick() { soundClick.currentTime = 0; soundClick.play().catch(e=>{}); }
         function playClickShip() { soundClickShip.currentTime = 0; soundClickShip.play().catch(e=>{}); }
 
+        function loadingTransisi(detik, callback) {
+            let waktuTunggu = detik || getAdaptiveLoadingTime();
+            const randomText = ["Memuat lautan baru", "Memuat samudera baru", "Memuat informasi", "Memuat teknologi terbaru"];
+            const loadTextEl = document.getElementById('loadingText');
+            if(loadTextEl) loadTextEl.innerText = randomText[Math.floor(Math.random() * randomText.length)];
+            const loadScreen = document.getElementById('loadingScreenRandom');
+            if(loadScreen) loadScreen.style.display = 'flex';
+            setTimeout(() => { if(loadScreen) loadScreen.style.display = 'none'; if(callback) callback(); }, waktuTunggu);
+        }
+        function loadingCarTransisi(detik, callback) {
+            const carScreen = document.getElementById('loadingCarTransition');
+            if(carScreen) carScreen.style.display = 'flex';
+            setTimeout(() => { if(carScreen) carScreen.style.display = 'none'; if(callback) callback(); }, detik);
+        }
+
+        function sembunyikanSemuaSlide() {
+            document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active'));
+            const kakekZone = document.getElementById('zoneKakek');
+            const kakekDialog = document.getElementById('dialogOverlayKakek');
+            if(kakekZone) kakekZone.style.display = 'none';
+            if(kakekDialog) kakekDialog.style.display = 'none';
+            sembunyikanRobotKiri();
+        }
+        function sembunyikanRobotKiri() {
+            const robot = document.getElementById('robotAktor');
+            if(robot) robot.classList.add('robot-hidden-ui');
+        }
+        function tampilkanRobotKiri() {
+            const robot = document.getElementById('robotAktor');
+            if(robot) robot.classList.remove('robot-hidden-ui');
+        }
+        function setRobot(text, posisi = 'robot-kiri') {
+            tampilkanRobotKiri();
+            const speechBubble = document.getElementById('robotSpeech');
+            const robotWrapper = document.getElementById('robotAktor');
+            if(speechBubble) speechBubble.innerHTML = text;
+            if(robotWrapper) robotWrapper.className = 'robot-wrapper ' + posisi;
+        }
+
+        function bukaModalNama() {
+            playClick();
+            sembunyikanRobotKiri();
+            const savedName = localStorage.getItem('etnoCaptainName');
+            const input = document.getElementById('inputNama');
+            if(savedName && input) input.value = savedName;
+            const modal = document.getElementById('modalNama');
+            if(modal) modal.style.display = 'flex';
+        }
         function mulaiDenganNama() {
-            let input = document.getElementById('inputNama').value.trim();
-            if(input === "") { alert("Mohon isi nama kapten sebelum mulai ekspedisi!"); return; }
-            playerName = input;
+            let input = document.getElementById('inputNama');
+            let val = input ? input.value.trim() : "";
+            if(val === "") { alert("Mohon isi nama kapten sebelum mulai ekspedisi!"); return; }
+            playerName = val;
             saveGameState();
             
             playClick(); 
@@ -613,59 +578,47 @@
                 isBgmPlaying = true;
             } else { isBgmPlaying = true; }
             
-            document.getElementById('modalNama').style.display = 'none';
+            const modal = document.getElementById('modalNama');
+            if(modal) modal.style.display = 'none';
             sembunyikanSemuaSlide(); 
-            document.getElementById('slide2').classList.add('active');
-            document.getElementById('globalUI').style.display = 'block'; 
+            const slide2 = document.getElementById('slide2');
+            if(slide2) slide2.classList.add('active');
+            const globalUI = document.getElementById('globalUI');
+            if(globalUI) globalUI.style.display = 'block'; 
             setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal di sebelah kanan ini!`, 'robot-kanan');
         }
 
-        /* GAME LOGIC & TRANSISI */
-        function loadingTransisi(detik, callback) {
-            let waktuTunggu = detik || getAdaptiveLoadingTime();
-            const randomText = ["Memuat lautan baru", "Memuat samudera baru", "Memuat informasi", "Memuat teknologi terbaru"];
-            document.getElementById('loadingText').innerText = randomText[Math.floor(Math.random() * randomText.length)];
-            document.getElementById('loadingScreenRandom').style.display = 'flex';
-            setTimeout(() => { document.getElementById('loadingScreenRandom').style.display = 'none'; callback(); }, waktuTunggu);
-        }
-        function loadingCarTransisi(detik, callback) {
-            document.getElementById('loadingCarTransition').style.display = 'flex';
-            setTimeout(() => { document.getElementById('loadingCarTransition').style.display = 'none'; callback(); }, detik);
-        }
-
-        function sembunyikanSemuaSlide() { document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active')); document.getElementById('zoneKakek').style.display = 'none'; document.getElementById('dialogOverlayKakek').style.display = 'none'; sembunyikanRobotKiri(); }
-        function sembunyikanRobotKiri() { document.getElementById('robotAktor').classList.add('robot-hidden-ui'); }
-        function tampilkanRobotKiri() { document.getElementById('robotAktor').classList.remove('robot-hidden-ui'); }
-        function setRobot(text, posisi = 'robot-kiri') { tampilkanRobotKiri(); document.getElementById('robotSpeech').innerHTML = text; document.getElementById('robotAktor').className = 'robot-wrapper ' + posisi; }
-
-        function bukaModalNama() { playClick(); sembunyikanRobotKiri(); let savedName = localStorage.getItem('etnoCaptainName'); if(savedName) document.getElementById('inputNama').value = savedName; document.getElementById('modalNama').style.display = 'flex'; }
-        function openMenu(menuType) { playClick(); sembunyikanSemuaSlide(); document.getElementById('starUI').style.display = 'none'; 
-            if(menuType === 'rules') document.getElementById('slideRules').classList.add('active');
-            if(menuType === 'caraMain') document.getElementById('slideCaraMain').classList.add('active');
+        function openMenu(menuType) { playClick(); sembunyikanSemuaSlide(); const starUI = document.getElementById('starUI'); if(starUI) starUI.style.display = 'none'; 
+            const slideRules = document.getElementById('slideRules');
+            const slideCaraMain = document.getElementById('slideCaraMain');
+            if(menuType === 'rules' && slideRules) slideRules.classList.add('active');
+            if(menuType === 'caraMain' && slideCaraMain) slideCaraMain.classList.add('active');
             sembunyikanRobotKiri(); 
         }
-        function kembaliKeMenu() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active'); document.getElementById('starUI').style.display = 'none'; sembunyikanRobotKiri(); setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal di sebelah kanan ini!`, 'robot-kanan'); }
+        function kembaliKeMenu() { playClick(); sembunyikanSemuaSlide(); const slide2 = document.getElementById('slide2'); if(slide2) slide2.classList.add('active'); const starUI = document.getElementById('starUI'); if(starUI) starUI.style.display = 'none'; sembunyikanRobotKiri(); setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal di sebelah kanan ini!`, 'robot-kanan'); }
         function bukaSkenario1() { playClickShip(); introCerita(); }
 
-        /* FUNGSI SKENARIO UTAMA */
         function interaksiLayar1(tipe) {
-            if (tipe === 'kapal') { playClickShip(); sinyalTerkirim = true; document.getElementById('zonePulau').classList.add('ready'); setRobot("Sekarang ketuk area PULAU untuk mendarat!"); } 
-            else if (tipe === 'pulau') { if(!sinyalTerkirim) { playClick(); return; } playClickShip(); document.getElementById('slidePetualangan1').classList.add('batu-zoomed'); setTimeout(() => { sembunyikanSemuaSlide(); document.getElementById('slidePrasasti').classList.add('active'); setRobot(`Kapten ${playerName}! Perhatikan baik-baik. Prasasti Kedukan Bukit ini berisi angka 604 Saka. Angka 0 di tengahnya adalah bukti nenek moyang kita sudah paham konsep nilai tempat dan sistem desimal.<br><br>Logika inilah yang menjadi fondasi dasar dari sistem biner (0 dan 1), yang membuat semua komputer dan HP bisa menyala. Jadi, teknologi yang kamu pegang sekarang, akarnya ada di prasasti ini. Keren banget, kan?`); }, 400); }
+            if (tipe === 'kapal') { playClickShip(); sinyalTerkirim = true; const zonePulau = document.getElementById('zonePulau'); if(zonePulau) zonePulau.classList.add('ready'); setRobot("Sekarang ketuk area PULAU untuk mendarat!"); } 
+            else if (tipe === 'pulau') { if(!sinyalTerkirim) { playClick(); return; } playClickShip(); const slide1 = document.getElementById('slidePetualangan1'); if(slide1) slide1.classList.add('batu-zoomed'); setTimeout(() => { sembunyikanSemuaSlide(); const slidePrasasti = document.getElementById('slidePrasasti'); if(slidePrasasti) slidePrasasti.classList.add('active'); setRobot(`Kapten ${playerName}! Perhatikan baik-baik. Prasasti Kedukan Bukit ini berisi angka 604 Saka. Angka 0 di tengahnya adalah bukti nenek moyang kita sudah paham konsep nilai tempat dan sistem desimal.<br><br>Logika inilah yang menjadi fondasi dasar dari sistem biner (0 dan 1), yang membuat semua komputer dan HP bisa menyala. Jadi, teknologi yang kamu pegang sekarang, akarnya ada di prasasti ini. Keren banget, kan?`); }, 400); }
         }
-        function lanjutKeSoal() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideSoalS1').classList.add('active'); setRobot("Kamu menemukan Prasasti! Tugasmu dokumentasikan ke digital. Pilih metode dokumentasinya!"); }); }
+        function lanjutKeSoal() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); const soal = document.getElementById('slideSoalS1'); if(soal) soal.classList.add('active'); setRobot("Kamu menemukan Prasasti! Tugasmu dokumentasikan ke digital. Pilih metode dokumentasinya!"); }); }
         function eksekusiPilihOpsiS1(opsi) {
             playClick(); let overlayFeed = document.getElementById('feedbackOverlay'); let feedbackMsg = document.getElementById('feedbackMsg');
-            if (opsi === 'B') { soundCorrect.currentTime = 0; soundCorrect.play().catch(e=>{}); feedbackMsg.className = 'feedback-box feedback-correct'; feedbackMsg.innerHTML = "🌟 PILIHAN TEPAT!"; jumlahBintang++; document.getElementById('starCount').innerText = jumlahBintang; saveGameState(); } 
-            else { soundWrong.currentTime = 0; soundWrong.play().catch(e=>{}); feedbackMsg.className = 'feedback-box feedback-wrong'; feedbackMsg.innerHTML = "⚠️ PILIHAN KURANG TEPAT!"; }
-            overlayFeed.style.display = 'flex';
-            setTimeout(() => { overlayFeed.style.display = 'none'; loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideSebabAkibatS1').classList.add('active'); sembunyikanRobotKiri(); setRobot(opsi === 'B' ? "Kerja bagus! Kamu memilih pola yang tepat!" : "Kamu memilih dokumentasi biasa. Teliti itu penting!", 'robot-atas'); }); }, 1200);
+            if (opsi === 'B') { soundCorrect.currentTime = 0; soundCorrect.play().catch(e=>{}); if(feedbackMsg) { feedbackMsg.className = 'feedback-box feedback-correct'; feedbackMsg.innerHTML = "🌟 PILIHAN TEPAT!"; } jumlahBintang++; const starCount = document.getElementById('starCount'); if(starCount) starCount.innerText = jumlahBintang; saveGameState(); } 
+            else { soundWrong.currentTime = 0; soundWrong.play().catch(e=>{}); if(feedbackMsg) { feedbackMsg.className = 'feedback-box feedback-wrong'; feedbackMsg.innerHTML = "⚠️ PILIHAN KURANG TEPAT!"; } }
+            if(overlayFeed) overlayFeed.style.display = 'flex';
+            setTimeout(() => { if(overlayFeed) overlayFeed.style.display = 'none'; loadingTransisi(null, () => { sembunyikanSemuaSlide(); const sa1 = document.getElementById('slideSebabAkibatS1'); if(sa1) sa1.classList.add('active'); sembunyikanRobotKiri(); setRobot(opsi === 'B' ? "Kerja bagus! Kamu memilih pola yang tepat!" : "Kamu memilih dokumentasi biasa. Teliti itu penting!", 'robot-atas'); }); }, 1200);
         }
-        function lanjutKeLayarNextSatu() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideNextSatu').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot(`Terima kasih telah mampir ke Palembang, Kapten ${playerName}. Prasasti Kedukan Bukit mengajarkan kita bahwa logika teknologi (sistem biner, angka 0) berakar dari peradaban Nusantara 682 Masehi.<br><br>Kita tidak sekadar ke Palembang tapi kita belajar menghargai warisan leluhur yang luar biasa! Mari kita jelajahi laut Nusantara balik ke dek kapalmu! tekan kapal di kiri atas ini.`); }); }
+        function lanjutKeLayarNextSatu() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); const next1 = document.getElementById('slideNextSatu'); if(next1) next1.classList.add('active'); const starUI = document.getElementById('starUI'); if(starUI) starUI.style.display = 'flex'; setRobot(`Terima kasih telah mampir ke Palembang, Kapten ${playerName}. Prasasti Kedukan Bukit mengajarkan kita bahwa logika teknologi (sistem biner, angka 0) berakar dari peradaban Nusantara 682 Masehi.<br><br>Kita tidak sekadar ke Palembang tapi kita belajar menghargai warisan leluhur yang luar biasa! Mari kita jelajahi laut Nusantara balik ke dek kapalmu! tekan kapal di kiri atas ini.`); }); }
 
         function introCerita() {
-            sembunyikanRobotKiri(); sembunyikanSemuaSlide(); document.getElementById('slideIntroCerita').classList.add('active'); introIndex=0; tampilkanIntro(introIndex);
+            sembunyikanRobotKiri(); sembunyikanSemuaSlide(); 
+            const introSlide = document.getElementById('slideIntroCerita');
+            if(introSlide) introSlide.classList.add('active');
+            introIndex=0; tampilkanIntro(introIndex);
         }
-        function finishIntroAndStartGame() { tampilkanRobotKiri(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slidePetualangan1').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot("Kapten, kita udah sampai di Palembang! Di sinilah nenek moyang kita menulis angka 0 pertama kali. Ayo kita temukan prasastinya!"); }); }
+        function finishIntroAndStartGame() { tampilkanRobotKiri(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); const slide1 = document.getElementById('slidePetualangan1'); if(slide1) slide1.classList.add('active'); const starUI = document.getElementById('starUI'); if(starUI) starUI.style.display = 'flex'; setRobot("Kapten, kita udah sampai di Palembang! Di sinilah nenek moyang kita menulis angka 0 pertama kali. Ayo kita temukan prasastinya!"); }); }
         let introIndex = 0; let introTimer = null; let countdownInterval = null;
         const introData = [
             { text: "Kapten, sebelum kita lihat prasastinya, aku mau kasih tahu sesuatu yang penting banget.<br><br>Kamu tahu nggak, kalau nenek moyang kita udah pake angka nol dan sistem desimal sejak tahun 682 Masehi? Bahkan dua abad lebih tua dari penemuan nol di India!", delay: 6000 },
@@ -675,16 +628,16 @@
             { text: "Jadi, prasasti ini bukan cuma batu kuno. Ini adalah bukti bahwa nenek moyang kita udah paham logika yang sama yang dipake di teknologi modern.", delay: 6000 }
         ];
         function tampilkanIntro(index) {
-            let data = introData[index]; document.getElementById('introStepIndicator').innerText = `Bagian ${index + 1} dari ${introData.length}`; document.getElementById('introText').innerHTML = data.text; let btn = document.getElementById('introNextBtn'); let totalTime = data.delay; let displayTime = totalTime / 1000; btn.innerText = `⏳ Membaca... ${displayTime}s`; btn.classList.remove('active-btn'); btn.style.pointerEvents = 'none'; btn.style.opacity = '0.6'; clearInterval(countdownInterval); countdownInterval = setInterval(() => { displayTime -= 0.1; if (displayTime <= 0) displayTime = 0; btn.innerText = `⏳ Membaca... ${displayTime.toFixed(1)}s`; }, 100); clearTimeout(introTimer); introTimer = setTimeout(() => { clearInterval(countdownInterval); btn.innerText = index === introData.length - 1 ? "Sekarang, ayo kita lihat langsung prasastinya! ➔" : "Lanjutkan ➔"; btn.classList.add('active-btn'); btn.style.pointerEvents = 'auto'; btn.style.opacity = '1'; }, data.delay);
+            let data = introData[index]; const step = document.getElementById('introStepIndicator'); const text = document.getElementById('introText'); if(step) step.innerText = `Bagian ${index + 1} dari ${introData.length}`; if(text) text.innerHTML = data.text; let btn = document.getElementById('introNextBtn'); let totalTime = data.delay; let displayTime = totalTime / 1000; if(btn) { btn.innerText = `⏳ Membaca... ${displayTime}s`; btn.classList.remove('active-btn'); btn.style.pointerEvents = 'none'; btn.style.opacity = '0.6'; } clearInterval(countdownInterval); countdownInterval = setInterval(() => { displayTime -= 0.1; if (displayTime <= 0) displayTime = 0; if(btn) btn.innerText = `⏳ Membaca... ${displayTime.toFixed(1)}s`; }, 100); clearTimeout(introTimer); introTimer = setTimeout(() => { clearInterval(countdownInterval); if(btn) { btn.innerText = index === introData.length - 1 ? "Sekarang, ayo kita lihat langsung prasastinya! ➔" : "Lanjutkan ➔"; btn.classList.add('active-btn'); btn.style.pointerEvents = 'auto'; btn.style.opacity = '1'; } }, data.delay);
         }
         function goToNextIntro() { playClick(); clearTimeout(introTimer); clearInterval(countdownInterval); introIndex++; if (introIndex < introData.length) { tampilkanIntro(introIndex); } else { finishIntroAndStartGame(); } }
 
-        function berlayarMalam() { playClickShip(); const randomText = ["Memuat lautan baru", "Memuat samudera baru", "Memuat informasi", "Memuat teknologi terbaru"]; document.getElementById('loadingText').innerText = randomText[Math.floor(Math.random() * randomText.length)]; document.getElementById('loadingScreenRandom').style.display = 'flex'; setTimeout(() => { document.getElementById('loadingScreenRandom').style.display = 'none'; sembunyikanSemuaSlide(); document.getElementById('slideMalam').classList.add('active'); sembunyikanRobotKiri(); setTimeout(() => { document.getElementById('dialogOverlayKakek').style.display = 'block'; }, 1500); }, 2500); }
-        function kakekSelesaiCerita() { playClick(); document.getElementById('dialogOverlayKakek').style.display = 'none'; setRobot("Wah, seru ya cerita Kakek tadi. Kakek bilang, kunci utamanya adalah jangan panik dan percaya sama petunjuk alam. Iya nggak sih?<br><br>Nah, kalau kamu ada di posisi kapal yang terombang-ambing tanpa maps, apakah kamu akan panik?", 'robot-kanan'); let bubble = document.getElementById('robotSpeech'); bubble.innerHTML += `<br><br><span style="display:flex; justify-content:center; gap:10px; margin-top:10px;"><button onclick="responKakek('panik')" style="padding:5px 15px; background:#e74c3c; color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Panik Banget!</button><button onclick="responKakek('nggak')" style="padding:5px 15px; background:#2ecc71; color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Nggak Dong</button></span>`; }
-        function responKakek(jawaban) { playClick(); if(jawaban === 'panik') { setRobot("Waduh tenangin dirimu!! Kalau panik, kapal bisa hilang kendali!"); sembunyikanSemuaSlide(); document.getElementById('slideRusak').classList.add('active'); klikRusakCount = 0; document.getElementById('klikRusak').innerText = "0"; setRobot("KARENA KAMU PANIK, KAPAL TEROMBANG AMBING! AYO SELAMATKAN DENGAN CLICK KAPAL 10X!"); } else { setRobot("Keren!! Betul kamu jangan panik! Yuk belajar membaca langit!"); setTimeout(() => { masukPetaBintang(); }, 2000); } }
-        function perbaikiKapal() { klikRusakCount++; document.getElementById('klikRusak').innerText = klikRusakCount; let imgRsk = document.getElementById('imgRusak'); imgRsk.classList.remove('shake-effect'); void imgRsk.offsetWidth; imgRsk.classList.add('shake-effect'); if(klikRusakCount >= 10) { playClickShip(); setRobot("Syukurlah! Mesin kapal pulih! Kita belajar bintang yuk!"); setTimeout(() => { masukPetaBintang(); }, 2000); } else { playClick(); } }
-        function masukPetaBintang() { sembunyikanRobotKiri(); sembunyikanSemuaSlide(); document.getElementById('slideStars').classList.add('active'); }
-        
+        function berlayarMalam() { playClickShip(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); const slideMalam = document.getElementById('slideMalam'); if(slideMalam) slideMalam.classList.add('active'); sembunyikanRobotKiri(); setTimeout(() => { const dialog = document.getElementById('dialogOverlayKakek'); if(dialog) dialog.style.display = 'block'; }, 1500); }); }
+        function kakekSelesaiCerita() { playClick(); const dialog = document.getElementById('dialogOverlayKakek'); if(dialog) dialog.style.display = 'none'; setRobot("Wah, seru ya cerita Kakek tadi. Kakek bilang, kunci utamanya adalah jangan panik dan percaya sama petunjuk alam. Iya nggak sih?<br><br>Nah, kalau kamu ada di posisi kapal yang terombang-ambing tanpa maps, apakah kamu akan panik?", 'robot-kanan'); let bubble = document.getElementById('robotSpeech'); if(bubble) bubble.innerHTML += `<br><br><span style="display:flex; justify-content:center; gap:10px; margin-top:10px;"><button onclick="responKakek('panik')" style="padding:5px 15px; background:#e74c3c; color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Panik Banget!</button><button onclick="responKakek('nggak')" style="padding:5px 15px; background:#2ecc71; color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Nggak Dong</button></span>`; }
+        function responKakek(jawaban) { playClick(); if(jawaban === 'panik') { setRobot("Waduh tenangin dirimu!! Kalau panik, kapal bisa hilang kendali!"); sembunyikanSemuaSlide(); const slideRusak = document.getElementById('slideRusak'); if(slideRusak) slideRusak.classList.add('active'); klikRusakCount = 0; const klikEl = document.getElementById('klikRusak'); if(klikEl) klikEl.innerText = "0"; setRobot("KARENA KAMU PANIK, KAPAL TEROMBANG AMBING! AYO SELAMATKAN DENGAN CLICK KAPAL 10X!"); } else { setRobot("Keren!! Betul kamu jangan panik! Yuk belajar membaca langit!"); setTimeout(() => { masukPetaBintang(); }, 2000); } }
+        function perbaikiKapal() { klikRusakCount++; const klikEl = document.getElementById('klikRusak'); if(klikEl) klikEl.innerText = klikRusakCount; let imgRsk = document.getElementById('imgRusak'); if(imgRsk) { imgRsk.classList.remove('shake-effect'); void imgRsk.offsetWidth; imgRsk.classList.add('shake-effect'); } if(klikRusakCount >= 10) { playClickShip(); setRobot("Syukurlah! Mesin kapal pulih! Kita belajar bintang yuk!"); setTimeout(() => { masukPetaBintang(); }, 2000); } else { playClick(); } }
+        function masukPetaBintang() { sembunyikanRobotKiri(); sembunyikanSemuaSlide(); const slideStars = document.getElementById('slideStars'); if(slideStars) slideStars.classList.add('active'); }
+
         const urutanBintang = [
             { img: 'crux.png', teks: `<h3>1. Rasi Pari / Salib Selatan (Crux)</h3><p style="margin-bottom: 10px;">Bentuk layang-layang. Penunjuk arah Selatan.</p><p style="font-size: 14px; margin-bottom: 5px;">📌 <b>Nama Lokal:</b> Bintoéng Kamasé (Bugis).</p><p style="font-size: 14px;">📌 <b>Fungsi:</b> Krusial bagi pelaut Nusantara.</p>` },
             { img: 'biduk.png', teks: `<h3>2. Rasi Biduk / Beruang Besar (Ursa Major)</h3><p style="margin-bottom: 10px;">7 bintang membentuk gayung. Penunjuk arah Utara.</p><p style="font-size: 14px; margin-bottom: 5px;">📌 <b>Nama Lokal:</b> Bintang Biduk.</p><p style="font-size: 14px;">📌 <b>Fungsi:</b> Menunjuk arah Utara.</p>` },
@@ -693,9 +646,10 @@
         ];
         let indexBintang = 0;
         function mulaiUrutanBintang() { playClick(); loadingTransisi(null, () => { indexBintang = 0; tampilkanBintangSaatIni(); }); }
-        function tampilkanBintangSaatIni() { sembunyikanSemuaSlide(); document.getElementById('slideRasi').classList.add('active'); document.getElementById('imgRasi').src = urutanBintang[indexBintang].img; document.getElementById('teksRasi').innerHTML = urutanBintang[indexBintang].teks; setRobot(`Formasi rasi ke-${indexBintang+1}! Klik Lanjutkan untuk rasi selanjutnya.`); }
-        function lanjutBintangBerikutnya() { playClick(); loadingTransisi(null, () => { indexBintang++; if(indexBintang < urutanBintang.length) { tampilkanBintangSaatIni(); } else { document.getElementById('starUI').style.display = 'none'; bukaMateriGPS(); } }); }
-        function bukaMateriGPS() { loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideGPS').classList.add('active'); setRobot("Paham rasi? Yuk uji pemahaman!"); }); }
+        function tampilkanBintangSaatIni() { sembunyikanSemuaSlide(); const slideRasi = document.getElementById('slideRasi'); if(slideRasi) slideRasi.classList.add('active'); const img = document.getElementById('imgRasi'); const txt = document.getElementById('teksRasi'); if(img) img.src = urutanBintang[indexBintang].img; if(txt) txt.innerHTML = urutanBintang[indexBintang].teks; setRobot(`Formasi rasi ke-${indexBintang+1}! Klik Lanjutkan untuk rasi selanjutnya.`); }
+        function lanjutBintangBerikutnya() { playClick(); loadingTransisi(null, () => { indexBintang++; if(indexBintang < urutanBintang.length) { tampilkanBintangSaatIni(); } else { const starUI = document.getElementById('starUI'); if(starUI) starUI.style.display = 'none'; bukaMateriGPS(); } }); }
+
+        function bukaMateriGPS() { loadingTransisi(null, () => { sembunyikanSemuaSlide(); const slideGPS = document.getElementById('slideGPS'); if(slideGPS) slideGPS.classList.add('active'); setRobot("Paham rasi? Yuk uji pemahaman!"); }); }
 
         const kuisData = [
             { q: "Kakek menunjuk ke 4 bintang layang-layang. Rasi apa?", a: "Biduk", b: "Salib Selatan (Crux)", c: "Orion", d: "Skorpio", ans: "b", exp: "Bentuk layang-layang = Salib Selatan (Crux)." },
@@ -704,29 +658,30 @@
             { q: "Tahu Crux, bisa tentukan arah apa?", a: "Utara", b: "Selatan", c: "Timur", d: "Barat", ans: "b", exp: "Crux = Arah Selatan." },
             { q: "Kenapa bentuk bintang penting?", a: "Jadi pelaut", b: "Pahami pola langit & akar GPS", c: "Hafal nama", d: "Tidak perlu HP", ans: "b", exp: "Literasi teknologi berakar dari pengetahuan tradisional!" }
         ];
-        function mulaiKuisStars() { playClick(); loadingTransisi(null, () => { kuisIndex = 0; document.getElementById('starUI').style.display = 'none'; sembunyikanSemuaSlide(); document.getElementById('slideKuis').classList.add('active'); renderKuis(); }); }
+        function mulaiKuisStars() { playClick(); loadingTransisi(null, () => { kuisIndex = 0; const starUI = document.getElementById('starUI'); if(starUI) starUI.style.display = 'none'; sembunyikanSemuaSlide(); const slideKuis = document.getElementById('slideKuis'); if(slideKuis) slideKuis.classList.add('active'); renderKuis(); }); }
         function renderKuis() {
-            let data = kuisData[kuisIndex]; document.getElementById('pertanyaanKuis').innerHTML = `<b>SOAL ${kuisIndex+1}/5:</b><br>${data.q}`;
+            let data = kuisData[kuisIndex]; const pertanyaan = document.getElementById('pertanyaanKuis'); if(pertanyaan) pertanyaan.innerHTML = `<b>SOAL ${kuisIndex+1}/5:</b><br>${data.q}`;
             let html = `<div class="opsi-btn" onclick="jawabKuis('a', '${data.ans}')"><div class="opsi-badge-kuis">A</div><div>${data.a}</div></div>
                 <div class="opsi-btn" onclick="jawabKuis('b', '${data.ans}')"><div class="opsi-badge-kuis">B</div><div>${data.b}</div></div>
                 <div class="opsi-btn" onclick="jawabKuis('c', '${data.ans}')"><div class="opsi-badge-kuis">C</div><div>${data.c}</div></div>
                 <div class="opsi-btn" onclick="jawabKuis('d', '${data.ans}')"><div class="opsi-badge-kuis">D</div><div>${data.d}</div></div>`;
-            document.getElementById('opsiKuisContainer').innerHTML = html; setRobot(`Soal ke-${kuisIndex+1}!`); document.querySelectorAll('.opsi-btn').forEach(el => el.style.backgroundColor = 'rgba(0,0,0,0.6)');
+            const container = document.getElementById('opsiKuisContainer');
+            if(container) { container.innerHTML = html; setRobot(`Soal ke-${kuisIndex+1}!`); document.querySelectorAll('.opsi-btn').forEach(el => el.style.backgroundColor = 'rgba(0,0,0,0.6)'); }
         }
         function jawabKuis(pilih, benar) {
-            let overlayFeed = document.getElementById('feedbackOverlay'); if(overlayFeed.style.display === 'flex') return;
+            let overlayFeed = document.getElementById('feedbackOverlay'); if(overlayFeed && overlayFeed.style.display === 'flex') return;
             let isCorrect = (pilih === benar); let feedbackMsg = document.getElementById('feedbackMsg');
-            if (isCorrect) { soundCorrect.currentTime = 0; soundCorrect.play().catch(e=>{}); feedbackMsg.className = 'feedback-box feedback-correct'; feedbackMsg.innerHTML = "🌟 JAWABAN BENAR!"; jumlahBintang++; document.getElementById('starCount').innerText = jumlahBintang; saveGameState(); } 
-            else { soundWrong.currentTime = 0; soundWrong.play().catch(e=>{}); feedbackMsg.className = 'feedback-box feedback-wrong'; feedbackMsg.innerHTML = "⚠️ KURANG TEPAT!"; }
-            overlayFeed.style.display = 'flex'; setTimeout(() => { overlayFeed.style.display = 'none'; document.getElementById('pertanyaanKuis').innerHTML = `<b>PENJELASAN:</b><br><span style="color:#eccc68;">${kuisData[kuisIndex].exp}</span>`; let nextBtn = (kuisIndex < 4) ? `<button class="btn-kuis-action" style="background:#e67e22;" onclick="lanjutKuis()">Soal Berikutnya ➔</button>` : `<button class="btn-kuis-action" onclick="selesaiSkenarioMalam()">Selesaikan Pelayaran ➔</button>`; document.getElementById('opsiKuisContainer').innerHTML = nextBtn; setRobot(isCorrect ? "Benar, pahami penjelasan ini!" : "Cermati penjelasan, gapapa!"); }, 1200);
+            if (isCorrect) { soundCorrect.currentTime = 0; soundCorrect.play().catch(e=>{}); if(feedbackMsg) { feedbackMsg.className = 'feedback-box feedback-correct'; feedbackMsg.innerHTML = "🌟 JAWABAN BENAR!"; } jumlahBintang++; const starCount = document.getElementById('starCount'); if(starCount) starCount.innerText = jumlahBintang; saveGameState(); } 
+            else { soundWrong.currentTime = 0; soundWrong.play().catch(e=>{}); if(feedbackMsg) { feedbackMsg.className = 'feedback-box feedback-wrong'; feedbackMsg.innerHTML = "⚠️ KURANG TEPAT!"; } }
+            if(overlayFeed) overlayFeed.style.display = 'flex';
+            setTimeout(() => { if(overlayFeed) overlayFeed.style.display = 'none'; const pertanyaan = document.getElementById('pertanyaanKuis'); if(pertanyaan) pertanyaan.innerHTML = `<b>PENJELASAN:</b><br><span style="color:#eccc68;">${kuisData[kuisIndex].exp}</span>`; let nextBtn = (kuisIndex < 4) ? `<button class="btn-kuis-action" style="background:#e67e22;" onclick="lanjutKuis()">Soal Berikutnya ➔</button>` : `<button class="btn-kuis-action" onclick="selesaiSkenarioMalam()">Selesaikan Pelayaran ➔</button>`; const container = document.getElementById('opsiKuisContainer'); if(container) container.innerHTML = nextBtn; setRobot(isCorrect ? "Benar, pahami penjelasan ini!" : "Cermati penjelasan, gapapa!"); }, 1200);
         }
         function lanjutKuis() { playClick(); kuisIndex++; renderKuis(); }
-        function selesaiSkenarioMalam() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideNextDua').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot(`Hebat Kapten ${playerName}! Kita telah belajar banyak tentang rasi bintang dan navigasi. Ayo pulang ke daratan!`); }); }
+        function selesaiSkenarioMalam() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); const nextDua = document.getElementById('slideNextDua'); if(nextDua) nextDua.classList.add('active'); const starUI = document.getElementById('starUI'); if(starUI) starUI.style.display = 'flex'; setRobot(`Hebat Kapten ${playerName}! Kita telah belajar banyak tentang rasi bintang dan navigasi. Ayo pulang ke daratan!`); }); }
 
-        function tamatKuisDanKembali() { playClickShip(); loadingCarTransisi(2500, () => { sembunyikanSemuaSlide(); document.getElementById('slideMeja').classList.add('active'); setRobot(`Kapten ${playerName}, kita udah sampe di rumah. Tuh, ada tablet di atas meja. Coba lihat, ada apa aja di dalamnya....tuh`, 'robot-kiri'); }); }
-        function klikTablet() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideTablet').classList.add('active'); }); }
+        function tamatKuisDanKembali() { playClickShip(); loadingCarTransisi(2500, () => { sembunyikanSemuaSlide(); const meja = document.getElementById('slideMeja'); if(meja) meja.classList.add('active'); setRobot(`Kapten ${playerName}, kita udah sampe di rumah. Tuh, ada tablet di atas meja. Coba lihat, ada apa aja di dalamnya....tuh`, 'robot-kiri'); }); }
+        function klikTablet() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); const tablet = document.getElementById('slideTablet'); if(tablet) tablet.classList.add('active'); }); }
 
-        /* SKENARIO CHAT & MINI GAME TABLET */
         const scenarios = {
             chat: [
                 { id: 1, type: 'chat', prompt: "Grup WA kelas 9A lagi rame. Ada pesan dari akun gak jelas:\n'Besok sekolah diliburkan! Ada demo di sekitar sekolah.'\nUdah banyak yang share ke grup lain tanpa ngecek.", optionA: "Share ke grup lain", optionB: "Cek kebenaran di website sekolah", correct: 'B', feedback: "Bagus! Cek fakta dulu sebelum share. Hoaks bisa bikin orang panik.", icon: "💬" },
@@ -745,15 +700,23 @@
 
         function bukaApp(type) {
             playClick(); currentApp = type; currentScenarioIndex = 0;
-            if(type === 'chat') { document.getElementById('scenarioTitle').innerText = "💬 CHAT & SOSMED"; scenarioData = scenarios.chat; }
-            else if(type === 'browser') { document.getElementById('scenarioTitle').innerText = "📰 BROWSER & BERITA"; scenarioData = scenarios.browser; }
-            else if(type === 'security') { document.getElementById('scenarioTitle').innerText = "🛡️ KEAMANAN DIGITAL"; scenarioData = scenarios.security; }
-            document.getElementById('scenarioPanel').style.display = 'flex'; tampilkanSkenario();
+            const title = document.getElementById('scenarioTitle');
+            if(title) {
+                if(type === 'chat') { title.innerText = "💬 CHAT & SOSMED"; scenarioData = scenarios.chat; }
+                else if(type === 'browser') { title.innerText = "📰 BROWSER & BERITA"; scenarioData = scenarios.browser; }
+                else if(type === 'security') { title.innerText = "🛡️ KEAMANAN DIGITAL"; scenarioData = scenarios.security; }
+            }
+            const panel = document.getElementById('scenarioPanel');
+            if(panel) panel.style.display = 'flex';
+            tampilkanSkenario();
         }
         function tampilkanSkenario() {
             let body = document.getElementById('scenarioBody');
+            if(!body) return;
             if(currentScenarioIndex >= scenarioData.length) {
-                document.getElementById('scenarioPanel').style.display = 'none'; mulaiMiniGame(currentApp); return;
+                const panel = document.getElementById('scenarioPanel');
+                if(panel) panel.style.display = 'none';
+                mulaiMiniGame(currentApp); return;
             }
             let data = scenarioData[currentScenarioIndex];
             let html = `
@@ -772,28 +735,38 @@
         }
         function jawabSkenario(pilihan) {
             let data = scenarioData[currentScenarioIndex]; let isCorrect = (pilihan === data.correct); let body = document.getElementById('scenarioBody');
+            if(!body) return;
             let choices = body.querySelectorAll('.chat-choice-btn'); choices.forEach(btn => btn.style.pointerEvents = 'none');
-            if(isCorrect) { soundCorrect.currentTime = 0; soundCorrect.play().catch(e=>{}); let correctBtn = pilihan === 'A' ? choices[0] : choices[1]; correctBtn.style.background = '#27ae60'; correctBtn.innerHTML = `✅ ${correctBtn.innerText}`; } 
-            else { soundWrong.currentTime = 0; soundWrong.play().catch(e=>{}); let wrongBtn = pilihan === 'A' ? choices[0] : choices[1]; wrongBtn.style.background = '#e74c3c'; wrongBtn.innerHTML = `❌ ${wrongBtn.innerText}`; let correctBtn = data.correct === 'A' ? choices[0] : choices[1]; correctBtn.style.background = '#27ae60'; correctBtn.innerHTML = `✅ ${correctBtn.innerText}`; }
+            if(isCorrect) { soundCorrect.currentTime = 0; soundCorrect.play().catch(e=>{}); let correctBtn = pilihan === 'A' ? choices[0] : choices[1]; if(correctBtn) { correctBtn.style.background = '#27ae60'; correctBtn.innerHTML = `✅ ${correctBtn.innerText}`; } } 
+            else { soundWrong.currentTime = 0; soundWrong.play().catch(e=>{}); let wrongBtn = pilihan === 'A' ? choices[0] : choices[1]; if(wrongBtn) { wrongBtn.style.background = '#e74c3c'; wrongBtn.innerHTML = `❌ ${wrongBtn.innerText}`; } let correctBtn = data.correct === 'A' ? choices[0] : choices[1]; if(correctBtn) { correctBtn.style.background = '#27ae60'; correctBtn.innerHTML = `✅ ${correctBtn.innerText}`; } }
             let feedbackDiv = document.createElement('div'); feedbackDiv.className = 'chat-bubble-system'; feedbackDiv.style.marginTop = '10px';
             feedbackDiv.innerHTML = `<div class="chat-avatar" style="background:#2ecc71;">🤖</div><div style="width:100%;"><div class="chat-bubble" style="background:#2ecc71; color:#fff;">${data.feedback}</div><button class="chat-choice-btn" style="background:#e67e22; text-align:center; margin-top:10px;" onclick="lanjutSkenario()">Lanjutkan ➔</button></div>`;
             body.appendChild(feedbackDiv); body.scrollTop = body.scrollHeight;
         }
         function lanjutSkenario() { playClick(); currentScenarioIndex++; tampilkanSkenario(); }
-        function tutupApp() { playClick(); document.getElementById('scenarioPanel').style.display = 'none'; document.getElementById('miniGamePanel').style.display = 'none'; if(typeof stopGameLoop === 'function') stopGameLoop(); }
+        function tutupApp() { playClick(); const scenarioPanel = document.getElementById('scenarioPanel'); if(scenarioPanel) scenarioPanel.style.display = 'none'; const miniGamePanel = document.getElementById('miniGamePanel'); if(miniGamePanel) miniGamePanel.style.display = 'none'; if(typeof stopGameLoop === 'function') stopGameLoop(); }
 
         let gameLoopId = null; let isGameOver = false; let score = 0;
         function mulaiMiniGame(type) {
-            document.getElementById('miniGamePanel').style.display = 'flex';
+            const miniGamePanel = document.getElementById('miniGamePanel');
+            if(!miniGamePanel) return;
+            miniGamePanel.style.display = 'flex';
+            const title = document.getElementById('gameTitle');
             let titleMap = { chat: "💬 Game Dino - Lompati Kotak!", browser: "📰 Game Burung - Jalan & Kumpul Poin!", security: "🛡️ Game Dino - Lompati Bola!" };
-            document.getElementById('gameTitle').innerText = titleMap[type];
-            const canvas = document.getElementById('gameCanvas'); const ctx = canvas.getContext('2d');
+            if(title) title.innerText = titleMap[type];
+            const canvas = document.getElementById('gameCanvas'); if(!canvas) return;
+            const ctx = canvas.getContext('2d');
             const rect = canvas.parentElement.getBoundingClientRect();
             canvas.width = rect.width || 800; canvas.height = rect.height || 400;
             let dino = { x: 50, y: canvas.height - 60, width: 40, height: 50, dy: 0, jumping: false, gravity: 0.6, jumpPower: -12 };
             let obstacles = []; let frame = 0; isGameOver = false; score = 0; let isRunning = true;
             let obstacleType = type === 'chat' ? 'box' : (type === 'security' ? 'circle' : 'bird');
-            const drawDino = () => { ctx.fillStyle = '#2d3436'; ctx.fillRect(dino.x, dino.y, dino.width, dino.height); ctx.fillStyle = '#fff'; ctx.fillRect(dino.x + 10, dino.y - 20, 20, 20); ctx.fillStyle = '#000'; ctx.beginPath(); ctx.arc(dino.x + 15, dino.y - 15, 4, 0, Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(dino.x + 25, dino.y - 15, 4, 0, Math.PI*2); ctx.fill(); };
+            const drawDino = () => {
+                ctx.fillStyle = '#2d3436'; ctx.fillRect(dino.x, dino.y, dino.width, dino.height);
+                ctx.fillStyle = '#fff'; ctx.fillRect(dino.x + 10, dino.y - 20, 20, 20);
+                ctx.fillStyle = '#000'; ctx.beginPath(); ctx.arc(dino.x + 15, dino.y - 15, 4, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(dino.x + 25, dino.y - 15, 4, 0, Math.PI*2); ctx.fill();
+            };
             const drawObstacle = (obs) => {
                 ctx.fillStyle = type === 'chat' ? '#e74c3c' : '#f1c40f';
                 if(obs.type === 'box') { ctx.fillRect(obs.x, obs.y, obs.width, obs.height); }
