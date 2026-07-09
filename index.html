@@ -63,7 +63,6 @@
         .slide.active { display: block; }
         .bg-img { width: 100%; height: 100%; object-fit: cover; display: block; background-color: #111; }
 
-        /* LOADING SCREENS */
         #loadingScreenRandom { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #2c3e50 0%, #1a252f 100%); color: white; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 200; text-align: center; padding: 20px; }
         .ship-loading-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; margin-bottom: 15px; }
         .ship-scene { position: relative; width: 100px; height: 80px; animation: floatShip 2s ease-in-out infinite alternate; }
@@ -107,7 +106,8 @@
         .icon-btn:hover { box-shadow: 0 0 20px 8px rgba(0, 168, 255, 0.6); }
         .puzzle-btn { left: 24.5%; } .book-btn { left: 42.5%; } .ship-btn { left: 61%; }
 
-        .tap-zone { position: absolute; background: rgba(0, 168, 255, 0.02); border: 3px dashed #00a8ff; cursor: pointer; z-index: 50; animation: pulse-glow 2s infinite ease-in-out; }
+        /* PERBAIKAN: Pastikan semua tap-zone memiliki pointer-events auto dan z-index jelas */
+        .tap-zone { position: absolute; background: rgba(0, 168, 255, 0.02); border: 3px dashed #00a8ff; cursor: pointer; z-index: 50; pointer-events: auto; animation: pulse-glow 2s infinite ease-in-out; }
         .tap-zone.ready { border-color: #2ecc71; background: rgba(46, 204, 113, 0.1); }
         .tap-zone.debug-mode { background: rgba(0, 168, 255, 0.08); border: 3px solid #ffffff; border-radius: 50%; box-shadow: 0 0 30px rgba(0, 168, 255, 1); animation: radar-pulse 1.2s infinite alternate !important; }
         @keyframes radar-pulse { 0% { transform: scale(1); box-shadow: 0 0 10px rgba(0, 168, 255, 0.4); } 100% { transform: scale(1.08); box-shadow: 0 0 40px rgba(0, 168, 255, 1); } }
@@ -116,7 +116,8 @@
         .pulau-tap { width: 38%; height: 42%; top: 25%; right: 10%; border-radius: 30px; }
         .kapal-tap { width: 60%; height: 26%; bottom: 0; left: 20%; border-radius: 100px 100px 0 0; }
         .kapal-madura-tap { width: 18%; height: 28%; top: 20%; left: 14%; border-radius: 30px; }
-        .kakek-tap { width: 20%; height: 35%; top: 25%; right: 25%; border-radius: 20px; display: none; border-color: #eccc68; background: rgba(236, 204, 104, 0.15); border-width: 3px; animation: pulse-glow 2s infinite; }
+        /* PERBAIKAN: Hapus display:none agar bisa diklik */
+        .kakek-tap { width: 20%; height: 35%; top: 25%; right: 25%; border-radius: 20px; display: block; border-color: #eccc68; background: rgba(236, 204, 104, 0.15); border-width: 3px; animation: pulse-glow 2s infinite; }
         .kapal-rusak-tap { width: 25%; height: 25%; bottom: 35%; left: 37%; border-radius: 20px; border: 4px solid rgba(255, 0, 0, 0.8); background: rgba(255, 0, 0, 0.15); animation: pulse-warning 1s infinite ease-in-out; z-index: 60; }
         @keyframes pulse-warning { 0% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); } 50% { border-color: rgba(255, 0, 0, 1); background: rgba(255, 0, 0, 0.3); box-shadow: 0 0 40px rgba(255,0,0,0.8); } 100% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); } }
 
@@ -125,11 +126,9 @@
 
         .tablet-tap { width: 32%; height: 24%; top: 36%; left: 34%; border-radius: 15px; }
 
-        /* --- UI TABLET & SKENARIO --- */
         #slideTablet { background: #1a252f; overflow: hidden; }
         #slideTablet .bg-img { object-fit: cover; }
 
-        /* Interactive Overlay for Tablet */
         .tablet-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;
             z-index: 60; padding: 5%;
@@ -146,7 +145,6 @@
         .tablet-btn:hover { border-color: #f1c40f; box-shadow: 0 0 20px rgba(241, 196, 15, 0.5); transform: scale(1.05); background: rgba(255, 215, 0, 0.1); }
         .tablet-btn span { font-size: 1.5vw; font-weight: 900; color: #fff; text-shadow: 0 0 10px #000; pointer-events: none; opacity: 0; }
 
-        /* UX Scenario Panel (Seperti Chat/App UI) */
         .scenario-panel {
             position: absolute; top: 5%; left: 5%; width: 90%; height: 90%; background: rgba(20, 30, 40, 0.95);
             border: 2px solid #eccc68; border-radius: 15px; z-index: 70; display: none; flex-direction: column; overflow: hidden;
@@ -159,9 +157,8 @@
         .scenario-header button { background: transparent; border: none; color: #1a252f; font-weight: bold; cursor: pointer; font-size: 1.5vw; }
         .scenario-body {
             flex-grow: 1; padding: 15px; display: flex; flex-direction: column; overflow-y: auto; gap: 15px;
-            background: #f5f6fa; /* White chat background */
+            background: #f5f6fa;
         }
-        /* Chat Bubble User (Skenario) */
         .chat-bubble-system {
             align-self: flex-start; width: 100%; display: flex; align-items: flex-start; gap: 10px; max-width: 100%;
         }
@@ -176,7 +173,6 @@
         .chat-bubble::before {
             content: ''; position: absolute; top: 10px; left: -10px; border-width: 5px 10px 5px 0; border-style: solid; border-color: transparent #e1e1e1 transparent transparent;
         }
-        /* Chat Bubble User Choices (A/B) */
         .chat-choices { display: flex; flex-direction: column; gap: 10px; width: 100%; padding-left: 10px; margin-top: 5px; }
         .chat-choice-btn {
             background: #2ecc71; padding: 12px 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1vw;
@@ -458,7 +454,8 @@
         <div id="slideMalam" class="slide">
             <img src="5.png" alt="Malam Hari & Kakek" class="bg-img">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
-            <div id="zoneKakek" class="tap-zone kakek-tap"></div>
+            <!-- PERBAIKAN: zoneKakek sekarang display:block dan punya onclick -->
+            <div id="zoneKakek" class="tap-zone kakek-tap" onclick="bukaDialogKakek()"></div>
             <div id="dialogOverlayKakek" class="dialogue-overlay">
                 <div class="dialogue-text" id="textDialogKakek">
                     "Dulu kakek sering berlayar tanpa maps, hanya mengandalkan bintang. Kakek tahu, kalau kita panik saat tersesat di lautan, malah bahaya. Ini yang namanya Navigasi Bintang, cara nenek moyang kita dulu. Kakek ingin kamu tau ilmu ini."
@@ -663,7 +660,6 @@
             playerName = input;
             localStorage.setItem('etnoCaptainName', playerName);
             
-            // 🔥 FIX BUG AUDIO: PLAY CLICK + BGM tanpa blocking
             playClick(); 
             setSistemVolume(volumeSistem);
             if(!audioMuted) {
@@ -679,7 +675,7 @@
             setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal di sebelah kanan ini!`, 'robot-kanan');
         }
 
-        function sembunyikanSemuaSlide() { document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active')); document.getElementById('zoneKakek').style.display = 'none'; document.getElementById('dialogOverlayKakek').style.display = 'none'; sembunyikanRobotKiri(); }
+        function sembunyikanSemuaSlide() { document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active')); document.getElementById('zoneKakek').style.display = 'block'; document.getElementById('dialogOverlayKakek').style.display = 'none'; sembunyikanRobotKiri(); }
         function sembunyikanRobotKiri() { document.getElementById('robotAktor').classList.add('robot-hidden-ui'); }
         function tampilkanRobotKiri() { document.getElementById('robotAktor').classList.remove('robot-hidden-ui'); }
         function setRobot(text, posisi = 'robot-kiri') { tampilkanRobotKiri(); document.getElementById('robotSpeech').innerHTML = text; document.getElementById('robotAktor').className = 'robot-wrapper ' + posisi; }
@@ -691,7 +687,19 @@
             sembunyikanRobotKiri(); 
         }
         function kembaliKeMenu() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active'); document.getElementById('starUI').style.display = 'none'; sembunyikanRobotKiri(); setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal di sebelah kanan ini!`, 'robot-kanan'); }
-        function bukaSkenario1() { playClickShip(); bukaIntroCerita(); }
+        
+        /* PERBAIKAN: Reset state setiap kali memulai skenario baru */
+        function bukaSkenario1() { 
+            // Reset variabel global agar interaksi berjalan normal
+            sinyalTerkirim = false;
+            klikRusakCount = 0;
+            indexBintang = 0;
+            kuisIndex = 0;
+            currentScenarioIndex = 0;
+            document.getElementById('klikRusak').innerText = '0';
+            playClickShip(); 
+            introCerita(); // Panggil langsung fungsi intro yang benar
+        }
 
         /* LOGIKA SKENARIO 1 */
         function interaksiLayar1(tipe) {
@@ -709,7 +717,16 @@
         function lanjutKeLayarNextSatu() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideNextSatu').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot(`Terima kasih telah mampir ke Palembang, Kapten ${playerName}. Prasasti Kedukan Bukit mengajarkan kita bahwa logika teknologi (sistem biner, angka 0) berakar dari peradaban Nusantara 682 Masehi.<br><br>Kita tidak sekadar ke Palembang tapi kita belajar menghargai warisan leluhur yang luar biasa! Mari kita jelajahi laut Nusantara balik ke dek kapalmu! tekan kapal di kiri atas ini.`); }); }
 
         /* LOGIKA SKENARIO 2, 3 (Kuis & Kakek) */
-        function berlayarMalam() { playClickShip(); const randomText = ["Memuat lautan baru", "Memuat samudera baru", "Memuat informasi", "Memuat teknologi terbaru"]; document.getElementById('loadingText').innerText = randomText[Math.floor(Math.random() * randomText.length)]; document.getElementById('loadingScreenRandom').style.display = 'flex'; setTimeout(() => { document.getElementById('loadingScreenRandom').style.display = 'none'; sembunyikanSemuaSlide(); document.getElementById('slideMalam').classList.add('active'); sembunyikanRobotKiri(); setTimeout(() => { document.getElementById('dialogOverlayKakek').style.display = 'block'; }, 1500); }, 2500); }
+        function berlayarMalam() { playClickShip(); const randomText = ["Memuat lautan baru", "Memuat samudera baru", "Memuat informasi", "Memuat teknologi terbaru"]; document.getElementById('loadingText').innerText = randomText[Math.floor(Math.random() * randomText.length)]; document.getElementById('loadingScreenRandom').style.display = 'flex'; setTimeout(() => { document.getElementById('loadingScreenRandom').style.display = 'none'; sembunyikanSemuaSlide(); document.getElementById('slideMalam').classList.add('active'); sembunyikanRobotKiri(); // Dialog otomatis muncul setelah delay, tapi Kakek juga bisa diklik
+            setTimeout(() => { document.getElementById('dialogOverlayKakek').style.display = 'block'; }, 1500); }, 2500); 
+        }
+
+        /* PERBAIKAN: Fungsi baru untuk membuka dialog Kakek saat area kakek diklik */
+        function bukaDialogKakek() {
+            playClick();
+            document.getElementById('dialogOverlayKakek').style.display = 'block';
+        }
+
         function kakekSelesaiCerita() { playClick(); document.getElementById('dialogOverlayKakek').style.display = 'none'; setRobot("Wah, seru ya cerita Kakek tadi. Kakek bilang, kunci utamanya adalah jangan panik dan percaya sama petunjuk alam. Iya nggak sih?<br><br>Nah, kalau kamu ada di posisi kapal yang terombang-ambing tanpa maps, apakah kamu akan panik?", 'robot-kanan'); let bubble = document.getElementById('robotSpeech'); bubble.innerHTML += `<br><br><span style="display:flex; justify-content:center; gap:10px; margin-top:10px;"><button onclick="responKakek('panik')" style="padding:5px 15px; background:#e74c3c; color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Panik Banget!</button><button onclick="responKakek('nggak')" style="padding:5px 15px; background:#2ecc71; color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Nggak Dong</button></span>`; }
         function responKakek(jawaban) { playClick(); if(jawaban === 'panik') { setRobot("Waduh tenangin dirimu!! Kalau panik, kapal bisa hilang kendali!"); sembunyikanSemuaSlide(); document.getElementById('slideRusak').classList.add('active'); klikRusakCount = 0; document.getElementById('klikRusak').innerText = "0"; setRobot("KARENA KAMU PANIK, KAPAL TEROMBANG AMBING! AYO SELAMATKAN DENGAN CLICK KAPAL 10X!"); } else { setRobot("Keren!! Betul kamu jangan panik! Yuk belajar membaca langit!"); setTimeout(() => { masukPetaBintang(); }, 2000); } }
         function perbaikiKapal() { klikRusakCount++; document.getElementById('klikRusak').innerText = klikRusakCount; let imgRsk = document.getElementById('imgRusak'); imgRsk.classList.remove('shake-effect'); void imgRsk.offsetWidth; imgRsk.classList.add('shake-effect'); if(klikRusakCount >= 10) { playClickShip(); setRobot("Syukurlah! Mesin kapal pulih! Kita belajar bintang yuk!"); setTimeout(() => { masukPetaBintang(); }, 2000); } else { playClick(); } }
@@ -722,7 +739,10 @@
             { img: 'scorpio.png', teks: `<h3>4. Rasi Skorpio (Kalajengking)</h3><p style="margin-bottom: 10px;">Berbentuk kalajengking. Arah Timur atau Tenggara.</p><p style="font-size: 14px; margin-bottom: 5px;">📌 <b>Nama Lokal:</b> Lintang Kelopo Doyong.</p><p style="font-size: 14px;">📌 <b>Fungsi:</b> Arah Timur atau Tenggara.</p>` }
         ];
         let indexBintang = 0;
-        function mulaiUrutanBintang() { playClick(); loadingTransisi(null, () => { indexBintang = 0; tampilkanBintangSaatIni(); }); }
+        function mulaiUrutanBintang() { 
+            indexBintang = 0; // Reset
+            playClick(); loadingTransisi(null, () => { tampilkanBintangSaatIni(); }); 
+        }
         function tampilkanBintangSaatIni() { sembunyikanSemuaSlide(); document.getElementById('slideRasi').classList.add('active'); document.getElementById('imgRasi').src = urutanBintang[indexBintang].img; document.getElementById('teksRasi').innerHTML = urutanBintang[indexBintang].teks; setRobot(`Formasi rasi ke-${indexBintang+1}! Klik Lanjutkan untuk rasi selanjutnya.`); }
         function lanjutBintangBerikutnya() { playClick(); loadingTransisi(null, () => { indexBintang++; if(indexBintang < urutanBintang.length) { tampilkanBintangSaatIni(); } else { document.getElementById('starUI').style.display = 'none'; bukaMateriGPS(); } }); }
         function bukaMateriGPS() { loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideGPS').classList.add('active'); setRobot("Paham rasi? Yuk uji pemahaman!"); }); }
@@ -734,7 +754,10 @@
             { q: "Tahu Crux, bisa tentukan arah apa?", a: "Utara", b: "Selatan", c: "Timur", d: "Barat", ans: "b", exp: "Crux = Arah Selatan." },
             { q: "Kenapa bentuk bintang penting?", a: "Jadi pelaut", b: "Pahami pola langit & akar GPS", c: "Hafal nama", d: "Tidak perlu HP", ans: "b", exp: "Literasi teknologi berakar dari pengetahuan tradisional!" }
         ];
-        function mulaiKuisStars() { playClick(); loadingTransisi(null, () => { kuisIndex = 0; document.getElementById('starUI').style.display = 'none'; sembunyikanSemuaSlide(); document.getElementById('slideKuis').classList.add('active'); renderKuis(); }); }
+        function mulaiKuisStars() { 
+            kuisIndex = 0; // Reset
+            playClick(); loadingTransisi(null, () => { document.getElementById('starUI').style.display = 'none'; sembunyikanSemuaSlide(); document.getElementById('slideKuis').classList.add('active'); renderKuis(); }); 
+        }
         function renderKuis() {
             let data = kuisData[kuisIndex]; document.getElementById('pertanyaanKuis').innerHTML = `<b>SOAL ${kuisIndex+1}/5:</b><br>${data.q}`;
             let html = `<div class="opsi-btn" onclick="jawabKuis('a', '${data.ans}')"><div class="opsi-badge-kuis">A</div><div>${data.a}</div></div>
@@ -779,7 +802,7 @@
         function bukaApp(type) {
             playClick();
             currentApp = type;
-            currentScenarioIndex = 0;
+            currentScenarioIndex = 0; // Reset
             if(type === 'chat') { document.getElementById('scenarioTitle').innerText = "💬 CHAT & SOSMED"; scenarioData = scenarios.chat; }
             else if(type === 'browser') { document.getElementById('scenarioTitle').innerText = "📰 BROWSER & BERITA"; scenarioData = scenarios.browser; }
             else if(type === 'security') { document.getElementById('scenarioTitle').innerText = "🛡️ KEAMANAN DIGITAL"; scenarioData = scenarios.security; }
@@ -791,7 +814,6 @@
         function tampilkanSkenario() {
             let body = document.getElementById('scenarioBody');
             if(currentScenarioIndex >= scenarioData.length) {
-                // Semua skenario selesai -> Buka Mini Game
                 document.getElementById('scenarioPanel').style.display = 'none';
                 mulaiMiniGame(currentApp);
                 return;
@@ -811,7 +833,6 @@
                 </div>
             `;
             body.innerHTML = html;
-            // Scroll ke bawah untuk UI seperti tablet asli
             body.scrollTop = body.scrollHeight;
         }
 
@@ -820,7 +841,6 @@
             let isCorrect = (pilihan === data.correct);
             let body = document.getElementById('scenarioBody');
             
-            // Tampilkan Feedback di dalam obrolan
             let choices = body.querySelectorAll('.chat-choice-btn');
             choices.forEach(btn => btn.style.pointerEvents = 'none');
             if(isCorrect) {
@@ -833,7 +853,6 @@
                 let wrongBtn = pilihan === 'A' ? choices[0] : choices[1];
                 wrongBtn.style.background = '#e74c3c';
                 wrongBtn.innerHTML = `❌ ${wrongBtn.innerText}`;
-                // Tampilkan jawaban benar
                 let correctBtn = data.correct === 'A' ? choices[0] : choices[1];
                 correctBtn.style.background = '#27ae60';
                 correctBtn.innerHTML = `✅ ${correctBtn.innerText}`;
@@ -863,7 +882,6 @@
             playClick();
             document.getElementById('scenarioPanel').style.display = 'none';
             document.getElementById('miniGamePanel').style.display = 'none';
-            // Hentikan game loop jika berjalan
             if(typeof stopGameLoop === 'function') stopGameLoop();
         }
 
@@ -890,35 +908,32 @@
             score = 0;
             let isRunning = true;
 
-            // Obstacle type: 'box' for Chat, 'circle' for Security, 'bird' for Browser
             let obstacleType = type === 'chat' ? 'box' : (type === 'security' ? 'circle' : 'bird');
 
             const drawDino = () => {
                 ctx.fillStyle = '#2d3436'; ctx.fillRect(dino.x, dino.y, dino.width, dino.height);
-                ctx.fillStyle = '#fff'; ctx.fillRect(dino.x + 10, dino.y - 20, 20, 20); // Mata
+                ctx.fillStyle = '#fff'; ctx.fillRect(dino.x + 10, dino.y - 20, 20, 20);
                 ctx.fillStyle = '#000'; ctx.beginPath(); ctx.arc(dino.x + 15, dino.y - 15, 4, 0, Math.PI*2); ctx.fill();
                 ctx.beginPath(); ctx.arc(dino.x + 25, dino.y - 15, 4, 0, Math.PI*2); ctx.fill();
             };
 
             const drawObstacle = (obs) => {
-                ctx.fillStyle = type === 'chat' ? '#e74c3c' : '#f1c40f'; // Red box / Yellow circle
+                ctx.fillStyle = type === 'chat' ? '#e74c3c' : '#f1c40f';
                 if(obs.type === 'box') { ctx.fillRect(obs.x, obs.y, obs.width, obs.height); }
                 else if(obs.type === 'circle') { ctx.beginPath(); ctx.arc(obs.x + obs.width/2, obs.y + obs.height/2, obs.width/2, 0, Math.PI*2); ctx.fill(); }
                 else if(obs.type === 'bird') {
-                    ctx.fillStyle = '#e67e22'; // Burung
+                    ctx.fillStyle = '#e67e22';
                     ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
-                    ctx.fillRect(obs.x - 10, obs.y - 10, 10, 10); // Sayap depan
-                    ctx.fillRect(obs.x + obs.width, obs.y - 10, 10, 10); // Sayap belakang
+                    ctx.fillRect(obs.x - 10, obs.y - 10, 10, 10);
+                    ctx.fillRect(obs.x + obs.width, obs.y - 10, 10, 10);
                 }
             };
 
             const update = () => {
                 if(isGameOver) return;
-                // Dino physics
                 if(dino.jumping) { dino.dy += dino.gravity; dino.y += dino.dy; }
                 if(dino.y >= canvas.height - 60) { dino.y = canvas.height - 60; dino.dy = 0; dino.jumping = false; }
 
-                // Generate Obstacles
                 if(frame % 60 === 0 && Math.random() > 0.4) {
                     let obs = { x: canvas.width, width: 25, height: 25, type: obstacleType };
                     obs.y = obs.type === 'bird' ? canvas.height - 100 : canvas.height - 60;
@@ -926,13 +941,11 @@
                     obstacles.push(obs);
                 }
 
-                // Move obstacles & check collision
                 for(let i = obstacles.length-1; i>=0; i--) {
                     let obs = obstacles[i];
                     obs.x -= 6;
                     if(obs.x + obs.width < 0) { obstacles.splice(i,1); score++; continue; }
 
-                    // Collision Detection
                     if(dino.x < obs.x + obs.width && dino.x + dino.width > obs.x &&
                        dino.y < obs.y + obs.height && dino.y + dino.height > obs.y) {
                         isGameOver = true;
@@ -944,7 +957,7 @@
             const draw = () => {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.fillStyle = '#f5f6fa'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = '#bdc3c7'; ctx.fillRect(0, canvas.height - 20, canvas.width, 20); // Ground
+                ctx.fillStyle = '#bdc3c7'; ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
                 
                 drawDino();
                 obstacles.forEach(o => drawObstacle(o));
@@ -961,11 +974,9 @@
                 gameLoopId = requestAnimationFrame(loop);
             };
 
-            // Event listeners
             const jumpHandler = (e) => {
                 e.preventDefault();
                 if(isGameOver) {
-                    // Restart jika game over
                     obstacles = []; score = 0; dino.y = canvas.height - 60; dino.dy = 0; dino.jumping = false; isGameOver = false;
                     return;
                 }
@@ -974,7 +985,6 @@
             canvas.addEventListener('click', jumpHandler);
             canvas.addEventListener('touchstart', jumpHandler);
 
-            // Override stop function to clean up
             window.stopGameLoop = () => {
                 isRunning = false;
                 if(gameLoopId) cancelAnimationFrame(gameLoopId);
@@ -985,10 +995,32 @@
             loop();
         }
 
+        /* PERBAIKAN: Fungsi introCerita & alias */
         function introCerita() {
-            sembunyikanRobotKiri(); sembunyikanSemuaSlide(); document.getElementById('slideIntroCerita').classList.add('active'); introIndex=0; tampilkanIntro(introIndex);
+            // Reset semua state sebelum intro dimulai
+            sinyalTerkirim = false;
+            klikRusakCount = 0;
+            indexBintang = 0;
+            kuisIndex = 0;
+            currentScenarioIndex = 0;
+            document.getElementById('klikRusak').innerText = '0';
+            
+            sembunyikanRobotKiri(); 
+            sembunyikanSemuaSlide(); 
+            document.getElementById('slideIntroCerita').classList.add('active'); 
+            introIndex=0; 
+            tampilkanIntro(introIndex);
         }
-        function finishIntroAndStartGame() { tampilkanRobotKiri(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slidePetualangan1').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot("Kapten, kita udah sampai di Palembang! Di sinilah nenek moyang kita menulis angka 0 pertama kali. Ayo kita temukan prasastinya!"); }); }
+        
+        function finishIntroAndStartGame() { 
+            tampilkanRobotKiri(); 
+            loadingTransisi(null, () => { 
+                sembunyikanSemuaSlide(); 
+                document.getElementById('slidePetualangan1').classList.add('active'); 
+                document.getElementById('starUI').style.display = 'flex'; 
+                setRobot("Kapten, kita udah sampai di Palembang! Di sinilah nenek moyang kita menulis angka 0 pertama kali. Ayo kita temukan prasastinya!"); 
+            }); 
+        }
 
         // --- SISA KODE INTRO ---
         let introIndex = 0; let introTimer = null; let countdownInterval = null;
