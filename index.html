@@ -60,11 +60,23 @@
         .audio-toggle { background: transparent; color: #f5f6fa; font-weight: bold; border: none; cursor: pointer; font-size: 16px; }
         .volume-slider { width: 70px; cursor: pointer; accent-color: #00a8ff; }
 
-        /* Anti-gelap: Background fallback terang */
-        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; background-color: #e8e3d3; }
+        /* --- PERBAIKAN ANTI-GELAP & FALLBACK SAAT LOADING GAMBAR --- */
+        .slide { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            display: none; 
+            background-color: #2c3e50; /* Warna biru kehitaman sebagai fallback agar tidak hitam pekat */
+        }
         .slide.active { display: block; }
         #slideSertifikat.active { display: flex !important; }
-        .bg-img { width: 100%; height: 100%; object-fit: cover; display: block; background-color: #e8e3d3; }
+
+        .bg-img { 
+            width: 100%; height: 100%; object-fit: cover; display: block; 
+            background-color: #2c3e50; /* Warna fallback untuk gambar */
+        }
+        /* Fallback khusus untuk slide rasi bintang agar tidak gelap saat delay */
+        #slideRasi .bg-img { background-color: #0d1b2a; } /* Langit malam gelap biru */
+        #slideStars .bg-img { background-color: #0d1b2a; } /* Langit malam */
+        /* ---------------------------------------------------------- */
 
         #loadingScreenRandom { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #2c3e50 0%, #1a252f 100%); color: white; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 200; text-align: center; padding: 20px; }
         .ship-loading-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; margin-bottom: 15px; }
@@ -96,6 +108,7 @@
         @keyframes spinWheel { 100% { transform: rotate(360deg); } }
         #loadingCarTransition h2 { color: #eccc68; font-weight: 900; font-size: 22px; text-shadow: 0 0 20px rgba(0,0,0,0.5); margin-top: 20px; letter-spacing: 1px; }
 
+        /* MODAL (Z-Index Tinggi) */
         .modal-overlay { position: absolute; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100000 !important; display: none; justify-content: center; align-items: center; flex-direction: column; pointer-events: auto !important; }
         .name-box { background: rgba(20, 30, 40, 0.95); border: 2px solid #eccc68; border-radius: 15px; padding: 30px; text-align: center; width: 60%; box-shadow: 0 10px 30px rgba(236,204,104,0.3); pointer-events: auto !important; }
         .name-box h2 { color: #eccc68; margin-bottom: 15px; letter-spacing: 1px; }
@@ -218,10 +231,10 @@
         .btn-kembali-hud { position: absolute; top: 15px; left: 15px; width: auto; padding: 8px 15px; background: rgba(44, 62, 80, 0.9); border: 2px solid #eccc68; border-radius: 8px; color: #fff; font-weight: bold; cursor: pointer; z-index: 70; box-shadow: 0 4px 6px rgba(0,0,0,0.4); text-shadow: 1px 1px 2px #000; transition: 0.2s; }
         .btn-kembali-hud:hover { background: #e74c3c; transform: scale(1.05); }
 
-        /* --- OVERLAY SERTIFIKAT --- */
+        /* --- SLIDE SERTIFIKAT FINAL --- */
         #slideSertifikat { background: #000; display: none; justify-content: center; align-items: center; z-index: 300; }
         .sertifikat-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; padding: 20px; }
-        .sertifikat-image-wrapper { position: relative; width: 100%; max-width: 900px; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.9); background: #e8e3d3; }
+        .sertifikat-image-wrapper { position: relative; width: 100%; max-width: 900px; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.9); background: #e8e3d3; /* Fallback warna untuk sertifikat */ }
         .sertifikat-image-wrapper img.bg-sertif { width: 100%; height: 100%; object-fit: contain; display: block; }
         .sertifikat-overlay { position: absolute; top: 18%; left: 12.5%; width: 75%; height: 62%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #3e2723; font-family: 'Georgia', 'Times New Roman', serif; padding: 10px; pointer-events: none; }
         .sertifikat-overlay > * { pointer-events: auto; }
@@ -229,6 +242,8 @@
         .sertif-pencapaian { font-size: clamp(0.8rem, 1.6vw, 1.3rem); line-height: 1.8; color: #3e2723; list-style: none; padding: 0; margin: 10px 0; }
         .sertif-pencapaian li::before { content: "✅ "; font-size: 1.2em; }
         .sertif-bintang { font-size: clamp(1rem, 2vw, 1.6rem); font-weight: 600; color: #b8860b; margin-top: 5px; }
+        
+        /* Tombol dipindahkan ke bawah gambar */
         .sertif-actions { margin-top: 20px; display: flex; gap: 15px; position: relative; z-index: 10; }
         .sertif-actions button { padding: 8px 20px; background: #d4af37; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: clamp(0.8rem, 1.2vw, 1rem); color: #2c3e50; }
         .sertif-actions button:hover { transform: scale(1.05); background: #e6c45a; }
@@ -337,7 +352,7 @@
 
         <!-- SLIDE 1 -->
         <div id="slide1" class="slide active">
-            <img src="wel1.jpg" alt="Selamat Datang" class="bg-img">
+            <img src="wel1.jpg" alt="Selamat Datang" class="bg-img" loading="lazy">
             <div class="bottom-bar" onclick="bukaModalNama()">
                 <span class="start-text">START GAME!!!</span>
             </div>
@@ -345,7 +360,7 @@
         
         <!-- SLIDE 2 -->
         <div id="slide2" class="slide">
-            <img src="wel2.jpg" alt="Pelabuhan" class="bg-img">
+            <img src="wel2.jpg" alt="Pelabuhan" class="bg-img" loading="lazy">
             <button class="icon-btn puzzle-btn" onclick="openMenu('caraMain')"></button>
             <button class="icon-btn book-btn" onclick="openMenu('rules')"></button>
             <button class="icon-btn ship-btn" onclick="bukaSkenario1()"></button>
@@ -353,7 +368,7 @@
 
         <!-- SLIDE MENU -->
         <div id="slideRules" class="slide">
-            <img src="soalback.png" alt="Background" class="bg-img">
+            <img src="soalback.png" alt="Background" class="bg-img" loading="lazy">
             <div class="menu-panel-wrapper">
                 <div class="menu-panel-title">📜 ATURAN EKSPEDISI</div>
                 <div class="menu-panel-content">
@@ -368,7 +383,7 @@
         </div>
 
         <div id="slideCaraMain" class="slide">
-            <img src="soalback.png" alt="Background" class="bg-img">
+            <img src="soalback.png" alt="Background" class="bg-img" loading="lazy">
             <div class="menu-panel-wrapper">
                 <div class="menu-panel-title">🧩 PETUNJUK NAVIGASI</div>
                 <div class="menu-panel-content">
@@ -384,7 +399,7 @@
 
         <!-- INTRO PRASASTI -->
         <div id="slideIntroCerita" class="slide">
-            <img src="soalback.png" alt="Background Soal" class="bg-img">
+            <img src="soalback.png" alt="Background Soal" class="bg-img" loading="lazy">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div class="intro-wrapper">
                 <div class="intro-bubble">
@@ -393,28 +408,28 @@
                 </div>
                 <button id="introNextBtn" onclick="goToNextIntro()">⏳ Membaca...</button>
                 <div class="intro-robot-wrapper">
-                    <img src="robot.jpg" alt="Robot Nusantara" class="intro-robot-img">
+                    <img src="robot.jpg" alt="Robot Nusantara" class="intro-robot-img" loading="lazy">
                 </div>
             </div>
         </div>
 
         <!-- SKENARIO 1 -->
         <div id="slidePetualangan1" class="slide">
-            <img src="1.png" alt="Skenario 1 - Layar 1" class="bg-img">
+            <img src="1.png" alt="Skenario 1 - Layar 1" class="bg-img" loading="lazy">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div id="zoneKapal" class="tap-zone kapal-tap" onclick="interaksiLayar1('kapal')"></div>
             <div id="zonePulau" class="tap-zone pulau-tap" onclick="interaksiLayar1('pulau')"></div>
         </div>
 
         <div id="slidePrasasti" class="slide">
-            <img src="2.png" alt="Prasasti Kedukan Bukit" class="bg-img">
+            <img src="2.png" alt="Prasasti Kedukan Bukit" class="bg-img" loading="lazy">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <button class="btn-selesai" style="position:absolute; bottom:15px; left:50%; transform:translateX(-50%); width:auto; padding:10px 30px; background:#e67e22; z-index:70; border-radius:30px;" onclick="lanjutKeSoal()">Lanjutkan ➔</button>
         </div>
         
         <!-- SOAL A/B PRASASTI -->
         <div id="slideSoalS1" class="slide">
-            <img src="soalback.png" alt="Background Soal" class="bg-img">
+            <img src="soalback.png" alt="Background Soal" class="bg-img" loading="lazy">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div class="soal-panel-wrapper">
                 <div class="opsi-card opsi-card-a" onclick="eksekusiPilihOpsiS1('A')">
@@ -440,21 +455,21 @@
 
         <!-- SA1.png -->
         <div id="slideSebabAkibatS1" class="slide">
-            <img id="assetSebabAkibatImgS1" src="SA1.png" alt="Penjelasan Sebab Akibat" class="bg-img">
+            <img id="assetSebabAkibatImgS1" src="SA1.png" alt="Penjelasan Sebab Akibat" class="bg-img" loading="lazy">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <button class="btn-selesai" style="position:absolute; top:25%; left:50%; transform:translateX(-50%); width:35%; background:#e67e22; z-index:70; padding:12px; border-radius:30px; box-shadow:0 4px 15px rgba(0,0,0,0.5);" onclick="lanjutKeLayarNextSatu()">Lanjutkan ➔</button>
         </div>
         
         <!-- NEXT1.JPG -->
         <div id="slideNextSatu" class="slide">
-            <img src="next1.jpg" alt="Peta Jalur Laut" class="bg-img">
+            <img src="next1.jpg" alt="Peta Jalur Laut" class="bg-img" loading="lazy">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div id="zoneKapalMadura" class="tap-zone kapal-madura-tap" onclick="berlayarMalam()"></div>
         </div>
         
         <!-- 5.png (MALAM) -->
         <div id="slideMalam" class="slide">
-            <img src="5.png" alt="Malam Hari & Kakek" class="bg-img">
+            <img src="5.png" alt="Malam Hari & Kakek" class="bg-img" loading="lazy">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div id="zoneKakek" class="tap-zone kakek-tap" onclick="bukaDialogKakek()"></div>
             <div id="dialogOverlayKakek" class="dialogue-overlay">
@@ -469,7 +484,7 @@
 
         <!-- RUSAK.PNG -->
         <div id="slideRusak" class="slide">
-            <img id="imgRusak" src="rusak.png" alt="Kapal Rusak" class="bg-img">
+            <img id="imgRusak" src="rusak.png" alt="Kapal Rusak" class="bg-img" loading="lazy">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div style="position:absolute; top:30px; width:100%; text-align:center; font-size:24px; font-weight:900; color:#e74c3c; text-shadow: 2px 2px 4px #000, 0 0 20px rgba(231,76,60,0.5); z-index: 100; pointer-events: none; animation: pulse-warning 1s infinite;">TAP LAYAR CEPAT UNTUK SELAMATKAN KAPAL! (<span id="klikRusak">0</span>/10)</div>
             <button class="tap-zone kapal-rusak-tap" onclick="perbaikiKapal()"></button>
@@ -477,7 +492,7 @@
         
         <!-- STARS.PNG -->
         <div id="slideStars" class="slide">
-            <img src="stars.png" alt="Peta Bintang Malam" class="bg-img">
+            <img src="stars.png" alt="Peta Bintang Malam" class="bg-img" loading="lazy">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div style="position:absolute; bottom:12%; left:0; width:100%; text-align:center; font-size:22px; font-weight:900; color:#f1c40f; text-shadow: 0 0 20px #000, 0 0 40px #000; z-index: 100; pointer-events: none; animation: pulse-glow 1.5s infinite;">✨ KLIK AREA CAHAYA DI LANGIT ✨</div>
             <div class="tap-zone star-zone z-crux" onclick="mulaiUrutanBintang()"></div>
@@ -485,7 +500,8 @@
         
         <!-- RASI BINTANG -->
         <div id="slideRasi" class="slide">
-            <img id="imgRasi" src="" alt="Rasi Bintang" class="bg-img">
+            <!-- Fallback gambar jika crux.png dll belum termuat -->
+            <img id="imgRasi" src="" alt="Rasi Bintang" class="bg-img" onerror="this.style.display='none'">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div class="rasi-container">
                 <div id="teksRasi" style="font-size:16px; line-height:1.6;"></div>
@@ -495,7 +511,7 @@
         
         <!-- MATERI GPS -->
         <div id="slideGPS" class="slide">
-            <img src="soalback.png" alt="Background GPS" class="bg-img">
+            <img src="soalback.png" alt="Background GPS" class="bg-img" loading="lazy">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:85%; background:rgba(0,0,0,0.7); padding:20px; border-radius:12px; z-index:50; color:#fff; text-align:left; max-height:80vh; overflow-y:auto;">
                 <h3 style="color:#f1c40f; text-align:center; margin-bottom:10px;">🌌 Navigasi Bintang = "GPS-nya" Nenek Moyang</h3>
@@ -511,7 +527,7 @@
         
         <!-- KUIS GPS -->
         <div id="slideKuis" class="slide">
-            <img src="soalback.png" alt="Kuis Bintang" class="bg-img">
+            <img src="soalback.png" alt="Kuis Bintang" class="bg-img" loading="lazy">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:90%; background:rgba(0,0,0,0.8); padding:20px; border-radius:15px; z-index:50; color:#fff; text-align:center; max-height:80vh; overflow-y:auto;">
                 <h3 style="color:#f1c40f; margin-bottom:15px;">⚔️ PILIH JAWABAN TEPAT</h3>
@@ -522,21 +538,21 @@
 
         <!-- NEXT2.PNG -->
         <div id="slideNextDua" class="slide">
-            <img src="next2.png" alt="Peta Jalur Laut Berikutnya" class="bg-img">
+            <img src="next2.png" alt="Peta Jalur Laut Berikutnya" class="bg-img" loading="lazy">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div class="tap-zone kapal-madura-tap" onclick="tamatKuisDanKembali()"></div>
         </div>
 
         <!-- MEJA.PNG -->
         <div id="slideMeja" class="slide">
-            <img src="meja.png" alt="Meja Kayu dengan Tablet" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=Meja+Kayu+(meja.png)'">
+            <img src="meja.png" alt="Meja Kayu dengan Tablet" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=Meja+Kayu+(meja.png)'" loading="lazy">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             <div id="zoneTablet" class="tap-zone tablet-tap" onclick="klikTablet()"></div>
         </div>
 
         <!-- 🔥 SLIDE TABLET JPG (ETNOSATEK DIGITAL TABLET) -->
         <div id="slideTablet" class="slide">
-            <img src="tablet.jpg" alt="Tablet Menu" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=Tablet+(tablet.jpg)'">
+            <img src="tablet.jpg" alt="Tablet Menu" class="bg-img" onerror="this.src='https://via.placeholder.com/900x600.png?text=Tablet+(tablet.jpg)'" loading="lazy">
             <button class="btn-kembali-hud" onclick="kembaliKeMenu()">⚓ Beranda</button>
             
             <div class="tablet-overlay">
@@ -563,7 +579,7 @@
         <div id="slideSertifikat" class="slide">
             <div class="sertifikat-wrapper">
                 <div class="sertifikat-image-wrapper">
-                    <img src="sertifikat.png" alt="Sertifikat" class="bg-sertif" onerror="this.src='https://via.placeholder.com/900x600?text=Sertifikat+(sertifikat.png)'">
+                    <img src="sertifikat.png" alt="Sertifikat" class="bg-sertif" onerror="this.src='https://via.placeholder.com/900x600?text=Sertifikat+(sertifikat.png)'" loading="lazy">
                     <div class="sertifikat-overlay">
                         <div class="sertif-nama" id="sertifNama">— Nama Pemain —</div>
                         <ul class="sertif-pencapaian">
@@ -605,16 +621,8 @@
         let klikRusakCount = 0; let kuisIndex = 0;
         let isSlowNetwork = false;
 
-        // State Progress untuk Sertifikat
-        let progress = {
-            prasasti: false,
-            laut: false,
-            chat: false,
-            browser: false,
-            security: false
-        };
+        let progress = { prasasti: false, laut: false, chat: false, browser: false, security: false };
 
-        /* DETEKSI JARINGAN */
         function checkNetworkSpeed() {
             return new Promise((resolve) => {
                 let connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
@@ -672,10 +680,11 @@
 
         function setSistemVolume(val) { volumeSistem = val; if(!audioMuted) { soundClick.volume = val; soundClickShip.volume = val * 1.3; soundWelcome.volume = val; soundBgm.volume = val * 0.5; soundCorrect.volume = val * 1.3; soundWrong.volume = val * 1.3; } }
         function toggleMute() { audioMuted = !audioMuted; const btn = document.getElementById('btnAudio'); if(audioMuted) { btn.innerText = "🔇"; soundWelcome.volume=0; soundBgm.volume=0; soundClick.volume=0; soundClickShip.volume=0; soundCorrect.volume=0; soundWrong.volume=0; soundBgm.pause(); } else { btn.innerText = "🔊"; setSistemVolume(document.getElementById('volSlider').value); if(isBgmPlaying) soundBgm.play().catch(e=>{}); } }
-        
-        // Fungsi audio dipastikan tidak menggagalkan game
-        function playClick() { try { soundClick.currentTime = 0; soundClick.play().catch(e=>{ console.warn("Audio playClick blocked:", e); }); } catch(e){} }
-        function playClickShip() { try { soundClickShip.currentTime = 0; soundClickShip.play().catch(e=>{ console.warn("Audio playClickShip blocked:", e); }); } catch(e){} }
+
+        /* --- PERBAIKAN AUDIO SUPAYA TIDAK MACET --- */
+        function playClick() { try { soundClick.currentTime = 0; soundClick.play().catch(e=>{}); } catch(e){} }
+        function playClickShip() { try { soundClickShip.currentTime = 0; soundClickShip.play().catch(e=>{}); } catch(e){} }
+        /* --------------------------------------------------- */
 
         function mulaiDenganNama() {
             let input = document.getElementById('inputNama').value.trim();
@@ -685,10 +694,14 @@
             
             playClick(); 
             setSistemVolume(volumeSistem);
+            
+            // Jika audio gagal, script tetap lanjut (Tidak akan macet)
             if(!audioMuted) {
-                try { soundWelcome.play().catch(e => console.warn("Welcome audio blocked:", e)); } catch(e){}
-                try { soundBgm.play().catch(e => console.warn("BGM audio blocked:", e)); } catch(e){}
-                isBgmPlaying = true;
+                try { 
+                    soundWelcome.play().catch(e => console.log("Welcome audio blocked, but game continues.")); 
+                    soundBgm.play().catch(e => console.log("BGM audio blocked, but game continues.")); 
+                    isBgmPlaying = true; 
+                } catch(e) { isBgmPlaying = true; }
             } else { isBgmPlaying = true; }
             
             document.getElementById('modalNama').style.display = 'none';
@@ -712,14 +725,9 @@
         function kembaliKeMenu() { playClick(); sembunyikanSemuaSlide(); document.getElementById('slide2').classList.add('active'); document.getElementById('starUI').style.display = 'none'; sembunyikanRobotKiri(); setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal di sebelah kanan ini!`, 'robot-kanan'); }
         
         function bukaSkenario1() { 
-            sinyalTerkirim = false;
-            klikRusakCount = 0;
-            indexBintang = 0;
-            kuisIndex = 0;
-            currentScenarioIndex = 0;
+            sinyalTerkirim = false; klikRusakCount = 0; indexBintang = 0; kuisIndex = 0; currentScenarioIndex = 0;
             document.getElementById('klikRusak').innerText = '0';
-            playClickShip(); 
-            introCerita(); 
+            playClickShip(); introCerita(); 
         }
 
         /* LOGIKA SKENARIO 1 */
@@ -753,7 +761,7 @@
         ];
         let indexBintang = 0;
         function mulaiUrutanBintang() { indexBintang = 0; playClick(); loadingTransisi(null, () => { tampilkanBintangSaatIni(); }); }
-        function tampilkanBintangSaatIni() { sembunyikanSemuaSlide(); document.getElementById('slideRasi').classList.add('active'); document.getElementById('imgRasi').src = urutanBintang[indexBintang].img; document.getElementById('teksRasi').innerHTML = urutanBintang[indexBintang].teks; setRobot(`Formasi rasi ke-${indexBintang+1}! Klik Lanjutkan untuk rasi selanjutnya.`); }
+        function tampilkanBintangSaatIni() { sembunyikanSemuaSlide(); document.getElementById('slideRasi').classList.add('active'); document.getElementById('imgRasi').src = urutanBintang[indexBintang].img; document.getElementById('imgRasi').style.display = 'block'; document.getElementById('imgRasi').style.backgroundColor = '#0d1b2a'; /* Fallback color */ document.getElementById('teksRasi').innerHTML = urutanBintang[indexBintang].teks; setRobot(`Formasi rasi ke-${indexBintang+1}! Klik Lanjutkan untuk rasi selanjutnya.`); }
         function lanjutBintangBerikutnya() { playClick(); loadingTransisi(null, () => { indexBintang++; if(indexBintang < urutanBintang.length) { tampilkanBintangSaatIni(); } else { document.getElementById('starUI').style.display = 'none'; bukaMateriGPS(); } }); }
         function bukaMateriGPS() { loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideGPS').classList.add('active'); setRobot("Paham rasi? Yuk uji pemahaman!"); }); }
 
@@ -783,21 +791,17 @@
         function lanjutKuis() { playClick(); kuisIndex++; renderKuis(); }
         function selesaiSkenarioMalam() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideNextDua').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot(`Hebat Kapten ${playerName}! Kita telah belajar banyak tentang rasi bintang dan navigasi. Ayo pulang ke daratan!`); }); }
 
-        /* LOGIKA MEJA & TABLET */
         function tamatKuisDanKembali() { playClickShip(); loadingCarTransisi(2500, () => { sembunyikanSemuaSlide(); document.getElementById('slideMeja').classList.add('active'); setRobot(`Kapten ${playerName}, kita udah sampe di rumah. Tuh, ada tablet di atas meja. Coba lihat, ada apa aja di dalamnya....tuh`, 'robot-kiri'); }); }
-        function klikTablet() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideTablet').classList.add('active'); 
-            document.getElementById('btnChat').style.opacity = progress.chat ? '0.5' : '1';
+        function klikTablet() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideTablet').classList.add('active'); document.getElementById('btnChat').style.opacity = progress.chat ? '0.5' : '1';
             document.getElementById('btnChat').style.pointerEvents = progress.chat ? 'none' : 'auto';
             document.getElementById('btnBrowser').style.opacity = (!progress.chat || progress.browser) ? '0.5' : '1';
             document.getElementById('btnBrowser').style.pointerEvents = (!progress.chat || progress.browser) ? 'none' : 'auto';
             document.getElementById('btnSecurity').style.opacity = (!progress.browser || progress.security) ? '0.5' : '1';
             document.getElementById('btnSecurity').style.pointerEvents = (!progress.browser || progress.security) ? 'none' : 'auto';
-            
             document.getElementById('scenarioPanel').style.display = 'none';
             setRobot("Pilih aplikasi di tablet! Chat dulu ya!"); 
         }); }
 
-        /* --- SKENARIO UNTUK TABLET --- */
         const scenarios = {
             chat: [
                 { id: 1, type: 'chat', prompt: "Grup WA kelas 9A lagi rame. Ada pesan dari akun gak jelas:\n'Besok sekolah diliburkan! Ada demo di sekitar sekolah.'\nUdah banyak yang share ke grup lain tanpa ngecek.", optionA: "Share ke grup lain", optionB: "Cek kebenaran di website sekolah", correct: 'B', feedback: "Tepat sekali, Kapten! Kamu cek kebenaran di website sekolah sebelum share. Ternyata berita itu hoaks — sekolah tetap masuk seperti biasa. Kamu selamatkan banyak orang dari kepanikan yang gak perlu.<br><br>Pelajaran: Hoaks itu mudah menyebar, apalagi di grup WA. Kebiasaan cek fakta dulu sebelum share adalah ciri orang yang paham literasi digital. Kamu hebat!", wrongFeedback: "Kurang tepat, Kapten! Kamu langsung share tanpa cek kebenaran. Akibatnya, berita hoaks menyebar ke grup lain dan bikin panik banyak orang. Orang tua jadi khawatir, teman-teman jadi bingung, dan guru harus meluruskan informasi yang salah.<br><br>Seharusnya: Cek kebenaran di website sekolah dulu. Biasanya sekolah punya pengumuman resmi di website atau grup resmi guru. Dengan cek fakta, kamu gak ikut nyebarin hoaks. Itu yang dilakukan orang melek digital!", icon: "💬" },
@@ -812,9 +816,7 @@
                 { id: 2, type: 'security', prompt: "Kamu dapat email dari 'Bank' yang minta verifikasi data karena 'ada transaksi mencurigakan'. Isinya minta kirim nomor PIN dan password.", optionA: "Kirim data karena panik", optionB: "Cek nomor resmi bank di browser", correct: 'B', feedback: "Sangat tepat, Kapten! Kamu gak panik dan gak percaya sama email yang ngaku dari 'Bank'. Kamu cek nomor resmi bank di browser dan tau itu penipuan. Data pribadimu aman, dan kamu berhasil melindungi diri dari kejahatan digital.<br><br>Pelajaran: Privasi digital itu mahal harganya. Jangan pernah kasih data pribadi, PIN, password, atau kode OTP ke siapa pun, apalagi lewat pesan. Selalu verifikasi lewat saluran resmi.", wrongFeedback: "Aduh, Kapten! Kamu panik dan langsung kirim data pribadi ke email yang ngaku dari 'Bank'. Ini jebakan! Bank gak pernah minta password atau PIN lewat email atau WhatsApp. Dengan kirim data, akun bankmu bisa dibobol!<br><br>Seharusnya: Cek nomor resmi bank di browser atau aplikasi resmi bank. Hubungi call center resmi buat konfirmasi. Jangan pernah kasih data pribadi lewat pesan.", icon: "🛡️" }
             ]
         };
-        let currentApp = '';
-        let currentScenarioIndex = 0;
-        let scenarioData = [];
+        let currentApp = ''; let currentScenarioIndex = 0; let scenarioData = [];
 
         function bukaApp(type) {
             if(type === 'browser' && !progress.chat) { setRobot("Selesaikan Chat dulu sebelum ke Browser ya!"); return; }
@@ -822,7 +824,6 @@
             if(type === 'chat' && progress.chat) { setRobot("Chat sudah selesai! Lanjut ke Browser."); return; }
             if(type === 'browser' && progress.browser) { setRobot("Browser sudah selesai! Lanjut ke Keamanan."); return; }
             if(type === 'security' && progress.security) { setRobot("Semua aplikasi sudah selesai! Sertifikat sedang diproses..."); return; }
-
             playClick();
             currentApp = type; currentScenarioIndex = 0;
             if(type === 'chat') { document.getElementById('scenarioTitle').innerText = "💬 CHAT & SOSMED"; scenarioData = scenarios.chat; }
@@ -839,14 +840,12 @@
                 if(currentApp === 'chat') progress.chat = true;
                 else if(currentApp === 'browser') progress.browser = true;
                 else if(currentApp === 'security') progress.security = true;
-                
                 document.getElementById('btnChat').style.opacity = progress.chat ? '0.5' : '1';
                 document.getElementById('btnChat').style.pointerEvents = progress.chat ? 'none' : 'auto';
                 document.getElementById('btnBrowser').style.opacity = (!progress.chat || progress.browser) ? '0.5' : '1';
                 document.getElementById('btnBrowser').style.pointerEvents = (!progress.chat || progress.browser) ? 'none' : 'auto';
                 document.getElementById('btnSecurity').style.opacity = (!progress.browser || progress.security) ? '0.5' : '1';
                 document.getElementById('btnSecurity').style.pointerEvents = (!progress.browser || progress.security) ? 'none' : 'auto';
-
                 if(progress.chat && progress.browser && progress.security) {
                     setRobot("🎉 Hebat Kapten! Semua aplikasi selesai. Sertifikat sedang diproses...");
                     setTimeout(() => { tampilkanLoadingSertifikat(); }, 1000);
@@ -857,7 +856,6 @@
                 }
                 return;
             }
-
             let data = scenarioData[currentScenarioIndex];
             let html = `
                 <div class="chat-bubble-system">
@@ -937,10 +935,9 @@
             let zones = document.querySelectorAll('.tap-zone'); let aktif = false; if(zones.length > 0 && zones[0].classList.contains('debug-mode')) { aktif = true; } zones.forEach(el => { if(aktif) el.classList.remove('debug-mode'); else el.classList.add('debug-mode'); }); alert(aktif ? "Mode Target Dinonaktifkan." : "Mode Target Diaktifkan! Semua zona klik berupa lingkaran radar.");
         }
 
-        /* --- LOGIKA SERTIFIKAT --- */
-        // Fungsi loading 5 detik dengan manipulasi psikologi kesabaran
+        /* --- LOGIKA SERTIFIKAT OTOMATIS (APRESIASI DIHAPUS) --- */
         function tampilkanLoadingSertifikat() {
-            if(!(progress.chat && progress.browser && progress.security)) { return; }
+            if(!(progress.chat && progress.browser && progress.security)) return;
             playClick();
             const loadingDiv = document.getElementById('loadingSertifikat');
             const progressFill = document.getElementById('progressFillSertif');
@@ -969,7 +966,7 @@
         function tutupSertifikat() {
             playClick();
             document.getElementById('slideSertifikat').classList.remove('active');
-            kembaliKeMenu(); // Kembali ke menu utama tanpa apresiasi
+            kembaliKeMenu();
         }
     </script>
 </body>
