@@ -60,16 +60,11 @@
         .audio-toggle { background: transparent; color: #f5f6fa; font-weight: bold; border: none; cursor: pointer; font-size: 16px; }
         .volume-slider { width: 70px; cursor: pointer; accent-color: #00a8ff; }
 
-        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; background-color: #1a252f; }
+        /* Anti-gelap: Background fallback terang */
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; background-color: #e8e3d3; }
         .slide.active { display: block; }
-        
-        /* --- PERBAIKAN BUG LAYAR GELAP --- */
-        #slideApresiasi.active, #slideSertifikat.active { 
-            display: flex !important; 
-        }
-        /* ----------------------------------- */
-
-        .bg-img { width: 100%; height: 100%; object-fit: cover; display: block; background-color: #111; }
+        #slideSertifikat.active { display: flex !important; }
+        .bg-img { width: 100%; height: 100%; object-fit: cover; display: block; background-color: #e8e3d3; }
 
         #loadingScreenRandom { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #2c3e50 0%, #1a252f 100%); color: white; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 200; text-align: center; padding: 20px; }
         .ship-loading-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; margin-bottom: 15px; }
@@ -101,11 +96,12 @@
         @keyframes spinWheel { 100% { transform: rotate(360deg); } }
         #loadingCarTransition h2 { color: #eccc68; font-weight: 900; font-size: 22px; text-shadow: 0 0 20px rgba(0,0,0,0.5); margin-top: 20px; letter-spacing: 1px; }
 
-        .modal-overlay { position: absolute; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 99; display: none; justify-content: center; align-items: center; flex-direction: column; }
-        .name-box { background: rgba(20, 30, 40, 0.95); border: 2px solid #eccc68; border-radius: 15px; padding: 30px; text-align: center; width: 60%; box-shadow: 0 10px 30px rgba(236,204,104,0.3); }
+        .modal-overlay { position: absolute; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100000 !important; display: none; justify-content: center; align-items: center; flex-direction: column; pointer-events: auto !important; }
+        .name-box { background: rgba(20, 30, 40, 0.95); border: 2px solid #eccc68; border-radius: 15px; padding: 30px; text-align: center; width: 60%; box-shadow: 0 10px 30px rgba(236,204,104,0.3); pointer-events: auto !important; }
         .name-box h2 { color: #eccc68; margin-bottom: 15px; letter-spacing: 1px; }
         .name-input { width: 90%; padding: 12px; font-size: 16px; font-weight: bold; text-align: center; border-radius: 8px; border: 2px solid #74b9ff; background: #1a252f; color: #fff; margin-bottom: 20px; outline: none; }
         .name-input:focus { border-color: #eccc68; }
+        .btn-selesai { width: 100%; padding: 12px; background: #2ecc71; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 10px rgba(46,204,113,0.4); pointer-events: auto !important;}
 
         .bottom-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 12%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 65; pointer-events: auto; }
         .start-text { color: #ffffff; font-size: 3vw; font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 20px rgba(9, 132, 227, 0.9), 0 4px 10px #000; animation: pulse-glow 1.2s infinite; }
@@ -135,55 +131,22 @@
         #slideTablet { background: #1a252f; overflow: hidden; }
         #slideTablet .bg-img { object-fit: cover; }
 
-        .tablet-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 60; padding: 5%;
-        }
-        .tablet-menu-buttons {
-            position: absolute; top: 39%; left: 0; width: 100%; height: 32%;
-            display: flex; justify-content: center; align-items: center; gap: 3.5%;
-            z-index: 61; pointer-events: none;
-        }
-        .tablet-btn {
-            width: 21.5%; height: 100%; background: transparent; border: 2px solid rgba(255,255,255,0.2); border-radius: 20px;
-            cursor: pointer; pointer-events: auto; transition: 0.2s; display: flex; justify-content: center; align-items: center;
-        }
+        .tablet-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 60; padding: 5%; }
+        .tablet-menu-buttons { position: absolute; top: 39%; left: 0; width: 100%; height: 32%; display: flex; justify-content: center; align-items: center; gap: 3.5%; z-index: 61; pointer-events: none; }
+        .tablet-btn { width: 21.5%; height: 100%; background: transparent; border: 2px solid rgba(255,255,255,0.2); border-radius: 20px; cursor: pointer; pointer-events: auto; transition: 0.2s; display: flex; justify-content: center; align-items: center; }
         .tablet-btn:hover { border-color: #f1c40f; box-shadow: 0 0 20px rgba(241, 196, 15, 0.5); transform: scale(1.05); background: rgba(255, 215, 0, 0.1); }
         .tablet-btn span { font-size: 1.5vw; font-weight: 900; color: #fff; text-shadow: 0 0 10px #000; pointer-events: none; opacity: 0; }
 
-        .scenario-panel {
-            position: absolute; top: 5%; left: 5%; width: 90%; height: 90%; background: rgba(20, 30, 40, 0.95);
-            border: 2px solid #eccc68; border-radius: 15px; z-index: 70; display: none; flex-direction: column; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-        }
-        .scenario-header {
-            background: #eccc68; color: #1a252f; padding: 10px 20px; font-weight: 900; font-size: 1.5vw;
-            display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1c40f;
-        }
+        .scenario-panel { position: absolute; top: 5%; left: 5%; width: 90%; height: 90%; background: rgba(20, 30, 40, 0.95); border: 2px solid #eccc68; border-radius: 15px; z-index: 70; display: none; flex-direction: column; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .scenario-header { background: #eccc68; color: #1a252f; padding: 10px 20px; font-weight: 900; font-size: 1.5vw; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1c40f; }
         .scenario-header button { background: transparent; border: none; color: #1a252f; font-weight: bold; cursor: pointer; font-size: 1.5vw; }
-        .scenario-body {
-            flex-grow: 1; padding: 15px; display: flex; flex-direction: column; overflow-y: auto; gap: 15px;
-            background: #f5f6fa;
-        }
-        .chat-bubble-system {
-            align-self: flex-start; width: 100%; display: flex; align-items: flex-start; gap: 10px; max-width: 100%;
-        }
-        .chat-avatar {
-            width: 40px; height: 40px; border-radius: 50%; background: #3498db; color: #fff; display: flex; justify-content: center; align-items: center;
-            font-size: 20px; font-weight: bold; flex-shrink: 0; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        .chat-bubble {
-            background: #e1e1e1; color: #2c3e50; padding: 12px 16px; border-radius: 0 15px 15px 15px; position: relative; font-size: 1.1vw;
-            line-height: 1.5; max-width: 90%; box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-        }
-        .chat-bubble::before {
-            content: ''; position: absolute; top: 10px; left: -10px; border-width: 5px 10px 5px 0; border-style: solid; border-color: transparent #e1e1e1 transparent transparent;
-        }
+        .scenario-body { flex-grow: 1; padding: 15px; display: flex; flex-direction: column; overflow-y: auto; gap: 15px; background: #f5f6fa; }
+        .chat-bubble-system { align-self: flex-start; width: 100%; display: flex; align-items: flex-start; gap: 10px; max-width: 100%; }
+        .chat-avatar { width: 40px; height: 40px; border-radius: 50%; background: #3498db; color: #fff; display: flex; justify-content: center; align-items: center; font-size: 20px; font-weight: bold; flex-shrink: 0; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .chat-bubble { background: #e1e1e1; color: #2c3e50; padding: 12px 16px; border-radius: 0 15px 15px 15px; position: relative; font-size: 1.1vw; line-height: 1.5; max-width: 90%; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .chat-bubble::before { content: ''; position: absolute; top: 10px; left: -10px; border-width: 5px 10px 5px 0; border-style: solid; border-color: transparent #e1e1e1 transparent transparent; }
         .chat-choices { display: flex; flex-direction: column; gap: 10px; width: 100%; padding-left: 10px; margin-top: 5px; }
-        .chat-choice-btn {
-            background: #2ecc71; padding: 12px 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1vw;
-            color: #fff; cursor: pointer; transition: 0.2s; text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+        .chat-choice-btn { background: #2ecc71; padding: 12px 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1vw; color: #fff; cursor: pointer; transition: 0.2s; text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .chat-choice-btn:hover { background: #27ae60; transform: scale(1.02); }
         .chat-choice-btn.wrong-choice { background: #e74c3c; }
 
@@ -224,14 +187,7 @@
         .robot-kanan { bottom: 5px; right: 10px; align-items: flex-end; }
         .robot-atas { top: 5px; left: 15px; align-items: flex-start; }
         .robot-img { width: 100%; height: auto; filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.8)); pointer-events: none; }
-        .speech-bubble { 
-            background: #ffffff; border-radius: 12px; padding: 12px 18px; 
-            font-size: 1.3vw; color: #2c3e50; font-weight: 600; text-align: left; 
-            box-shadow: 0px 4px 15px rgba(0,0,0,0.4); position: relative; z-index: 81; 
-            border: 2px solid #00a8ff; width: 240px; max-width: 85vw; 
-            height: auto !important; max-height: none !important; overflow: visible !important;
-            pointer-events: auto; line-height: 1.5; transform: translateY(-5px); 
-        }
+        .speech-bubble { background: #ffffff; border-radius: 12px; padding: 12px 18px; font-size: 1.3vw; color: #2c3e50; font-weight: 600; text-align: left; box-shadow: 0px 4px 15px rgba(0,0,0,0.4); position: relative; z-index: 81; border: 2px solid #00a8ff; width: 240px; max-width: 85vw; height: auto !important; max-height: none !important; overflow: visible !important; pointer-events: auto; line-height: 1.5; transform: translateY(-5px); }
         .robot-kiri .speech-bubble { margin-left: 15px; } 
         .robot-kiri .speech-bubble::after { content: ''; position: absolute; bottom: -12px; left: 25px; border-width: 12px 12px 0; border-style: solid; border-color: #00a8ff transparent transparent transparent; }
         .robot-kiri .speech-bubble::before { content: ''; position: absolute; bottom: -10px; left: 27px; border-width: 10px 10px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; z-index: 82; }
@@ -262,53 +218,19 @@
         .btn-kembali-hud { position: absolute; top: 15px; left: 15px; width: auto; padding: 8px 15px; background: rgba(44, 62, 80, 0.9); border: 2px solid #eccc68; border-radius: 8px; color: #fff; font-weight: bold; cursor: pointer; z-index: 70; box-shadow: 0 4px 6px rgba(0,0,0,0.4); text-shadow: 1px 1px 2px #000; transition: 0.2s; }
         .btn-kembali-hud:hover { background: #e74c3c; transform: scale(1.05); }
 
-        /* --- SLIDE APRESIASI DAN SERTIFIKAT BARU --- */
-        #slideApresiasi {
-            background: radial-gradient(circle at center, #2c3e50 0%, #1a252f 100%);
-            display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 5%;
-            z-index: 200;
-        }
-        #slideApresiasi h1 { color: #f1c40f; font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 10px; text-shadow: 0 0 30px rgba(241,196,15,0.4); }
-        #slideApresiasi .subtitle { color: #ecf0f1; font-size: clamp(1rem, 2vw, 1.6rem); margin-bottom: 20px; }
-        #slideApresiasi .list-pencapaian { color: #fff; font-size: clamp(0.9rem, 1.5vw, 1.4rem); line-height: 2; text-align: left; display: inline-block; margin: 0 auto 20px; }
-        #slideApresiasi .list-pencapaian li { list-style: none; }
-        #slideApresiasi .list-pencapaian li::before { content: "✅ "; }
-        #slideApresiasi .bintang-total { color: #ffeaa7; font-size: clamp(1.2rem, 2.5vw, 2rem); margin-bottom: 20px; }
-        .btn-ambil-sertifikat { 
-            background: #d4af37; color: #2c3e50; border: none; padding: 15px 40px; font-size: clamp(1.2rem, 2vw, 1.8rem); 
-            font-weight: 900; border-radius: 40px; cursor: pointer; box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5); 
-            transition: 0.3s; opacity: 0.5; pointer-events: none; 
-        }
-        .btn-ambil-sertifikat.aktif { opacity: 1; pointer-events: auto; animation: pulse-glow 1.5s infinite; }
-        .btn-ambil-sertifikat.aktif:hover { transform: scale(1.05); background: #e6c45a; }
-
-        /* Overlay Sertifikat - Analisis Posisi: top 18%, kiri 12.5%, width 75%, height 62% */
-        #slideSertifikat {
-            background: #000; display: none; justify-content: center; align-items: center; z-index: 300;
-        }
-        .sertifikat-wrapper {
-            position: relative; width: 100%; max-width: 900px; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 10px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.9);
-        }
-        .sertifikat-wrapper img.bg-sertif {
-            width: 100%; height: 100%; object-fit: contain; display: block;
-        }
-        .sertifikat-overlay {
-            position: absolute; top: 18%; left: 12.5%; width: 75%; height: 62%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-            color: #3e2723; font-family: 'Georgia', 'Times New Roman', serif; padding: 10px; pointer-events: none;
-        }
+        /* --- OVERLAY SERTIFIKAT --- */
+        #slideSertifikat { background: #000; display: none; justify-content: center; align-items: center; z-index: 300; }
+        .sertifikat-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; padding: 20px; }
+        .sertifikat-image-wrapper { position: relative; width: 100%; max-width: 900px; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.9); background: #e8e3d3; }
+        .sertifikat-image-wrapper img.bg-sertif { width: 100%; height: 100%; object-fit: contain; display: block; }
+        .sertifikat-overlay { position: absolute; top: 18%; left: 12.5%; width: 75%; height: 62%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #3e2723; font-family: 'Georgia', 'Times New Roman', serif; padding: 10px; pointer-events: none; }
         .sertifikat-overlay > * { pointer-events: auto; }
-        
         .sertif-nama { font-size: clamp(1.8rem, 4vw, 3.2rem); font-weight: 700; color: #3e2723; margin-bottom: 10px; text-shadow: 0 1px 2px rgba(255,255,255,0.5); }
         .sertif-pencapaian { font-size: clamp(0.8rem, 1.6vw, 1.3rem); line-height: 1.8; color: #3e2723; list-style: none; padding: 0; margin: 10px 0; }
         .sertif-pencapaian li::before { content: "✅ "; font-size: 1.2em; }
         .sertif-bintang { font-size: clamp(1rem, 2vw, 1.6rem); font-weight: 600; color: #b8860b; margin-top: 5px; }
-        .sertif-actions { margin-top: 15px; display: flex; gap: 15px; }
-        .sertif-actions button {
-            padding: 8px 20px; background: #d4af37; border: none; border-radius: 20px; font-weight: bold; cursor: pointer;
-            transition: 0.2s; font-size: clamp(0.8rem, 1.2vw, 1rem); color: #2c3e50;
-        }
+        .sertif-actions { margin-top: 20px; display: flex; gap: 15px; position: relative; z-index: 10; }
+        .sertif-actions button { padding: 8px 20px; background: #d4af37; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: clamp(0.8rem, 1.2vw, 1rem); color: #2c3e50; }
         .sertif-actions button:hover { transform: scale(1.05); background: #e6c45a; }
         .sertif-actions button.btn-tutup { background: #7f8c8d; color: white; }
         .sertif-actions button.btn-tutup:hover { background: #95a5a6; }
@@ -317,20 +239,13 @@
             .sertifikat-overlay { top: 20%; left: 12%; width: 76%; height: 58%; }
             .sertif-nama { font-size: 5vw; }
             .sertif-pencapaian { font-size: 2.2vw; line-height: 1.6; }
+            .sertif-actions { margin-top: 10px; }
         }
 
         /* --- LOADING SERTIFIKAT --- */
-        #loadingSertifikat {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 250;
-            display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-            padding: 20px; color: white;
-        }
+        #loadingSertifikat { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 250; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; color: white; }
         #loadingSertifikat .emoji-besar { font-size: 80px; animation: bounceEmoji 1.5s infinite; }
-        @keyframes bounceEmoji {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
+        @keyframes bounceEmoji { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
         #loadingSertifikat h2 { color: #f1c40f; font-size: 2.5vw; margin-top: 20px; text-shadow: 0 0 20px rgba(0,0,0,0.8); }
         #loadingSertifikat p { font-size: 1.8vw; margin-top: 15px; color: #ecf0f1; }
         .progress-bar-sertif { width: 60%; height: 8px; background: #2c3e50; border-radius: 10px; margin-top: 20px; overflow: hidden; }
@@ -355,8 +270,10 @@
         <button class="btn-retry-internet" onclick="cekInternet()">🔄 Coba Nyari Sinyal Lagi</button>
     </div>
 
-    <button onclick="nyalakanDebug()" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 99999; background: #0984e3; color: white; border: 2px solid white; padding: 10px 15px; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">🎯 TAMPILKAN TARGET OBJEK</button>
+    <!-- Tombol Debug -->
+    <button onclick="nyalakanDebug()" style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); z-index: 9999; background: #0984e3; color: white; border: 2px solid white; padding: 10px 15px; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">🎯 TAMPILKAN TARGET OBJEK</button>
 
+    <!-- Audio -->
     <audio id="clickSound" src="click.mp3" preload="auto"></audio>
     <audio id="clickShipSound" src="clickship.mp3" preload="auto"></audio>
     <audio id="etnoWelcome" src="etnowelcome.mp3" preload="auto"></audio>
@@ -366,6 +283,7 @@
 
     <div id="feedbackOverlay"><div id="feedbackMsg" class="feedback-box"></div></div>
 
+    <!-- Modal Nama -->
     <div id="modalNama" class="modal-overlay">
         <div class="name-box">
             <h2>LOG IDENTITAS KAPTEN</h2>
@@ -374,6 +292,7 @@
         </div>
     </div>
 
+    <!-- Loading 1 -->
     <div id="loadingScreenRandom">
         <div class="ship-loading-wrapper">
             <div class="ship-scene">
@@ -389,6 +308,7 @@
         <h2 id="loadingText" style="color: #eccc68; font-weight: 900; letter-spacing: 2px;">Memuat lautan baru...</h2>
     </div>
 
+    <!-- Loading 2 -->
     <div id="loadingCarTransition">
         <div class="car-container">
             <div class="car">
@@ -399,7 +319,7 @@
         <h2>Kembali ke daratan...</h2>
     </div>
 
-    <!-- LOADING SERTIFIKAT (ditambahkan) -->
+    <!-- LOADING SERTIFIKAT -->
     <div id="loadingSertifikat">
         <div class="emoji-besar">🎓</div>
         <h2>Sabar Kapten!</h2>
@@ -639,37 +559,25 @@
             </div>
         </div>
 
-        <!-- SLIDE APRESIASI DAN SERTIFIKAT (BARU) -->
-        <div id="slideApresiasi" class="slide">
-            <h1>🎉 SELAMAT, KAPTEN!</h1>
-            <div class="subtitle">Kamu berhasil menyelesaikan seluruh petualangan <b>ETNOSATEK</b>!</div>
-            <div class="subtitle">Kamu sudah belajar 3 literasi teknologi yang penting:</div>
-            <ul class="list-pencapaian">
-                <li><b>Pengetahuan Teknologi</b> — Sistem biner di HP (dari Prasasti Kedukan Bukit)</li>
-                <li><b>Navigasi & GPS</b> — Cara kerja GPS dari navigasi bintang nenek moyang</li>
-                <li><b>Literasi Digital</b> — Cek hoaks, hindari phishing, lawan cyberbullying</li>
-            </ul>
-            <div class="bintang-total">🌟 Total Bintang yang didapat: <span id="bintangAkhir">0</span></div>
-            <div class="subtitle" style="font-size:1.5vw; color:#eccc68;">📜 Kamu sekarang resmi menjadi <b>Pahlawan Literasi Nusantara</b>!</div>
-            <button class="btn-ambil-sertifikat" id="btnAmbilSertifikat" onclick="tampilkanLoadingSertifikat()">Ambil Sertifikat</button>
-        </div>
-
         <!-- OVERLAY SERTIFIKAT (BACKGROUND PNG + TEXT CSS) -->
         <div id="slideSertifikat" class="slide">
             <div class="sertifikat-wrapper">
-                <img src="sertifikat.png" alt="Sertifikat" class="bg-sertif" onerror="this.src='https://via.placeholder.com/900x600?text=Sertifikat+(sertifikat.png)'">
-                <div class="sertifikat-overlay">
-                    <div class="sertif-nama" id="sertifNama">— Nama Pemain —</div>
-                    <ul class="sertif-pencapaian">
-                        <li>Prasasti Kedukan Bukit (Sistem Biner)</li>
-                        <li>Laut Nusantara (Navigasi Bintang)</li>
-                        <li>Literasi Digital (Hoaks, Phishing, Cyberbullying)</li>
-                    </ul>
-                    <div class="sertif-bintang">⭐ Total Bintang: <span id="sertifBintang">0</span></div>
-                    <div class="sertif-actions">
-                        <button onclick="window.print()">🖨️ Cetak</button>
-                        <button class="btn-tutup" onclick="tutupSertifikat()">✕ Tutup</button>
+                <div class="sertifikat-image-wrapper">
+                    <img src="sertifikat.png" alt="Sertifikat" class="bg-sertif" onerror="this.src='https://via.placeholder.com/900x600?text=Sertifikat+(sertifikat.png)'">
+                    <div class="sertifikat-overlay">
+                        <div class="sertif-nama" id="sertifNama">— Nama Pemain —</div>
+                        <ul class="sertif-pencapaian">
+                            <li>Prasasti Kedukan Bukit (Sistem Biner)</li>
+                            <li>Laut Nusantara (Navigasi Bintang)</li>
+                            <li>Literasi Digital (Hoaks, Phishing, Cyberbullying)</li>
+                        </ul>
+                        <div class="sertif-bintang">⭐ Total Bintang: <span id="sertifBintang">0</span></div>
                     </div>
+                </div>
+                <!-- Tombol dipindahkan ke bawah gambar -->
+                <div class="sertif-actions">
+                    <button onclick="window.print()">🖨️ Cetak</button>
+                    <button class="btn-tutup" onclick="tutupSertifikat()">✕ Tutup</button>
                 </div>
             </div>
         </div>
@@ -764,8 +672,10 @@
 
         function setSistemVolume(val) { volumeSistem = val; if(!audioMuted) { soundClick.volume = val; soundClickShip.volume = val * 1.3; soundWelcome.volume = val; soundBgm.volume = val * 0.5; soundCorrect.volume = val * 1.3; soundWrong.volume = val * 1.3; } }
         function toggleMute() { audioMuted = !audioMuted; const btn = document.getElementById('btnAudio'); if(audioMuted) { btn.innerText = "🔇"; soundWelcome.volume=0; soundBgm.volume=0; soundClick.volume=0; soundClickShip.volume=0; soundCorrect.volume=0; soundWrong.volume=0; soundBgm.pause(); } else { btn.innerText = "🔊"; setSistemVolume(document.getElementById('volSlider').value); if(isBgmPlaying) soundBgm.play().catch(e=>{}); } }
-        function playClick() { soundClick.currentTime = 0; soundClick.play().catch(e=>{}); }
-        function playClickShip() { soundClickShip.currentTime = 0; soundClickShip.play().catch(e=>{}); }
+        
+        // Fungsi audio dipastikan tidak menggagalkan game
+        function playClick() { try { soundClick.currentTime = 0; soundClick.play().catch(e=>{ console.warn("Audio playClick blocked:", e); }); } catch(e){} }
+        function playClickShip() { try { soundClickShip.currentTime = 0; soundClickShip.play().catch(e=>{ console.warn("Audio playClickShip blocked:", e); }); } catch(e){} }
 
         function mulaiDenganNama() {
             let input = document.getElementById('inputNama').value.trim();
@@ -776,8 +686,8 @@
             playClick(); 
             setSistemVolume(volumeSistem);
             if(!audioMuted) {
-                soundWelcome.play().catch(e => console.log("Welcome block:", e));
-                soundBgm.play().catch(e => console.log("Bgm block:", e));
+                try { soundWelcome.play().catch(e => console.warn("Welcome audio blocked:", e)); } catch(e){}
+                try { soundBgm.play().catch(e => console.warn("BGM audio blocked:", e)); } catch(e){}
                 isBgmPlaying = true;
             } else { isBgmPlaying = true; }
             
@@ -875,7 +785,7 @@
 
         /* LOGIKA MEJA & TABLET */
         function tamatKuisDanKembali() { playClickShip(); loadingCarTransisi(2500, () => { sembunyikanSemuaSlide(); document.getElementById('slideMeja').classList.add('active'); setRobot(`Kapten ${playerName}, kita udah sampe di rumah. Tuh, ada tablet di atas meja. Coba lihat, ada apa aja di dalamnya....tuh`, 'robot-kiri'); }); }
-        function klikTablet() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideTablet').classList.add('active'); // Set status tombol berdasarkan progress
+        function klikTablet() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideTablet').classList.add('active'); 
             document.getElementById('btnChat').style.opacity = progress.chat ? '0.5' : '1';
             document.getElementById('btnChat').style.pointerEvents = progress.chat ? 'none' : 'auto';
             document.getElementById('btnBrowser').style.opacity = (!progress.chat || progress.browser) ? '0.5' : '1';
@@ -883,7 +793,6 @@
             document.getElementById('btnSecurity').style.opacity = (!progress.browser || progress.security) ? '0.5' : '1';
             document.getElementById('btnSecurity').style.pointerEvents = (!progress.browser || progress.security) ? 'none' : 'auto';
             
-            // Reset panel
             document.getElementById('scenarioPanel').style.display = 'none';
             setRobot("Pilih aplikasi di tablet! Chat dulu ya!"); 
         }); }
@@ -908,20 +817,17 @@
         let scenarioData = [];
 
         function bukaApp(type) {
-            // Cek urutan dan status (TEST CASE 2: Urutan Wajib)
             if(type === 'browser' && !progress.chat) { setRobot("Selesaikan Chat dulu sebelum ke Browser ya!"); return; }
             if(type === 'security' && !progress.browser) { setRobot("Selesaikan Browser dulu sebelum ke Keamanan ya!"); return; }
             if(type === 'chat' && progress.chat) { setRobot("Chat sudah selesai! Lanjut ke Browser."); return; }
             if(type === 'browser' && progress.browser) { setRobot("Browser sudah selesai! Lanjut ke Keamanan."); return; }
-            if(type === 'security' && progress.security) { setRobot("Semua aplikasi sudah selesai! Siap ambil sertifikat."); return; }
+            if(type === 'security' && progress.security) { setRobot("Semua aplikasi sudah selesai! Sertifikat sedang diproses..."); return; }
 
             playClick();
-            currentApp = type;
-            currentScenarioIndex = 0;
+            currentApp = type; currentScenarioIndex = 0;
             if(type === 'chat') { document.getElementById('scenarioTitle').innerText = "💬 CHAT & SOSMED"; scenarioData = scenarios.chat; }
             else if(type === 'browser') { document.getElementById('scenarioTitle').innerText = "📰 BROWSER & BERITA"; scenarioData = scenarios.browser; }
             else if(type === 'security') { document.getElementById('scenarioTitle').innerText = "🛡️ KEAMANAN DIGITAL"; scenarioData = scenarios.security; }
-            
             document.getElementById('scenarioPanel').style.display = 'flex';
             tampilkanSkenario();
         }
@@ -930,12 +836,10 @@
             let body = document.getElementById('scenarioBody');
             if(currentScenarioIndex >= scenarioData.length) {
                 document.getElementById('scenarioPanel').style.display = 'none';
-                // Tandai selesai
                 if(currentApp === 'chat') progress.chat = true;
                 else if(currentApp === 'browser') progress.browser = true;
                 else if(currentApp === 'security') progress.security = true;
                 
-                // Update status tombol tablet
                 document.getElementById('btnChat').style.opacity = progress.chat ? '0.5' : '1';
                 document.getElementById('btnChat').style.pointerEvents = progress.chat ? 'none' : 'auto';
                 document.getElementById('btnBrowser').style.opacity = (!progress.chat || progress.browser) ? '0.5' : '1';
@@ -943,15 +847,10 @@
                 document.getElementById('btnSecurity').style.opacity = (!progress.browser || progress.security) ? '0.5' : '1';
                 document.getElementById('btnSecurity').style.pointerEvents = (!progress.browser || progress.security) ? 'none' : 'auto';
 
-                // TEST CASE 4 & 5: Otomatis Menuju Sertifikat jika semua selesai
                 if(progress.chat && progress.browser && progress.security) {
                     setRobot("🎉 Hebat Kapten! Semua aplikasi selesai. Sertifikat sedang diproses...");
-                    // Jalankan loading 5 detik, lalu tampilkan sertifikat
-                    setTimeout(() => {
-                        tampilkanLoadingSertifikat();
-                    }, 1000);
+                    setTimeout(() => { tampilkanLoadingSertifikat(); }, 1000);
                 } else {
-                    // Arahkan ke aplikasi berikutnya
                     if(!progress.chat) { setRobot("Lanjut ke Chat!"); }
                     else if(!progress.browser) { setRobot("Lanjut ke Browser!"); }
                     else if(!progress.security) { setRobot("Lanjut ke Keamanan!"); }
@@ -980,7 +879,6 @@
             let data = scenarioData[currentScenarioIndex];
             let isCorrect = (pilihan === data.correct);
             let body = document.getElementById('scenarioBody');
-            
             let choices = body.querySelectorAll('.chat-choice-btn');
             choices.forEach(btn => btn.style.pointerEvents = 'none');
             if(isCorrect) {
@@ -997,7 +895,6 @@
                 correctBtn.style.background = '#27ae60';
                 correctBtn.innerHTML = `✅ ${correctBtn.innerText}`;
             }
-
             let feedbackDiv = document.createElement('div');
             feedbackDiv.className = 'chat-bubble-system';
             feedbackDiv.style.marginTop = '10px';
@@ -1012,41 +909,16 @@
             body.scrollTop = body.scrollHeight;
         }
 
-        function lanjutSkenario() {
-            playClick();
-            currentScenarioIndex++;
-            tampilkanSkenario();
-        }
-
-        function tutupApp() {
-            playClick();
-            document.getElementById('scenarioPanel').style.display = 'none';
-        }
+        function lanjutSkenario() { playClick(); currentScenarioIndex++; tampilkanSkenario(); }
+        function tutupApp() { playClick(); document.getElementById('scenarioPanel').style.display = 'none'; }
 
         function introCerita() {
-            sinyalTerkirim = false;
-            klikRusakCount = 0;
-            indexBintang = 0;
-            kuisIndex = 0;
-            currentScenarioIndex = 0;
+            sinyalTerkirim = false; klikRusakCount = 0; indexBintang = 0; kuisIndex = 0; currentScenarioIndex = 0;
             document.getElementById('klikRusak').innerText = '0';
-            
-            sembunyikanRobotKiri(); 
-            sembunyikanSemuaSlide(); 
-            document.getElementById('slideIntroCerita').classList.add('active'); 
-            introIndex=0; 
-            tampilkanIntro(introIndex);
+            sembunyikanRobotKiri(); sembunyikanSemuaSlide(); document.getElementById('slideIntroCerita').classList.add('active'); introIndex=0; tampilkanIntro(introIndex);
         }
         
-        function finishIntroAndStartGame() { 
-            tampilkanRobotKiri(); 
-            loadingTransisi(null, () => { 
-                sembunyikanSemuaSlide(); 
-                document.getElementById('slidePetualangan1').classList.add('active'); 
-                document.getElementById('starUI').style.display = 'flex'; 
-                setRobot("Kapten, kita udah sampai di Palembang! Di sinilah nenek moyang kita menulis angka 0 pertama kali. Ayo kita temukan prasastinya!"); 
-            }); 
-        }
+        function finishIntroAndStartGame() { tampilkanRobotKiri(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slidePetualangan1').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot("Kapten, kita udah sampai di Palembang! Di sinilah nenek moyang kita menulis angka 0 pertama kali. Ayo kita temukan prasastinya!"); }); }
 
         let introIndex = 0; let introTimer = null; let countdownInterval = null;
         const introData = [
@@ -1065,86 +937,39 @@
             let zones = document.querySelectorAll('.tap-zone'); let aktif = false; if(zones.length > 0 && zones[0].classList.contains('debug-mode')) { aktif = true; } zones.forEach(el => { if(aktif) el.classList.remove('debug-mode'); else el.classList.add('debug-mode'); }); alert(aktif ? "Mode Target Dinonaktifkan." : "Mode Target Diaktifkan! Semua zona klik berupa lingkaran radar.");
         }
 
-        /* --- LOGIKA APRESIASI DAN SERTIFIKAT --- */
-        function cekSertifikat() {
-            // Semua misi harus selesai: Prasasti, Laut, Chat, Browser, Security
-            if(progress.prasasti && progress.laut && progress.chat && progress.browser && progress.security) {
-                document.getElementById('btnAmbilSertifikat').classList.add('aktif');
-                setRobot("🎉 Semua misi selesai! Klik tombol 'Ambil Sertifikat' untuk mendapatkan penghargaan!");
-            } else {
-                document.getElementById('btnAmbilSertifikat').classList.remove('aktif');
-            }
-        }
-
+        /* --- LOGIKA SERTIFIKAT --- */
         // Fungsi loading 5 detik dengan manipulasi psikologi kesabaran
         function tampilkanLoadingSertifikat() {
-            // Cek apakah semua app sudah selesai
-            if(!(progress.chat && progress.browser && progress.security)) {
-                return;
-            }
+            if(!(progress.chat && progress.browser && progress.security)) { return; }
             playClick();
             const loadingDiv = document.getElementById('loadingSertifikat');
             const progressFill = document.getElementById('progressFillSertif');
             loadingDiv.style.display = 'flex';
             progressFill.style.width = '0%';
             let progressLoad = 0;
-            const duration = 5000; // 5 detik sesuai permintaan
-            const interval = 100; // update setiap 100ms
-            const step = (interval / duration) * 100;
+            const duration = 5000; const interval = 100; const step = (interval / duration) * 100;
             const timer = setInterval(() => {
                 progressLoad += step;
                 if (progressLoad >= 100) {
-                    progressLoad = 100;
-                    clearInterval(timer);
-                    setTimeout(() => {
-                        loadingDiv.style.display = 'none';
-                        bukaOverlaySertifikat();
-                    }, 500);
+                    progressLoad = 100; clearInterval(timer);
+                    setTimeout(() => { loadingDiv.style.display = 'none'; bukaOverlaySertifikat(); }, 500);
                 }
                 progressFill.style.width = progressLoad + '%';
             }, interval);
         }
 
         function bukaOverlaySertifikat() {
-            // Isi data sertifikat
             document.getElementById('sertifNama').innerText = playerName;
             document.getElementById('sertifBintang').innerText = jumlahBintang;
-            // Tampilkan overlay sertifikat
             sembunyikanSemuaSlide();
             document.getElementById('slideSertifikat').classList.add('active');
-            sembunyikanRobotKiri(); // Test Case 1: Robot otomatis menghilang agar tidak menutupi teks
+            sembunyikanRobotKiri();
         }
 
         function tutupSertifikat() {
             playClick();
             document.getElementById('slideSertifikat').classList.remove('active');
-            // Kembali ke apresiasi
-            document.getElementById('slideApresiasi').classList.add('active');
-            cekSertifikat();
-        }
-
-        // Override kembaliKeMenu untuk mengecek progress
-        const originalKembaliKeMenu = kembaliKeMenu;
-        kembaliKeMenu = function() {
-            originalKembaliKeMenu();
-            // Jika semua progress selesai, tampilkan apresiasi alih-alih menu utama
-            if(progress.prasasti && progress.laut && progress.chat && progress.browser && progress.security) {
-                playClick();
-                sembunyikanSemuaSlide();
-                document.getElementById('slideApresiasi').classList.add('active');
-                document.getElementById('bintangAkhir').innerText = jumlahBintang;
-                cekSertifikat();
-            }
-        }
-
-        // Pastikan tombol Sertifikat terupdate
-        const originalKlikTablet = klikTablet;
-        klikTablet = function() {
-            originalKlikTablet();
-            // Cek jika semua selesai
-            if(progress.chat && progress.browser && progress.security && progress.prasasti && progress.laut) {
-                // Logic untuk mencegah duplikasi
-            }
+            kembaliKeMenu(); // Kembali ke menu utama tanpa apresiasi
         }
     </script>
 </body>
