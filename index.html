@@ -60,59 +60,22 @@
         .audio-toggle { background: transparent; color: #f5f6fa; font-weight: bold; border: none; cursor: pointer; font-size: 16px; }
         .volume-slider { width: 70px; cursor: pointer; accent-color: #00a8ff; }
 
-        /* --- SISTEM LOADING TEKS (MENUNGGU ASET) --- */
-        .slide { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            display: none; 
-            background-color: #1a252f; 
-        }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; background-color: #1a252f; }
         .slide.active { display: block; }
         #slideSertifikat.active { display: flex !important; }
 
-        .slide-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        .bg-img-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        .bg-img-wrapper img.bg-img {
-            width: 100%; height: 100%; object-fit: cover; display: block; 
-            background-color: #1a252f;
-        }
+        .slide-wrapper { position: relative; width: 100%; height: 100%; overflow: hidden; }
+        .bg-img-wrapper { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .bg-img-wrapper img.bg-img { width: 100%; height: 100%; object-fit: cover; display: block; background-color: #1a252f; }
         
-        /* Teks Loading */
         .loading-asset-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             background: rgba(0,0,0,0.75);
-            color: #fff;
-            z-index: 15;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 2vw;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
+            color: #fff; z-index: 15; font-weight: bold; text-transform: uppercase;
+            letter-spacing: 2px; font-size: 2vw; pointer-events: none; transition: opacity 0.5s ease;
         }
-        .loading-asset-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        /* ------------------------------------ */
+        .loading-asset-overlay.hidden { opacity: 0; pointer-events: none; }
 
         #loadingScreenRandom { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #2c3e50 0%, #1a252f 100%); color: white; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 200; text-align: center; padding: 20px; }
         .ship-loading-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; margin-bottom: 15px; }
@@ -144,7 +107,6 @@
         @keyframes spinWheel { 100% { transform: rotate(360deg); } }
         #loadingCarTransition h2 { color: #eccc68; font-weight: 900; font-size: 22px; text-shadow: 0 0 20px rgba(0,0,0,0.5); margin-top: 20px; letter-spacing: 1px; }
 
-        /* MODAL & TOMBOL */
         .modal-overlay { position: absolute; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100000 !important; display: none; justify-content: center; align-items: center; flex-direction: column; pointer-events: auto !important; }
         .name-box { background: rgba(20, 30, 40, 0.95); border: 2px solid #eccc68; border-radius: 15px; padding: 30px; text-align: center; width: 60%; box-shadow: 0 10px 30px rgba(236,204,104,0.3); pointer-events: auto !important; }
         .name-box h2 { color: #eccc68; margin-bottom: 15px; letter-spacing: 1px; }
@@ -152,9 +114,9 @@
         .name-input:focus { border-color: #eccc68; }
         .btn-selesai { width: 100%; padding: 12px; background: #2ecc71; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 10px rgba(46,204,113,0.4); pointer-events: auto !important;}
 
-        .bottom-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 12%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 65; pointer-events: auto; flex-direction: column; }
-        .start-text { color: #ffffff; font-size: 3vw; font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 20px rgba(9, 132, 227, 0.9), 0 4px 10px #000; animation: pulse-glow 1.2s infinite; }
-        .tap-sound-hint { color: #f1c40f; font-size: 1.2vw; margin-top: 5px; text-shadow: 0 0 10px #000; }
+        .bottom-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 13%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 65; pointer-events: auto; }
+        .tap-sound-hint { color: #ffd700; font-size: 1.1vw; font-weight: bold; text-align: center; text-shadow: 0 0 15px #000; margin-bottom: 5px; animation: pulse-glow 2s infinite; }
+        .start-text { color: #ffffff; font-size: 3vw; font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 20px rgba(9, 132, 227, 0.9), 0 4px 10px #000; animation: pulse-glow 1.2s infinite; cursor: pointer; }
 
         .icon-btn { position: absolute; background: transparent; border: none; cursor: pointer; border-radius: 20%; width: 14%; height: 21%; top: 38%; z-index: 65; transition: 0.2s; pointer-events: auto; }
         .icon-btn:hover { box-shadow: 0 0 20px 8px rgba(0, 168, 255, 0.6); }
@@ -255,7 +217,20 @@
         .rasi-container p, .rasi-container ul { font-size: 15px; line-height: 1.6; text-shadow: 0 0 15px #000, 0 0 10px #000; }
 
         .btn-selesai { width: 100%; padding: 12px; background: #2ecc71; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 10px rgba(46,204,113,0.4); }
-        .btn-kuis-action { width: 85%; padding: 15px; background: #2ecc71; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(46,204,113,0.4); margin-top: 10px; }
+        .btn-kuis-action { 
+            width: 85%; 
+            padding: 15px; 
+            background: #2ecc71; 
+            color: white; 
+            border: none; 
+            border-radius: 10px; 
+            font-weight: bold; 
+            font-size: 16px; 
+            cursor: pointer; 
+            box-shadow: 0 4px 10px rgba(46,204,113,0.4); 
+            margin: 15px auto; /* Diperbaiki: Center horizontal */
+            display: block;   /* Diperbaiki: Menjadi block element untuk margin auto */
+        }
 
         .intro-wrapper { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 60; padding: 10px; }
         .intro-bubble { width: 80%; max-width: 750px; background: rgba(15, 25, 35, 0.92); border: 2px solid #eccc68; border-radius: 20px; padding: 25px; text-align: center; color: #fff; font-size: 1.5vw; line-height: 1.6; margin-bottom: 10px; box-shadow: 0 0 30px rgba(0,0,0,0.8); height: auto !important; max-height: none !important; overflow: visible !important; }
@@ -268,7 +243,6 @@
         .btn-kembali-hud { position: absolute; top: 15px; left: 15px; width: auto; padding: 8px 15px; background: rgba(44, 62, 80, 0.9); border: 2px solid #eccc68; border-radius: 8px; color: #fff; font-weight: bold; cursor: pointer; z-index: 70; box-shadow: 0 4px 6px rgba(0,0,0,0.4); text-shadow: 1px 1px 2px #000; transition: 0.2s; }
         .btn-kembali-hud:hover { background: #e74c3c; transform: scale(1.05); }
 
-        /* --- SLIDE SERTIFIKAT FINAL --- */
         #slideSertifikat { background: #000; display: none; justify-content: center; align-items: center; z-index: 300; }
         .sertifikat-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; padding: 20px; }
         .sertifikat-image-wrapper { position: relative; width: 100%; max-width: 900px; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.9); background: #1a252f; }
@@ -279,7 +253,6 @@
         .sertif-pencapaian { font-size: clamp(0.8rem, 1.6vw, 1.3rem); line-height: 1.8; color: #3e2723; list-style: none; padding: 0; margin: 10px 0; }
         .sertif-pencapaian li::before { content: "✅ "; font-size: 1.2em; }
         .sertif-bintang { font-size: clamp(1rem, 2vw, 1.6rem); font-weight: 600; color: #b8860b; margin-top: 5px; }
-        
         .sertif-actions { margin-top: 20px; display: flex; gap: 15px; position: relative; z-index: 10; }
         .sertif-actions button { padding: 8px 20px; background: #d4af37; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: clamp(0.8rem, 1.2vw, 1rem); color: #2c3e50; }
         .sertif-actions button:hover { transform: scale(1.05); background: #e6c45a; }
@@ -293,7 +266,6 @@
             .sertif-actions { margin-top: 10px; }
         }
 
-        /* --- LOADING SERTIFIKAT --- */
         #loadingSertifikat { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 250; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; color: white; }
         #loadingSertifikat .emoji-besar { font-size: 80px; animation: bounceEmoji 1.5s infinite; }
         @keyframes bounceEmoji { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
@@ -301,6 +273,18 @@
         #loadingSertifikat p { font-size: 1.8vw; margin-top: 15px; color: #ecf0f1; }
         .progress-bar-sertif { width: 60%; height: 8px; background: #2c3e50; border-radius: 10px; margin-top: 20px; overflow: hidden; }
         .progress-bar-sertif .fill { height: 100%; background: #f1c40f; width: 0%; transition: width 0.2s; }
+
+        /* --- PERBAIKAN KHUSUS UNTUK POSISI TOMBOL KUIS --- */
+        #opsiKuisContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: center; /* Diubah: Jangan left, center agar tombol tunggal rapi */
+            align-items: center; /* Ditambahkan: memaksa item di tengah */
+            justify-content: center;
+            width: 100%;
+        }
+        /* --------------------------------------------------- */
     </style>
 </head>
 <body>
@@ -389,9 +373,9 @@
                 <div class="loading-asset-overlay" id="loadSlide1">
                     <span>Memuat Aset...</span>
                 </div>
-                <div class="bottom-bar" onclick="bukaModalNama()">
-                    <span class="start-text">START GAME!!!</span>
-                    <span class="tap-sound-hint">🔊 Pastikan suara menyala untuk pengalaman terbaik!</span>
+                <div class="bottom-bar">
+                    <div class="tap-sound-hint">🔊 <b>PENTING:</b> Jika suara tidak terdengar, <b>tap ikon suara di kanan atas 2-3 kali</b>, lalu klik tombol di bawah!</div>
+                    <div class="start-text" onclick="bukaModalNama()">START GAME!!!</div>
                 </div>
             </div>
         </div>
@@ -673,7 +657,7 @@
                 <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:90%; background:rgba(0,0,0,0.8); padding:20px; border-radius:15px; z-index:50; color:#fff; text-align:center; max-height:80vh; overflow-y:auto;">
                     <h3 style="color:#f1c40f; margin-bottom:15px;">⚔️ PILIH JAWABAN TEPAT</h3>
                     <div id="pertanyaanKuis" style="background:rgba(0,0,0,0.4); padding:15px; border-radius:8px; margin-bottom:15px; font-size:16px;"></div>
-                    <div id="opsiKuisContainer" style="display:flex; flex-direction:column; gap:10px; text-align:left;"></div>
+                    <div id="opsiKuisContainer" style="display:flex; flex-direction:column; gap:10px; text-align:center; align-items:center; justify-content:center; width:100%;"></div>
                 </div>
             </div>
         </div>
@@ -782,9 +766,7 @@
 
         let progress = { prasasti: false, laut: false, chat: false, browser: false, security: false };
 
-        /* --- PERBAIKAN LOADING TEKS --- */
         function handleImageLoad(img) {
-            // Cari parent slide-wrapper
             let wrapper = img.closest('.slide-wrapper');
             if(wrapper) {
                 let overlay = wrapper.querySelector('.loading-asset-overlay');
@@ -793,7 +775,6 @@
                 }
             }
         }
-        /* --------------------------------- */
 
         function checkNetworkSpeed() {
             return new Promise((resolve) => {
@@ -861,21 +842,18 @@
             playerName = input;
             localStorage.setItem('etnoCaptainName', playerName);
             
-            /* --- Logika Baru: Pindah slide DULU, baru mainkan audio (agar tombol tetap responsif) --- */
             document.getElementById('modalNama').style.display = 'none';
             sembunyikanSemuaSlide(); 
             document.getElementById('slide2').classList.add('active');
             document.getElementById('globalUI').style.display = 'block'; 
             setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal di sebelah kanan ini!`, 'robot-kanan');
             
-            // Mainkan audio setelah transisi slide BERHASIL
             setSistemVolume(volumeSistem);
             if(!audioMuted) {
-                try { 
-                    soundWelcome.play().catch(e => console.log("Welcome audio blocked, but game continues.")); 
-                    soundBgm.play().catch(e => console.log("BGM audio blocked, but game continues.")); 
-                    isBgmPlaying = true; 
-                } catch(e) { isBgmPlaying = true; }
+                try { soundWelcome.play(); } catch(e) {}
+                try { soundBgm.play(); isBgmPlaying = true; } catch(e) { 
+                    setTimeout(() => { try { soundBgm.play(); isBgmPlaying = true; } catch(e2){} }, 500); 
+                }
             } else { isBgmPlaying = true; }
         }
 
@@ -898,7 +876,6 @@
             playClickShip(); introCerita(); 
         }
 
-        /* LOGIKA SKENARIO 1 */
         function interaksiLayar1(tipe) {
             if (tipe === 'kapal') { playClickShip(); sinyalTerkirim = true; document.getElementById('zonePulau').classList.add('ready'); setRobot("Sekarang ketuk area PULAU untuk mendarat!"); } 
             else if (tipe === 'pulau') { if(!sinyalTerkirim) { playClick(); return; } playClickShip(); document.getElementById('slidePetualangan1').classList.add('batu-zoomed'); setTimeout(() => { sembunyikanSemuaSlide(); document.getElementById('slidePrasasti').classList.add('active'); progress.prasasti = true; setRobot(`Kapten ${playerName}! Perhatikan baik-baik. Prasasti Kedukan Bukit ini berisi angka 604 Saka. Angka 0 di tengahnya adalah bukti nenek moyang kita sudah paham konsep nilai tempat dan sistem desimal.<br><br>Logika inilah yang menjadi fondasi dasar dari sistem biner (0 dan 1), yang membuat semua komputer dan HP bisa menyala. Jadi, teknologi yang kamu pegang sekarang, akarnya ada di prasasti ini. Keren banget, kan?`); }, 400); }
@@ -913,7 +890,6 @@
         }
         function lanjutKeLayarNextSatu() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideNextSatu').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot(`Terima kasih telah mampir ke Palembang, Kapten ${playerName}. Prasasti Kedukan Bukit mengajarkan kita bahwa logika teknologi (sistem biner, angka 0) berakar dari peradaban Nusantara 682 Masehi.<br><br>Kita tidak sekadar ke Palembang tapi kita belajar menghargai warisan leluhur yang luar biasa! Mari kita jelajahi laut Nusantara balik ke dek kapalmu! tekan kapal di kiri atas ini.`); }); }
 
-        /* LOGIKA SKENARIO 2, 3 (Kuis & Kakek) */
         function berlayarMalam() { playClickShip(); const randomText = ["Memuat lautan baru", "Memuat samudera baru", "Memuat informasi", "Memuat teknologi terbaru"]; document.getElementById('loadingText').innerText = randomText[Math.floor(Math.random() * randomText.length)]; document.getElementById('loadingScreenRandom').style.display = 'flex'; setTimeout(() => { document.getElementById('loadingScreenRandom').style.display = 'none'; sembunyikanSemuaSlide(); document.getElementById('slideMalam').classList.add('active'); sembunyikanRobotKiri(); setTimeout(() => { document.getElementById('dialogOverlayKakek').style.display = 'block'; }, 1500); }, 2500); }
         function bukaDialogKakek() { playClick(); document.getElementById('dialogOverlayKakek').style.display = 'block'; }
         function kakekSelesaiCerita() { playClick(); document.getElementById('dialogOverlayKakek').style.display = 'none'; setRobot("Wah, seru ya cerita Kakek tadi. Kakek bilang, kunci utamanya adalah jangan panik dan percaya sama petunjuk alam. Iya nggak sih?<br><br>Nah, kalau kamu ada di posisi kapal yang terombang-ambing tanpa maps, apakah kamu akan panik?", 'robot-kanan'); let bubble = document.getElementById('robotSpeech'); bubble.innerHTML += `<br><br><span style="display:flex; justify-content:center; gap:10px; margin-top:10px;"><button onclick="responKakek('panik')" style="padding:5px 15px; background:#e74c3c; color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Panik Banget!</button><button onclick="responKakek('nggak')" style="padding:5px 15px; background:#2ecc71; color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Nggak Dong</button></span>`; }
@@ -1103,7 +1079,6 @@
             let zones = document.querySelectorAll('.tap-zone'); let aktif = false; if(zones.length > 0 && zones[0].classList.contains('debug-mode')) { aktif = true; } zones.forEach(el => { if(aktif) el.classList.remove('debug-mode'); else el.classList.add('debug-mode'); }); alert(aktif ? "Mode Target Dinonaktifkan." : "Mode Target Diaktifkan! Semua zona klik berupa lingkaran radar.");
         }
 
-        /* --- LOGIKA SERTIFIKAT OTOMATIS (APRESIASI DIHAPUS) --- */
         function tampilkanLoadingSertifikat() {
             if(!(progress.chat && progress.browser && progress.security)) return;
             playClick();
