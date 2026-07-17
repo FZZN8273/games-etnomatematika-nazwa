@@ -131,14 +131,14 @@
         .pulau-tap { width: 38%; height: 42%; top: 25%; right: 10%; border-radius: 30px; }
         .kapal-tap { width: 60%; height: 26%; bottom: 0; left: 20%; border-radius: 100px 100px 0 0; }
         
-        /* --- PERBAIKAN POSISI AREA INTERAKSI (SLIDE next1.jpg, stars.png) --- */
+        /* --- PERBAIKAN POSISI AREA INTERAKSI (HANYA next1.jpg) --- */
         .kapal-madura-tap { 
-            /* Analisis visual: Diperbaiki agar kotak pas membungkus perahu */
-            width: 15%; height: 28%; top: 22%; left: 13.5%; border-radius: 20px; 
+            /* Analisis visual: Dipastikan pas membungkus BADAN KAPAL (lambung) */
+            width: 16%; height: 30%; top: 30%; left: 12%; border-radius: 20px; 
         }
-        /* 5.png area kakek dihapus total sesuai permintaan */
+        /* 5.png area kakek dihapus total sesuai permintaan sebelumnya */
         
-        /* stars.png TIDAK DIUBAH SAMA SEKALI, tetap seperti kode terakhir */
+        /* stars.png TIDAK DIUBAH SAMA SEKALI */
         .star-zone { width: 22%; height: 24%; border-radius: 50%; border-color: #f1c40f; }
         .z-crux { top: 60%; left: 58%; } 
         /* --------------------------------------------------------------------------- */
@@ -289,7 +289,7 @@
 
     <button onclick="nyalakanDebug()" style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); z-index: 9999; background: #0984e3; color: white; border: 2px solid white; padding: 10px 15px; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">🎯 TAMPILKAN TARGET OBJEK</button>
 
-    <!-- click.mp3 dihapus total karena dianggap mengganggu -->
+    <!-- click.mp3 telah dihapus -->
     <audio id="clickShipSound" src="clickship.mp3" preload="auto"></audio>
     <audio id="etnoWelcome" src="etnowelcome.mp3" preload="auto"></audio>
     <audio id="soundCorrect" src="correct.mp3" preload="auto"></audio>
@@ -733,7 +733,7 @@
     </div>
 
     <script>
-        /* click.mp3 dihapus, jadi fungsi playClick dikosongkan */
+        /* click.mp3 telah dihapus */
         function playClick() {} 
 
         const soundClickShip = document.getElementById('clickShipSound');
