@@ -131,17 +131,15 @@
         .pulau-tap { width: 38%; height: 42%; top: 25%; right: 10%; border-radius: 30px; }
         .kapal-tap { width: 60%; height: 26%; bottom: 0; left: 20%; border-radius: 100px 100px 0 0; }
         
-        /* --- PERBAIKAN POSISI AREA INTERAKSI (SLIDE next1.jpg, 5.png, stars.png) --- */
+        /* --- PERBAIKAN POSISI AREA INTERAKSI (SLIDE next1.jpg, stars.png) --- */
         .kapal-madura-tap { 
-            width: 18%; height: 26%; top: 22%; left: 14%; border-radius: 20px; 
+            /* Analisis visual: Diperbaiki agar kotak pas membungkus perahu */
+            width: 15%; height: 28%; top: 22%; left: 13.5%; border-radius: 20px; 
         }
-        .kakek-tap { 
-            width: 12%; height: 14%; top: 10%; left: 25%; 
-            display: block; border-color: #eccc68; background: rgba(236, 204, 104, 0.15); 
-            border-width: 3px; animation: pulse-glow 2s infinite; 
-        }
+        /* 5.png area kakek dihapus total sesuai permintaan */
+        
+        /* stars.png TIDAK DIUBAH SAMA SEKALI, tetap seperti kode terakhir */
         .star-zone { width: 22%; height: 24%; border-radius: 50%; border-color: #f1c40f; }
-        /* Analisis visual: Geser turun 3% agar tepat membungkus kapal (top 60%) */
         .z-crux { top: 60%; left: 58%; } 
         /* --------------------------------------------------------------------------- */
         
@@ -291,7 +289,7 @@
 
     <button onclick="nyalakanDebug()" style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); z-index: 9999; background: #0984e3; color: white; border: 2px solid white; padding: 10px 15px; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">🎯 TAMPILKAN TARGET OBJEK</button>
 
-    <audio id="clickSound" src="click.mp3" preload="auto"></audio>
+    <!-- click.mp3 dihapus total karena dianggap mengganggu -->
     <audio id="clickShipSound" src="clickship.mp3" preload="auto"></audio>
     <audio id="etnoWelcome" src="etnowelcome.mp3" preload="auto"></audio>
     <audio id="soundCorrect" src="correct.mp3" preload="auto"></audio>
@@ -546,7 +544,7 @@
                     <span>Memuat Aset...</span>
                 </div>
                 <button class="btn-back-hud" onclick="kembaliKeSlideSebelumnya()">⚓ Kembali</button>
-                <div id="zoneKakek" class="tap-zone kakek-tap" onclick="bukaDialogKakek()"></div>
+                <!-- zoneKakek dihapus total, dialog muncul otomatis via JS -->
                 <div id="dialogOverlayKakek" class="dialogue-overlay">
                     <div class="dialogue-text" id="textDialogKakek">
                         "Dulu kakek sering berlayar tanpa maps, hanya mengandalkan bintang. Kakek tahu, kalau kita panik saat tersesat di lautan, malah bahaya. Ini yang namanya Navigasi Bintang, cara nenek moyang kita dulu. Kakek ingin kamu tau ilmu ini."
@@ -735,7 +733,9 @@
     </div>
 
     <script>
-        const soundClick = document.getElementById('clickSound');
+        /* click.mp3 dihapus, jadi fungsi playClick dikosongkan */
+        function playClick() {} 
+
         const soundClickShip = document.getElementById('clickShipSound');
         const soundWelcome = document.getElementById('etnoWelcome');
         const soundBgm = document.getElementById('backsound');
@@ -816,9 +816,8 @@
             setTimeout(() => { document.getElementById('loadingCarTransition').style.display = 'none'; callback(); }, detik);
         }
 
-        function setSistemVolume(val) { volumeSistem = val; if(!audioMuted) { soundClick.volume = val; soundClickShip.volume = val * 1.3; soundWelcome.volume = val; soundBgm.volume = val * 0.5; soundCorrect.volume = val * 1.3; soundWrong.volume = val * 1.3; } }
-        function toggleMute() { audioMuted = !audioMuted; const btn = document.getElementById('btnAudio'); if(audioMuted) { btn.innerText = "🔇"; soundWelcome.volume=0; soundBgm.volume=0; soundClick.volume=0; soundClickShip.volume=0; soundCorrect.volume=0; soundWrong.volume=0; soundBgm.pause(); } else { btn.innerText = "🔊"; setSistemVolume(document.getElementById('volSlider').value); if(isBgmPlaying) soundBgm.play().catch(e=>{}); } }
-        function playClick() { try { soundClick.currentTime = 0; soundClick.play().catch(e=>{}); } catch(e){} }
+        function setSistemVolume(val) { volumeSistem = val; if(!audioMuted) { soundClickShip.volume = val * 1.3; soundWelcome.volume = val; soundBgm.volume = val * 0.5; soundCorrect.volume = val * 1.3; soundWrong.volume = val * 1.3; } }
+        function toggleMute() { audioMuted = !audioMuted; const btn = document.getElementById('btnAudio'); if(audioMuted) { btn.innerText = "🔇"; soundWelcome.volume=0; soundBgm.volume=0; soundClickShip.volume=0; soundCorrect.volume=0; soundWrong.volume=0; soundBgm.pause(); } else { btn.innerText = "🔊"; setSistemVolume(document.getElementById('volSlider').value); if(isBgmPlaying) soundBgm.play().catch(e=>{}); } }
         function playClickShip() { try { soundClickShip.currentTime = 0; soundClickShip.play().catch(e=>{}); } catch(e){} }
 
         function sembunyikanSemuaSlide() {
@@ -904,7 +903,6 @@
         function lanjutKeLayarNextSatu() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideNextSatu').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot(`Terima kasih telah mampir ke Palembang, Kapten ${playerName}. Prasasti Kedukan Bukit mengajarkan kita bahwa logika teknologi (sistem biner, angka 0) berakar dari peradaban Nusantara 682 Masehi.<br><br>Kita tidak sekadar ke Palembang tapi kita belajar menghargai warisan leluhur yang luar biasa! Mari kita jelajahi laut Nusantara balik ke dek kapalmu! tekan kapal di kiri atas ini.`); }); }
 
         function berlayarMalam() { playClickShip(); const randomText = ["Memuat lautan baru", "Memuat samudera baru", "Memuat informasi", "Memuat teknologi terbaru"]; document.getElementById('loadingText').innerText = randomText[Math.floor(Math.random() * randomText.length)]; document.getElementById('loadingScreenRandom').style.display = 'flex'; setTimeout(() => { document.getElementById('loadingScreenRandom').style.display = 'none'; sembunyikanSemuaSlide(); document.getElementById('slideMalam').classList.add('active'); sembunyikanRobotKiri(); setTimeout(() => { document.getElementById('dialogOverlayKakek').style.display = 'block'; }, 1500); }, 2500); }
-        function bukaDialogKakek() { playClick(); document.getElementById('dialogOverlayKakek').style.display = 'block'; }
         function kakekSelesaiCerita() { playClick(); document.getElementById('dialogOverlayKakek').style.display = 'none'; setRobot("Wah, seru ya cerita Kakek tadi. Kakek bilang, kunci utamanya adalah jangan panik dan percaya sama petunjuk alam. Iya nggak sih?<br><br>Nah, kalau kamu ada di posisi kapal yang terombang-ambing tanpa maps, apakah kamu akan panik?", 'robot-kanan'); let bubble = document.getElementById('robotSpeech'); bubble.innerHTML += `<br><br><span style="display:flex; justify-content:center; gap:10px; margin-top:10px;"><button onclick="responKakek('panik')" style="padding:5px 15px; background:#e74c3c; color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Panik Banget!</button><button onclick="responKakek('nggak')" style="padding:5px 15px; background:#2ecc71; color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Nggak Dong</button></span>`; }
         function responKakek(jawaban) { playClick(); if(jawaban === 'panik') { setRobot("Waduh tenangin dirimu!! Kalau panik, kapal bisa hilang kendali!"); sembunyikanSemuaSlide(); document.getElementById('slideRusak').classList.add('active'); klikRusakCount = 0; document.getElementById('klikRusak').innerText = "0"; setRobot("KARENA KAMU PANIK, KAPAL TEROMBANG AMBING! AYO SELAMATKAN DENGAN CLICK KAPAL 10X!"); } else { setRobot("Keren!! Betul kamu jangan panik! Yuk belajar membaca langit!"); setTimeout(() => { masukPetaBintang(); }, 2000); } }
         function perbaikiKapal() { klikRusakCount++; document.getElementById('klikRusak').innerText = klikRusakCount; let imgRsk = document.getElementById('imgRusak'); imgRsk.classList.remove('shake-effect'); void imgRsk.offsetWidth; imgRsk.classList.add('shake-effect'); if(klikRusakCount >= 10) { playClickShip(); setRobot("Syukurlah! Mesin kapal pulih! Kita belajar bintang yuk!"); setTimeout(() => { masukPetaBintang(); }, 2000); progress.laut = true; } else { playClick(); } }
