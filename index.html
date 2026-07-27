@@ -135,16 +135,10 @@
         .pulau-tap { width: 38%; height: 42%; top: 25%; right: 10%; border-radius: 30px; }
         .kapal-tap { width: 60%; height: 26%; bottom: 0; left: 20%; border-radius: 100px 100px 0 0; }
         
-        /* --- PERBAIKAN POSISI AREA INTERAKSI (HANYA next1.jpg) --- */
-        .kapal-madura-tap { 
-            width: 16%; height: 30%; top: 30%; left: 12%; border-radius: 20px; 
-        }
-        /* 5.png area kakek dihapus total */
+        .kapal-madura-tap { width: 16%; height: 30%; top: 30%; left: 12%; border-radius: 20px; }
         
-        /* stars.png TIDAK DIUBAH SAMA SEKALI */
         .star-zone { width: 22%; height: 24%; border-radius: 50%; border-color: #f1c40f; }
         .z-crux { top: 60%; left: 58%; } 
-        /* --------------------------------------------------------------------------- */
         
         .kapal-rusak-tap { width: 25%; height: 25%; bottom: 35%; left: 37%; border-radius: 20px; border: 4px solid rgba(255, 0, 0, 0.8); background: rgba(255, 0, 0, 0.15); animation: pulse-warning 1s infinite ease-in-out; z-index: 60; }
         @keyframes pulse-warning { 0% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); } 50% { border-color: rgba(255, 0, 0, 1); background: rgba(255, 0, 0, 0.3); box-shadow: 0 0 40px rgba(255,0,0,0.8); } 100% { border-color: rgba(255, 0, 0, 0.4); background: rgba(255, 0, 0, 0.05); box-shadow: 0 0 10px rgba(255,0,0,0.3); } }
@@ -297,7 +291,10 @@
     <audio id="etnoWelcome" src="etnowelcome.mp3" preload="auto"></audio>
     <audio id="soundCorrect" src="correct.mp3" preload="auto"></audio>
     <audio id="soundWrong" src="wrong.mp3" preload="auto"></audio>
-    <audio id="backsound" src="backsound.mp3" loop preload="auto"></audio>
+    
+    <!-- Backsound MP3 dihapus total, diganti A1.mpeg dan A2.mpeg -->
+    <audio id="bgmSoundA1" src="A1.mpeg" loop preload="auto"></audio>
+    <audio id="bgmSoundA2" src="A2.mpeg" loop preload="auto"></audio>
 
     <div id="feedbackOverlay"><div id="feedbackMsg" class="feedback-box"></div></div>
 
@@ -739,9 +736,13 @@
 
         const soundClickShip = document.getElementById('clickShipSound');
         const soundWelcome = document.getElementById('etnoWelcome');
-        const soundBgm = document.getElementById('backsound');
         const soundCorrect = document.getElementById('soundCorrect');
         const soundWrong = document.getElementById('soundWrong');
+        
+        // Sound A1 dan A2 pengganti backsound
+        const soundA1 = document.getElementById('bgmSoundA1');
+        const soundA2 = document.getElementById('bgmSoundA2');
+        let currentBgm = null; // Untuk melacak bgm mana yang sedang diputar
         
         let audioMuted = false; let isBgmPlaying = false; 
         let jumlahBintang = 0; let volumeSistem = 1;
@@ -823,23 +824,54 @@
             if(audioMuted) { 
                 btn.innerText = "🔇"; 
                 soundWelcome.volume = 0; 
-                soundBgm.volume = 0; 
+                soundA1.volume = 0;
+                soundA2.volume = 0;
                 soundClickShip.volume = 0; 
                 soundCorrect.volume = 0; 
                 soundWrong.volume = 0; 
-                soundBgm.pause(); 
+                soundA1.pause();
+                soundA2.pause();
             } else { 
                 btn.innerText = "🔊"; 
                 soundWelcome.volume = 1; 
-                soundBgm.volume = 0.5; 
+                soundA1.volume = 0.5; 
+                soundA2.volume = 0.5;
                 soundClickShip.volume = 1; 
                 soundCorrect.volume = 1; 
                 soundWrong.volume = 1; 
-                if(isBgmPlaying) soundBgm.play().catch(e=>{}); 
+                if(isBgmPlaying) {
+                    if(currentBgm === soundA1 || currentBgm === null) soundA1.play().catch(e=>{});
+                    else if(currentBgm === soundA2) soundA2.play().catch(e=>{});
+                }
             } 
         }
 
         function playClickShip() { try { soundClickShip.currentTime = 0; soundClickShip.play().catch(e=>{}); } catch(e){} }
+
+        /* --- FUNGSI BGM SWITCHER (PENGANTI BACKSOUND A1 & A2) --- */
+        function switchBgm(newBgm) {
+            if (audioMuted) return;
+            try {
+                // Hentikan BGM yang sedang aktif
+                if (currentBgm === soundA1) { soundA1.pause(); soundA1.currentTime = 0; }
+                else if (currentBgm === soundA2) { soundA2.pause(); soundA2.currentTime = 0; }
+                
+                // Mainkan BGM baru
+                if (newBgm) {
+                    newBgm.volume = 0.5; // sesuaikan volume default
+                    newBgm.play().catch(e => {}); // Error handling autoplay policy
+                    currentBgm = newBgm;
+                }
+            } catch(e) {
+                // Fallback jika ada error
+                if (newBgm) {
+                    setTimeout(() => {
+                        try { newBgm.play(); currentBgm = newBgm; } catch(e2){}
+                    }, 300);
+                }
+            }
+        }
+        /* -------------------------------------------------------- */
 
         function sembunyikanSemuaSlide() {
             let current = document.querySelector('.slide.active');
@@ -865,7 +897,6 @@
             }
         }
 
-        /* --- PERBAIKAN LOGIKA AUDIO AGAR BISA OTOMATIS TANPA ERROR --- */
         function playAudioSafely(audioElement, fallbackDelay = 0) {
             if (audioMuted) return;
             try {
@@ -888,7 +919,6 @@
                 }
             }
         }
-        /* -------------------------------------------------------- */
 
         function mulaiDenganNama() {
             let input = document.getElementById('inputNama').value.trim();
@@ -896,7 +926,7 @@
             playerName = input;
             localStorage.setItem('etnoCaptainName', playerName);
             
-            // 1. Tutup Modal & Pindah Slide terlebih dahulu
+            // Tutup Modal & Pindah Slide terlebih dahulu
             document.getElementById('modalNama').style.display = 'none';
             slideHistory = []; 
             sembunyikanSemuaSlide(); 
@@ -904,11 +934,10 @@
             document.getElementById('globalUI').style.display = 'block'; 
             setRobot(`Halo Kapten <b>${playerName}</b>! Silakan pilih menu di kapal di sebelah kanan ini!`);
             
-            // 2. Mainkan suara menggunakan fungsi aman
+            // Mainkan suara: A1 di Slide 2, dan etnowelcome
             if(!audioMuted) {
-                // Putar backsound dan etnowelcome tepat saat slide 2 aktif
-                playAudioSafely(soundWelcome, 300); 
-                playAudioSafely(soundBgm, 500);    
+                switchBgm(soundA1); // Memutar A1.mpeg (BGM Utama)
+                playAudioSafely(soundWelcome, 300); // Memutar etnowelcome.mp3 di Slide 2
                 isBgmPlaying = true;
             } else {
                 isBgmPlaying = true;
@@ -934,9 +963,34 @@
         function bukaSkenario1() { 
             sinyalTerkirim = false; klikRusakCount = 0; indexBintang = 0; kuisIndex = 0; currentScenarioIndex = 0;
             document.getElementById('klikRusak').innerText = '0';
-            playClickShip(); introCerita(); 
+            playClickShip(); 
+            introCerita(); 
         }
 
+        /* --- PERUBAHAN AUDIO SKENARIO 1 (BAGIAN 1-5 menggunakan A2.mpeg) --- */
+        function introCerita() {
+            sinyalTerkirim = false; klikRusakCount = 0; indexBintang = 0; kuisIndex = 0; currentScenarioIndex = 0;
+            document.getElementById('klikRusak').innerText = '0';
+            // Ganti BGM menjadi A2 saat memasuki intro cerita
+            if(!audioMuted) switchBgm(soundA2);
+            
+            sembunyikanRobotKiri(); sembunyikanSemuaSlide(); document.getElementById('slideIntroCerita').classList.add('active'); introIndex=0; tampilkanIntro(introIndex);
+        }
+        /* ---------------------------------------------------------------- */
+
+        function finishIntroAndStartGame() { 
+            // Kembalikan BGM menjadi A1 setelah intro selesai
+            if(!audioMuted) switchBgm(soundA1);
+            
+            tampilkanRobotKiri(); loadingTransisi(null, () => { 
+                sembunyikanSemuaSlide(); 
+                document.getElementById('slidePetualangan1').classList.add('active'); 
+                document.getElementById('starUI').style.display = 'flex'; 
+                setRobot("Kapten, kita udah sampai di Palembang! Di sinilah nenek moyang kita menulis angka 0 pertama kali. Ayo kita temukan prasastinya!"); 
+            }); 
+        }
+
+        /* LOGIKA SKENARIO 1 */
         function interaksiLayar1(tipe) {
             if (tipe === 'kapal') { playClickShip(); sinyalTerkirim = true; document.getElementById('zonePulau').classList.add('ready'); setRobot("Sekarang ketuk area PULAU untuk mendarat!"); } 
             else if (tipe === 'pulau') { if(!sinyalTerkirim) { playClick(); return; } playClickShip(); document.getElementById('slidePetualangan1').classList.add('batu-zoomed'); setTimeout(() => { sembunyikanSemuaSlide(); document.getElementById('slidePrasasti').classList.add('active'); progress.prasasti = true; setRobot(`Kapten ${playerName}! Perhatikan baik-baik. Prasasti Kedukan Bukit ini berisi angka 604 Saka. Angka 0 di tengahnya adalah bukti nenek moyang kita sudah paham konsep nilai tempat dan sistem desimal.<br><br>Logika inilah yang menjadi fondasi dasar dari sistem biner (0 dan 1), yang membuat semua komputer dan HP bisa menyala. Jadi, teknologi yang kamu pegang sekarang, akarnya ada di prasasti ini. Keren banget, kan?`); }, 400); }
@@ -951,7 +1005,9 @@
         }
         function lanjutKeLayarNextSatu() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideNextSatu').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot(`Terima kasih telah mampir ke Palembang, Kapten ${playerName}. Prasasti Kedukan Bukit mengajarkan kita bahwa logika teknologi (sistem biner, angka 0) berakar dari peradaban Nusantara 682 Masehi.<br><br>Kita tidak sekadar ke Palembang tapi kita belajar menghargai warisan leluhur yang luar biasa! Mari kita jelajahi laut Nusantara balik ke dek kapalmu! tekan kapal di kiri atas ini.`); }); }
 
+        /* LOGIKA SKENARIO 2, 3 (Kuis & Kakek) */
         function berlayarMalam() { playClickShip(); const randomText = ["Memuat lautan baru", "Memuat samudera baru", "Memuat informasi", "Memuat teknologi terbaru"]; document.getElementById('loadingText').innerText = randomText[Math.floor(Math.random() * randomText.length)]; document.getElementById('loadingScreenRandom').style.display = 'flex'; setTimeout(() => { document.getElementById('loadingScreenRandom').style.display = 'none'; sembunyikanSemuaSlide(); document.getElementById('slideMalam').classList.add('active'); sembunyikanRobotKiri(); setTimeout(() => { document.getElementById('dialogOverlayKakek').style.display = 'block'; }, 1500); }, 2500); }
+        function bukaDialogKakek() { playClick(); document.getElementById('dialogOverlayKakek').style.display = 'block'; }
         function kakekSelesaiCerita() { playClick(); document.getElementById('dialogOverlayKakek').style.display = 'none'; setRobot("Wah, seru ya cerita Kakek tadi. Kakek bilang, kunci utamanya adalah jangan panik dan percaya sama petunjuk alam. Iya nggak sih?<br><br>Nah, kalau kamu ada di posisi kapal yang terombang-ambing tanpa maps, apakah kamu akan panik?", 'robot-kanan'); let bubble = document.getElementById('robotSpeech'); bubble.innerHTML += `<br><br><span style="display:flex; justify-content:center; gap:10px; margin-top:10px;"><button onclick="responKakek('panik')" style="padding:5px 15px; background:#e74c3c; color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Panik Banget!</button><button onclick="responKakek('nggak')" style="padding:5px 15px; background:#2ecc71; color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Nggak Dong</button></span>`; }
         function responKakek(jawaban) { playClick(); if(jawaban === 'panik') { setRobot("Waduh tenangin dirimu!! Kalau panik, kapal bisa hilang kendali!"); sembunyikanSemuaSlide(); document.getElementById('slideRusak').classList.add('active'); klikRusakCount = 0; document.getElementById('klikRusak').innerText = "0"; setRobot("KARENA KAMU PANIK, KAPAL TEROMBANG AMBING! AYO SELAMATKAN DENGAN CLICK KAPAL 10X!"); } else { setRobot("Keren!! Betul kamu jangan panik! Yuk belajar membaca langit!"); setTimeout(() => { masukPetaBintang(); }, 2000); } }
         function perbaikiKapal() { klikRusakCount++; document.getElementById('klikRusak').innerText = klikRusakCount; let imgRsk = document.getElementById('imgRusak'); imgRsk.classList.remove('shake-effect'); void imgRsk.offsetWidth; imgRsk.classList.add('shake-effect'); if(klikRusakCount >= 10) { playClickShip(); setRobot("Syukurlah! Mesin kapal pulih! Kita belajar bintang yuk!"); setTimeout(() => { masukPetaBintang(); }, 2000); progress.laut = true; } else { playClick(); } }
@@ -1113,14 +1169,6 @@
 
         function lanjutSkenario() { playClick(); currentScenarioIndex++; tampilkanSkenario(); }
         function tutupApp() { playClick(); document.getElementById('scenarioPanel').style.display = 'none'; }
-
-        function introCerita() {
-            sinyalTerkirim = false; klikRusakCount = 0; indexBintang = 0; kuisIndex = 0; currentScenarioIndex = 0;
-            document.getElementById('klikRusak').innerText = '0';
-            sembunyikanRobotKiri(); sembunyikanSemuaSlide(); document.getElementById('slideIntroCerita').classList.add('active'); introIndex=0; tampilkanIntro(introIndex);
-        }
-        
-        function finishIntroAndStartGame() { tampilkanRobotKiri(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slidePetualangan1').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot("Kapten, kita udah sampai di Palembang! Di sinilah nenek moyang kita menulis angka 0 pertama kali. Ayo kita temukan prasastinya!"); }); }
 
         let introIndex = 0; let introTimer = null; let countdownInterval = null;
         const introData = [
