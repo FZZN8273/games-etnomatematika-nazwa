@@ -173,16 +173,40 @@
         .menu-panel-content ul { list-style: none; padding: 0; margin: 0; }
         .menu-panel-content li { margin-bottom: 15px; }
 
-        .soal-panel-wrapper { position: absolute; top: 5%; left: 4%; width: 92%; height: 75%; z-index: 50; display: flex; flex-direction: row; justify-content: space-between; gap: 10px; background: transparent; padding: 10px; }
-        .opsi-card { width: 48%; height: 100%; background: transparent !important; border-radius: 15px; padding: 20px; display: flex; flex-direction: column; cursor: pointer; transition: 0.2s; border: 3px solid rgba(255,255,255,0.2); justify-content: center; align-items: center; }
+        /* --- PERBAIKAN UKURAN PANEL PILIHAN (AGAK KECILIN, TAPI TULISAN GEDE) --- */
+        .soal-panel-wrapper { 
+            position: absolute; top: 5%; left: 4%; width: 92%; height: 75%; 
+            z-index: 50; display: flex; flex-direction: row; justify-content: space-between; 
+            gap: 10px; background: transparent; padding: 10px; 
+        }
+        .opsi-card { 
+            width: 48%; height: 100%; background: transparent !important; 
+            border-radius: 12px; padding: 10px 15px; display: flex; flex-direction: column; 
+            cursor: pointer; transition: 0.2s; border: 3px solid rgba(255,255,255,0.2); 
+            justify-content: center; align-items: center; 
+        }
         .opsi-card:hover { transform: scale(1.02); border-color: #f1c40f; box-shadow: 0 0 30px rgba(241, 196, 15, 0.5); }
         .opsi-card-a { border-color: rgba(230, 126, 34, 0.8); }
         .opsi-card-b { border-color: rgba(52, 152, 219, 0.8); }
-        .opsi-header { font-size: 22px; font-weight: 900; color: #fff; text-align: center; padding-bottom: 10px; border-bottom: 2px dashed rgba(255,255,255,0.3); margin-bottom: 15px; text-shadow: 0 0 20px #000, 0 0 10px #000; }
+        
+        .opsi-header { 
+            font-size: 1.8vw; font-weight: 900; color: #fff; text-align: center; 
+            padding-bottom: 8px; border-bottom: 2px dashed rgba(255,255,255,0.3); 
+            margin-bottom: 10px; text-shadow: 0 0 20px #000, 0 0 10px #000; 
+        }
         .opsi-header-a { color: #e67e22; }
         .opsi-header-b { color: #3498db; }
-        .opsi-detail { font-size: 16px; font-weight: 700; line-height: 1.6; color: #f5f6fa; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; gap: 10px; text-shadow: 0 0 15px #000, 0 0 5px #000; }
-        .opsi-badge { background: #fff; color: #1a252f; width: 30px; height: 30px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; margin: 0 auto 10px auto; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .opsi-detail { 
+            font-size: 1.6vw; font-weight: 700; line-height: 1.6; color: #f5f6fa; 
+            text-align: center; flex-grow: 1; display: flex; flex-direction: column; 
+            justify-content: center; gap: 10px; text-shadow: 0 0 15px #000, 0 0 5px #000; 
+        }
+        .opsi-badge { 
+            background: #fff; color: #1a252f; width: 30px; height: 30px; 
+            border-radius: 50%; display: flex; justify-content: center; align-items: center; 
+            font-weight: bold; margin: 0 auto 10px auto; box-shadow: 0 0 20px rgba(0,0,0,0.5); 
+        }
+        /* -------------------------------------------------------------- */
 
         .dialogue-overlay { position: absolute; bottom: 5%; left: 5%; width: 90%; background: rgba(20, 30, 40, 0.92); border: 2px solid #74b9ff; border-radius: 12px; padding: 20px; z-index: 80; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
         .dialogue-text { font-size: 16px; line-height: 1.5; margin-bottom: 15px; font-weight: bold; color: #fff; }
@@ -202,17 +226,20 @@
         .robot-hidden-ui { display: none !important; }
         .robot-kanan { bottom: 5px; right: 10px; align-items: flex-end; } 
         .robot-img { width: 100%; height: auto; filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.8)); pointer-events: none; }
+        
+        /* --- PERBAIKAN GELUMBUNG ROBOT (AGAK KECILIN) --- */
         .speech-bubble { 
-            background: #ffffff; border-radius: 12px; padding: 12px 18px; 
-            font-size: 1.3vw; color: #2c3e50; font-weight: 600; text-align: left; 
+            background: #ffffff; border-radius: 12px; padding: 8px 14px; 
+            font-size: 1.1vw; color: #2c3e50; font-weight: 600; text-align: left; 
             box-shadow: 0px 4px 15px rgba(0,0,0,0.4); position: relative; z-index: 81; 
-            border: 2px solid #00a8ff; width: 240px; max-width: 85vw; 
+            border: 2px solid #00a8ff; width: 220px; max-width: 85vw; 
             height: auto !important; max-height: none !important; overflow: visible !important;
             pointer-events: auto; line-height: 1.5; transform: translateY(-5px); 
             margin-right: 15px; text-align: right; 
         }
         .robot-kanan .speech-bubble::after { content: ''; position: absolute; bottom: -12px; right: 25px; border-width: 12px 12px 0; border-style: solid; border-color: #00a8ff transparent transparent transparent; }
         .robot-kanan .speech-bubble::before { content: ''; position: absolute; bottom: -10px; right: 27px; border-width: 10px 10px 0; border-style: solid; border-color: #ffffff transparent transparent transparent; z-index: 82; }
+        /* ----------------------------------------------------- */
 
         .rasi-container { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); width: 85%; color: #ffffff; text-align: center; z-index: 50; text-shadow: 0 0 15px rgba(0, 168, 255, 0.9), 0 0 30px #000; }
         .rasi-container h3 { color: #f1c40f; font-size: 22px; margin-bottom: 10px; text-shadow: 0 0 20px #000; }
@@ -280,7 +307,7 @@
             font-weight: 600;
             width: 100%;
             box-sizing: border-box;
-            font-size: 1vw;
+            font-size: 1.1vw;
             text-align: left;
         }
         .opsi-btn:hover {
@@ -301,6 +328,12 @@
             flex-shrink: 0;
         }
         /* --------------------------------------------------- */
+
+        /* --- PERMINTAAN KHUSUS: HAPUS ROBOT DI SLIDE SA1.png --- */
+        #slideSebabAkibatS1 .robot-wrapper {
+            display: none !important;
+        }
+        /* ------------------------------------------------------ */
     </style>
 </head>
 <body>
@@ -1077,8 +1110,6 @@
                 <div class="opsi-btn" onclick="jawabKuis('c', '${data.ans}')"><div class="opsi-badge-kuis">C</div><div>${data.c}</div></div>
                 <div class="opsi-btn" onclick="jawabKuis('d', '${data.ans}')"><div class="opsi-badge-kuis">D</div><div>${data.d}</div></div>`;
             document.getElementById('opsiKuisContainer').innerHTML = html; setRobot(`Soal ke-${kuisIndex+1}!`);
-            // Baris berikut dihapus agar CSS putih & teks hitam bisa bekerja
-            // document.querySelectorAll('.opsi-btn').forEach(el => el.style.backgroundColor = 'rgba(0,0,0,0.6)');
         }
         function jawabKuis(pilih, benar) {
             let overlayFeed = document.getElementById('feedbackOverlay'); if(overlayFeed.style.display === 'flex') return;
