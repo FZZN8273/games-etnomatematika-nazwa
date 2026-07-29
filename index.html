@@ -264,6 +264,43 @@
         .progress-bar-sertif .fill { height: 100%; background: #f1c40f; width: 0%; transition: width 0.2s; }
 
         #opsiKuisContainer { display: flex; flex-direction: column; gap: 10px; text-align: center; align-items: center; justify-content: center; width: 100%; }
+
+        /* --- PERBAIKAN TOMBOL KUIS (PUTIH, TEKS HITAM) --- */
+        .opsi-btn {
+            background-color: #ffffff;
+            color: #000000;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 1vw;
+            text-align: left;
+        }
+        .opsi-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #2ecc71;
+            transform: scale(1.02);
+        }
+        .opsi-badge-kuis {
+            background-color: #3498db;
+            color: #ffffff;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        /* --------------------------------------------------- */
     </style>
 </head>
 <body>
@@ -1039,7 +1076,9 @@
                 <div class="opsi-btn" onclick="jawabKuis('b', '${data.ans}')"><div class="opsi-badge-kuis">B</div><div>${data.b}</div></div>
                 <div class="opsi-btn" onclick="jawabKuis('c', '${data.ans}')"><div class="opsi-badge-kuis">C</div><div>${data.c}</div></div>
                 <div class="opsi-btn" onclick="jawabKuis('d', '${data.ans}')"><div class="opsi-badge-kuis">D</div><div>${data.d}</div></div>`;
-            document.getElementById('opsiKuisContainer').innerHTML = html; setRobot(`Soal ke-${kuisIndex+1}!`); document.querySelectorAll('.opsi-btn').forEach(el => el.style.backgroundColor = 'rgba(0,0,0,0.6)');
+            document.getElementById('opsiKuisContainer').innerHTML = html; setRobot(`Soal ke-${kuisIndex+1}!`);
+            // Baris berikut dihapus agar CSS putih & teks hitam bisa bekerja
+            // document.querySelectorAll('.opsi-btn').forEach(el => el.style.backgroundColor = 'rgba(0,0,0,0.6)');
         }
         function jawabKuis(pilih, benar) {
             let overlayFeed = document.getElementById('feedbackOverlay'); if(overlayFeed.style.display === 'flex') return;
