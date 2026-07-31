@@ -307,8 +307,9 @@
         }
         /* --------------------------------------------------- */
 
-        /* --- PERBAIKAN SA1.PNG: ROBOT DIHAPUS TOTAL --- */
-        #slideSebabAkibatS1 .robot-wrapper { 
+        /* --- PERBAIKAN SA1.PNG: ROBOT DAN GELUMBUNG DIHAPUS TOTAL --- */
+        #slideSebabAkibatS1 .robot-wrapper, 
+        #slideSebabAkibatS1 .speech-bubble {
             display: none !important; 
         }
         /* -------------------------------------------------- */
@@ -564,7 +565,7 @@
                 </div>
                 <button class="btn-back-hud" onclick="kembaliKeSlideSebelumnya()">⚓ Kembali</button>
                 <button class="btn-selesai" style="position:absolute; top:25%; left:50%; transform:translateX(-50%); width:35%; background:#e67e22; z-index:70; padding:12px; border-radius:30px; box-shadow:0 4px 15px rgba(0,0,0,0.5);" onclick="lanjutKeLayarNextSatu()">Lanjutkan ➔</button>
-                <!-- Robot di slide SA1.png telah dihapus total via CSS -->
+                <!-- Robot dan gelembung teks di slide SA1.png telah dihapus total via CSS -->
             </div>
         </div>
         
@@ -1050,7 +1051,16 @@
             if (opsi === 'B') { soundCorrect.currentTime = 0; soundCorrect.play().catch(e=>{}); feedbackMsg.className = 'feedback-box feedback-correct'; feedbackMsg.innerHTML = "🌟 PILIHAN TEPAT!"; jumlahBintang++; document.getElementById('starCount').innerText = jumlahBintang; } 
             else { soundWrong.currentTime = 0; soundWrong.play().catch(e=>{}); feedbackMsg.className = 'feedback-box feedback-wrong'; feedbackMsg.innerHTML = "⚠️ PILIHAN KURANG TEPAT!"; }
             overlayFeed.style.display = 'flex';
-            setTimeout(() => { overlayFeed.style.display = 'none'; loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideSebabAkibatS1').classList.add('active'); sembunyikanRobotKiri(); setRobot(opsi === 'B' ? "Kerja bagus! Kamu memilih pola yang tepat!" : "Kamu memilih dokumentasi biasa. Teliti itu penting!"); }); }, 1200);
+            setTimeout(() => { 
+                overlayFeed.style.display = 'none'; 
+                loadingTransisi(null, () => { 
+                    sembunyikanSemuaSlide(); 
+                    document.getElementById('slideSebabAkibatS1').classList.add('active'); 
+                    sembunyikanRobotKiri(); 
+                    // Robot dan gelembung teks di SA1.png telah dihapus total
+                    // Tidak ada panggilan setRobot di sini lagi, agar tidak ada gelembung yang muncul
+                }); 
+            }, 1200);
         }
         function lanjutKeLayarNextSatu() { playClick(); loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideNextSatu').classList.add('active'); document.getElementById('starUI').style.display = 'flex'; setRobot(`Terima kasih telah mampir ke Palembang, Kapten ${playerName}. Prasasti Kedukan Bukit mengajarkan kita bahwa logika teknologi (sistem biner, angka 0) berakar dari peradaban Nusantara 682 Masehi.<br><br>Kita tidak sekadar ke Palembang tapi kita belajar menghargai warisan leluhur yang luar biasa! Mari kita jelajahi laut Nusantara balik ke dek kapalmu! tekan kapal di kiri atas ini.`); }); }
 
