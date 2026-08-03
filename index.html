@@ -646,7 +646,8 @@
                 <button class="btn-back-hud" onclick="kembaliKeSlideSebelumnya()">⚓ Kembali</button>
                 <div class="rasi-container">
                     <div id="teksRasi" style="font-size:16px; line-height:1.6;"></div>
-                    <button class="btn-selesai" style="width:auto; padding:10px 30px; background:#e67e22; margin-top:15px; border-radius:25px;" onclick="lanjutBintangBerikutnya()">Lanjutkan ➔</button>
+                    <!-- Tombol manual akan mereset timer dan pindah -->
+                    <button class="btn-selesai" style="width:auto; padding:10px 30px; background:#e67e22; margin-top:15px; border-radius:25px;" onclick="lanjutBintangDenganTimerReset()">Lanjutkan ➔</button>
                 </div>
             </div>
         </div>
@@ -802,6 +803,7 @@
 
         let progress = { prasasti: false, laut: false, chat: false, browser: false, security: false };
         let slideHistory = [];
+        let timerRasi = null; // Timer untuk auto-advance rasi
 
         function handleImageLoad(img) {
             let wrapper = img.closest('.slide-wrapper');
@@ -1057,8 +1059,6 @@
                     sembunyikanSemuaSlide(); 
                     document.getElementById('slideSebabAkibatS1').classList.add('active'); 
                     sembunyikanRobotKiri(); 
-                    // Robot dan gelembung teks di SA1.png telah dihapus total
-                    // Tidak ada panggilan setRobot di sini lagi, agar tidak ada gelembung yang muncul
                 }); 
             }, 1200);
         }
@@ -1072,16 +1072,84 @@
         function perbaikiKapal() { klikRusakCount++; document.getElementById('klikRusak').innerText = klikRusakCount; let imgRsk = document.getElementById('imgRusak'); imgRsk.classList.remove('shake-effect'); void imgRsk.offsetWidth; imgRsk.classList.add('shake-effect'); if(klikRusakCount >= 10) { playClickShip(); setRobot("Syukurlah! Mesin kapal pulih! Kita belajar bintang yuk!"); setTimeout(() => { masukPetaBintang(); }, 2000); progress.laut = true; } else { playClick(); } }
         function masukPetaBintang() { sembunyikanRobotKiri(); sembunyikanSemuaSlide(); document.getElementById('slideStars').classList.add('active'); }
         
+        /* --- DATA RASI BINTANG DENGAN TEKS BERSIH TANPA TANDA BERLEBIH --- */
         const urutanBintang = [
-            { img: 'crux.png', teks: `<h3>1. Rasi Pari / Salib Selatan (Crux)</h3><p style="margin-bottom: 10px;">Bentuk layang-layang. Penunjuk arah Selatan.</p><p style="font-size: 14px; margin-bottom: 5px;">📌 <b>Nama Lokal:</b> Bintoéng Kamasé (Bugis).</p><p style="font-size: 14px;">📌 <b>Fungsi:</b> Krusial bagi pelaut Nusantara.</p>` },
-            { img: 'biduk.png', teks: `<h3>2. Rasi Biduk / Beruang Besar (Ursa Major)</h3><p style="margin-bottom: 10px;">7 bintang membentuk gayung. Penunjuk arah Utara.</p><p style="font-size: 14px; margin-bottom: 5px;">📌 <b>Nama Lokal:</b> Bintang Biduk.</p><p style="font-size: 14px;">📌 <b>Fungsi:</b> Menunjuk arah Utara.</p>` },
-            { img: 'orion.png', teks: `<h3>3. Rasi Orion / Luku</h3><p style="margin-bottom: 10px;">3 bintang berderet lurus (sabuk Orion). Arah Barat & Tanda musim tanam.</p><p style="font-size: 14px; margin-bottom: 5px;">📌 <b>Nama Lokal:</b> Lintang Luku (Jawa).</p><p style="font-size: 14px;">📌 <b>Fungsi:</b> Arah Barat & Tanda musim tanam padi.</p>` },
-            { img: 'scorpio.png', teks: `<h3>4. Rasi Skorpio (Kalajengking)</h3><p style="margin-bottom: 10px;">Berbentuk kalajengking. Arah Timur atau Tenggara.</p><p style="font-size: 14px; margin-bottom: 5px;">📌 <b>Nama Lokal:</b> Lintang Kelopo Doyong.</p><p style="font-size: 14px;">📌 <b>Fungsi:</b> Arah Timur atau Tenggara.</p>` }
+            { 
+                img: 'crux.png', 
+                teks: `<h3>1. Rasi Pari / Salib Selatan (Crux)</h3>
+                       <p style="margin-bottom: 10px;">Bentuk layang-layang dan penunjuk arah Selatan.</p>
+                       <p style="font-size: 14px; margin-bottom: 5px;">📌 Nama Lokal: Bintoéng Kamasé (Bugis)</p>
+                       <p style="font-size: 14px;">📌 Fungsi: Krusial bagi pelaut Nusantara</p>` 
+            },
+            { 
+                img: 'biduk.png', 
+                teks: `<h3>2. Rasi Biduk / Beruang Besar (Ursa Major)</h3>
+                       <p style="margin-bottom: 10px;">Tujuh bintang membentuk gayung dan penunjuk arah Utara.</p>
+                       <p style="font-size: 14px; margin-bottom: 5px;">📌 Nama Lokal: Bintang Biduk</p>
+                       <p style="font-size: 14px;">📌 Fungsi: Menunjuk arah Utara</p>` 
+            },
+            { 
+                img: 'orion.png', 
+                teks: `<h3>3. Rasi Orion / Luku</h3>
+                       <p style="margin-bottom: 10px;">Tiga bintang berderet lurus (sabuk Orion). Arah Barat dan tanda musim tanam.</p>
+                       <p style="font-size: 14px; margin-bottom: 5px;">📌 Nama Lokal: Lintang Luku (Jawa)</p>
+                       <p style="font-size: 14px;">📌 Fungsi: Arah Barat dan tanda musim tanam padi</p>` 
+            },
+            { 
+                img: 'scorpio.png', 
+                teks: `<h3>4. Rasi Skorpio (Kalajengking)</h3>
+                       <p style="margin-bottom: 10px;">Berbentuk kalajengking dan arah Timur atau Tenggara.</p>
+                       <p style="font-size: 14px; margin-bottom: 5px;">📌 Nama Lokal: Lintang Kelopo Doyong</p>
+                       <p style="font-size: 14px;">📌 Fungsi: Arah Timur atau Tenggara</p>` 
+            }
         ];
+        /* ------------------------------------------------------ */
         let indexBintang = 0;
-        function mulaiUrutanBintang() { indexBintang = 0; playClick(); loadingTransisi(null, () => { tampilkanBintangSaatIni(); }); }
-        function tampilkanBintangSaatIni() { sembunyikanSemuaSlide(); document.getElementById('slideRasi').classList.add('active'); document.getElementById('imgRasi').src = urutanBintang[indexBintang].img; document.getElementById('imgRasi').style.display = 'block'; document.getElementById('imgRasi').style.backgroundColor = '#0d1b2a'; document.getElementById('teksRasi').innerHTML = urutanBintang[indexBintang].teks; setRobot(`Formasi rasi ke-${indexBintang+1}! Klik Lanjutkan untuk rasi selanjutnya.`); }
-        function lanjutBintangBerikutnya() { playClick(); loadingTransisi(null, () => { indexBintang++; if(indexBintang < urutanBintang.length) { tampilkanBintangSaatIni(); } else { document.getElementById('starUI').style.display = 'none'; bukaMateriGPS(); } }); }
+        
+        function mulaiUrutanBintang() { 
+            indexBintang = 0; 
+            playClick(); 
+            loadingTransisi(null, () => { 
+                tampilkanBintangSaatIni(); 
+            }); 
+        }
+
+        function tampilkanBintangSaatIni() {
+            // Bersihkan timer sebelumnya
+            if(timerRasi) { clearTimeout(timerRasi); timerRasi = null; }
+
+            sembunyikanSemuaSlide(); 
+            document.getElementById('slideRasi').classList.add('active'); 
+            document.getElementById('imgRasi').src = urutanBintang[indexBintang].img; 
+            document.getElementById('imgRasi').style.display = 'block'; 
+            document.getElementById('imgRasi').style.backgroundColor = '#0d1b2a'; 
+            document.getElementById('teksRasi').innerHTML = urutanBintang[indexBintang].teks; 
+            setRobot(`Formasi rasi ke-${indexBintang+1}! Lanjutkan untuk rasi selanjutnya.`);
+
+            // Atur timer 6 detik (6000ms)
+            timerRasi = setTimeout(() => {
+                lanjutBintangBerikutnya();
+            }, 6000);
+        }
+
+        // Fungsi tombol manual: reset timer lalu pindah
+        function lanjutBintangDenganTimerReset() {
+            playClick();
+            if(timerRasi) { clearTimeout(timerRasi); timerRasi = null; }
+            lanjutBintangBerikutnya();
+        }
+
+        function lanjutBintangBerikutnya() { 
+            loadingTransisi(null, () => { 
+                indexBintang++; 
+                if(indexBintang < urutanBintang.length) { 
+                    tampilkanBintangSaatIni(); 
+                } else { 
+                    document.getElementById('starUI').style.display = 'none'; 
+                    bukaMateriGPS(); 
+                } 
+            }); 
+        }
         function bukaMateriGPS() { loadingTransisi(null, () => { sembunyikanSemuaSlide(); document.getElementById('slideGPS').classList.add('active'); setRobot("Paham rasi? Yuk uji pemahaman!"); }); }
 
         const kuisData = [
